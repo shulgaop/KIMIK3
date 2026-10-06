@@ -38,6 +38,7 @@ route_app/
     gpx_analyze.py     # разбор GPX: км, высоты, проекции, азимуты, градиенты
     make_kml.py        # генерация KML по дням + жёсткая валидация
     make_ics.py        # календарь ICS (VTIMEZONE, VALARM)
+    weather.py         # погодный движок F3: прогноз/климат/факт (Open-Meteo)
     tts_audioguide.py  # edge-tts: тексты с числами прописью → mp3 + ffprobe
   routegen/            # (создаётся) Python-пакет приложения
   projects/<маршрут>/  # входные и выходные файлы конкретного похода
@@ -47,6 +48,7 @@ route_app/
 - Разбор трека:        `python3 scripts/gpx_analyze.py track.gpx --points points.json`
 - Генерация KML:       `python3 scripts/make_kml.py track.gpx out.kml --bbox 38.9 39.6 67.9 68.5`
 - Календарь:           `python3 scripts/make_ics.py events.json out.ics`
+- Погода (F3):         `python3 scripts/weather.py points.json --start 2026-09-06 --end 2026-09-16`
 - Аудиогид:            `python3 scripts/tts_audioguide.py texts.json out_dir/ --voice ru-RU-DmitryNeural`
 - Тесты (когда будут): `python3 -m pytest routegen/tests -q`
 

@@ -27,6 +27,7 @@ route_app/    Генератор походных документов
 python3 gpx_analyze.py    # анализ GPX-трека (км, высоты, профиль)
 python3 make_kml.py       # генерация KML для Google Earth
 python3 make_ics.py       # календарь похода (.ics)
+python3 weather.py        # погодный движок: прогноз/климат/факт (Open-Meteo)
 python3 tts_audioguide.py # аудиогид (нужен piper и голос ru-RU-DmitryNeural)
 ```
 

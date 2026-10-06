@@ -38,10 +38,14 @@ MD-гид, офлайн HTML-гид, аудиогид mp3, GPX/KML с точка
 python3 scripts/gpx_analyze.py track.gpx --points points.json   # анализ трека
 python3 scripts/make_kml.py track.gpx out.kml --bbox S N W E    # KML + валидация
 python3 scripts/make_ics.py events.json out.ics                 # календарь
+python3 scripts/weather.py points.json --start ГГГГ-ММ-ДД --end ГГГГ-ММ-ДД  # погода
 python3 scripts/tts_audioguide.py texts.json out/ --rate -5%    # аудиогид
 ```
 
 ## Заметки по среде
 - edge-tts при проблемах ставить: `pip install edge-tts -i https://pypi.org/simple`.
 - Плагин-TTS может отдавать HTTP 424 — сразу фолбэк на edge-tts.
+- Погода — Open-Meteo (без ключа): forecast API и архив ERA5; `weather.py` сам
+  выбирает режим по датам (fact/forecast/climate) и пересчитывает температуры
+  на высоту точек градиентом −0,6 °C/100 м от высоты сетки модели.
 - Файлы проекта кладутся в `projects/<маршрут>/`; имена — на русском.
