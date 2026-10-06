@@ -58,6 +58,7 @@ python3 scripts/make_ics.py events.json out.ics                 # календа
 python3 scripts/weather.py points.json --start ГГГГ-ММ-ДД --end ГГГГ-ММ-ДД  # погода
 python3 scripts/make_status.py projects/<маршрут>               # снимок СТАТУС (F9)
 python3 scripts/tts_audioguide.py texts.json out/ --rate -5%    # аудиогид
+python3 webapp.py                                               # веб-мастер + обучение
 ```
 
 ## Заметки по среде

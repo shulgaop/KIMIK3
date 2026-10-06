@@ -11,15 +11,30 @@ app/          Офлайн HTML-гид похода (одностраничны�
               открываются без сервера и интернета)
               index.html — главная страница
 route_app/    Генератор походных документов
+              webapp.py + wizard.html  Локальный веб-интерфейс: мастер
+                                       генерации маршрутов + обучение
               scripts/        Python-скрипты анализа GPX, KML, ICS, аудиогида
               ТЗ_*.md         Техническое задание (скоуп MVP)
               AGENTS.md       Инструкции для кодовых агентов (Kimi Code, Claude)
+INSTALL.md    Установка: Windows 11, macOS, Ubuntu/Linux
+USER_GUIDE.md Как пользоваться мастером и обучением
 ```
 
 ## Быстрый старт
 
 Открыть гид: достаточно открыть `app/index.html` в браузере — ничего
 собирать не нужно.
+
+Мастер генерации маршрутов (веб-интерфейс):
+
+```bash
+cd route_app
+pip install -r requirements-web.txt
+python3 webapp.py          # http://127.0.0.1:8077
+```
+
+Подробно: **INSTALL.md** (установка на Windows 11 / macOS / Ubuntu/Linux),
+**USER_GUIDE.md** (мастер, обучение, CLI-эквиваленты).
 
 Скрипты (в `route_app/scripts/`):
 

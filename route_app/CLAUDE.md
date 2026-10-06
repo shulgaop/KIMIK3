@@ -42,8 +42,10 @@ route_app/
     make_status.py     # снимок проекта СТАТУС_<Маршрут>.md (F9, после каждого изменения выдачи)
     make_checklist.py  # интерактивный чеклист HTML (F8: Web Speech API, localStorage, печать)
     tts_audioguide.py  # edge-tts: тексты с числами прописью → mp3 + ffprobe
-  routegen/            # (создаётся) Python-пакет приложения
-  projects/<маршрут>/  # входные и выходные файлы конкретного похода
+  webapp.py + wizard.html  # веб-мастер генерации (FastAPI) + вкладка «Обучение»
+  requirements-web.txt     # зависимости веб-интерфейса (fastapi, uvicorn)
+  learn/             # правила.md + примеры.json (обучение; в .gitignore)
+  projects/<маршрут>/  # входные и выходные файлы конкретного похода (в .gitignore)
 ```
 
 ## Команды
@@ -53,6 +55,7 @@ route_app/
 - Погода (F3):         `python3 scripts/weather.py points.json --start 2026-09-06 --end 2026-09-16`
 - Снимок проекта (F9): `python3 scripts/make_status.py projects/Фанские_горы`
 - Чеклист (F8):        `python3 scripts/make_checklist.py checklist.json Чеклист.html`
+- Веб-мастер:          `python3 webapp.py` → http://127.0.0.1:8077 (проекты в projects/, обучение в learn/)
 - Аудиогид:            `python3 scripts/tts_audioguide.py texts.json out_dir/ --voice ru-RU-DmitryNeural`
 - Тесты (когда будут): `python3 -m pytest routegen/tests -q`
 
