@@ -15,3 +15,7 @@ Thumbs.db
 # Локальные данные
 *.log
 .env
+
+# пользовательские данные мастера (не коммитим)
+route_app/projects/
+route_app/learn/
