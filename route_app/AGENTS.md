@@ -24,7 +24,9 @@ MD-гид, офлайн HTML-гид, аудиогид mp3, GPX/KML с точка
   (настраивается), проверка ffprobe каждого файла, zip; точки 🎧 дописываются в GPX.
 - **HTML-гид**: один самодостаточный файл, инлайн CSS/JS, системные шрифты с
   кириллицей, якорное оглавление, SVG-профиль высот, @media print, мобильная вёрстка.
-- **СТАТУС**: обновляется после КАЖДОГО изменения выдачи (не в конце сессии).
+- **СТАТУС**: обновляется после КАЖДОГО изменения выдачи (не в конце сессии) —
+  `scripts/make_status.py projects/<маршрут>`; разделы «Решения, которые НЕ
+  откатывать» и «Открытые вопросы» скрипт переносит, правит их человек/агент.
 
 ## Проверка перед завершением (обязательно)
 - Каждый затронутый скрипт прогоняется на эталоне Фанов (или тестовых точках bbox
@@ -54,6 +56,7 @@ python3 scripts/gpx_analyze.py track.gpx --points points.json   # анализ �
 python3 scripts/make_kml.py track.gpx out.kml --bbox S N W E    # KML + валидация
 python3 scripts/make_ics.py events.json out.ics                 # календарь
 python3 scripts/weather.py points.json --start ГГГГ-ММ-ДД --end ГГГГ-ММ-ДД  # погода
+python3 scripts/make_status.py projects/<маршрут>               # снимок СТАТУС (F9)
 python3 scripts/tts_audioguide.py texts.json out/ --rate -5%    # аудиогид
 ```
 

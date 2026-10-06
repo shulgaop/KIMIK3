@@ -28,6 +28,8 @@ python3 gpx_analyze.py    # анализ GPX-трека (км, высоты, п�
 python3 make_kml.py       # генерация KML для Google Earth
 python3 make_ics.py       # календарь похода (.ics)
 python3 weather.py        # погодный движок: прогноз/климат/факт (Open-Meteo)
+python3 make_status.py    # снимок проекта СТАТУС_<Маршрут>.md (F9)
+python3 make_checklist.py # интерактивный чеклист HTML (F8)
 python3 tts_audioguide.py # аудиогид (нужен piper и голос ru-RU-DmitryNeural)
 ```
 
