@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Чеклист · Фанские горы 05–17.09.2026</title>
+<style>
+  :root{--paper:#b0c6b3;--ink:#111;--crim:#db3356;--card:#fdfdfb;--line:#7a947e}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font:16px/1.55 -apple-system,"Segoe UI",Roboto,"Microsoft YaHei",sans-serif;padding:18px}
+  .wrap{max-width:760px;margin:0 auto}
+  h1{font-family:Georgia,serif;font-size:1.7rem;margin:8px 0 2px}
+  .sub{font-size:.9rem;opacity:.85;margin-bottom:14px}
+  .toolbar{position:sticky;top:0;background:var(--paper);padding:8px 0;border-bottom:2px solid var(--ink);display:flex;gap:8px;flex-wrap:wrap;z-index:5;margin-bottom:14px}
+  button{font:600 .92rem/1 inherit;padding:9px 14px;border:2px solid var(--ink);background:var(--card);cursor:pointer;border-radius:6px}
+  button:hover{background:var(--ink);color:var(--paper)}
+  button.reading{background:var(--crim);border-color:var(--crim);color:#fff}
+  .progress{font:600 .95rem/1 Georgia,serif;align-self:center;margin-left:auto}
+  section{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin-bottom:14px}
+  h2{font-family:Georgia,serif;font-size:1.15rem;display:flex;align-items:center;gap:10px;margin-bottom:8px;cursor:pointer}
+  h2 .speak{font-size:.8rem;padding:5px 10px;border-width:1px}
+  h2 .cnt{margin-left:auto;font:600 .85rem/1 inherit;color:var(--crim)}
+  ul{list-style:none}
+  li{display:flex;gap:10px;padding:6px 2px;border-bottom:1px dashed var(--line);align-items:flex-start}
+  li:last-child{border-bottom:none}
+  input[type=checkbox]{width:20px;height:20px;margin-top:2px;accent-color:var(--crim);flex-shrink:0;cursor:pointer}
+  label{cursor:pointer;flex:1}
+  li.done label{text-decoration:line-through;opacity:.5}
+  .note{font-size:.85rem;opacity:.8;margin-top:8px;font-style:italic}
+  @media print{
+    body{background:#fff}
+    .toolbar{display:none}
+    section{break-inside:avoid;border:1px solid #999}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Чеклист · Фанские горы</h1>
+<p class="sub">05–17 сентября 2026 · отметки сохраняются в этом браузере · кнопка 🔊 читает раздел вслух (работает офлайн, голос браузера)</p>
+
+<div class="toolbar">
+  <button id="readAll">🔊 Читать всё</button>
+  <button id="stopRead">⏹ Стоп</button>
+  <button id="reset">↺ Сбросить отметки</button>
+  <span class="progress" id="progress">0 / 0</span>
+</div>
+
+<section data-sec>
+<h2 onclick="speakSec(this)">1 · Документы и билеты <button class="speak" onclick="event.stopPropagation();speakSec(this.parentElement)">🔊</button><span class="cnt"></span></h2>
+<ul>
+<li><input type="checkbox" id="c1"><label for="c1">Загранпаспорт (срок 6+ мес. после поездки) — в гермопакет</label></li>
+<li><input type="checkbox" id="c2"><label for="c2">Авиабилет XYKQLD: HY710 Минск-2 → Ташкент 05.09 21:15 (рег. до 20:35); HY709 17.09 09:00 (рег. до 08:00) — распечатка/офлайн-PDF</label></li>
+<li><input type="checkbox" id="c3"><label for="c3">Ж/д билет 710ФА 06.09 08:37 Ташкент-Северный → Самарканд, ваг. 05 место 028, э-билет 76215198441135 (рег. до 08:07)</label></li>
+<li><input type="checkbox" id="c4"><label for="c4">Ж/д билет 709ФА 16.09 19:23 Самарканд → Ташкент, ваг. 05 место 034, э-билет 76465198437543 (рег. до 18:53)</label></li>
+<li><input type="checkbox" id="c5"><label for="c5">Копии паспорта и билетов: бумажные (отдельно от оригиналов) + в облаке офлайн</label></li>
+<li><input type="checkbox" id="c6"><label for="c6">Страховка с горным туризмом до 5000 м — распечатать</label></li>
+<li><input type="checkbox" id="c7"><label for="c7">Контакты: организатор, гид, АТБ Артуч +992 928886888 / +992 927307939 — записаны на бумаге</label></li>
+</ul>
+</section>
+
+<section data-sec>
+<h2 onclick="speakSec(this)">2 · Деньги <button class="speak" onclick="event.stopPropagation();speakSec(this.parentElement)">🔊</button><span class="cnt"></span></h2>
+<ul>
+<li><input type="checkbox" id="c8"><label for="c8">Наличные $/€ куплены в Беларуси (курс НБРБ 04.09: $1 = 3,0792 BYN, €1 = 3,5738 BYN). Купюры $100 — «синие», образца 2013+</label></li>
+<li><input type="checkbox" id="c9"><label for="c9">Бюджет наличных: отель Самарканд ~20 €/ночь × 2, питание в городах, трансферы/такси, чайханы и ослики на маршруте, сувениры — с запасом 20 %</label></li>
+<li><input type="checkbox" id="c10"><label for="c10">Мелкие купюры ($1–20) для базаров и чайхан</label></li>
+<li><input type="checkbox" id="c11"><label for="c11">Две карты разных банков (Visa + Mastercard): Альфа (комиссия 1 % за рубежом), МТБанк (+2 % возможно), Беларусбанк, БСБ — курсы по картам в гиде §1.1</label></li>
+<li><input type="checkbox" id="c12"><label for="c12">Банкам отправлено уведомление о поездке (страны, даты) — чтобы не заблокировали карту</label></li>
+<li><input type="checkbox" id="c13"><label for="c13">Запомнил правила: в горах только наличные сомони; на терминале выбирать местную валюту; Booking.com картами РБ не платится — отель наличными</label></li>
+</ul>
+<p class="note">Курсы 04.09.2026: УЗ $1 = 11 795 сум, €1 = 13 699 сум; ТД $1 = 9,25, €1 = 10,77 сомони. Менять: Ташкент (аэропорт/банк), Самарканд; сомони — Пенджикент.</p>
+</section>
+
+<section data-sec>
+<h2 onclick="speakSec(this)">3 · Телефон, связь, приложения <button class="speak" onclick="event.stopPropagation();speakSec(this.parentElement)">🔊</button><span class="cnt"></span></h2>
+<ul>
+<li><input type="checkbox" id="c14"><label for="c14">Organic Maps / Maps.me: офлайн-карты Узбекистана и Таджикистана скачаны; GPX-трек загружен</label></li>
+<li><input type="checkbox" id="c15"><label for="c15">Аудиогиды скачаны в телефон: Фаны (12 треков) + Самарканд (8 треков)</label></li>
+<li><input type="checkbox" id="c16"><label for="c16">Yandex Go установлен и привязан (такси в Ташкенте и Самарканде)</label></li>
+<li><input type="checkbox" id="c17"><label for="c17">KML для Google Earth загружен; календарь .ics импортирован</label></li>
+<li><input type="checkbox" id="c18"><label for="c18">Пауэрбанк 20 000 mAh заряжен + кабели + розеточный переходник (в УЗ/ТД розетки европейские, переходник не нужен — проверь своё зарядное)</label></li>
+<li><input type="checkbox" id="c19"><label for="c19">Родным сообщён регламент: «нет связи с 07.09 до 15.09»; экстренный контакт — через организатора</label></li>
+</ul>
+</section>
+
+<section data-sec>
+<h2 onclick="speakSec(this)">4 · Снаряжение — ключевое <button class="speak" onclick="event.stopPropagation();speakSec(this.parentElement)">🔊</button><span class="cnt"></span></h2>
+<ul>
+<li><input type="checkbox" id="c20"><label for="c20">Спальник комфорт −10 °C (прогноз на 4400 м: −6…−10 °C ночью 11–12.09) + коврик R≥4</label></li>
+<li><input type="checkbox" id="c21"><label for="c21">Кошки-«цепочки» (фирн на Чимтарге остаётся, даже без свежего снега) + треккинговые палки</label></li>
+<li><input type="checkbox" id="c22"><label for="c22">Мембранная куртка + пуховка/флиска «на перевал» наверху рюкзака</label></li>
+<li><input type="checkbox" id="c23"><label for="c23">Очки категории 3–4 (снежная слепота на 4740 м!) + SPF 50 + кепка + баф</label></li>
+<li><input type="checkbox" id="c24"><label for="c24">Ботинки треккинговые разношенные + гамаши от осыпи</label></li>
+<li><input type="checkbox" id="c25"><label for="c25">Фонарь налобный + запасные батарейки (день Чимтарги — выход в 05:00)</label></li>
+<li><input type="checkbox" id="c26"><label for="c26">Термос (кипяток в спальник на 4400 м) + фляги/бутылки суммарно 2 л</label></li>
+<li><input type="checkbox" id="c27"><label for="c27">Компас (склонение +4,7°E: магнитный азимут = истинный − 5°) + часы/свисток/нож (нож — в багаж!)</label></li>
+<li><input type="checkbox" id="c28"><label for="c28">Гермопакеты: документы, деньги, телефон</label></li>
+<li><input type="checkbox" id="c29"><label for="c29">Рюкзак взвешен дома: ≤ 23 кг багаж + 8 кг ручная кладь (палки, нож, горелка — только в багаж; газ не ввозить — выдадут на месте)</label></li>
+</ul>
+<p class="note">Полный список — в «Памятке по снаряжению» организатора. Продукты (~5 кг) выдадут в Самарканде/Артуче — заложи вес.</p>
+</section>
+
+<section data-sec>
+<h2 onclick="speakSec(this)">5 · Аптечка и здоровье <button class="speak" onclick="event.stopPropagation();speakSec(this.parentElement)">🔊</button><span class="cnt"></span></h2>
+<ul>
+<li><input type="checkbox" id="c30"><label for="c30">Конкор (бисопролол) 5 мг — на каждый день + запас; НЕ пропускать; утром каждый день</label></li>
+<li><input type="checkbox" id="c31"><label for="c31">Рецепты выписаны: Диакарб (профилактика со 125 мг 2 р/сут за день до 3500+ м), дексаметазон, азитромицин</label></li>
+<li><input type="checkbox" id="c32"><label for="c32">Аптечка собрана по чеклисту «Аптечка_Фанские_горы.xlsx» (зелёное = есть, оранжевое = рецепт)</label></li>
+<li><input type="checkbox" id="c33"><label for="c33">Милдронат 500 мг — начать за 3–4 дня до высотной части (≈07.09)</label></li>
+<li><input type="checkbox" id="c34"><label for="c34">Аквабриз для воды в ходу (1 таб/л, 60 мин); в лагере — кипячение</label></li>
+<li><input type="checkbox" id="c35"><label for="c35">ДЭТА-репеллент (клещи в долинах)</label></li>
+</ul>
+</section>
+
+<section data-sec>
+<h2 onclick="speakSec(this)">6 · 05.09 — день вылета <button class="speak" onclick="event.stopPropagation();speakSec(this.parentElement)">🔊</button><span class="cnt"></span></h2>
+<ul>
+<li><input type="checkbox" id="c36"><label for="c36">Выезд в аэропорт Минск-2 к 18:30 (рейс HY710 21:15, рег. до 20:35)</label></li>
+<li><input type="checkbox" id="c37"><label for="c37">В ручную кладь: документы, деньги, пауэрбанк, аптечка-на-день, тёплый слой (ночь в самолёте), очки/маска для сна</label></li>
+<li><input type="checkbox" id="c38"><label for="c38">Дома: вода/газ/электричество выключены, холодильник проверен</label></li>
+</ul>
+</section>
+
+<section data-sec>
+<h2 onclick="speakSec(this)">7 · 06.09 — Ташкент → Самарканд <button class="speak" onclick="event.stopPropagation();speakSec(this.parentElement)">🔊</button><span class="cnt"></span></h2>
+<ul>
+<li><input type="checkbox" id="c39"><label for="c39">Прилёт 04:00 → такси до Северного вокзала (ул. Туркистон, 7), 15–20 мин; запас 4 ч — позавтракать</label></li>
+<li><input type="checkbox" id="c40"><label for="c40">Обменять $/€ на сумы (аэропорт или банк у вокзала): ~11 795 сум/$</label></li>
+<li><input type="checkbox" id="c41"><label for="c41">Поезд 710ФА 08:37 (на вокзале до 08:07!) → Самарканд 11:46</label></li>
+<li><input type="checkbox" id="c42"><label for="c42">Такси до отеля Hotel Sofia Samarkand (ул. Хусейн Байкаро, 23; тел. +998 91 544 40 44; GPS 39.6585, 66.9577), заселение с 14:00, оплата наличными</label></li>
+<li><input type="checkbox" id="c43"><label for="c43">Прогулка по гиду «Самарканд за один день»: Шахи-Зинда → Сиаб → Биби-Ханым → плов днём → Регистан на закате</label></li>
+<li><input type="checkbox" id="c44"><label for="c44">Купить в городе: вода на дорогу, перекус, при необходимости — местная симка</label></li>
+</ul>
+</section>
+
+<section data-sec>
+<h2 onclick="speakSec(this)">8 · 07.09 — перед треком <button class="speak" onclick="event.stopPropagation();speakSec(this.parentElement)">🔊</button><span class="cnt"></span></h2>
+<ul>
+<li><input type="checkbox" id="c45"><label for="c45">Лишние вещи оставлены в отеле Самарканда (подтверждено организатором)</label></li>
+<li><input type="checkbox" id="c46"><label for="c46">Паспорт на границу — в руке, не в рюкзаке; вода и головной убор — доступны</label></li>
+<li><input type="checkbox" id="c47"><label for="c47">В Пенджикенте: обменять $/€ на сомони (~9,25/$) — дальше обменников нет</label></li>
+<li><input type="checkbox" id="c48"><label for="c48">В Артуче: зарядить всё (розетки в кафе), сверить прогноз meteoblue/windy на 11–13.09 (день Чимтарги!), сообщить родным «ушли в горы»</label></li>
+</ul>
+</section>
+
+<section data-sec>
+<h2 onclick="speakSec(this)">9 · Правила на маршруте (напоминание каждое утро) <button class="speak" onclick="event.stopPropagation();speakSec(this.parentElement)">🔊</button><span class="cnt"></span></h2>
+<ul>
+<li><input type="checkbox" id="c49"><label for="c49">Конкор 5 мг — каждое утро; милдронат 500 мг — утром</label></li>
+<li><input type="checkbox" id="c50"><label for="c50">Перевалы — до 13:00; на Чимтаргу (12.09) выход в 05:00, кошки, цепочкой за гидом</label></li>
+<li><input type="checkbox" id="c51"><label for="c51">Пить 3–4 л/день; вода ниже 2500 м — только кипячёная/обработанная</label></li>
+<li><input type="checkbox" id="c52"><label for="c52">На осыпях — интервал 2–3 м, никого над собой (камнепад)</label></li>
+<li><input type="checkbox" id="c53"><label for="c53">Головная боль/тошнота/координация — сразу гиду (не по пульсу — бисопролол его маскирует)</label></li>
+<li><input type="checkbox" id="c54"><label for="c54">10.09 у «Вертикаль-Алаудин» — зарядить телефон и пауэрбанк (последняя розетка до Газзы)</label></li>
+</ul>
+</section>
+
+<section data-sec>
+<h2 onclick="speakSec(this)">10 · 16–17.09 — возвращение <button class="speak" onclick="event.stopPropagation();speakSec(this.parentElement)">🔊</button><span class="cnt"></span></h2>
+<ul>
+<li><input type="checkbox" id="c55"><label for="c55">16.09: трансфер Газза → Самарканд, к 18:30 на вокзал (ул. Беруни, 3); паспорт на границу</label></li>
+<li><input type="checkbox" id="c56"><label for="c56">Забрать вещи из отеля (если по пути); ужин в Самарканде</label></li>
+<li><input type="checkbox" id="c57"><label for="c57">Поезд 709ФА 19:23 (рег. до 18:53) → Ташкент 23:06 → такси в отель у аэропорта</label></li>
+<li><input type="checkbox" id="c58"><label for="c58">17.09: выезд в аэропорт ≤ 06:30 (терминал 2), рейс HY709 09:00 (рег. до 08:00) → Минск-2 12:15</label></li>
+<li><input type="checkbox" id="c59"><label for="c59">Остатки сумов потратить/съесть — обратный обмен без чека невозможен</label></li>
+</ul>
+</section>
+
+</div>
+<script>
+const synth = window.speechSynthesis;
+function secText(h2){
+  const sec = h2.closest('section');
+  let t = h2.childNodes[0].textContent.trim() + '. ';
+  sec.querySelectorAll('label').forEach(l=>{ if(!l.closest('li').classList.contains('done')) t += l.textContent.trim() + '. '; });
+  return t;
+}
+function speak(txt){
+  synth.cancel();
+  const u = new SpeechSynthesisUtterance(txt);
+  u.lang = 'ru-RU'; u.rate = 0.95;
+  synth.speak(u);
+}
+function speakSec(h2){ speak(secText(h2)); }
+document.getElementById('readAll').onclick = ()=>{
+  synth.cancel();
+  const secs = [...document.querySelectorAll('section[data-sec]')];
+  let i = 0;
+  const btn = document.getElementById('readAll');
+  btn.classList.add('reading'); btn.textContent = '🔊 Читаю…';
+  function next(){
+    if(i >= secs.length){ btn.classList.remove('reading'); btn.textContent='🔊 Читать всё'; return; }
+    const u = new SpeechSynthesisUtterance(secText(secs[i].querySelector('h2')));
+    u.lang='ru-RU'; u.rate=0.95; u.onend = ()=>{ i++; next(); };
+    synth.speak(u);
+  }
+  next();
+};
+document.getElementById('stopRead').onclick = ()=>{
+  synth.cancel();
+  const btn = document.getElementById('readAll');
+  btn.classList.remove('reading'); btn.textContent='🔊 Читать всё';
+};
+// persistence + counters
+const boxes = [...document.querySelectorAll('input[type=checkbox]')];
+function refresh(){
+  let done = 0;
+  boxes.forEach(b=>{
+    b.closest('li').classList.toggle('done', b.checked);
+    if(b.checked) done++;
+  });
+  document.getElementById('progress').textContent = done + ' / ' + boxes.length;
+  document.querySelectorAll('section[data-sec]').forEach(s=>{
+    const bs = [...s.querySelectorAll('input[type=checkbox]')];
+    const d = bs.filter(b=>b.checked).length;
+    s.querySelector('.cnt').textContent = d + '/' + bs.length;
+  });
+  localStorage.setItem('fannChecklist', JSON.stringify(boxes.map(b=>b.checked)));
+}
+boxes.forEach(b=>b.addEventListener('change', refresh));
+try{
+  const saved = JSON.parse(localStorage.getItem('fannChecklist')||'[]');
+  saved.forEach((v,i)=>{ if(boxes[i]) boxes[i].checked = v; });
+}catch(e){}
+refresh();
+document.getElementById('reset').onclick = ()=>{ if(confirm('Сбросить все отметки?')){ boxes.forEach(b=>b.checked=false); refresh(); } };
+</script>
+</body>
+</html>
