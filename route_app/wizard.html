@@ -111,6 +111,9 @@
   <h2><span class="tick">✓</span>4 · Погода на даты похода</h2>
   <p class="hint">До похода — прогноз или климат с датой перепроверки; после — фактические наблюдения для отчёта.</p>
   <button class="big primary" onclick="runStep('weather')">Собрать погоду</button>
+  <div class="row">
+    <button onclick="runStep('daylight')" title="Рассвет/закат и фазы Луны по датам похода (расчёт NOAA)">🌅 Световой день и ночное небо</button>
+  </div>
   <pre id="logWeather" style="display:none"></pre>
 </div>
 
@@ -147,6 +150,9 @@
   <div class="row">
     <div><label>Границы дней по км (необязательно)</label><input id="splitKm" placeholder="8 16 24"></div>
     <div style="align-self:end"><button class="primary" onclick="runStep('kml')">Карта KML для Google Earth</button></div>
+  </div>
+  <div class="row">
+    <button onclick="runStep('first_aid')" title="Чеклист аптечки по высотам маршрута + напоминания о приёме в календарь">💊 Аптечка (чеклист + напоминания)</button>
   </div>
   <details>
     <summary>События календаря (события.json)</summary>
@@ -322,7 +328,7 @@ async function runStep(step){
   if(!cur) return alert('Сначала создайте проект (шаг 1)');
   const logId = {program:'logProgram', analyze:'logAnalyze', weather:'logWeather',
                  guide:'logGuide', guide_html:'logGuide', audio_texts:'logGuide', tts:'logGuide',
-                 research:'logGuide',
+                 research:'logGuide', daylight:'logWeather',
                  photos:'logPhotos', marks:'logPhotos', photos_all:'logPhotos'}[step] || 'logDocs';
   log(logId, '⏳ Выполняю… это может занять до пары минут.');
   const body = {};
@@ -336,7 +342,8 @@ async function runStep(step){
       body.filename = 'программа.txt';
     }
   }
-  if(step==='weather'){ body.start=$('pStart').value; body.end=$('pEnd').value; }
+  if(step==='weather' || step==='daylight'){ body.start=$('pStart').value; body.end=$('pEnd').value; }
+  if(step==='first_aid'){ body.start=$('pStart').value; body.end=$('pEnd').value; }
   if(step==='kml'){ body.split_km = $('splitKm').value.trim().split(/\s+/).filter(Boolean).map(Number); }
   if(step.startsWith('photos') || step==='marks'){ body.folder = photoFolder; body.start = $('pStart').value; }
   try{

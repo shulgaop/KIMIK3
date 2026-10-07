@@ -69,6 +69,8 @@ python3 scripts/llm.py guide projects/<маршрут>                          
 python3 scripts/research.py points.json --out выходные/ --region "Фаны"   # факты (Вики+OSM)
 python3 scripts/llm.py audio projects/<маршрут>                           # тексты аудиогида (прописью)
 python3 scripts/make_guide_html.py projects/<маршрут>                     # Гид.md → Гид.html (профиль SVG)
+python3 scripts/daylight.py points.json --start Д --end Д --md Блок.md    # рассвет/закат + Луна
+python3 scripts/first_aid.py points.json --start Д --end Д --out выходные/  # аптечка+напоминания
 python3 scripts/hike_report.py /папка/фото   # гео-фото-отчёт: видео, DJI, офлайн-карта
 python3 scripts/color_route_by_days.py track.gpx out.kml        # трек по дням (из таймстемпов)
 python3 scripts/tts_audioguide.py texts.json out/ --rate -5%    # аудиогид

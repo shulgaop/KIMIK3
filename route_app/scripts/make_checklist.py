@@ -174,10 +174,23 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("checklist", help="JSON с описанием чеклиста")
     ap.add_argument("out", help="выходной HTML-файл")
+    ap.add_argument("--keep", help="дополнительно: txt для вставки в Google Keep "
+                                   "(разделы ЗАГЛАВНЫМИ, пункты строками)")
     args = ap.parse_args()
 
     spec = json.load(open(args.checklist, encoding="utf-8"))
     validate(spec)
+
+    if args.keep:
+        lines = []
+        for sec in spec["sections"]:
+            lines.append(sec["title"].upper())
+            lines += sec["items"]
+            if sec.get("note"):
+                lines.append(f"({sec['note']})")
+            lines.append("")
+        open(args.keep, "w", encoding="utf-8").write("\n".join(lines).strip() + "\n")
+        print(f"✓ {args.keep}: для Google Keep", file=sys.stderr)
 
     sections_html, total = render_sections(spec["sections"])
     html = (TEMPLATE

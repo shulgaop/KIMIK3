@@ -375,9 +375,42 @@ def step_tts(d, params):
     return ok, out, err
 
 
+def step_daylight(d, params):
+    """Световой день и ночное небо: рассвет/закат (NOAA), фаза Луны."""
+    pts = d / IN_DIR / "points.json"
+    if not pts.is_file():
+        raise HTTPException(400, "Нужен входные/points.json (шаг «Программа»)")
+    start, end = params.get("start"), params.get("end")
+    if not start or not end:
+        raise HTTPException(400, "Укажите даты проекта (шаг 1)")
+    return (*run_script([SCRIPTS / "daylight.py", pts, "--start", start, "--end", end,
+                         "--md", d / OUT_DIR / "Световой_день.md"]),)
+
+
+def step_first_aid(d, params):
+    """Аптечка: чеклист (HTML + Keep) и ICS-напоминания о приёме."""
+    pts = d / IN_DIR / "points.json"
+    if not pts.is_file():
+        raise HTTPException(400, "Нужен входные/points.json (шаг «Программа»)")
+    start, end = params.get("start"), params.get("end")
+    if not start or not end:
+        raise HTTPException(400, "Укажите даты проекта (шаг 1)")
+    out = d / OUT_DIR
+    ok1, _, err1 = run_script([SCRIPTS / "first_aid.py", pts, "--start", start,
+                               "--end", end, "--out", out])
+    if not ok1:
+        return False, "", err1
+    ok2, _, err2 = run_script([SCRIPTS / "make_checklist.py", out / "аптечка_чеклист.json",
+                               out / "Аптечка.html", "--keep", out / "Аптечка_Keep.txt"])
+    ok3, _, err3 = run_script([SCRIPTS / "make_ics.py", out / "аптечка_напоминания.json",
+                               out / "аптечка_напоминания.ics"])
+    return ok1 and ok2 and ok3, "", "\n".join(x.strip() for x in (err1, err2, err3) if x)
+
+
 STEPS = {"program": step_program, "analyze": step_analyze, "weather": step_weather,
          "guide": step_guide, "guide_html": step_guide_html, "research": step_research,
          "audio_texts": step_audio_texts, "tts": step_tts,
+         "daylight": step_daylight, "first_aid": step_first_aid,
          "kml": step_kml, "ics": step_ics, "checklist": step_checklist,
          "photos": step_photos, "marks": step_marks,
          "photos_all": step_photos_all, "status": step_status}
