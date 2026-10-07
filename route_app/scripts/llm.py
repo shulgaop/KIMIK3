@@ -92,15 +92,31 @@ def chat(messages, model, key, max_tokens=16000, temperature=0.4):
     """Один запрос chat/completions с ретраями на сетевые сбои."""
     payload = {"model": model, "messages": messages,
                "max_tokens": max_tokens, "temperature": temperature}
+    last = None
     for attempt, pause in enumerate((5, 15), start=1):
         try:
             r = _post("/chat/completions", payload, key)
-            return r["choices"][0]["message"]["content"]
         except urllib.error.URLError as e:
-            if attempt == 2:
-                sys.exit(f"⚠️  Сеть недоступна: {e}")
+            last = e
             print(f"⚠️  {e} — повтор через {pause} с", file=sys.stderr)
             time.sleep(pause)
+            continue
+        if "error" in r:  # OpenRouter отвечает 200 с объектом error (напр. провайдер перегружен)
+            raise RuntimeError(f"{model}: {r['error'].get('message', r['error'])}")
+        return r["choices"][0]["message"]["content"]
+    sys.exit(f"⚠️  Сеть недоступна: {last}")
+
+
+def candidate_models(preferred=None, key=None):
+    """Очередь моделей: явно заданная (без фолбэка) или free-предпочтения по живому списку."""
+    if preferred:
+        return [preferred]
+    try:
+        ids = [m["id"] for m in list_free_models(key)]
+    except Exception:
+        ids = []
+    chain = [m for m in FREE_PREFERENCE if m in ids] or ids[:3] or FREE_PREFERENCE
+    return chain
 
 
 def list_free_models(key=None):
@@ -150,18 +166,29 @@ def build_guide_context(project):
 
 
 def generate_guide(project, model=None, key=None, out_name="Гид.md"):
-    """Генерация MD-гида проекта → выходные/Гид.md. Возвращает путь."""
+    """Генерация MD-гида проекта → выходные/Гид.md. Возвращает путь.
+    Без явной модели — перебор бесплатных по очереди (провайдеры бывают перегружены)."""
     project = Path(project)
     key = get_key(key)
-    model = model or load_config().get("model") or default_model(key)
+    explicit = model or load_config().get("model")
     context = build_guide_context(project)
     if not context.strip():
         sys.exit("⚠️  В проекте нет данных: пройдите шаги «Программа», «Анализ», «Погода»")
     user = (f"Проект: {project.name}\n\n{context}\n\n"
             "Напиши полный путеводитель по правилам из system-промпта.")
-    print(f"Модель: {model}; контекст {len(context)} символов", file=sys.stderr)
-    text = chat([{"role": "system", "content": GUIDE_SYSTEM},
-                 {"role": "user", "content": user}], model, key)
+    messages = [{"role": "system", "content": GUIDE_SYSTEM},
+                {"role": "user", "content": user}]
+    text = last_err = None
+    for m in candidate_models(explicit, key):
+        try:
+            print(f"Модель: {m}; контекст {len(context)} символов", file=sys.stderr)
+            text = chat(messages, m, key)
+            break
+        except RuntimeError as e:
+            last_err = e
+            print(f"⚠️  {e} — пробую следующую бесплатную модель", file=sys.stderr)
+    if text is None:
+        sys.exit(f"⚠️  Все доступные бесплатные модели не ответили. Последняя ошибка: {last_err}")
     out = project / "выходные" / out_name
     out.parent.mkdir(exist_ok=True)
     out.write_text(text + "\n", encoding="utf-8")
