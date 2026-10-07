@@ -58,6 +58,7 @@ python3 scripts/make_kml.py track.gpx out.kml --bbox S N W E    # KML + вали
 python3 scripts/make_ics.py events.json out.ics                 # календарь
 python3 scripts/weather.py points.json --start ГГГГ-ММ-ДД --end ГГГГ-ММ-ДД  # погода
 python3 scripts/make_status.py projects/<маршрут>               # снимок СТАТУС (F9)
+python3 scripts/photo_sort.py фото/ --points points.json --out выходные/  # фото по точкам
 python3 scripts/tts_audioguide.py texts.json out/ --rate -5%    # аудиогид
 python3 webapp.py                                               # веб-мастер + обучение
 ```

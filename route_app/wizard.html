@@ -114,7 +114,17 @@
 </div>
 
 <div class="card" data-step="5">
-  <h2>6 · Результат</h2>
+  <h2>6 · Фотографии</h2>
+  <p class="hint">Фото привязываются к точкам маршрута по EXIF-GPS; без GPS — по времени
+  на треке (если в GPX есть таймстемпы); без EXIF — в «Неразобранное».</p>
+  <label>Путь к папке с фотографиями на этом компьютере (JPG)</label>
+  <input id="photoFolder" placeholder="C:\Фото\Фаны или /Users/.../Фаны">
+  <button class="primary" onclick="runStep('photos')" style="margin-top:8px">Рассортировать фото</button>
+  <pre id="logPhotos" style="display:none"></pre>
+</div>
+
+<div class="card" data-step="6">
+  <h2>7 · Результат</h2>
   <button onclick="refreshFiles()">Обновить список</button>
   <button class="primary" id="btnZip" onclick="downloadZip()" disabled>Скачать всё (zip)</button>
   <ul class="files" id="filesOut"></ul>
@@ -146,7 +156,7 @@
 <script>
 const $ = id => document.getElementById(id);
 let cur = localStorage.getItem('routeWizardProject') || '';
-const STEP_NAMES = ['Проект','Программа','Анализ','Погода','Документы','Результат'];
+const STEP_NAMES = ['Проект','Программа','Анализ','Погода','Документы','Фото','Результат'];
 
 function drawSteps(active){
   $('stepsBar').innerHTML = STEP_NAMES.map((n,i)=>
@@ -154,7 +164,7 @@ function drawSteps(active){
   document.querySelectorAll('#pageWizard .card[data-step]').forEach(c=>
     c.style.display = +c.dataset.step===active ? '' : 'none');
 }
-function showStep(i){ drawSteps(i); if(i===5) refreshFiles(); }
+function showStep(i){ drawSteps(i); if(i===STEP_NAMES.length-1) refreshFiles(); }
 
 async function api(path, opts={}){
   const r = await fetch(path, opts.method ? {headers:{'Content-Type':'application/json'}, ...opts} : opts);
@@ -225,9 +235,10 @@ async function saveText(fname, text){
 
 async function runStep(step){
   if(!cur) return alert('Сначала создайте/выберите проект');
-  const logId = {program:'logProgram', analyze:'logAnalyze', weather:'logWeather'}[step] || 'logDocs';
+  const logId = {program:'logProgram', analyze:'logAnalyze', weather:'logWeather', photos:'logPhotos'}[step] || 'logDocs';
   log(logId, '⏳ Выполняю…');
   const body = {};
+  if(step==='photos'){ body.folder = $('photoFolder').value.trim(); body.start = $('pStart').value; }
   if(step==='program'){
     if($('fProgram').files[0]) body.filename = $('fProgram').files[0].name;
     else if($('taProgram').value.trim()){
@@ -247,6 +258,9 @@ async function runStep(step){
       t = `Текст: ${j.chars} симв. Точек в черновике: ${j.points_draft.length}. Дней: ${j.days_mentioned.length}. ` +
           (j.warnings.length ? '⚠️ ' + j.warnings.join('; ') : 'Проверьте черновик и нажмите «Сохранить points.json».');
     }catch(e){} }
+    if(step==='photos' && r.ok){ try{ const j=JSON.parse(r.stdout);
+      t = `Фото: ${j.total} · с GPS: ${j.with_gps} · по времени: ${j.by_time} · неразобранных: ${j.unsorted}\n` +
+          j.groups.map(g=>`  ${g.title}: ${g.count}`).join('\n') + '\n' + t; }catch(e){} }
     if(step==='analyze' && r.ok){ try{ const j=JSON.parse(r.stdout);
       t = `Итого: ${j.total_km} км, высоты ${j.ele_min_m}–${j.ele_max_m} м, уклоны +${j.gradients.max_up_deg}°/${j.gradients.max_down_deg}° (окно ${j.gradients.window_m} м)\n` + t; }catch(e){} }
     if(!r.status_ok) t += '\n⚠️ СТАТУС не обновился: ' + r.status_stderr;

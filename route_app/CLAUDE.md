@@ -42,6 +42,7 @@ route_app/
     weather.py         # погодный движок F3: прогноз/климат/факт (Open-Meteo)
     make_status.py     # снимок проекта СТАТУС_<Маршрут>.md (F9, после каждого изменения выдачи)
     make_checklist.py  # интерактивный чеклист HTML (F8: Web Speech API, localStorage, печать)
+    photo_sort.py      # фото по точкам/дням маршрута: EXIF GPS, интерполяция по времени трека
     tts_audioguide.py  # edge-tts: тексты с числами прописью → mp3 + ffprobe
   webapp.py + wizard.html  # веб-мастер генерации (FastAPI) + вкладка «Обучение»
   requirements-web.txt     # зависимости веб-интерфейса (fastapi, uvicorn)

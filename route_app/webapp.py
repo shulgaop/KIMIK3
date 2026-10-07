@@ -238,8 +238,26 @@ def step_status(d, params):
     return (*run_script([SCRIPTS / "make_status.py", d]),)
 
 
+def step_photos(d, params):
+    """Сортировка фото по точкам/дням маршрута (EXIF GPS или время на треке)."""
+    folder = (params.get("folder") or "").strip()
+    if not folder:
+        raise HTTPException(400, "Укажите путь к папке с фотографиями")
+    pts = d / IN_DIR / "points.json"
+    if not pts.is_file():
+        raise HTTPException(400, "Нужен входные/points.json (шаг «Программа»)")
+    args = [SCRIPTS / "photo_sort.py", folder, "--points", pts, "--out", d / OUT_DIR]
+    gpx = d / IN_DIR / "track.gpx"
+    if gpx.is_file():
+        args += ["--gpx", gpx]
+    if params.get("start"):
+        args += ["--start", params["start"]]
+    return (*run_script(args, timeout=1800),)
+
+
 STEPS = {"program": step_program, "analyze": step_analyze, "weather": step_weather,
-         "kml": step_kml, "ics": step_ics, "checklist": step_checklist, "status": step_status}
+         "kml": step_kml, "ics": step_ics, "checklist": step_checklist,
+         "photos": step_photos, "status": step_status}
 
 
 @app.post("/api/projects/{name}/run/{step}")
