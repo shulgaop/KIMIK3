@@ -14,8 +14,10 @@ route_app/    Генератор походных документов
               webapp.py + wizard.html  Локальный веб-интерфейс: мастер
                                        генерации маршрутов + обучение
               scripts/        Python-скрипты анализа GPX, KML, ICS, аудиогида
+              examples/       Эталон «Фанские горы» (трек, гид, KML, СТАТУС)
               ТЗ_*.md         Техническое задание (скоуп MVP)
               AGENTS.md       Инструкции для кодовых агентов (Kimi Code, Claude)
+Инструкция_генерация_горных_маршрутов.md   Методика генерации (для всех LLM)
 INSTALL.md    Установка: Windows 11, macOS, Ubuntu/Linux
 USER_GUIDE.md Как пользоваться мастером и обучением
 ```
@@ -45,6 +47,8 @@ python3 make_ics.py       # календарь похода (.ics)
 python3 weather.py        # погодный движок: прогноз/климат/факт (Open-Meteo)
 python3 make_status.py    # снимок проекта СТАТУС_<Маршрут>.md (F9)
 python3 photo_sort.py     # фото по точкам/дням маршрута (EXIF GPS/время)
+python3 hike_report.py    # гео-фото-отчёт с картой, видео, DJI (нужны зависимости)
+python3 color_route_by_days.py  # GPX → KML по дням из таймстемпов
 python3 make_checklist.py # интерактивный чеклист HTML (F8)
 python3 tts_audioguide.py # аудиогид (нужен piper и голос ru-RU-DmitryNeural)
 ```
