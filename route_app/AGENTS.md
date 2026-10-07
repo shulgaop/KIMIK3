@@ -66,6 +66,8 @@ python3 scripts/photo_sort.py фото/ --points points.json --out выходн�
 python3 scripts/photo_marks.py фото/ --gpx track.gpx --out выходные/      # фотометки к 🎧 аудиогида
 python3 scripts/llm.py models                                             # бесплатные модели OpenRouter
 python3 scripts/llm.py guide projects/<маршрут>                           # F4: гид через LLM
+python3 scripts/llm.py audio projects/<маршрут>                           # тексты аудиогида (прописью)
+python3 scripts/make_guide_html.py projects/<маршрут>                     # Гид.md → Гид.html (профиль SVG)
 python3 scripts/hike_report.py /папка/фото   # гео-фото-отчёт: видео, DJI, офлайн-карта
 python3 scripts/color_route_by_days.py track.gpx out.kml        # трек по дням (из таймстемпов)
 python3 scripts/tts_audioguide.py texts.json out/ --rate -5%    # аудиогид

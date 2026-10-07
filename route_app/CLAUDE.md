@@ -45,6 +45,7 @@ route_app/
     photo_sort.py      # фото по точкам/дням маршрута: EXIF GPS, интерполяция по времени трека
     photo_marks.py     # фотометки: привязка фото/видео к точкам 🎧 аудиогида → KML + JSON
     llm.py             # F4: генерация гида через OpenRouter (free по умолчанию, платные по ключу)
+    make_guide_html.py # Гид.md → офлайн Гид.html (оглавление, SVG-профиль высот, печать)
     hike_report.py     # гео-фото-отчёт: видео, DJI-телеметрия, офлайн-карта, xlsx (CLI)
     color_route_by_days.py  # GPX → KML с раскраской по дням (из таймстемпов трека)
     tts_audioguide.py  # edge-tts: тексты с числами прописью → mp3 + ffprobe

@@ -32,12 +32,16 @@ async def gen_one(text, voice, rate, path, retries=3):
 
 
 def probe_duration(path):
+    """Длительность mp3 через ffprobe; None, если ffprobe не установлен."""
+    import shutil
+    if not shutil.which("ffprobe"):
+        return None
     try:
         out = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration",
                               "-of", "csv=p=0", str(path)], capture_output=True, text=True)
         return float(out.stdout.strip())
     except Exception:
-        return 0.0
+        return None
 
 
 async def main():
@@ -60,8 +64,13 @@ async def main():
             failed.append(name)
             continue
         dur = probe_duration(path)
-        flag = "" if 35 <= dur <= 130 else "  ⚠️ длительность вне нормы!"
-        print(f"✓ {name}.mp3 — {dur:.0f} с{flag}", file=sys.stderr)
+        if dur is None:
+            flag = "  (ffprobe не найден — длительность не проверена)"
+            dur_s = "?"
+        else:
+            flag = "" if 35 <= dur <= 130 else "  ⚠️ длительность вне нормы!"
+            dur_s = f"{dur:.0f}"
+        print(f"✓ {name}.mp3 — {dur_s} с{flag}", file=sys.stderr)
 
     if failed:
         sys.exit(f"Не сгенерировались: {failed}")

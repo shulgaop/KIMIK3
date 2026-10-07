@@ -327,9 +327,47 @@ def step_guide(d, params):
         return False, "", str(e)
 
 
+def step_guide_html(d, params):
+    """HTML-версия Гид.md (офлайн, профиль высот, печать)."""
+    return (*run_script([SCRIPTS / "make_guide_html.py", d]),)
+
+
+def step_audio_texts(d, params):
+    """Тексты аудиогида через LLM (числа прописью) → аудиотексты.json."""
+    llm = _llm_mod()
+    model = (params.get("model") or "").strip() or None
+    key = (params.get("api_key") or "").strip() or None
+    try:
+        out = llm.generate_audio_texts(d, model=model, key=key)
+        return True, "", f"✓ Тексты аудиогида: {out.name}"
+    except SystemExit as e:
+        return False, "", str(e)
+
+
+def step_tts(d, params):
+    """Озвучка аудиотекстов (edge-tts) → выходные/Аудиогид/*.mp3 + zip."""
+    texts = d / OUT_DIR / "аудиотексты.json"
+    if not texts.is_file():
+        raise HTTPException(400, "Сначала сгенерируйте тексты аудиогида (кнопка выше)")
+    try:
+        import edge_tts  # noqa: F401
+    except ImportError:
+        raise HTTPException(400, "Нужен edge-tts: pip install edge-tts -i https://pypi.org/simple")
+    ok, out, err = run_script([SCRIPTS / "tts_audioguide.py", texts, d / OUT_DIR / "Аудиогид"],
+                              timeout=3600)
+    if ok:  # упаковать в zip (контракт выдачи аудиогида)
+        zpath = d / OUT_DIR / "Аудиогид.zip"
+        with zipfile.ZipFile(zpath, "w", zipfile.ZIP_DEFLATED) as z:
+            for f in sorted((d / OUT_DIR / "Аудиогид").glob("*.mp3")):
+                z.write(f, f"Аудиогид/{f.name}")
+        err += f"\n✓ {zpath.name}: {len(list((d / OUT_DIR / 'Аудиогид').glob('*.mp3')))} треков"
+    return ok, out, err
+
+
 STEPS = {"program": step_program, "analyze": step_analyze, "weather": step_weather,
-         "guide": step_guide, "kml": step_kml, "ics": step_ics,
-         "checklist": step_checklist,
+         "guide": step_guide, "guide_html": step_guide_html,
+         "audio_texts": step_audio_texts, "tts": step_tts,
+         "kml": step_kml, "ics": step_ics, "checklist": step_checklist,
          "photos": step_photos, "marks": step_marks,
          "photos_all": step_photos_all, "status": step_status}
 

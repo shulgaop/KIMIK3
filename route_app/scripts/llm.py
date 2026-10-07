@@ -17,7 +17,7 @@ OpenRouter — единая точка доступа к моделям (OpenAI-
 списка (крупный контекст, сильная модель); список всегда можно обновить
 командой `models`.
 """
-import argparse, json, os, sys, time, urllib.request
+import argparse, json, os, re, sys, time, urllib.request
 from pathlib import Path
 
 API = "https://openrouter.ai/api/v1"
@@ -85,6 +85,8 @@ def _post(path, payload, key, timeout=300):
         body = e.read().decode("utf-8", "replace")[:300]
         if e.code == 401:
             sys.exit("⚠️  Ключ OpenRouter отклонён (401) — проверьте ключ в шаге «Гид»")
+        if e.code >= 500:
+            raise RuntimeError(f"HTTP {e.code}: {body[:150]}")
         sys.exit(f"⚠️  OpenRouter HTTP {e.code}: {body}")
 
 
@@ -96,7 +98,7 @@ def chat(messages, model, key, max_tokens=16000, temperature=0.4):
     for attempt, pause in enumerate((5, 15), start=1):
         try:
             r = _post("/chat/completions", payload, key)
-        except urllib.error.URLError as e:
+        except (urllib.error.URLError, OSError) as e:  # URLError, обрывы TLS/соединения
             last = e
             print(f"⚠️  {e} — повтор через {pause} с", file=sys.stderr)
             time.sleep(pause)
@@ -165,9 +167,22 @@ def build_guide_context(project):
     return "\n\n".join(parts)
 
 
+def chat_with_fallback(messages, explicit_model, key, max_tokens=16000):
+    """Запрос с перебором бесплатных моделей (провайдеры бывают перегружены).
+    Возвращает (текст, использованная_модель)."""
+    last_err = None
+    for m in candidate_models(explicit_model, key):
+        try:
+            print(f"Модель: {m}", file=sys.stderr)
+            return chat(messages, m, key, max_tokens=max_tokens), m
+        except RuntimeError as e:
+            last_err = e
+            print(f"⚠️  {e} — пробую следующую бесплатную модель", file=sys.stderr)
+    sys.exit(f"⚠️  Доступные модели не ответили. Последняя ошибка: {last_err}")
+
+
 def generate_guide(project, model=None, key=None, out_name="Гид.md"):
-    """Генерация MD-гида проекта → выходные/Гид.md. Возвращает путь.
-    Без явной модели — перебор бесплатных по очереди (провайдеры бывают перегружены)."""
+    """Генерация MD-гида проекта → выходные/Гид.md. Возвращает путь."""
     project = Path(project)
     key = get_key(key)
     explicit = model or load_config().get("model")
@@ -176,19 +191,9 @@ def generate_guide(project, model=None, key=None, out_name="Гид.md"):
         sys.exit("⚠️  В проекте нет данных: пройдите шаги «Программа», «Анализ», «Погода»")
     user = (f"Проект: {project.name}\n\n{context}\n\n"
             "Напиши полный путеводитель по правилам из system-промпта.")
-    messages = [{"role": "system", "content": GUIDE_SYSTEM},
-                {"role": "user", "content": user}]
-    text = last_err = None
-    for m in candidate_models(explicit, key):
-        try:
-            print(f"Модель: {m}; контекст {len(context)} символов", file=sys.stderr)
-            text = chat(messages, m, key)
-            break
-        except RuntimeError as e:
-            last_err = e
-            print(f"⚠️  {e} — пробую следующую бесплатную модель", file=sys.stderr)
-    if text is None:
-        sys.exit(f"⚠️  Все доступные бесплатные модели не ответили. Последняя ошибка: {last_err}")
+    print(f"Контекст {len(context)} символов", file=sys.stderr)
+    text, _ = chat_with_fallback([{"role": "system", "content": GUIDE_SYSTEM},
+                                  {"role": "user", "content": user}], explicit, key)
     out = project / "выходные" / out_name
     out.parent.mkdir(exist_ok=True)
     out.write_text(text + "\n", encoding="utf-8")
@@ -196,9 +201,74 @@ def generate_guide(project, model=None, key=None, out_name="Гид.md"):
     return out
 
 
+AUDIO_SYSTEM = """Ты — автор аудиогидов для горных походов. Пишешь тексты для озвучки (TTS).
+
+Жёсткие правила (нарушать нельзя):
+- ВСЕ числа — прописью («четыре тысячи семьсот сорок метров», не «4740 м»);
+  аббревиатуры расписаны («джи-пи-эс»); знаки словами («плюс пять градусов»).
+- 110–190 слов на трек (это 40–80 секунд звучания).
+- Живой рассказ от второго лица («Ты выходишь к озеру…», «Справа — стена цирка…»),
+  тон — проводник рядом, не учебник.
+- На точку: 1 исторический факт + 1 географический + 1 природный/культурный +
+  1 практический совет. Числа и высоты — только из присланных данных.
+- Структура: трек «01 — Вводный» (обзор: даты, километраж, высоты, главные
+  правила безопасности), далее по одному треку на день/точку маршрута,
+  финальный трек — с поздравлением.
+- ОТВЕТ — СТРОГО валидный JSON без markdown-ограждений и пояснений:
+  {"01 — Вводный": "текст...", "02 — Название точки": "текст...", ...}
+"""
+
+
+def generate_audio_texts(project, model=None, key=None, out_name="аудиотексты.json"):
+    """Тексты аудиогида (формат tts_audioguide.py) → выходные/аудиотексты.json."""
+    project = Path(project)
+    key = get_key(key)
+    explicit = model or load_config().get("model")
+    context = build_guide_context(project)
+    guide = project / "выходные" / "Гид.md"
+    if guide.is_file():
+        context += "\n\n## Путеводитель (Гид.md)\n" + \
+                   guide.read_text(encoding="utf-8", errors="replace")[:20000]
+    if not context.strip():
+        sys.exit("⚠️  В проекте нет данных: пройдите шаги «Программа», «Анализ», «Погода»")
+    messages = [{"role": "system", "content": AUDIO_SYSTEM},
+                {"role": "user", "content":
+                 f"Проект: {project.name}\n\n{context}\n\n"
+                 "Составь тексты аудиогида (8–14 треков) и верни строго JSON."}]
+    text = None
+    for attempt in (1, 2):  # вторая попытка — просим починить JSON
+        raw, _ = chat_with_fallback(messages, explicit, key, max_tokens=12000)
+        raw = raw.strip()
+        if raw.startswith("```"):
+            raw = raw.split("\n", 1)[1].rsplit("```", 1)[0]
+        try:
+            texts = json.loads(raw)
+            break
+        except json.JSONDecodeError as e:
+            print(f"⚠️  Модель вернула невалидный JSON ({e}) — повтор", file=sys.stderr)
+            messages.append({"role": "assistant", "content": raw})
+            messages.append({"role": "user", "content": "Верни только валидный JSON, без пояснений."})
+    else:
+        sys.exit("⚠️  Модель дважды вернула невалидный JSON — попробуйте другую модель")
+
+    bad_keys = [k for k in texts if not re.match(r"^\d{2}\s+—\s+", k)]
+    if bad_keys:
+        print(f"⚠️  Ключи без нумерации «NN — »: {bad_keys}", file=sys.stderr)
+    for k, v in texts.items():
+        words = len(str(v).split())
+        if not 80 <= words <= 220:
+            print(f"⚠️  «{k}»: {words} слов (норма 110–190)", file=sys.stderr)
+
+    out = project / "выходные" / out_name
+    out.parent.mkdir(exist_ok=True)
+    out.write_text(json.dumps(texts, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    print(f"✓ {out}: {len(texts)} треков", file=sys.stderr)
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["models", "guide"])
+    ap.add_argument("cmd", choices=["models", "guide", "audio"])
     ap.add_argument("project", nargs="?")
     ap.add_argument("--model", help="id модели OpenRouter (платные — тоже, по вашему ключу)")
     ap.add_argument("--key", help="ключ OpenRouter (или OPENROUTER_API_KEY / мастер)")
@@ -211,8 +281,11 @@ def main():
             print(f"  {m['id']}  (контекст {m['context'] // 1024}K)")
     else:
         if not args.project:
-            sys.exit("Укажите папку проекта: llm.py guide projects/<маршрут>")
-        generate_guide(args.project, model=args.model, key=args.key)
+            sys.exit(f"Укажите папку проекта: llm.py {args.cmd} projects/<маршрут>")
+        if args.cmd == "guide":
+            generate_guide(args.project, model=args.model, key=args.key)
+        else:
+            generate_audio_texts(args.project, model=args.model, key=args.key)
 
 
 if __name__ == "__main__":

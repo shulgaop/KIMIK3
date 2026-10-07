@@ -129,6 +129,11 @@
       <input id="llmModelCustom" placeholder="например openai/gpt-5, anthropic/claude-sonnet-4" onchange="saveLlmModel()"></div>
   </div>
   <button class="big primary" onclick="runStep('guide')">Сгенерировать путеводитель</button>
+  <div class="row">
+    <button onclick="runStep('guide_html')">HTML-версия гида</button>
+    <button onclick="runStep('audio_texts')">Тексты аудиогида (ИИ)</button>
+    <button onclick="runStep('tts')">Озвучить mp3</button>
+  </div>
   <pre id="logGuide" style="display:none"></pre>
 </div>
 
@@ -223,7 +228,7 @@ let doneSteps = new Set();
 const STEP_NAMES = ['Проект','Программа','Анализ','Погода','Гид (ИИ)','Документы','Фото','Результат'];
 // какие файлы выдачи отмечают шаг выполненным
 const STEP_MARKS = {1:['программа.txt'], 2:['анализ.json'], 3:['погода.json','Погода.md'],
-  4:['Гид.md'],
+  4:['Гид.md','Гид.html','аудиотексты.json','Аудиогид.zip'],
   5:['маршрут.kml','календарь.ics','Чеклист.html'],
   6:['фотоотчёт.html','фотометки.kml'], 7:[]};
 
@@ -311,11 +316,11 @@ async function saveJsonTo(fname, text, logId){
 async function runStep(step){
   if(!cur) return alert('Сначала создайте проект (шаг 1)');
   const logId = {program:'logProgram', analyze:'logAnalyze', weather:'logWeather',
-                 guide:'logGuide',
+                 guide:'logGuide', guide_html:'logGuide', audio_texts:'logGuide', tts:'logGuide',
                  photos:'logPhotos', marks:'logPhotos', photos_all:'logPhotos'}[step] || 'logDocs';
   log(logId, '⏳ Выполняю… это может занять до пары минут.');
   const body = {};
-  if(step==='guide'){ body.model = $('llmModelCustom').value.trim() || $('llmModel').value;
+  if(step==='guide' || step==='audio_texts'){ body.model = $('llmModelCustom').value.trim() || $('llmModel').value;
                       body.api_key = $('llmKey').value.trim(); }
   if(step==='program'){
     if($('fProgram').files[0]) body.filename = $('fProgram').files[0].name;
