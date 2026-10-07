@@ -115,7 +115,25 @@
 </div>
 
 <div class="card" data-step="4">
-  <h2><span class="tick">✓</span>5 · Документы</h2>
+  <h2><span class="tick">✓</span>5 · Гид (ИИ, OpenRouter)</h2>
+  <p class="hint">Генерация MD-путеводителя из данных проекта. Работают <b>бесплатные модели</b>
+  (нужен бесплатный ключ с <a href="https://openrouter.ai/keys" target="_blank">openrouter.ai/keys</a>);
+  при платной подписке можно вписать id любой платной модели.</p>
+  <div class="row">
+    <div><label>Ключ OpenRouter</label>
+      <input id="llmKey" type="password" placeholder="sk-or-..." onchange="saveLlmKey()">
+      <p class="hint" id="llmKeyState"></p></div>
+    <div><label>Модель (бесплатные)</label>
+      <select id="llmModel" onchange="saveLlmModel()"><option value="">загружаю список…</option></select></div>
+    <div><label>или id платной модели</label>
+      <input id="llmModelCustom" placeholder="например openai/gpt-5, anthropic/claude-sonnet-4" onchange="saveLlmModel()"></div>
+  </div>
+  <button class="big primary" onclick="runStep('guide')">Сгенерировать путеводитель</button>
+  <pre id="logGuide" style="display:none"></pre>
+</div>
+
+<div class="card" data-step="5">
+  <h2><span class="tick">✓</span>6 · Документы</h2>
   <div class="row">
     <div><label>Границы дней по км (необязательно)</label><input id="splitKm" placeholder="8 16 24"></div>
     <div style="align-self:end"><button class="primary" onclick="runStep('kml')">Карта KML для Google Earth</button></div>
@@ -135,8 +153,8 @@
   <pre id="logDocs" style="display:none"></pre>
 </div>
 
-<div class="card" data-step="5">
-  <h2><span class="tick">✓</span>6 · Фотографии и видео</h2>
+<div class="card" data-step="6">
+  <h2><span class="tick">✓</span>7 · Фотографии и видео</h2>
   <p class="hint">Выберите папку с фото — приложение рассортирует их по точкам и дням маршрута,
   привяжет к аудиогиду (фотометки KML) и соберёт отчёт с картой.</p>
   <button onclick="openPicker()">📁 Выбрать папку с фото…</button>
@@ -152,8 +170,8 @@
   </details>
 </div>
 
-<div class="card" data-step="6">
-  <h2><span class="tick">✓</span>7 · Готово — забрать результат</h2>
+<div class="card" data-step="7">
+  <h2><span class="tick">✓</span>8 · Готово — забрать результат</h2>
   <div class="row">
     <button onclick="refreshFiles()">Обновить список</button>
     <button class="primary" id="btnZip" onclick="downloadZip()" disabled>Скачать всё одним zip</button>
@@ -202,11 +220,12 @@ const $ = id => document.getElementById(id);
 let cur = localStorage.getItem('routeWizardProject') || '';
 let photoFolder = '';
 let doneSteps = new Set();
-const STEP_NAMES = ['Проект','Программа','Анализ','Погода','Документы','Фото','Результат'];
+const STEP_NAMES = ['Проект','Программа','Анализ','Погода','Гид (ИИ)','Документы','Фото','Результат'];
 // какие файлы выдачи отмечают шаг выполненным
 const STEP_MARKS = {1:['программа.txt'], 2:['анализ.json'], 3:['погода.json','Погода.md'],
-  4:['маршрут.kml','календарь.ics','Чеклист.html'],
-  5:['фотоотчёт.html','фотометки.kml'], 6:[]};
+  4:['Гид.md'],
+  5:['маршрут.kml','календарь.ics','Чеклист.html'],
+  6:['фотоотчёт.html','фотометки.kml'], 7:[]};
 
 function drawSteps(active){
   $('stepsBar').innerHTML = STEP_NAMES.map((n,i)=>{
@@ -292,9 +311,12 @@ async function saveJsonTo(fname, text, logId){
 async function runStep(step){
   if(!cur) return alert('Сначала создайте проект (шаг 1)');
   const logId = {program:'logProgram', analyze:'logAnalyze', weather:'logWeather',
+                 guide:'logGuide',
                  photos:'logPhotos', marks:'logPhotos', photos_all:'logPhotos'}[step] || 'logDocs';
   log(logId, '⏳ Выполняю… это может занять до пары минут.');
   const body = {};
+  if(step==='guide'){ body.model = $('llmModelCustom').value.trim() || $('llmModel').value;
+                      body.api_key = $('llmKey').value.trim(); }
   if(step==='program'){
     if($('fProgram').files[0]) body.filename = $('fProgram').files[0].name;
     else if($('taProgram').value.trim()){
@@ -323,7 +345,7 @@ async function runStep(step){
     if(!r.status_ok) t += '\n⚠️ СТАТУС не обновился: ' + r.status_stderr;
     log(logId, t || (r.ok?'✓ Готово':'Ошибка'), r.ok);
     refreshFiles(true);
-    if(r.ok && (step==='program' || step==='analyze' || step==='weather')) nextStep();
+    if(r.ok && (step==='program' || step==='analyze' || step==='weather' || step==='guide')) nextStep();
   }catch(e){ log(logId, '✗ ' + e.message, false); }
 }
 
@@ -384,6 +406,30 @@ function choosePicked(){
   closePicker();
 }
 
+// ---- LLM (OpenRouter) ----
+async function loadLlm(){
+  try{
+    const cfg = await api('/api/llm');
+    $('llmKeyState').textContent = cfg.has_key ? `✓ ключ сохранён (${cfg.key_masked})` : 'ключ не задан';
+    if(cfg.model) $('llmModelCustom').placeholder = cfg.model;
+    const m = await api('/api/llm/models');
+    $('llmModel').innerHTML = m.free.map(x=>
+      `<option value="${x.id}" ${x.id===m.default?'selected':''}>${x.id.replace(':free','')} (${Math.round(x.context/1024)}K)</option>`).join('');
+    if(cfg.model && [...$('llmModel').options].some(o=>o.value===cfg.model)) $('llmModel').value = cfg.model;
+  }catch(e){ $('llmModel').innerHTML = '<option value="">OpenRouter недоступен</option>'; }
+}
+async function saveLlmKey(){
+  const key = $('llmKey').value.trim();
+  if(!key) return;
+  await api('/api/llm', {method:'PUT', body:JSON.stringify({api_key:key})});
+  $('llmKey').value = '';
+  loadLlm();
+}
+async function saveLlmModel(){
+  const model = $('llmModelCustom').value.trim() || $('llmModel').value;
+  await api('/api/llm', {method:'PUT', body:JSON.stringify({model})});
+}
+
 // ---- обучение ----
 async function loadLearn(){
   const r = await api('/api/learn');
@@ -421,7 +467,7 @@ $('tabLearn').onclick = ()=>{ $('pageWizard').style.display='none'; $('pageLearn
 
 $('taEvents').value = eventsTemplate();
 $('taChecklist').value = CHECKLIST_TEMPLATE;
-setCur(cur); loadProjects(); drawSteps(0);
+setCur(cur); loadProjects(); drawSteps(0); loadLlm();
 </script>
 </body>
 </html>

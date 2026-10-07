@@ -44,6 +44,7 @@ route_app/
     make_checklist.py  # интерактивный чеклист HTML (F8: Web Speech API, localStorage, печать)
     photo_sort.py      # фото по точкам/дням маршрута: EXIF GPS, интерполяция по времени трека
     photo_marks.py     # фотометки: привязка фото/видео к точкам 🎧 аудиогида → KML + JSON
+    llm.py             # F4: генерация гида через OpenRouter (free по умолчанию, платные по ключу)
     hike_report.py     # гео-фото-отчёт: видео, DJI-телеметрия, офлайн-карта, xlsx (CLI)
     color_route_by_days.py  # GPX → KML с раскраской по дням (из таймстемпов трека)
     tts_audioguide.py  # edge-tts: тексты с числами прописью → mp3 + ffprobe
@@ -62,6 +63,7 @@ route_app/
 - Погода (F3):         `python3 scripts/weather.py points.json --start 2026-09-06 --end 2026-09-16`
 - Снимок проекта (F9): `python3 scripts/make_status.py projects/Фанские_горы`
 - Чеклист (F8):        `python3 scripts/make_checklist.py checklist.json Чеклист.html`
+- Гид (F4, LLM):       `python3 scripts/llm.py guide projects/Фанские_горы` (ключ OpenRouter)
 - Веб-мастер:          `python3 webapp.py` → http://127.0.0.1:8077 (проекты в projects/, обучение в learn/)
 - Аудиогид:            `python3 scripts/tts_audioguide.py texts.json out_dir/ --voice ru-RU-DmitryNeural`
 - Тесты (когда будут): `python3 -m pytest routegen/tests -q`

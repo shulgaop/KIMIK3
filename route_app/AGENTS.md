@@ -64,6 +64,8 @@ python3 scripts/weather.py points.json --start ГГГГ-ММ-ДД --end ГГГГ
 python3 scripts/make_status.py projects/<маршрут>               # снимок СТАТУС (F9)
 python3 scripts/photo_sort.py фото/ --points points.json --out выходные/  # фото по точкам
 python3 scripts/photo_marks.py фото/ --gpx track.gpx --out выходные/      # фотометки к 🎧 аудиогида
+python3 scripts/llm.py models                                             # бесплатные модели OpenRouter
+python3 scripts/llm.py guide projects/<маршрут>                           # F4: гид через LLM
 python3 scripts/hike_report.py /папка/фото   # гео-фото-отчёт: видео, DJI, офлайн-карта
 python3 scripts/color_route_by_days.py track.gpx out.kml        # трек по дням (из таймстемпов)
 python3 scripts/tts_audioguide.py texts.json out/ --rate -5%    # аудиогид
@@ -76,6 +78,9 @@ python3 webapp.py                                               # веб-мас�
 - Погода — Open-Meteo (без ключа): forecast API и архив ERA5; `weather.py` сам
   выбирает режим по датам (fact/forecast/climate) и пересчитывает температуры
   на высоту точек градиентом −0,6 °C/100 м от высоты сетки модели.
+- LLM — OpenRouter (`scripts/llm.py`): ключ из OPENROUTER_API_KEY или
+  `learn/llm_config.json` (gitignored); по умолчанию сильнейшая бесплатная
+  модель из живого списка `/models`, платные — тем же ключом по id.
 - `hike_report.py` (гео-фото-отчёт с картой, видео, DJI) — отдельные зависимости:
   `pip install pillow folium openpyxl reverse-geocoder pyosmogps` (+pillow-heif
   для iPhone); инструкция для пользователя — `ИНСТРУКЦИЯ_фотоотчёт.md`.

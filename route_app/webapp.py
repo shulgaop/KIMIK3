@@ -312,8 +312,24 @@ def step_photos_all(d, params):
     return any_ok, "", "\n".join(logs)
 
 
+def step_guide(d, params):
+    """F4: генерация MD-гида через OpenRouter (модель из настроек шага)."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("llm", SCRIPTS / "llm.py")
+    llm = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(llm)
+    model = (params.get("model") or "").strip() or None
+    key = (params.get("api_key") or "").strip() or None
+    try:
+        out = llm.generate_guide(d, model=model, key=key)
+        return True, "", f"✓ Гид записан: {out.name} (модель: {model or llm.load_config().get('model') or 'по умолчанию'})"
+    except SystemExit as e:
+        return False, "", str(e)
+
+
 STEPS = {"program": step_program, "analyze": step_analyze, "weather": step_weather,
-         "kml": step_kml, "ics": step_ics, "checklist": step_checklist,
+         "guide": step_guide, "kml": step_kml, "ics": step_ics,
+         "checklist": step_checklist,
          "photos": step_photos, "marks": step_marks,
          "photos_all": step_photos_all, "status": step_status}
 
@@ -409,6 +425,50 @@ def zip_project(name):
     return Response(buf.getvalue(), media_type="application/zip",
                     headers={"Content-Disposition":
                              f"attachment; filename*=UTF-8''{quote(d.name)}.zip"})
+
+
+# ---------- LLM (OpenRouter) ----------
+
+def _llm_mod():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("llm", SCRIPTS / "llm.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+@app.get("/api/llm")
+def llm_get():
+    llm = _llm_mod()
+    cfg = llm.load_config()
+    key = cfg.get("api_key") or os.environ.get("OPENROUTER_API_KEY", "")
+    return {"model": cfg.get("model") or "",
+            "has_key": bool(key),
+            "key_masked": (key[:7] + "…" + key[-4:]) if key else "",
+            "default_free": None}
+
+
+@app.put("/api/llm")
+def llm_put(payload: dict = Body(...)):
+    llm = _llm_mod()
+    cfg = llm.load_config()
+    if "api_key" in payload:
+        cfg["api_key"] = payload["api_key"].strip()
+    if "model" in payload:
+        cfg["model"] = payload["model"].strip()
+    llm.save_config(cfg)
+    return {"ok": True, "model": cfg.get("model") or "", "has_key": bool(cfg.get("api_key"))}
+
+
+@app.get("/api/llm/models")
+def llm_models():
+    """Живой список бесплатных моделей + рекомендуемая по умолчанию."""
+    llm = _llm_mod()
+    try:
+        free = llm.list_free_models()
+    except Exception as e:
+        raise HTTPException(502, f"OpenRouter недоступен: {e}")
+    return {"free": free, "default": llm.default_model()}
 
 
 # ---------- обучение ----------
