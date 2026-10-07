@@ -130,10 +130,15 @@
   </div>
   <button class="big primary" onclick="runStep('guide')">Сгенерировать путеводитель</button>
   <div class="row">
+    <button onclick="runStep('research')" title="Википедия + OpenStreetMap: история, география, флора, фауна, инфраструктура">🔎 Найти факты по маршруту</button>
     <button onclick="runStep('guide_html')">HTML-версия гида</button>
+  </div>
+  <div class="row">
     <button onclick="runStep('audio_texts')">Тексты аудиогида (ИИ)</button>
     <button onclick="runStep('tts')">Озвучить mp3</button>
   </div>
+  <p class="hint">Совет: сначала «Найти факты», потом «Сгенерировать путеводитель» —
+  гид получит факт-блоки (история, география, флора, фауна) с источниками.</p>
   <pre id="logGuide" style="display:none"></pre>
 </div>
 
@@ -228,7 +233,7 @@ let doneSteps = new Set();
 const STEP_NAMES = ['Проект','Программа','Анализ','Погода','Гид (ИИ)','Документы','Фото','Результат'];
 // какие файлы выдачи отмечают шаг выполненным
 const STEP_MARKS = {1:['программа.txt'], 2:['анализ.json'], 3:['погода.json','Погода.md'],
-  4:['Гид.md','Гид.html','аудиотексты.json','Аудиогид.zip'],
+  4:['Гид.md','Гид.html','аудиотексты.json','Аудиогид.zip','Факты.md'],
   5:['маршрут.kml','календарь.ics','Чеклист.html'],
   6:['фотоотчёт.html','фотометки.kml'], 7:[]};
 
@@ -317,6 +322,7 @@ async function runStep(step){
   if(!cur) return alert('Сначала создайте проект (шаг 1)');
   const logId = {program:'logProgram', analyze:'logAnalyze', weather:'logWeather',
                  guide:'logGuide', guide_html:'logGuide', audio_texts:'logGuide', tts:'logGuide',
+                 research:'logGuide',
                  photos:'logPhotos', marks:'logPhotos', photos_all:'logPhotos'}[step] || 'logDocs';
   log(logId, '⏳ Выполняю… это может занять до пары минут.');
   const body = {};

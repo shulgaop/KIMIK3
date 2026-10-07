@@ -327,6 +327,17 @@ def step_guide(d, params):
         return False, "", str(e)
 
 
+def step_research(d, params):
+    """Сбор фактов по маршруту (Википедия + OSM) → Факты.md для LLM-гида."""
+    pts = d / IN_DIR / "points.json"
+    if not pts.is_file():
+        raise HTTPException(400, "Нужен входные/points.json (шаг «Программа»)")
+    args = [SCRIPTS / "research.py", pts, "--out", d / OUT_DIR, "--region", d.name]
+    if (d / IN_DIR / "track.gpx").is_file():
+        args += ["--gpx", d / IN_DIR / "track.gpx"]
+    return (*run_script(args, timeout=600),)
+
+
 def step_guide_html(d, params):
     """HTML-версия Гид.md (офлайн, профиль высот, печать)."""
     return (*run_script([SCRIPTS / "make_guide_html.py", d]),)
@@ -365,7 +376,7 @@ def step_tts(d, params):
 
 
 STEPS = {"program": step_program, "analyze": step_analyze, "weather": step_weather,
-         "guide": step_guide, "guide_html": step_guide_html,
+         "guide": step_guide, "guide_html": step_guide_html, "research": step_research,
          "audio_texts": step_audio_texts, "tts": step_tts,
          "kml": step_kml, "ics": step_ics, "checklist": step_checklist,
          "photos": step_photos, "marks": step_marks,

@@ -154,6 +154,9 @@ def build_guide_context(project):
     add("Точки маршрута (points.json)", in_d / "points.json")
     add("Анализ трека (анализ.json — ВСЕ числа брать отсюда)", out_d / "анализ.json")
     add("Погода (Погода.md)", out_d / "Погода.md")
+    add("Факты из открытых источников (Факты.md — Википедия/OSM, использовать "
+        "для факт-блоков: история, география, флора, фауна, культура)",
+        out_d / "Факты.md", limit=25000)
     add("Фотометки (фотометки.json)", out_d / "фотометки.json", limit=5000)
 
     learn = Path(__file__).parent.parent / "learn"
