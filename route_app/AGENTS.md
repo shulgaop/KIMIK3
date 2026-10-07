@@ -53,6 +53,7 @@ MD-гид, офлайн HTML-гид, аудиогид mp3, GPX/KML с точка
 ## Команды
 ```
 python3 scripts/gpx_analyze.py track.gpx --points points.json   # анализ трека
+python3 scripts/read_program.py программа.docx                  # F1: текст + черновик точек
 python3 scripts/make_kml.py track.gpx out.kml --bbox S N W E    # KML + валидация
 python3 scripts/make_ics.py events.json out.ics                 # календарь
 python3 scripts/weather.py points.json --start ГГГГ-ММ-ДД --end ГГГГ-ММ-ДД  # погода

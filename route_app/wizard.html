@@ -63,13 +63,22 @@
 </div>
 
 <div class="card" data-step="1">
-  <h2>2 · Входные данные</h2>
-  <label>GPX-трек (сохранится как track.gpx)</label>
-  <input type="file" id="fGpx" accept=".gpx" onchange="uploadFile(this,'track.gpx')">
-  <label>Точки программы points.json (ночёвки, перевалы; name/lat/lon/ele)</label>
-  <input type="file" accept=".json" onchange="uploadFile(this,'points.json')">
+  <h2>2 · Программа и точки</h2>
+  <label>Описание маршрута — PDF, DOCX или TXT (свободная форма)</label>
+  <input type="file" id="fProgram" accept=".pdf,.docx,.txt,.md" onchange="uploadBinary(this)">
+  <p class="hint">Старый бинарный .doc не читается — пересохраните как .docx.</p>
+  <label>…или вставьте текст программы сюда</label>
+  <textarea id="taProgram" placeholder="День 1. Артуч (2200 м) — Куликалонские озёра, 7 км&#10;День 2. Кемп Куликалон 2850 м (39.2551, 68.1723)&#10;..."></textarea>
+  <div class="row">
+    <button onclick="saveProgramText()">Сохранить текст программы</button>
+    <button class="primary" onclick="runStep('program')">Прочитать и извлечь точки</button>
+  </div>
+  <pre id="logProgram" style="display:none"></pre>
+  <label>Точки маршрута points.json — черновик из программы, проверьте и дополните (name/lat/lon/ele)</label>
   <textarea id="taPoints" placeholder='[{"name":"Кемп","lat":39.2551,"lon":68.1723,"ele":2850}]'></textarea>
   <button onclick="saveText('points.json', taPoints.value)">Сохранить points.json</button>
+  <label>GPX-трек (сохранится как track.gpx)</label>
+  <input type="file" id="fGpx" accept=".gpx" onchange="uploadFile(this,'track.gpx')">
   <pre id="logIn" style="display:none"></pre>
 </div>
 
@@ -137,7 +146,7 @@
 <script>
 const $ = id => document.getElementById(id);
 let cur = localStorage.getItem('routeWizardProject') || '';
-const STEP_NAMES = ['Проект','Входные','Анализ','Погода','Документы','Результат'];
+const STEP_NAMES = ['Проект','Программа','Анализ','Погода','Документы','Результат'];
 
 function drawSteps(active){
   $('stepsBar').innerHTML = STEP_NAMES.map((n,i)=>
@@ -186,6 +195,27 @@ function uploadFile(input, canon){
   rd.readAsText(f, 'utf-8');
 }
 const enc = () => encodeURIComponent(cur);
+
+function uploadBinary(input){
+  const f = input.files[0]; if(!f || !cur) return alert('Сначала создайте/выберите проект');
+  const rd = new FileReader();
+  rd.onload = async ()=>{
+    const b64 = String(rd.result).split(',')[1];
+    const r = await api(`/api/projects/${enc()}/upload`, {method:'POST',
+      body:JSON.stringify({filename:f.name, content_b64:b64})});
+    log('logProgram', `✓ ${r.filename}: ${r.size} байт. Теперь нажмите «Прочитать и извлечь точки».`, true);
+  };
+  rd.readAsDataURL(f);
+}
+async function saveProgramText(){
+  if(!cur) return alert('Сначала создайте/выберите проект');
+  const text = $('taProgram').value.trim();
+  if(!text) return alert('Вставьте текст программы');
+  await api(`/api/projects/${enc()}/upload`, {method:'POST',
+    body:JSON.stringify({filename:'программа.txt', text})});
+  log('logProgram', '✓ программа.txt сохранена. Теперь нажмите «Прочитать и извлечь точки».', true);
+}
+
 async function saveText(fname, text){
   if(!cur) return alert('Сначала создайте/выберите проект');
   try{ JSON.parse(text); }catch(e){ return alert('Не JSON: '+e.message); }
@@ -195,14 +225,28 @@ async function saveText(fname, text){
 
 async function runStep(step){
   if(!cur) return alert('Сначала создайте/выберите проект');
-  const logId = {analyze:'logAnalyze', weather:'logWeather'}[step] || 'logDocs';
+  const logId = {program:'logProgram', analyze:'logAnalyze', weather:'logWeather'}[step] || 'logDocs';
   log(logId, '⏳ Выполняю…');
   const body = {};
+  if(step==='program'){
+    if($('fProgram').files[0]) body.filename = $('fProgram').files[0].name;
+    else if($('taProgram').value.trim()){
+      await api(`/api/projects/${enc()}/upload`, {method:'POST',
+        body:JSON.stringify({filename:'программа.txt', text:$('taProgram').value.trim()})});
+      body.filename = 'программа.txt';
+    }
+  }
   if(step==='weather'){ body.start=$('pStart').value; body.end=$('pEnd').value; }
   if(step==='kml'){ body.split_km = $('splitKm').value.trim().split(/\s+/).filter(Boolean).map(Number); }
   try{
     const r = await api(`/api/projects/${enc()}/run/${step}`, {method:'POST', body:JSON.stringify(body)});
     let t = (r.stderr||'').trim();
+    if(step==='program' && r.ok){ try{ const j=JSON.parse(r.stdout);
+      $('taPoints').value = JSON.stringify(j.points_draft.map(({source_line, ...p})=>p), null, 1);
+      if(j.dates_iso.length){ $('pStart').value=j.dates_iso[0]; $('pEnd').value=j.dates_iso[j.dates_iso.length-1]; }
+      t = `Текст: ${j.chars} симв. Точек в черновике: ${j.points_draft.length}. Дней: ${j.days_mentioned.length}. ` +
+          (j.warnings.length ? '⚠️ ' + j.warnings.join('; ') : 'Проверьте черновик и нажмите «Сохранить points.json».');
+    }catch(e){} }
     if(step==='analyze' && r.ok){ try{ const j=JSON.parse(r.stdout);
       t = `Итого: ${j.total_km} км, высоты ${j.ele_min_m}–${j.ele_max_m} м, уклоны +${j.gradients.max_up_deg}°/${j.gradients.max_down_deg}° (окно ${j.gradients.window_m} м)\n` + t; }catch(e){} }
     if(!r.status_ok) t += '\n⚠️ СТАТУС не обновился: ' + r.status_stderr;

@@ -36,6 +36,7 @@ route_app/
   AGENTS.md            # зеркальные инструкции для Kimi Code
   scripts/
     gpx_analyze.py     # разбор GPX: км, высоты, проекции, азимуты, градиенты
+    read_program.py    # F1: PDF/DOCX/TXT → текст программы + черновик точек
     make_kml.py        # генерация KML по дням + жёсткая валидация
     make_ics.py        # календарь ICS (VTIMEZONE, VALARM)
     weather.py         # погодный движок F3: прогноз/климат/факт (Open-Meteo)
@@ -50,6 +51,7 @@ route_app/
 
 ## Команды
 - Разбор трека:        `python3 scripts/gpx_analyze.py track.gpx --points points.json`
+- Программа (F1):      `python3 scripts/read_program.py программа.docx --out-points points_draft.json`
 - Генерация KML:       `python3 scripts/make_kml.py track.gpx out.kml --bbox 38.9 39.6 67.9 68.5`
 - Календарь:           `python3 scripts/make_ics.py events.json out.ics`
 - Погода (F3):         `python3 scripts/weather.py points.json --start 2026-09-06 --end 2026-09-16`

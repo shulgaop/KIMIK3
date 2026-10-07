@@ -115,15 +115,21 @@ def create_project(payload: dict = Body(...)):
 
 @app.post("/api/projects/{name}/upload")
 def upload(name, payload: dict = Body(...)):
-    """Сохранить входной файл: {"filename": "track.gpx", "text": "<содержимое>"}."""
+    """Сохранить входной файл: {"filename", "text"} для текста или
+    {"filename", "content_b64"} для бинарных (PDF/DOCX)."""
     d = project_dir(name)
     fname = safe_name(payload.get("filename"))
-    text = payload.get("text")
-    if text is None:
-        raise HTTPException(400, "Нет поля text")
     (d / IN_DIR).mkdir(exist_ok=True)
-    (d / IN_DIR / fname).write_text(text, encoding="utf-8")
-    return {"ok": True, "filename": fname, "size": len(text)}
+    if payload.get("content_b64") is not None:
+        import base64
+        (d / IN_DIR / fname).write_bytes(base64.b64decode(payload["content_b64"]))
+        size = (d / IN_DIR / fname).stat().st_size
+    elif payload.get("text") is not None:
+        (d / IN_DIR / fname).write_text(payload["text"], encoding="utf-8")
+        size = len(payload["text"])
+    else:
+        raise HTTPException(400, "Нужно поле text или content_b64")
+    return {"ok": True, "filename": fname, "size": size}
 
 
 @app.get("/api/projects/{name}/files")
@@ -146,6 +152,26 @@ def read_file(name, path):
 
 
 # ---------- мастер: шаги генерации ----------
+
+def step_program(d, params):
+    """F1: прочитать программу (PDF/DOCX/TXT), извлечь текст и черновик точек."""
+    src = params.get("filename")
+    if src:
+        src = d / IN_DIR / safe_name(src)
+    else:  # по умолчанию — первый подходящий файл во входных
+        for ext in ("pdf", "docx", "txt", "md"):
+            found = sorted((d / IN_DIR).glob(f"*.{ext}"))
+            if found:
+                src = found[0]
+                break
+    if not src or not src.is_file():
+        raise HTTPException(400, "Загрузите программу (PDF/DOCX/TXT) или вставьте текст")
+    args = [SCRIPTS / "read_program.py", src,
+            "--out-points", d / IN_DIR / "points_draft.json"]
+    if src.name != "программа.txt":  # не затирать ручной текст производным файлом
+        args += ["--out-text", d / IN_DIR / "программа.txt"]
+    return (*run_script(args),)
+
 
 def step_analyze(d, params):
     gpx = d / IN_DIR / "track.gpx"
@@ -212,8 +238,8 @@ def step_status(d, params):
     return (*run_script([SCRIPTS / "make_status.py", d]),)
 
 
-STEPS = {"analyze": step_analyze, "weather": step_weather, "kml": step_kml,
-         "ics": step_ics, "checklist": step_checklist, "status": step_status}
+STEPS = {"program": step_program, "analyze": step_analyze, "weather": step_weather,
+         "kml": step_kml, "ics": step_ics, "checklist": step_checklist, "status": step_status}
 
 
 @app.post("/api/projects/{name}/run/{step}")
