@@ -255,9 +255,23 @@ def step_photos(d, params):
     return (*run_script(args, timeout=1800),)
 
 
+def step_marks(d, params):
+    """Фотометки: привязка фото/видео к точкам аудиогида 🎧 (GPX проекта)."""
+    folder = (params.get("folder") or "").strip()
+    if not folder:
+        raise HTTPException(400, "Укажите путь к папке с фотографиями")
+    gpx = d / IN_DIR / "track.gpx"
+    if not gpx.is_file():
+        raise HTTPException(400, "Нужен входные/track.gpx с точками 🎧 аудиогида")
+    args = [SCRIPTS / "photo_marks.py", folder, "--gpx", gpx, "--out", d / OUT_DIR]
+    if (d / IN_DIR / "points.json").is_file():
+        args += ["--points", d / IN_DIR / "points.json"]
+    return (*run_script(args, timeout=1800),)
+
+
 STEPS = {"program": step_program, "analyze": step_analyze, "weather": step_weather,
          "kml": step_kml, "ics": step_ics, "checklist": step_checklist,
-         "photos": step_photos, "status": step_status}
+         "photos": step_photos, "marks": step_marks, "status": step_status}
 
 
 @app.post("/api/projects/{name}/run/{step}")

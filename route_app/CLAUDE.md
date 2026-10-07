@@ -43,6 +43,7 @@ route_app/
     make_status.py     # снимок проекта СТАТУС_<Маршрут>.md (F9, после каждого изменения выдачи)
     make_checklist.py  # интерактивный чеклист HTML (F8: Web Speech API, localStorage, печать)
     photo_sort.py      # фото по точкам/дням маршрута: EXIF GPS, интерполяция по времени трека
+    photo_marks.py     # фотометки: привязка фото/видео к точкам 🎧 аудиогида → KML + JSON
     hike_report.py     # гео-фото-отчёт: видео, DJI-телеметрия, офлайн-карта, xlsx (CLI)
     color_route_by_days.py  # GPX → KML с раскраской по дням (из таймстемпов трека)
     tts_audioguide.py  # edge-tts: тексты с числами прописью → mp3 + ffprobe

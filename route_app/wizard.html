@@ -119,7 +119,12 @@
   на треке (если в GPX есть таймстемпы); без EXIF — в «Неразобранное».</p>
   <label>Путь к папке с фотографиями на этом компьютере (JPG)</label>
   <input id="photoFolder" placeholder="C:\Фото\Фаны или /Users/.../Фаны">
-  <button class="primary" onclick="runStep('photos')" style="margin-top:8px">Рассортировать фото</button>
+  <div class="row" style="margin-top:8px">
+    <button class="primary" onclick="runStep('photos')">Рассортировать фото</button>
+    <button onclick="runStep('marks')">Фотометки к аудиогиду (KML)</button>
+  </div>
+  <p class="hint">«Фотометки» — фото/видео привязываются к точкам 🎧 аудиогида в track.gpx
+  и собираются в фотометки.kml (превью в Google Earth) + фотометки.json.</p>
   <pre id="logPhotos" style="display:none"></pre>
 </div>
 
@@ -235,10 +240,10 @@ async function saveText(fname, text){
 
 async function runStep(step){
   if(!cur) return alert('Сначала создайте/выберите проект');
-  const logId = {program:'logProgram', analyze:'logAnalyze', weather:'logWeather', photos:'logPhotos'}[step] || 'logDocs';
+  const logId = {program:'logProgram', analyze:'logAnalyze', weather:'logWeather', photos:'logPhotos', marks:'logPhotos'}[step] || 'logDocs';
   log(logId, '⏳ Выполняю…');
   const body = {};
-  if(step==='photos'){ body.folder = $('photoFolder').value.trim(); body.start = $('pStart').value; }
+  if(step==='photos' || step==='marks'){ body.folder = $('photoFolder').value.trim(); body.start = $('pStart').value; }
   if(step==='program'){
     if($('fProgram').files[0]) body.filename = $('fProgram').files[0].name;
     else if($('taProgram').value.trim()){
