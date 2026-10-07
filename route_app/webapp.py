@@ -50,12 +50,12 @@ def project_dir(name):
     return d
 
 
-def run_script(args, cwd=BASE, timeout=600):
+def run_script(args, cwd=BASE, timeout=600, stdin_text=None, env_extra=None):
     """Запуск скрипта из scripts/ с UTF-8-окружением; возвращает (ok, stdout, stderr)."""
-    env = dict(os.environ, PYTHONIOENCODING="utf-8")
+    env = dict(os.environ, PYTHONIOENCODING="utf-8", **(env_extra or {}))
     r = subprocess.run([sys.executable, *map(str, args)], cwd=cwd, env=env,
-                       capture_output=True, text=True, encoding="utf-8",
-                       errors="replace", timeout=timeout)
+                       input=stdin_text, capture_output=True, text=True,
+                       encoding="utf-8", errors="replace", timeout=timeout)
     return r.returncode == 0, r.stdout, r.stderr
 
 
@@ -269,9 +269,53 @@ def step_marks(d, params):
     return (*run_script(args, timeout=1800),)
 
 
+def step_photos_all(d, params):
+    """Всё про фото одной кнопкой: сортировка → фотометки → гео-отчёт с картой.
+    Каждый подшаг терпим к отсутствию входных: пропуск с пояснением, не падение."""
+    folder = (params.get("folder") or "").strip()
+    if not folder:
+        raise HTTPException(400, "Сначала выберите папку с фотографиями")
+    logs, any_ok = [], False
+
+    sub = [("Сортировка по точкам и дням", step_photos),
+           ("Фотометки к аудиогиду", step_marks)]
+    for title, fn in sub:
+        try:
+            ok, out, err = fn(d, params)
+        except HTTPException as e:
+            ok, out, err = False, "", f"пропущено: {e.detail}"
+        any_ok |= ok
+        tail = (err or out).strip().splitlines()
+        logs.append(f"— {title}: {'готово' if ok else 'не выполнено'}\n  " +
+                    "\n  ".join(tail[-4:]))
+
+    # гео-фото-отчёт с картой (hike_report.py) — только если стоят зависимости
+    try:
+        import folium, openpyxl, reverse_geocoder  # noqa: F401
+        have_deps = True
+    except ImportError:
+        have_deps = False
+    if have_deps:
+        # без офлайн-тайлов: они качаются несколько минут — из мастера быстро,
+        # полный офлайн-вариант: python3 scripts/hike_report.py <папка> вручную
+        ok, out, err = run_script([SCRIPTS / "hike_report.py", folder],
+                                  timeout=1200, stdin_text="\n\n",
+                                  env_extra={"HIKE_OFFLINE_MAP": "0"})
+        any_ok |= ok
+        tail = (out or err).strip().splitlines()
+        logs.append("— Отчёт с картой (hike_report): " +
+                    ("готово — файлы в папке с фото" if ok else "ошибка") +
+                    "\n  " + "\n  ".join(tail[-8:]))
+    else:
+        logs.append("— Отчёт с картой (hike_report): пропущено — нет зависимостей "
+                    "(pip install folium openpyxl reverse-geocoder pyosmogps)")
+    return any_ok, "", "\n".join(logs)
+
+
 STEPS = {"program": step_program, "analyze": step_analyze, "weather": step_weather,
          "kml": step_kml, "ics": step_ics, "checklist": step_checklist,
-         "photos": step_photos, "marks": step_marks, "status": step_status}
+         "photos": step_photos, "marks": step_marks,
+         "photos_all": step_photos_all, "status": step_status}
 
 
 @app.post("/api/projects/{name}/run/{step}")
@@ -289,6 +333,61 @@ def run_step(name, step, payload: dict = Body(default={})):
 
 
 # ---------- мастер: результат ----------
+
+MEDIA_EXT = {".jpg", ".jpeg", ".mp4", ".mov", ".heic"}
+
+
+@app.get("/api/browse")
+def browse(path: str = ""):
+    """Проводник по папкам компьютера для выбора директории с фото."""
+    if not path:
+        roots, seen = [], set()
+
+        def add(name, p):
+            p = Path(p)
+            key = str(p).lower()
+            if p.is_dir() and key not in seen:
+                seen.add(key)
+                roots.append({"name": name, "path": str(p), "media": None})
+
+        if os.name == "nt":
+            for c in "CDEFGH":
+                add(f"Диск {c}:\\", f"{c}:/")
+        home = Path.home()
+        od = Path(os.environ.get("OneDrive", home))
+        add("Документы", home / "Documents")
+        add("Документы (OneDrive)", od / "Documents")
+        add("Документы (OneDrive, ru)", od / "Документы")
+        add("Рабочий стол", home / "Desktop")
+        add("Загрузки", home / "Downloads")
+        add("Изображения", home / "Pictures")
+        add("Изображения (OneDrive)", od / "Pictures")
+        add("Домашняя папка", home)
+        return {"path": "", "parent": None, "dirs": roots}
+
+    p = Path(path)
+    if not p.is_dir():
+        raise HTTPException(404, "Папка не найдена")
+    dirs = []
+    try:
+        subs = sorted(p.iterdir())
+    except PermissionError:
+        raise HTTPException(403, "Нет доступа к папке")
+    for sub in subs:
+        if not sub.is_dir() or sub.name.startswith((".", "$")):
+            continue
+        try:
+            media = sum(1 for f in sub.iterdir() if f.suffix.lower() in MEDIA_EXT)
+        except (PermissionError, OSError):
+            media = None
+        dirs.append({"name": sub.name, "path": str(sub), "media": media})
+    try:
+        media_here = sum(1 for f in p.iterdir()
+                         if f.is_file() and f.suffix.lower() in MEDIA_EXT)
+    except (PermissionError, OSError):
+        media_here = None
+    parent = "" if p.parent == p else str(p.parent)
+    return {"path": str(p), "parent": parent, "dirs": dirs, "media_here": media_here}
 
 @app.get("/api/projects/{name}/download")
 def download(name, path):

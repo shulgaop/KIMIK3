@@ -5,35 +5,54 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Мастер генерации маршрутов</title>
 <style>
-  :root{--paper:#b0c6b3;--ink:#111;--crim:#db3356;--card:#fdfdfb;--line:#7a947e}
+  :root{--paper:#b0c6b3;--ink:#111;--crim:#db3356;--card:#fdfdfb;--line:#7a947e;--ok:#1a7a34}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--paper);color:var(--ink);font:15px/1.55 -apple-system,"Segoe UI",Roboto,sans-serif;padding:18px}
-  .wrap{max-width:860px;margin:0 auto}
-  h1{font-family:Georgia,serif;font-size:1.6rem;margin:6px 0 12px}
-  h2{font-family:Georgia,serif;font-size:1.15rem;margin-bottom:8px}
-  .tabs{display:flex;gap:8px;margin-bottom:14px}
-  .tabs button{flex:0 0 auto}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin-bottom:12px}
-  button{font:600 .9rem/1 inherit;padding:8px 14px;border:2px solid var(--ink);background:var(--card);cursor:pointer;border-radius:6px}
+  body{background:var(--paper);color:var(--ink);font:16px/1.55 -apple-system,"Segoe UI",Roboto,sans-serif;padding:18px}
+  .wrap{max-width:820px;margin:0 auto}
+  h1{font-family:Georgia,serif;font-size:1.5rem;margin:4px 0 12px}
+  h2{font-family:Georgia,serif;font-size:1.15rem;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+  h2 .tick{color:var(--ok);font-size:1.2rem;display:none}
+  .card.done h2 .tick{display:inline}
+  .tabs{display:flex;gap:8px;margin-bottom:12px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:12px}
+  .card.done{border-color:var(--ok);border-width:2px}
+  button{font:600 .92rem/1 inherit;padding:9px 14px;border:2px solid var(--ink);background:var(--card);cursor:pointer;border-radius:8px}
   button:hover{background:var(--ink);color:var(--paper)}
   button:disabled{opacity:.4;cursor:default}
-  button.primary{background:var(--ink);color:var(--paper)}
-  input,textarea,select{font:inherit;padding:7px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;width:100%}
-  textarea{font-family:Consolas,monospace;font-size:.85rem;min-height:130px}
+  button.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  button.primary:hover{background:var(--crim);border-color:var(--crim)}
+  button.big{font-size:1.05rem;padding:14px 20px;width:100%;margin-top:10px}
+  button.small{font-size:.8rem;padding:5px 10px;border-width:1px;opacity:.85}
+  input,textarea,select{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:#fff;width:100%}
+  textarea{font-family:Consolas,monospace;font-size:.85rem;min-height:120px}
   label{display:block;font-size:.85rem;font-weight:600;margin:10px 0 4px}
-  .row{display:flex;gap:10px;flex-wrap:wrap}
+  .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
   .row>*{flex:1;min-width:140px}
   .steps{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
-  .steps span{padding:4px 10px;border:1px solid var(--line);border-radius:12px;font-size:.8rem;cursor:pointer}
+  .steps span{padding:5px 11px;border:1px solid var(--line);border-radius:14px;font-size:.82rem;cursor:pointer;background:var(--card)}
   .steps span.cur{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-  pre{background:#f2f2ee;border:1px dashed var(--line);border-radius:6px;padding:10px;font-size:.8rem;max-height:260px;overflow:auto;white-space:pre-wrap;margin-top:8px}
-  .ok{color:#1a7a34;font-weight:600}
+  .steps span.done{border-color:var(--ok);color:var(--ok)}
+  pre{background:#f2f2ee;border:1px dashed var(--line);border-radius:8px;padding:10px;font-size:.8rem;max-height:280px;overflow:auto;white-space:pre-wrap;margin-top:10px}
+  .ok{color:var(--ok);font-weight:600}
   .bad{color:var(--crim);font-weight:600}
-  ul.files{list-style:none;margin-top:6px}
-  ul.files li{padding:3px 0;border-bottom:1px dashed var(--line)}
+  ul.files{list-style:none;margin-top:8px}
+  ul.files li{padding:4px 0;border-bottom:1px dashed var(--line)}
   ul.files a{color:var(--ink)}
-  .ex{border:1px dashed var(--line);border-radius:6px;padding:8px;margin-top:8px}
-  .hint{font-size:.82rem;opacity:.75;margin-top:4px}
+  .ex{border:1px dashed var(--line);border-radius:8px;padding:8px;margin-top:8px}
+  .hint{font-size:.85rem;opacity:.75;margin-top:4px}
+  .chip{display:inline-block;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:5px 12px;font-size:.85rem;margin-top:6px;word-break:break-all}
+  details{margin-top:10px}
+  summary{cursor:pointer;font-size:.85rem;font-weight:600;opacity:.8}
+  /* модальный выбор папки */
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:20}
+  .modal.open{display:flex}
+  .modal .box{background:var(--card);border-radius:10px;padding:16px;width:min(560px,92vw);max-height:80vh;display:flex;flex-direction:column}
+  .modal .crumbs{font-size:.85rem;font-weight:600;margin-bottom:8px;word-break:break-all}
+  .modal .list{overflow:auto;flex:1;border:1px solid var(--line);border-radius:8px}
+  .modal .item{padding:8px 12px;cursor:pointer;border-bottom:1px dashed var(--line);display:flex;justify-content:space-between;gap:8px}
+  .modal .item:hover{background:var(--paper)}
+  .modal .cnt{font-size:.78rem;opacity:.7}
+  .modal .foot{display:flex;gap:8px;margin-top:10px}
 </style>
 </head>
 <body>
@@ -49,89 +68,96 @@
 <div class="steps" id="stepsBar"></div>
 
 <div class="card" data-step="0">
-  <h2>1 · Проект</h2>
+  <h2><span class="tick">✓</span>1 · Проект и даты</h2>
   <div class="row">
-    <div><label>Название маршрута</label><input id="pName" placeholder="Фанские горы"></div>
-    <div><label>Начало похода</label><input id="pStart" type="date"></div>
-    <div><label>Конец похода</label><input id="pEnd" type="date"></div>
+    <div><label>Название похода</label><input id="pName" placeholder="Например: Фанские горы"></div>
+    <div><label>Первый день</label><input id="pStart" type="date"></div>
+    <div><label>Последний день</label><input id="pEnd" type="date"></div>
   </div>
-  <div class="row" style="margin-top:10px">
+  <div class="row">
     <button class="primary" onclick="createProject()">Создать проект</button>
     <select id="pList" onchange="pickProject(this.value)"><option value="">— открыть существующий —</option></select>
   </div>
-  <p class="hint" id="curProject">Проект не выбран.</p>
+  <p class="hint" id="curProject">Проект не выбран — начните с названия и дат.</p>
 </div>
 
 <div class="card" data-step="1">
-  <h2>2 · Программа и точки</h2>
-  <label>Описание маршрута — PDF, DOCX или TXT (свободная форма)</label>
+  <h2><span class="tick">✓</span>2 · Программа похода</h2>
+  <p class="hint">Загрузите файл с описанием маршрута (PDF, DOCX, TXT) или просто вставьте текст —
+  приложение само найдёт даты, дни, точки и высоты.</p>
   <input type="file" id="fProgram" accept=".pdf,.docx,.txt,.md" onchange="uploadBinary(this)">
-  <p class="hint">Старый бинарный .doc не читается — пересохраните как .docx.</p>
-  <label>…или вставьте текст программы сюда</label>
+  <label>…или текст программы</label>
   <textarea id="taProgram" placeholder="День 1. Артуч (2200 м) — Куликалонские озёра, 7 км&#10;День 2. Кемп Куликалон 2850 м (39.2551, 68.1723)&#10;..."></textarea>
-  <div class="row">
-    <button onclick="saveProgramText()">Сохранить текст программы</button>
-    <button class="primary" onclick="runStep('program')">Прочитать и извлечь точки</button>
-  </div>
+  <button class="big primary" onclick="runStep('program')">Прочитать программу</button>
   <pre id="logProgram" style="display:none"></pre>
-  <label>Точки маршрута points.json — черновик из программы, проверьте и дополните (name/lat/lon/ele)</label>
-  <textarea id="taPoints" placeholder='[{"name":"Кемп","lat":39.2551,"lon":68.1723,"ele":2850}]'></textarea>
-  <button onclick="saveText('points.json', taPoints.value)">Сохранить points.json</button>
-  <label>GPX-трек (сохранится как track.gpx)</label>
+  <details>
+    <summary>Точки маршрута (points.json) — что нашлось, можно поправить</summary>
+    <textarea id="taPoints" placeholder='[{"name":"Кемп","lat":39.2551,"lon":68.1723,"ele":2850}]'></textarea>
+    <button onclick="saveText('points.json', taPoints.value)">Сохранить точки</button>
+  </details>
+  <label>GPX-трек маршрута</label>
   <input type="file" id="fGpx" accept=".gpx" onchange="uploadFile(this,'track.gpx')">
   <pre id="logIn" style="display:none"></pre>
 </div>
 
 <div class="card" data-step="2">
-  <h2>3 · Анализ трека</h2>
-  <p class="hint">Километраж, высоты, проекция точек на трек, плечи, градиенты окном 400 м — считает скрипт, не «на глаз».</p>
-  <button class="primary" onclick="runStep('analyze')">Запустить анализ</button>
+  <h2><span class="tick">✓</span>3 · Анализ трека</h2>
+  <p class="hint">Километраж, высоты, уклоны по дням — считает скрипт по GPX, ничего «на глаз».</p>
+  <button class="big primary" onclick="runStep('analyze')">Посчитать километраж и высоты</button>
   <pre id="logAnalyze" style="display:none"></pre>
 </div>
 
 <div class="card" data-step="3">
-  <h2>4 · Погода</h2>
-  <p class="hint">Режим выбирается автоматически: прогноз / климат + дата перепроверки / факт (после похода).</p>
-  <button class="primary" onclick="runStep('weather')">Собрать погоду</button>
+  <h2><span class="tick">✓</span>4 · Погода на даты похода</h2>
+  <p class="hint">До похода — прогноз или климат с датой перепроверки; после — фактические наблюдения для отчёта.</p>
+  <button class="big primary" onclick="runStep('weather')">Собрать погоду</button>
   <pre id="logWeather" style="display:none"></pre>
 </div>
 
 <div class="card" data-step="4">
-  <h2>5 · Документы</h2>
+  <h2><span class="tick">✓</span>5 · Документы</h2>
   <div class="row">
-    <div><label>Границы дней по км (через пробел, необязательно)</label><input id="splitKm" placeholder="8 16 24"></div>
+    <div><label>Границы дней по км (необязательно)</label><input id="splitKm" placeholder="8 16 24"></div>
+    <div style="align-self:end"><button class="primary" onclick="runStep('kml')">Карта KML для Google Earth</button></div>
   </div>
-  <div class="row" style="margin-top:8px">
-    <button onclick="runStep('kml')">KML для Google Earth</button>
-  </div>
-  <label>События календаря события.json</label>
-  <textarea id="taEvents"></textarea>
-  <div class="row"><button onclick="saveEvents()">Сохранить события</button><button onclick="runStep('ics')">Сделать календарь .ics</button></div>
-  <label>Описание чеклиста чеклист.json</label>
-  <textarea id="taChecklist"></textarea>
-  <div class="row"><button onclick="saveChecklist()">Сохранить чеклист</button><button onclick="runStep('checklist')">Сделать Чеклист.html</button></div>
+  <details>
+    <summary>События календаря (события.json)</summary>
+    <textarea id="taEvents"></textarea>
+    <div class="row"><button onclick="saveJsonTo('события.json',$('taEvents').value,'logDocs')">Сохранить</button>
+    <button class="primary" onclick="runStep('ics')">Сделать календарь .ics</button></div>
+  </details>
+  <details>
+    <summary>Чеклист сборов (чеклист.json)</summary>
+    <textarea id="taChecklist"></textarea>
+    <div class="row"><button onclick="saveJsonTo('чеклист.json',$('taChecklist').value,'logDocs')">Сохранить</button>
+    <button class="primary" onclick="runStep('checklist')">Сделать Чеклист.html</button></div>
+  </details>
   <pre id="logDocs" style="display:none"></pre>
 </div>
 
 <div class="card" data-step="5">
-  <h2>6 · Фотографии</h2>
-  <p class="hint">Фото привязываются к точкам маршрута по EXIF-GPS; без GPS — по времени
-  на треке (если в GPX есть таймстемпы); без EXIF — в «Неразобранное».</p>
-  <label>Путь к папке с фотографиями на этом компьютере (JPG)</label>
-  <input id="photoFolder" placeholder="C:\Фото\Фаны или /Users/.../Фаны">
-  <div class="row" style="margin-top:8px">
-    <button class="primary" onclick="runStep('photos')">Рассортировать фото</button>
-    <button onclick="runStep('marks')">Фотометки к аудиогиду (KML)</button>
-  </div>
-  <p class="hint">«Фотометки» — фото/видео привязываются к точкам 🎧 аудиогида в track.gpx
-  и собираются в фотометки.kml (превью в Google Earth) + фотометки.json.</p>
+  <h2><span class="tick">✓</span>6 · Фотографии и видео</h2>
+  <p class="hint">Выберите папку с фото — приложение рассортирует их по точкам и дням маршрута,
+  привяжет к аудиогиду (фотометки KML) и соберёт отчёт с картой.</p>
+  <button onclick="openPicker()">📁 Выбрать папку с фото…</button>
+  <span class="chip" id="folderChip" style="display:none"></span>
+  <button class="big primary" id="btnPhotosAll" onclick="runStep('photos_all')" disabled>Обработать фото: сортировка + фотометки + отчёт</button>
   <pre id="logPhotos" style="display:none"></pre>
+  <details>
+    <summary>По отдельности</summary>
+    <div class="row">
+      <button class="small" onclick="runStep('photos')">Только сортировка по дням</button>
+      <button class="small" onclick="runStep('marks')">Только фотометки (KML)</button>
+    </div>
+  </details>
 </div>
 
 <div class="card" data-step="6">
-  <h2>7 · Результат</h2>
-  <button onclick="refreshFiles()">Обновить список</button>
-  <button class="primary" id="btnZip" onclick="downloadZip()" disabled>Скачать всё (zip)</button>
+  <h2><span class="tick">✓</span>7 · Готово — забрать результат</h2>
+  <div class="row">
+    <button onclick="refreshFiles()">Обновить список</button>
+    <button class="primary" id="btnZip" onclick="downloadZip()" disabled>Скачать всё одним zip</button>
+  </div>
   <ul class="files" id="filesOut"></ul>
   <p class="hint">СТАТУС проекта обновляется автоматически после каждого шага.</p>
 </div>
@@ -158,18 +184,43 @@
 </div>
 
 </div>
+
+<div class="modal" id="picker">
+  <div class="box">
+    <div class="crumbs" id="pkCrumbs">Выбор папки</div>
+    <div class="list" id="pkList"></div>
+    <div class="foot">
+      <button onclick="pickerUp()">← Назад</button>
+      <button class="primary" id="pkChoose" onclick="choosePicked()">Выбрать эту папку</button>
+      <button onclick="closePicker()">Отмена</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const $ = id => document.getElementById(id);
 let cur = localStorage.getItem('routeWizardProject') || '';
+let photoFolder = '';
+let doneSteps = new Set();
 const STEP_NAMES = ['Проект','Программа','Анализ','Погода','Документы','Фото','Результат'];
+// какие файлы выдачи отмечают шаг выполненным
+const STEP_MARKS = {1:['программа.txt'], 2:['анализ.json'], 3:['погода.json','Погода.md'],
+  4:['маршрут.kml','календарь.ics','Чеклист.html'],
+  5:['фотоотчёт.html','фотометки.kml'], 6:[]};
 
 function drawSteps(active){
-  $('stepsBar').innerHTML = STEP_NAMES.map((n,i)=>
-    `<span class="${i===active?'cur':''}" onclick="showStep(${i})">${i+1}·${n}</span>`).join('');
-  document.querySelectorAll('#pageWizard .card[data-step]').forEach(c=>
-    c.style.display = +c.dataset.step===active ? '' : 'none');
+  $('stepsBar').innerHTML = STEP_NAMES.map((n,i)=>{
+    const cls = [i===active?'cur':'', doneSteps.has(i)?'done':''].join(' ');
+    return `<span class="${cls}" onclick="showStep(${i})">${doneSteps.has(i)&&i!==active?'✓ ':''}${i+1}·${n}</span>`;
+  }).join('');
+  document.querySelectorAll('#pageWizard .card[data-step]').forEach(c=>{
+    c.style.display = +c.dataset.step===active ? '' : 'none';
+    c.classList.toggle('done', doneSteps.has(+c.dataset.step));
+  });
 }
-function showStep(i){ drawSteps(i); if(i===STEP_NAMES.length-1) refreshFiles(); }
+let activeStep = 0;
+function showStep(i){ activeStep=i; drawSteps(i); if(i===STEP_NAMES.length-1) refreshFiles(); }
+function nextStep(){ if(activeStep < STEP_NAMES.length-1) showStep(activeStep+1); }
 
 async function api(path, opts={}){
   const r = await fetch(path, opts.method ? {headers:{'Content-Type':'application/json'}, ...opts} : opts);
@@ -185,6 +236,8 @@ function setCur(name){
   cur = name; localStorage.setItem('routeWizardProject', name);
   $('curProject').textContent = name ? `Текущий проект: «${name}». Файлы: projects/${name}/` : 'Проект не выбран.';
   $('btnZip').disabled = !name;
+  doneSteps = new Set(name ? [0] : []);
+  if(name) refreshFiles(true);
 }
 async function loadProjects(){
   const list = await api('/api/projects');
@@ -192,14 +245,14 @@ async function loadProjects(){
     list.map(p=>`<option ${p.name===cur?'selected':''}>${p.name}</option>`).join('');
 }
 async function createProject(){
-  const name = $('pName').value.trim(); if(!name) return alert('Введите название');
+  const name = $('pName').value.trim(); if(!name) return alert('Введите название похода');
   await api('/api/projects', {method:'POST', body:JSON.stringify({name})});
-  setCur(name); loadProjects(); showStep(1);
+  setCur(name); loadProjects(); nextStep();
 }
 function pickProject(name){ if(name) setCur(name); }
 
 function uploadFile(input, canon){
-  const f = input.files[0]; if(!f || !cur) return alert('Сначала создайте/выберите проект');
+  const f = input.files[0]; if(!f || !cur) return alert('Сначала создайте проект (шаг 1)');
   const rd = new FileReader();
   rd.onload = async ()=>{
     const r = await api(`/api/projects/${enc()}/upload`, {method:'POST',
@@ -212,38 +265,36 @@ function uploadFile(input, canon){
 const enc = () => encodeURIComponent(cur);
 
 function uploadBinary(input){
-  const f = input.files[0]; if(!f || !cur) return alert('Сначала создайте/выберите проект');
+  const f = input.files[0]; if(!f || !cur) return alert('Сначала создайте проект (шаг 1)');
   const rd = new FileReader();
   rd.onload = async ()=>{
     const b64 = String(rd.result).split(',')[1];
     const r = await api(`/api/projects/${enc()}/upload`, {method:'POST',
       body:JSON.stringify({filename:f.name, content_b64:b64})});
-    log('logProgram', `✓ ${r.filename}: ${r.size} байт. Теперь нажмите «Прочитать и извлечь точки».`, true);
+    log('logProgram', `✓ «${r.filename}» загружен. Нажмите «Прочитать программу».`, true);
   };
   rd.readAsDataURL(f);
 }
-async function saveProgramText(){
-  if(!cur) return alert('Сначала создайте/выберите проект');
-  const text = $('taProgram').value.trim();
-  if(!text) return alert('Вставьте текст программы');
-  await api(`/api/projects/${enc()}/upload`, {method:'POST',
-    body:JSON.stringify({filename:'программа.txt', text})});
-  log('logProgram', '✓ программа.txt сохранена. Теперь нажмите «Прочитать и извлечь точки».', true);
-}
 
 async function saveText(fname, text){
-  if(!cur) return alert('Сначала создайте/выберите проект');
-  try{ JSON.parse(text); }catch(e){ return alert('Не JSON: '+e.message); }
-  const r = await api(`/api/projects/${enc()}/upload`, {method:'POST', body:JSON.stringify({filename:fname, text})});
-  log('logIn', `✓ ${r.filename} сохранён`, true);
+  if(!cur) return alert('Сначала создайте проект (шаг 1)');
+  try{ JSON.parse(text); }catch(e){ return alert('Это не JSON: '+e.message); }
+  await api(`/api/projects/${enc()}/upload`, {method:'POST', body:JSON.stringify({filename:fname, text})});
+  log('logIn', `✓ ${fname} сохранён`, true);
+}
+async function saveJsonTo(fname, text, logId){
+  if(!cur) return alert('Сначала создайте проект (шаг 1)');
+  try{ JSON.parse(text); }catch(e){ return alert('Это не JSON: '+e.message); }
+  await api(`/api/projects/${enc()}/upload`, {method:'POST', body:JSON.stringify({filename:fname, text})});
+  log(logId, `✓ ${fname} сохранён`, true);
 }
 
 async function runStep(step){
-  if(!cur) return alert('Сначала создайте/выберите проект');
-  const logId = {program:'logProgram', analyze:'logAnalyze', weather:'logWeather', photos:'logPhotos', marks:'logPhotos'}[step] || 'logDocs';
-  log(logId, '⏳ Выполняю…');
+  if(!cur) return alert('Сначала создайте проект (шаг 1)');
+  const logId = {program:'logProgram', analyze:'logAnalyze', weather:'logWeather',
+                 photos:'logPhotos', marks:'logPhotos', photos_all:'logPhotos'}[step] || 'logDocs';
+  log(logId, '⏳ Выполняю… это может занять до пары минут.');
   const body = {};
-  if(step==='photos' || step==='marks'){ body.folder = $('photoFolder').value.trim(); body.start = $('pStart').value; }
   if(step==='program'){
     if($('fProgram').files[0]) body.filename = $('fProgram').files[0].name;
     else if($('taProgram').value.trim()){
@@ -254,22 +305,25 @@ async function runStep(step){
   }
   if(step==='weather'){ body.start=$('pStart').value; body.end=$('pEnd').value; }
   if(step==='kml'){ body.split_km = $('splitKm').value.trim().split(/\s+/).filter(Boolean).map(Number); }
+  if(step.startsWith('photos') || step==='marks'){ body.folder = photoFolder; body.start = $('pStart').value; }
   try{
     const r = await api(`/api/projects/${enc()}/run/${step}`, {method:'POST', body:JSON.stringify(body)});
     let t = (r.stderr||'').trim();
     if(step==='program' && r.ok){ try{ const j=JSON.parse(r.stdout);
       $('taPoints').value = JSON.stringify(j.points_draft.map(({source_line, ...p})=>p), null, 1);
       if(j.dates_iso.length){ $('pStart').value=j.dates_iso[0]; $('pEnd').value=j.dates_iso[j.dates_iso.length-1]; }
-      t = `Текст: ${j.chars} симв. Точек в черновике: ${j.points_draft.length}. Дней: ${j.days_mentioned.length}. ` +
-          (j.warnings.length ? '⚠️ ' + j.warnings.join('; ') : 'Проверьте черновик и нажмите «Сохранить points.json».');
+      t = `Прочитано ${j.chars} символов. Найдено точек: ${j.points_draft.length}, дней: ${j.days_mentioned.length}. ` +
+          (j.warnings.length ? '⚠️ ' + j.warnings.join('; ') : 'Точки подставлены ниже — проверьте и сохраните.');
     }catch(e){} }
-    if(step==='photos' && r.ok){ try{ const j=JSON.parse(r.stdout);
-      t = `Фото: ${j.total} · с GPS: ${j.with_gps} · по времени: ${j.by_time} · неразобранных: ${j.unsorted}\n` +
-          j.groups.map(g=>`  ${g.title}: ${g.count}`).join('\n') + '\n' + t; }catch(e){} }
     if(step==='analyze' && r.ok){ try{ const j=JSON.parse(r.stdout);
-      t = `Итого: ${j.total_km} км, высоты ${j.ele_min_m}–${j.ele_max_m} м, уклоны +${j.gradients.max_up_deg}°/${j.gradients.max_down_deg}° (окно ${j.gradients.window_m} м)\n` + t; }catch(e){} }
+      t = `Итого: ${j.total_km} км, высоты ${j.ele_min_m}–${j.ele_max_m} м, макс. уклоны +${j.gradients.max_up_deg}°/${j.gradients.max_down_deg}°\n` + t; }catch(e){} }
+    if((step==='photos' || step==='marks') && r.ok){ try{ const j=JSON.parse(r.stdout);
+      if(j.total!==undefined) t = `Фото: ${j.total} · с GPS: ${j.with_gps} · по времени: ${j.by_time} · неразобранных: ${j.unsorted}\n` + t;
+      else t = `Привязано: ${j.bound} · без привязки: ${j.unbound}\n` + t; }catch(e){} }
     if(!r.status_ok) t += '\n⚠️ СТАТУС не обновился: ' + r.status_stderr;
     log(logId, t || (r.ok?'✓ Готово':'Ошибка'), r.ok);
+    refreshFiles(true);
+    if(r.ok && (step==='program' || step==='analyze' || step==='weather')) nextStep();
   }catch(e){ log(logId, '✗ ' + e.message, false); }
 }
 
@@ -288,23 +342,47 @@ const CHECKLIST_TEMPLATE = JSON.stringify({
     {title:'Снаряжение', items:['Спальник по прогнозу ночей','Треккинговые палки'], note:'Полный список — в памятке организатора.'}
   ]}, null, 1);
 
-async function saveEvents(){ await saveJsonTo('события.json', $('taEvents').value, 'logDocs'); }
-async function saveChecklist(){ await saveJsonTo('чеклист.json', $('taChecklist').value, 'logDocs'); }
-async function saveJsonTo(fname, text, logId){
-  if(!cur) return alert('Сначала создайте/выберите проект');
-  try{ JSON.parse(text); }catch(e){ return alert('Не JSON: '+e.message); }
-  await api(`/api/projects/${enc()}/upload`, {method:'POST', body:JSON.stringify({filename:fname, text})});
-  log(logId, `✓ ${fname} сохранён`, true);
-}
-
-async function refreshFiles(){
+async function refreshFiles(silent){
   if(!cur) return;
   const f = await api(`/api/projects/${enc()}/files`);
-  $('filesOut').innerHTML = f['выходные'].map(n=>
+  const outs = f['выходные'], ins = f['входные'];
+  $('filesOut').innerHTML = outs.map(n=>
     `<li><a href="/api/projects/${enc()}/download?path=${encodeURIComponent('выходные/'+n)}">${n}</a></li>`).join('')
-    || '<li>пока пусто</li>';
+    || '<li>пока пусто — пройдите шаги мастера</li>';
+  // отметки выполненных шагов
+  for(const [step, marks] of Object.entries(STEP_MARKS)){
+    if(marks.some(m => outs.includes(m) || ins.includes(m))) doneSteps.add(+step);
+  }
+  if(silent) drawSteps(activeStep);
 }
 function downloadZip(){ location.href = `/api/projects/${enc()}/zip`; }
+
+// ---- выбор папки с фото (проводник по компьютеру) ----
+let pkPath = '';
+async function openPicker(){
+  $('picker').classList.add('open');
+  await pickerGo('');
+}
+async function pickerGo(path){
+  const r = await api('/api/browse' + (path ? '?path=' + encodeURIComponent(path) : ''));
+  pkPath = r.path;
+  $('pkCrumbs').textContent = r.path || 'Выберите место:';
+  const items = r.dirs.map(d=>
+    `<div class="item" onclick="pickerGo('${d.path.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}')">
+       <span>📁 ${esc(d.name)}</span>${d.media?`<span class="cnt">${d.media} фото/видео</span>`:''}</div>`).join('');
+  $('pkList').innerHTML = items || '<div class="item">пусто</div>';
+  $('pkChoose').textContent = r.media_here ? `Выбрать (здесь ${r.media_here} фото/видео)` : 'Выбрать эту папку';
+}
+function pickerUp(){ if(pkPath) api('/api/browse?path='+encodeURIComponent(pkPath)).then(r=>{ if(r.parent!==undefined) pickerGo(r.parent); }); }
+function closePicker(){ $('picker').classList.remove('open'); }
+function choosePicked(){
+  if(!pkPath) return alert('Зайдите в нужную папку');
+  photoFolder = pkPath;
+  $('folderChip').style.display = '';
+  $('folderChip').textContent = '📂 ' + photoFolder;
+  $('btnPhotosAll').disabled = false;
+  closePicker();
+}
 
 // ---- обучение ----
 async function loadLearn(){
