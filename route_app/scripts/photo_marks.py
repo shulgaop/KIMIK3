@@ -93,6 +93,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("media", help="папка с фото (JPG) и видео (MP4/MOV, DJI — по имени)")
     ap.add_argument("--gpx", required=True, help="GPX проекта: точки 🎧 и/или трек с таймстемпами")
+    ap.add_argument("--track-gpx", help="записанный трек с часов — привязка по времени по нему "
+                                        "(иначе используется --gpx)")
     ap.add_argument("--points", help="points.json — запасные цели привязки, если в GPX нет 🎧")
     ap.add_argument("--out", required=True, help="папка результата")
     ap.add_argument("--max-dist", type=float, default=2000.0,
@@ -109,7 +111,7 @@ def main():
                      if "lat" in p and "lon" in p]
     if not audio_pts:
         sys.exit("Нет точек привязки: в GPX нет wpt с 🎧 и points.json не задан/без координат")
-    track = load_track_times(args.gpx)
+    track = load_track_times(args.track_gpx or args.gpx)
 
     out = Path(args.out)
     photos_dir = out / "фото_метки"

@@ -20,6 +20,9 @@
        Для видео DJI время съёмки берётся из имени файла
        (DJI_20260906095623_... = 06.09.2026 09:56:23), поэтому привязка
        к треку работает даже без телеметрии.
+       Если за день нет записанного трека, но есть плановый маршрут
+       (GPX без меток времени) — позиция оценивается интерполяцией
+       по нему пропорционально времени (помечается «по плану (оценка)»).
   3. Определяет название местности (офлайн-база, интернет не нужен).
   4. Строит маршрут по дням и создаёт три файла:
      - карта_похода.html     — интерактивная карта: линии маршрута
@@ -71,9 +74,10 @@ VIDEO_EXT = {'.mp4', '.mov', '.m4v', '.avi', '.mkv', '.mts', '.3gp'}
 
 EPOCH_1904 = datetime(1904, 1, 1)  # точка отсчёта времени в MP4/MOV
 
-# Часовой пояс для треков DJI (в видео время хранится в UTC).
-# UTC+3 — Москва. Измените при необходимости.
-DJI_TIMEZONE_OFFSET = 3
+# Часовой пояс места похода: в видео DJI и в GPX время хранится в UTC,
+# а в фото — локальное. Для Фанских гор (Таджикистан) это UTC+5.
+# Для похода в другом поясе поменяйте обе цифры (Москва = 3).
+DJI_TIMEZONE_OFFSET = 5
 
 # --- Офлайн-карта ---
 # HIKE_OFFLINE_MAP=0 в окружении отключает скачивание тайлов (так делает
@@ -95,10 +99,14 @@ OFFLINE_TILE_URL = ('https://server.arcgisonline.com/ArcGIS/rest/services/'
 
 # --- Привязка файлов без координат к GPS-треку (GPX) ---
 # Просто положите GPX-файл в папку с фото — скрипт подхватит его сам.
-GPX_TIMEZONE_OFFSET = 3   # часовой пояс: в GPX время хранится в UTC,
-                          # а в фото — локальное (3 = Москва)
+GPX_TIMEZONE_OFFSET = 5   # часовой пояс: в GPX время хранится в UTC,
+                          # а в фото — локальное (Фаны/Таджикистан = 5)
 TRACK_MAX_GAP_MIN = 30    # привязывать фото к треку, только если точка
                           # трека по времени не дальше этих минут от съёмки
+PLAN_INTERPOLATION = True  # дни без записанного трека: оценивать позицию
+                          # по плановому маршруту (GPX без меток времени),
+                          # распределяя фото пропорционально времени между
+                          # опорными точками записанных треков
 
 # Поддержка HEIC (iPhone), если установлен pillow-heif
 try:
@@ -221,26 +229,42 @@ def dt_from_filename(path):
 #  Извлечение GPS-трека из видео DJI Osmo Action (pyosmogps)
 # ------------------------------------------------------------------
 def parse_gpx(path):
-    """Читает GPX-файл -> список (dt, lat, lon)."""
-    pts = []
+    """Читает GPX-файл ->
+    (точки_с_временем [(dt, lat, lon)],
+     точки_без_времени [(lat, lon)],      # плановый маршрут
+     путевые_точки [(имя, lat, lon)]).    # wpt: лагеря, перевалы и т.п."""
+    timed, untimed, wpts = [], [], []
     tree = ET.parse(path)
     for p in tree.iter():
-        if not p.tag.endswith('trkpt'):
-            continue
-        try:
-            lat, lon = float(p.get('lat')), float(p.get('lon'))
-        except (TypeError, ValueError):
-            continue
-        dt = None
-        for child in p:
-            if child.tag.endswith('time') and child.text:
-                try:
-                    dt = datetime.fromisoformat(
-                        child.text.strip().replace('Z', '+00:00')).replace(tzinfo=None)
-                except ValueError:
-                    pass
-        pts.append((dt, lat, lon))
-    return pts
+        if p.tag.endswith('trkpt'):
+            try:
+                lat, lon = float(p.get('lat')), float(p.get('lon'))
+            except (TypeError, ValueError):
+                continue
+            dt = None
+            for child in p:
+                if child.tag.endswith('time') and child.text:
+                    try:
+                        dt = datetime.fromisoformat(
+                            child.text.strip().replace('Z', '+00:00')
+                        ).replace(tzinfo=None)
+                    except ValueError:
+                        pass
+            if dt:
+                timed.append((dt, lat, lon))
+            else:
+                untimed.append((lat, lon))
+        elif p.tag.endswith('wpt'):
+            try:
+                lat, lon = float(p.get('lat')), float(p.get('lon'))
+            except (TypeError, ValueError):
+                continue
+            name = ''
+            for child in p:
+                if child.tag.endswith('name') and child.text:
+                    name = child.text.strip()
+            wpts.append((name, lat, lon))
+    return timed, untimed, wpts
 
 
 def nearest_track_point(track, dt, max_gap_min):
@@ -275,7 +299,7 @@ def dji_track(path):
         r = subprocess.run(cmd, capture_output=True, text=True, timeout=3600)
         if r.returncode != 0 or not os.path.exists(gpx_path):
             return None
-        pts = parse_gpx(gpx_path)
+        pts, _, _ = parse_gpx(gpx_path)
         return pts or None
     except Exception:
         return None
@@ -400,6 +424,57 @@ def scan_folder(root):
     return files
 
 
+def nearest_plan_idx(plan, lat, lon):
+    """Индекс ближайшей точки планового маршрута к (lat, lon)."""
+    best_i, best_d = 0, float('inf')
+    for i, (la, lo) in enumerate(plan):
+        dd = (la - lat) ** 2 + (lo - lon) ** 2
+        if dd < best_d:
+            best_d, best_i = dd, i
+    return best_i
+
+
+def build_plan_anchors(plan, track, pending_dts):
+    """Опорные точки [(время, индекс_на_плане)] для интерполяции:
+    начало и конец каждого записанного сегмента трека привязываются
+    к ближайшей точке планового маршрута. Края (до первого / после
+    последнего трека) достраиваются по времени непривязанных файлов."""
+    anchors = []
+    if track:
+        # разбиваем записанный трек на сегменты (разрыв > 3 ч)
+        cuts = [0]
+        for i in range(1, len(track)):
+            if (track[i][0] - track[i - 1][0]).total_seconds() > 3 * 3600:
+                cuts.append(i)
+        cuts.append(len(track))
+        for a, b in zip(cuts, cuts[1:]):
+            for dt, lat, lon in (track[a], track[b - 1]):
+                anchors.append((dt, float(nearest_plan_idx(plan, lat, lon))))
+    before = [d for d in pending_dts if not anchors or d < anchors[0][0]]
+    after = [d for d in pending_dts if not anchors or d > anchors[-1][0]]
+    if before:
+        anchors.insert(0, (min(before) - timedelta(hours=1), 0.0))
+    if after:
+        anchors.append((max(after) + timedelta(hours=1), float(len(plan) - 1)))
+    return sorted(anchors)
+
+
+def interp_plan(plan, anchors, dt):
+    """Позиция на плановом маршруте для момента dt: линейная
+    интерполяция между опорными точками. None, если вне интервалов."""
+    for (t0, i0), (t1, i1) in zip(anchors, anchors[1:]):
+        if t0 <= dt <= t1 and t1 > t0:
+            frac = (dt - t0).total_seconds() / (t1 - t0).total_seconds()
+            pos = i0 + frac * (i1 - i0)
+            i = int(pos)
+            j = min(i + 1, len(plan) - 1)
+            f2 = pos - i
+            lat = plan[i][0] + (plan[j][0] - plan[i][0]) * f2
+            lon = plan[i][1] + (plan[j][1] - plan[i][1]) * f2
+            return lat, lon
+    return None
+
+
 def ask_dji_mode():
     """Интерактивный выбор способа обработки видео DJI.
     1 — только телеметрия, 2 — только по треку, 3 — комбо (по умолчанию)."""
@@ -423,8 +498,16 @@ def ask_dji_mode():
 #  Основная логика
 # ------------------------------------------------------------------
 def main():
-    root = sys.argv[1] if len(sys.argv) > 1 else os.getcwd()
-    root = os.path.abspath(root)
+    # python hike_report.py [папка] [--gpx файл1 файл2 ...]
+    # --gpx: треки из проекта (записанный с часов, плановый маршрут) — читаются
+    # в дополнение к GPX из папки с фото; записанный приоритетнее планового.
+    argv = sys.argv[1:]
+    extra_gpx = []
+    if "--gpx" in argv:
+        i = argv.index("--gpx")
+        extra_gpx = [a for a in argv[i + 1:] if not a.startswith("--")]
+        argv = argv[:i]
+    root = os.path.abspath(argv[0] if argv else os.getcwd())
     print(f'Папка: {root}')
 
     files = scan_folder(root)
@@ -433,14 +516,25 @@ def main():
         return
     print(f'Найдено файлов: {len(files)}.')
 
-    # --- Загрузка GPS-треков: все GPX-файлы из папки и подпапок ---
-    gpx_points = []
-    for dirpath, _, names in os.walk(root):
-        for n in sorted(names):
-            if n.lower().endswith('.gpx'):
-                pts = parse_gpx(os.path.join(dirpath, n))
-                gpx_points.extend(pts)
-                print(f'  трек: {n} — {len(pts)} точек')
+    # --- Загрузка GPS-треков: все GPX-файлы из папки и подпапок + --gpx ---
+    gpx_points = []      # записанный трек (с метками времени)
+    plan_points = []     # плановый маршрут (без времени)
+    waypoints = []       # путевые точки (wpt)
+    gpx_files = [os.path.join(dp, n) for dp, _, names in os.walk(root)
+                 for n in sorted(names) if n.lower().endswith('.gpx')]
+    gpx_files += [g for g in extra_gpx if os.path.isfile(g)]
+    for gpx_path in gpx_files:
+        n = os.path.basename(gpx_path)
+        timed, untimed, wpts = parse_gpx(gpx_path)
+        gpx_points.extend(timed)
+        plan_points.extend(untimed)
+        waypoints.extend(wpts)
+        desc = f'  трек: {n} — {len(timed)} точек с временем'
+        if untimed:
+            desc += f' + {len(untimed)} плановых'
+        if wpts:
+            desc += f' + {len(wpts)} путевых'
+        print(desc)
     # Время в GPX — UTC, переводим в локальное (как в EXIF фото)
     gpx_points = [(dt + timedelta(hours=GPX_TIMEZONE_OFFSET) if dt else None,
                    la, lo) for dt, la, lo in gpx_points]
@@ -468,7 +562,7 @@ def main():
                   'видео DJI без телеметрии останутся без координат.')
 
     print('Обработка...')
-    records, no_gps = [], []
+    records, no_gps, pending = [], [], []
     n_dji = n_track = 0
     for i, path in enumerate(files, 1):
         ext = os.path.splitext(path)[1].lower()
@@ -519,11 +613,36 @@ def main():
             if dt is None:  # запасной вариант — время изменения файла
                 rec['dt'] = datetime.fromtimestamp(os.path.getmtime(path))
             records.append(rec)
+        elif dt is not None:
+            pending.append(rec)   # время есть — попробуем плановый маршрут
         else:
             no_gps.append(rel)
-        print(f'  [{i}/{len(files)}] {rel} — '
-              + (f'OK ({lat:.5f}, {lon:.5f}) [{source}]' if coords_ok(lat, lon)
-                 else 'нет GPS'))
+        status = (f'OK ({lat:.5f}, {lon:.5f}) [{source}]'
+                  if coords_ok(lat, lon)
+                  else ('нет GPS — проверю по плановому маршруту'
+                        if dt is not None else 'нет GPS'))
+        print(f'  [{i}/{len(files)}] {rel} — {status}')
+
+    # --- Дни без записанного трека: оценка позиции по плановому маршруту ---
+    n_plan = 0
+    if pending and plan_points and PLAN_INTERPOLATION:
+        anchors = build_plan_anchors(plan_points, gpx_points,
+                                     [r['dt'] for r in pending])
+        for r in pending:
+            pos = interp_plan(plan_points, anchors, r['dt'])
+            if pos:
+                r['lat'], r['lon'] = pos
+                r['source'] = 'по плану (оценка)'
+                records.append(r)
+                n_plan += 1
+                print(f'  {r["file"]} — по плану ({pos[0]:.5f}, {pos[1]:.5f})')
+            else:
+                no_gps.append(r['file'])
+        if n_plan:
+            print(f'По плановому маршруту расставлено файлов: {n_plan} '
+                  f'(оценочные позиции!)')
+    else:
+        no_gps.extend(r['file'] for r in pending)
 
     if not records:
         print('\nНи в одном файле не найдено координат.')
@@ -605,6 +724,21 @@ def main():
         g = folium.FeatureGroup(name='GPS-трек (GPX)')
         folium.PolyLine(line[::step], color='black', weight=3,
                         opacity=0.7, dash_array='8').add_to(g)
+        g.add_to(fmap)
+
+    # Плановый маршрут (GPX без меток времени) и путевые точки
+    if plan_points or waypoints:
+        g = folium.FeatureGroup(name='Плановый маршрут (GPX)')
+        if plan_points:
+            step = max(1, len(plan_points) // 3000)
+            folium.PolyLine(plan_points[::step], color='darkgreen', weight=3,
+                            opacity=0.6, dash_array='3').add_to(g)
+        for name, la, lo in waypoints:
+            folium.CircleMarker(
+                (la, lo), radius=5, color='darkgreen',
+                fill=True, fill_opacity=0.9,
+                tooltip=html_mod.escape(name) if name else None,
+            ).add_to(g)
         g.add_to(fmap)
     colors = ['red', 'blue', 'green', 'purple', 'orange', 'darkred',
               'cadetblue', 'darkgreen', 'darkpurple', 'pink']
@@ -692,7 +826,8 @@ def main():
     print('\n========== ГОТОВО ==========')
     print(f'Обработано файлов:        {len(files)}')
     print(f'С координатами:           {len(records)}'
-          f' (DJI-треки: {n_dji}, по GPX-треку: {n_track})')
+          f' (DJI-треки: {n_dji}, по GPX-треку: {n_track}, '
+          f'по плану: {n_plan})')
     print(f'Без координат:            {len(no_gps)}')
     print(f'Дней в маршруте:          {len(days)}')
     print(f'Карта:                    {map_path}')

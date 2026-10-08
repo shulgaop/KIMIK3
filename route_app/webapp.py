@@ -238,6 +238,14 @@ def step_status(d, params):
     return (*run_script([SCRIPTS / "make_status.py", d]),)
 
 
+def watch_and_planned(d):
+    """Треки проекта: записанный с часов (приоритет для времени) и плановый."""
+    watch = d / IN_DIR / "трек_с_часов.gpx"
+    planned = d / IN_DIR / "track.gpx"
+    return (watch if watch.is_file() else None,
+            planned if planned.is_file() else None)
+
+
 def step_photos(d, params):
     """Сортировка фото по точкам/дням маршрута (EXIF GPS или время на треке)."""
     folder = (params.get("folder") or "").strip()
@@ -247,8 +255,9 @@ def step_photos(d, params):
     if not pts.is_file():
         raise HTTPException(400, "Нужен входные/points.json (шаг «Программа»)")
     args = [SCRIPTS / "photo_sort.py", folder, "--points", pts, "--out", d / OUT_DIR]
-    gpx = d / IN_DIR / "track.gpx"
-    if gpx.is_file():
+    watch, planned = watch_and_planned(d)
+    gpx = watch or planned  # привязка по времени — в первую очередь по записанному треку
+    if gpx:
         args += ["--gpx", gpx]
     if params.get("start"):
         args += ["--start", params["start"]]
@@ -260,10 +269,12 @@ def step_marks(d, params):
     folder = (params.get("folder") or "").strip()
     if not folder:
         raise HTTPException(400, "Укажите путь к папке с фотографиями")
-    gpx = d / IN_DIR / "track.gpx"
-    if not gpx.is_file():
+    watch, planned = watch_and_planned(d)
+    if not planned:
         raise HTTPException(400, "Нужен входные/track.gpx с точками 🎧 аудиогида")
-    args = [SCRIPTS / "photo_marks.py", folder, "--gpx", gpx, "--out", d / OUT_DIR]
+    args = [SCRIPTS / "photo_marks.py", folder, "--gpx", planned, "--out", d / OUT_DIR]
+    if watch:
+        args += ["--track-gpx", watch]  # время — по записанному треку с часов
     if (d / IN_DIR / "points.json").is_file():
         args += ["--points", d / IN_DIR / "points.json"]
     return (*run_script(args, timeout=1800),)
@@ -298,8 +309,12 @@ def step_photos_all(d, params):
     if have_deps:
         # без офлайн-тайлов: они качаются несколько минут — из мастера быстро,
         # полный офлайн-вариант: python3 scripts/hike_report.py <папка> вручную
-        ok, out, err = run_script([SCRIPTS / "hike_report.py", folder],
-                                  timeout=1200, stdin_text="\n\n",
+        args = [SCRIPTS / "hike_report.py", folder]
+        watch, planned = watch_and_planned(d)
+        extra = [t for t in (watch, planned) if t]  # записанный + плановый треки
+        if extra:
+            args += ["--gpx", *extra]
+        ok, out, err = run_script(args, timeout=1200, stdin_text="\n\n",
                                   env_extra={"HIKE_OFFLINE_MAP": "0"})
         any_ok |= ok
         tail = (out or err).strip().splitlines()

@@ -180,8 +180,10 @@
     <textarea id="taPoints" placeholder='[{"name":"Кемп","lat":39.2551,"lon":68.1723,"ele":2850}]'></textarea>
     <button onclick="saveText('points.json', taPoints.value)">Сохранить точки</button>
   </details>
-  <label>GPX-трек маршрута</label>
+  <label>GPX-трек маршрута (плановый)</label>
   <input type="file" id="fGpx" accept=".gpx" onchange="uploadFile(this,'track.gpx')">
+  <label>Трек с часов — записанный GPX (необязательно): фото без GPS привяжутся по времени точно к нему; дни без записи — оценка по плановому треку</label>
+  <input type="file" accept=".gpx" onchange="uploadFile(this,'трек_с_часов.gpx')">
   <pre id="logIn" style="display:none"></pre>
 </div>
 
