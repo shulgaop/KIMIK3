@@ -65,9 +65,9 @@ def update_status(proj):
     return ok, err
 
 
-def load_gpx_analyze():
-    """Импорт функций разбора GPX (bbox для KML считаем ими, не «на глаз»)."""
-    spec = importlib.util.spec_from_file_location("gpx_analyze", SCRIPTS / "gpx_analyze.py")
+def load_script_module(name):
+    """Импорт модуля из scripts/ по имени без .py (скрипты — не пакет, поэтому так)."""
+    spec = importlib.util.spec_from_file_location(name, SCRIPTS / f"{name}.py")
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     return mod
@@ -75,7 +75,7 @@ def load_gpx_analyze():
 
 def track_bbox(gpx_path, margin=0.05):
     """Bbox трека (S, N, W, E) с полем margin градусов — для валидации KML."""
-    ga = load_gpx_analyze()
+    ga = load_script_module("gpx_analyze")
     trkpts, _ = ga.load_gpx(str(gpx_path))
     lats = [p[0] for p in trkpts]
     lons = [p[1] for p in trkpts]
@@ -307,15 +307,7 @@ def step_photos_all(d, params):
     except ImportError:
         have_deps = False
     if have_deps:
-        # без офлайн-тайлов: они качаются несколько минут — из мастера быстро,
-        # полный офлайн-вариант: python3 scripts/hike_report.py <папка> вручную
-        args = [SCRIPTS / "hike_report.py", folder]
-        watch, planned = watch_and_planned(d)
-        extra = [t for t in (watch, planned) if t]  # записанный + плановый треки
-        if extra:
-            args += ["--gpx", *extra]
-        ok, out, err = run_script(args, timeout=1200, stdin_text="\n\n",
-                                  env_extra={"HIKE_OFFLINE_MAP": "0"})
+        ok, out, err = run_hike_report(d, folder, params)
         any_ok |= ok
         tail = (out or err).strip().splitlines()
         logs.append("— Отчёт с картой (hike_report): " +
@@ -327,12 +319,44 @@ def step_photos_all(d, params):
     return any_ok, "", "\n".join(logs)
 
 
+def run_hike_report(d, folder, params):
+    """Запуск hike_report.py с настройками модуля «Фотоотчёт»:
+    пояс похода, макс. разрыв привязки, офлайн-тайлы, оценка по плану."""
+    args = [SCRIPTS / "hike_report.py", folder]
+    watch, planned = watch_and_planned(d)
+    extra = [t for t in (watch, planned) if t]  # записанный + плановый треки
+    if extra:
+        args += ["--gpx", *extra]
+    if params.get("tz_offset") not in (None, ""):
+        args += ["--tz-offset", str(params["tz_offset"])]
+    if params.get("max_gap_min") not in (None, ""):
+        args += ["--max-gap-min", str(params["max_gap_min"])]
+    if params.get("plan_interp") is False:
+        args += ["--no-plan"]
+    # офлайн-тайлы качаются минуты — по умолчанию выключены, включаются галочкой
+    env = {} if params.get("offline_tiles") else {"HIKE_OFFLINE_MAP": "0"}
+    timeout = 3600 if params.get("offline_tiles") else 1200
+    return run_script(args, timeout=timeout, stdin_text="\n\n", env_extra=env)
+
+
+def step_report_map(d, params):
+    """Только гео-фото-отчёт с картой (hike_report) с настройками модуля."""
+    folder = (params.get("folder") or "").strip()
+    if not folder:
+        raise HTTPException(400, "Сначала выберите папку с фотографиями")
+    try:
+        import folium, openpyxl, reverse_geocoder  # noqa: F401
+    except ImportError:
+        raise HTTPException(400, "Нужны зависимости: pip install folium openpyxl "
+                                 "reverse-geocoder pyosmogps")
+    ok, out, err = run_hike_report(d, folder, params)
+    tail = (out or err).strip().splitlines()
+    return ok, "", "\n".join(tail[-10:])
+
+
 def step_guide(d, params):
     """F4: генерация MD-гида через OpenRouter (модель из настроек шага)."""
-    import importlib.util
-    spec = importlib.util.spec_from_file_location("llm", SCRIPTS / "llm.py")
-    llm = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(llm)
+    llm = _llm_mod()
     model = (params.get("model") or "").strip() or None
     key = (params.get("api_key") or "").strip() or None
     try:
@@ -440,8 +464,8 @@ STEPS = {"program": step_program, "analyze": step_analyze, "weather": step_weath
          "daylight": step_daylight, "first_aid": step_first_aid, "currency": step_currency,
          "report": step_report,
          "kml": step_kml, "ics": step_ics, "checklist": step_checklist,
-         "photos": step_photos, "marks": step_marks,
-         "photos_all": step_photos_all, "status": step_status}
+         "photos": step_photos, "marks": step_marks, "photos_all": step_photos_all,
+         "report_map": step_report_map, "status": step_status}
 
 
 @app.post("/api/projects/{name}/run/{step}")
@@ -475,9 +499,7 @@ def add_note(name, payload: dict = Body(...)):
         if src.suffix.lower() in (".png", ".jpg", ".jpeg", ".heic"):
             raise HTTPException(400, "Текст из изображений не распознаётся (нет OCR) — "
                                      "опишите фото текстом")
-        spec = importlib.util.spec_from_file_location("read_program", SCRIPTS / "read_program.py")
-        rp = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(rp)
+        rp = load_script_module("read_program")
         try:
             extracted = rp.extract_text(str(src)).strip()
         except SystemExit as e:
@@ -576,11 +598,8 @@ def zip_project(name):
 # ---------- LLM (OpenRouter) ----------
 
 def _llm_mod():
-    import importlib.util
-    spec = importlib.util.spec_from_file_location("llm", SCRIPTS / "llm.py")
-    mod = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(mod)
-    return mod
+    """Модуль llm.py (OpenRouter) — ленивый импорт, чтобы без ключа мастер работал."""
+    return load_script_module("llm")
 
 
 @app.get("/api/llm")

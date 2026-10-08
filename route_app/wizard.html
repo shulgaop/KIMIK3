@@ -156,6 +156,7 @@
   </div>
   <div class="tabs">
     <button class="active" id="tabWizard">Мастер</button>
+    <button id="tabPhotos">Фотоотчёт</button>
     <button id="tabReport">Отчёт</button>
     <button id="tabLearn">Обучение</button>
     <button id="tabHelp">Инструкция</button>
@@ -281,23 +282,6 @@
 </div>
 
 <div class="card" data-step="6">
-  <h2><span class="ic"><svg width="19" height="19"><use href="#i-camera"/></svg></span>Фотографии и видео
-    <span class="badge"><svg width="12" height="12"><use href="#i-check"/></svg>готово</span></h2>
-  <p class="sub">Сортировка по точкам и дням, фотометки к аудиогиду, отчёт с картой.</p>
-  <button onclick="openPicker()"><svg width="15" height="15" style="vertical-align:-2px"><use href="#i-folder"/></svg> Выбрать папку с фото…</button>
-  <span class="chip" id="folderChip" style="display:none"></span>
-  <button class="big primary" id="btnPhotosAll" onclick="runStep('photos_all')" disabled>Обработать фото: сортировка + фотометки + отчёт</button>
-  <pre id="logPhotos" style="display:none"></pre>
-  <details>
-    <summary>По отдельности</summary>
-    <div class="row">
-      <button class="small" onclick="runStep('photos')">Только сортировка по дням</button>
-      <button class="small" onclick="runStep('marks')">Только фотометки (KML)</button>
-    </div>
-  </details>
-</div>
-
-<div class="card" data-step="7">
   <h2><span class="ic"><svg width="19" height="19"><use href="#i-box"/></svg></span>Готово — забрать результат
     <span class="badge"><svg width="12" height="12"><use href="#i-check"/></svg>готово</span></h2>
   <p class="sub">Все файлы выдачи одним архивом или по отдельности.</p>
@@ -306,7 +290,40 @@
     <button class="primary" id="btnZip" onclick="downloadZip()" disabled>Скачать всё одним zip</button>
   </div>
   <ul class="files" id="filesOut"></ul>
-  <p class="hint">СТАТУС проекта обновляется автоматически после каждого шага.</p>
+  <p class="hint">Фото и видео — во вкладке «Фотоотчёт». СТАТУС проекта обновляется автоматически.</p>
+</div>
+</div>
+
+<div id="pagePhotos" style="display:none">
+<div class="card">
+  <h2><span class="ic"><svg width="19" height="19"><use href="#i-camera"/></svg></span>Фотоотчёт по маршруту</h2>
+  <p class="sub">Сортировка фото по точкам и дням, фотометки к аудиогиду, карта и таблица похода.
+  Проект: <b id="photoProject">не выбран</b> (выбор — «Мастер», шаг 1). Треки берутся из проекта:
+  записанный с часов приоритетнее, без него — оценка по плановому.</p>
+  <label>Записанный трек с часов (GPX с таймстемпами, необязательно)</label>
+  <input type="file" accept=".gpx" onchange="uploadFile(this,'трек_с_часов.gpx')">
+  <div class="row">
+    <button onclick="openPicker()"><svg width="15" height="15" style="vertical-align:-2px"><use href="#i-folder"/></svg> Выбрать папку с фото…</button>
+  </div>
+  <span class="chip" id="folderChip" style="display:none"></span>
+  <details>
+    <summary>Настройки привязки (пояс, погрешность, слои)</summary>
+    <div class="row">
+      <div><label>Часовой пояс похода (UTC+N)</label><input id="phTz" type="number" step="1" value="5"></div>
+      <div><label>Макс. разрыв фото↔трек, мин</label><input id="phGap" type="number" step="5" value="30"></div>
+    </div>
+    <div class="row">
+      <label style="font-weight:400"><input type="checkbox" id="phPlan" checked style="width:auto"> Оценивать позицию по плановому треку, если записи нет</label>
+      <label style="font-weight:400"><input type="checkbox" id="phTiles" style="width:auto"> Скачать офлайн-тайлы карты (минуты, интернет)</label>
+    </div>
+  </details>
+  <button class="big primary" id="btnPhotosAll" onclick="runStep('photos_all')" disabled>Обработать: сортировка + фотометки + отчёт с картой</button>
+  <div class="row">
+    <button class="small" onclick="runStep('photos')">Только сортировка по дням</button>
+    <button class="small" onclick="runStep('marks')">Только фотометки (KML)</button>
+    <button class="small" onclick="runStep('report_map')">Только карта + таблица</button>
+  </div>
+  <pre id="logPhotos" style="display:none"></pre>
 </div>
 </div>
 
@@ -392,9 +409,9 @@
     <tr><td>4 · Погода</td><td>даты + точки</td><td>Погода.md (прогноз/климат/факт), Световой_день.md (рассветы, Луна)</td></tr>
     <tr><td>5 · Гид (ИИ)</td><td>ключ OpenRouter</td><td>Гид.md + Гид.html, аудиотексты → mp3, факты из Википедии/OSM</td></tr>
     <tr><td>6 · Документы</td><td>—</td><td>маршрут.kml, календарь.ics, Чеклист.html, Аптечка.html, Деньги.md</td></tr>
-    <tr><td>7 · Фото</td><td>папка с фото на компьютере</td><td>фото по дням, фотометки.kml, карта_похода.html</td></tr>
-    <tr><td>8 · Результат</td><td>—</td><td>zip всего проекта</td></tr>
+    <tr><td>7 · Результат</td><td>—</td><td>zip всего проекта</td></tr>
   </table>
+  <p class="hint">Фото и видео живут в отдельной вкладке «Фотоотчёт» (сортировка по дням, фотометки к аудиогиду, карта и таблица похода с настройками привязки).</p>
   <p class="hint">Совет: в шаге 5 сначала «🔎 Найти факты», потом «Сгенерировать путеводитель» — гид будет с факт-блоками и источниками.</p>
 </div>
 
@@ -431,13 +448,16 @@
 </div>
 
 <div class="card answer" id="help-photo">
-  <h3><span class="ic"><svg width="16" height="16"><use href="#i-camera"/></svg></span>Фото и видео: как получить точную привязку</h3>
+  <h3><span class="ic"><svg width="16" height="16"><use href="#i-camera"/></svg></span>Фото и видео: вкладка «Фотоотчёт»</h3>
   <ul>
     <li><b>На телефоне включите геометки:</b> iPhone — Настройки → Конфиденциальность → Службы геолокации → Камера;
         Android — в камере «Сохранять геопозицию». Фото из мессенджеров присылайте «файлом» — иначе EXIF вырезается.</li>
-    <li><b>Записывайте трек на часах/навигаторе</b> (Garmin, Suunto, Amazfit → экспорт GPX) и загрузите его в шаге 2 —
+    <li><b>Записывайте трек на часах/навигаторе</b> (Garmin, Suunto, Amazfit → экспорт GPX) и загрузите его во вкладке «Фотоотчёт» —
         фото без GPS встанут на маршрут по времени съёмки.</li>
-    <li>Нет записи за день — позиция оценивается по плановому треку и честно помечается «по плану (оценка)».</li>
+    <li>Нет записи за день — позиция оценивается по плановому треку и честно помечается «по плану (оценка)»
+        (отключается в настройках привязки).</li>
+    <li><b>Настройки привязки:</b> часовой пояс похода (в GPX время в UTC! Фаны = UTC+5, Москва = UTC+3),
+        макс. разрыв фото↔трек (минуты), офлайн-тайлы карты (долго качаются, зато карта работает без интернета).</li>
   </ul>
 </div>
 
@@ -495,12 +515,11 @@ const $ = id => document.getElementById(id);
 let cur = localStorage.getItem('routeWizardProject') || '';
 let photoFolder = '';
 let doneSteps = new Set();
-const STEP_NAMES = ['Проект','Программа','Анализ','Погода','Гид (ИИ)','Документы','Фото','Результат'];
+const STEP_NAMES = ['Проект','Программа','Анализ','Погода','Гид (ИИ)','Документы','Результат'];
 // какие файлы выдачи отмечают шаг выполненным
 const STEP_MARKS = {1:['программа.txt'], 2:['анализ.json'], 3:['погода.json','Погода.md','Световой_день.md'],
   4:['Гид.md','Гид.html','аудиотексты.json','Аудиогид.zip','Факты.md'],
-  5:['маршрут.kml','календарь.ics','Чеклист.html','Аптечка.html'],
-  6:['фотоотчёт.html','фотометки.kml'], 7:[]};
+  5:['маршрут.kml','календарь.ics','Чеклист.html','Аптечка.html'], 6:[]};
 
 function drawSteps(active){
   $('stepsBar').innerHTML = STEP_NAMES.map((n,i)=>{
@@ -533,6 +552,8 @@ function log(elId, text, ok){
 function setCur(name){
   cur = name; localStorage.setItem('routeWizardProject', name);
   $('curProject').textContent = name ? `Текущий проект: «${name}». Файлы: projects/${name}/` : 'Проект не выбран.';
+  $('photoProject').textContent = name || 'не выбран';
+  $('repProject').textContent = name || 'не выбран';
   $('btnZip').disabled = !name;
   doneSteps = new Set(name ? [0] : []);
   if(name) refreshFiles(true);
@@ -592,7 +613,8 @@ async function runStep(step){
   const logId = {program:'logProgram', analyze:'logAnalyze', weather:'logWeather',
                  guide:'logGuide', guide_html:'logGuide', audio_texts:'logGuide', tts:'logGuide',
                  research:'logGuide', daylight:'logWeather',
-                 photos:'logPhotos', marks:'logPhotos', photos_all:'logPhotos'}[step] || 'logDocs';
+                 photos:'logPhotos', marks:'logPhotos', photos_all:'logPhotos',
+                 report_map:'logPhotos'}[step] || 'logDocs';
   log(logId, '⏳ Выполняю… это может занять до пары минут.');
   const body = {};
   if(step==='program'){
@@ -608,7 +630,11 @@ async function runStep(step){
   if(step==='weather' || step==='daylight' || step==='first_aid'){ body.start=$('pStart').value; body.end=$('pEnd').value; }
   if(step==='kml'){ body.split_km = $('splitKm').value.trim().split(/\s+/).filter(Boolean).map(Number); }
   if(step==='currency'){ body.currencies = $('currencies').value.trim(); }
-  if(step.startsWith('photos') || step==='marks'){ body.folder = photoFolder; body.start = $('pStart').value; }
+  if(step.startsWith('photos') || step==='marks' || step==='report_map'){
+    body.folder = photoFolder; body.start = $('pStart').value;
+    body.tz_offset = $('phTz').value; body.max_gap_min = $('phGap').value;
+    body.plan_interp = $('phPlan').checked; body.offline_tiles = $('phTiles').checked;
+  }
   try{
     const r = await api(`/api/projects/${enc()}/run/${step}`, {method:'POST', body:JSON.stringify(body)});
     let t = (r.stderr||'').trim();
@@ -741,15 +767,17 @@ async function delExample(i){
 }
 
 $('tabWizard').onclick = ()=>{ showTab('Wizard'); };
+$('tabPhotos').onclick = ()=>{ showTab('Photos'); };
 $('tabReport').onclick = ()=>{ showTab('Report'); };
 $('tabLearn').onclick = ()=>{ showTab('Learn'); loadLearn(); };
 $('tabHelp').onclick = ()=>{ showTab('Help'); };
 function showTab(t){
-  for(const p of ['Wizard','Report','Learn','Help']){
+  for(const p of ['Wizard','Photos','Report','Learn','Help']){
     $('page'+p).style.display = p===t ? '' : 'none';
     $('tab'+p).classList.toggle('active', p===t);
   }
   if(t==='Report') $('repProject').textContent = cur || 'не выбран';
+  if(t==='Photos') $('photoProject').textContent = cur || 'не выбран';
 }
 
 // ---- инструкция: живой поиск ----

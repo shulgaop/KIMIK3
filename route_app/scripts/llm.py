@@ -240,7 +240,6 @@ def generate_audio_texts(project, model=None, key=None, out_name="аудиоте
                 {"role": "user", "content":
                  f"Проект: {project.name}\n\n{context}\n\n"
                  "Составь тексты аудиогида (8–14 треков) и верни строго JSON."}]
-    text = None
     for attempt in (1, 2):  # вторая попытка — просим починить JSON
         raw, _ = chat_with_fallback(messages, explicit, key, max_tokens=12000)
         raw = raw.strip()

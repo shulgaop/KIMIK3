@@ -92,7 +92,7 @@ def main():
         [{"name": "Куликалон", "lat": 39.2551, "lon": 68.1723, "ele": 2850}]), encoding="utf-8")
     code, out, _ = run("daylight.py", tmp / "pts.json", "--start", "2026-09-06", "--end", "2026-09-12")
     j = json.loads(out)
-    d0, d6 = j["days"][0], j["days"][-1]
+    d0 = j["days"][0]
     rise_min = int(d0["sunrise"].split(":")[0]) * 60 + int(d0["sunrise"].split(":")[1])
     check("daylight: рассвет 06.09 ≈ 06:03 (±10 мин)", abs(rise_min - 363) <= 10, d0["sunrise"])
     check("daylight: новолуние 11–12.09.2026",

@@ -65,8 +65,6 @@ def wiki_geosearch(lat, lon, lang, radius=10000, limit=8):
         return []
 
 
-def overpass_pois(south, north, west, east):
-    """Инфраструктура из OSM: родники/вода, хижины, сёла, магазины в bbox."""
 OVERPASS_MIRRORS = ["https://overpass-api.de/api/interpreter",
                     "https://overpass.kumi.systems/api/interpreter",
                     "https://overpass.nchc.org.tw/api/interpreter"]

@@ -11,7 +11,6 @@
   python3 currency.py --currencies BYN,UZS,TJS --base EUR
 """
 import argparse, json, sys, urllib.request
-from datetime import datetime, timezone
 from pathlib import Path
 
 API = "https://open.er-api.com/v6/latest"
@@ -64,7 +63,7 @@ def main():
 
     if args.md:
         L = [f"## Деньги (курсы на {date_utc} UTC)", "",
-             f"_Источник: open.er-api.com. Перепроверить перед вылетом._", "",
+             "_Источник: open.er-api.com. Перепроверить перед вылетом._", "",
              f"| Валюта | 1 USD | 1 {args.also or '—'} |", "|---|---|---|"]
         for r in rows:
             L.append(f"| {r['currency']} | {r['per_usd']} | {r.get('per_eur', '—')} |")

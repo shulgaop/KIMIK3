@@ -498,15 +498,43 @@ def ask_dji_mode():
 #  Основная логика
 # ------------------------------------------------------------------
 def main():
-    # python hike_report.py [папка] [--gpx файл1 файл2 ...]
+    # python hike_report.py [папка] [--gpx файл1 файл2 ...] [--tz-offset N]
+    #         [--max-gap-min N] [--no-offline] [--no-plan]
     # --gpx: треки из проекта (записанный с часов, плановый маршрут) — читаются
     # в дополнение к GPX из папки с фото; записанный приоритетнее планового.
+    # --tz-offset: часовой пояс похода (UTC+N) для GPX и видео DJI сразу.
+    # --max-gap-min: макс. разрыв фото↔точка трека, минут (TRACK_MAX_GAP_MIN).
+    # --no-plan: отключить оценку позиции по плановому маршруту.
+    global GPX_TIMEZONE_OFFSET, DJI_TIMEZONE_OFFSET, TRACK_MAX_GAP_MIN
+    global PLAN_INTERPOLATION, OFFLINE_MAP
     argv = sys.argv[1:]
     extra_gpx = []
     if "--gpx" in argv:
         i = argv.index("--gpx")
         extra_gpx = [a for a in argv[i + 1:] if not a.startswith("--")]
         argv = argv[:i]
+
+    def take_value(flag):  # значение параметра вида --flag N
+        nonlocal argv
+        if flag in argv:
+            i = argv.index(flag)
+            val = argv[i + 1]
+            argv = argv[:i] + argv[i + 2:]
+            return val
+        return None
+
+    tz = take_value("--tz-offset")
+    if tz is not None:
+        GPX_TIMEZONE_OFFSET = DJI_TIMEZONE_OFFSET = float(tz)
+    gap = take_value("--max-gap-min")
+    if gap is not None:
+        TRACK_MAX_GAP_MIN = float(gap)
+    if "--no-offline" in argv:
+        OFFLINE_MAP = False
+        argv.remove("--no-offline")
+    if "--no-plan" in argv:
+        PLAN_INTERPOLATION = False
+        argv.remove("--no-plan")
     root = os.path.abspath(argv[0] if argv else os.getcwd())
     print(f'Папка: {root}')
 

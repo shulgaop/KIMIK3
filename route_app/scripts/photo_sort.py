@@ -126,8 +126,8 @@ def build_html(report, title):
   .meta{font-size:.85rem;opacity:.8}
   @media print{body{background:#fff}figure{break-inside:avoid}}
 """
-    parts = [f"<!DOCTYPE html><html lang='ru'><head><meta charset='UTF-8'>",
-             f"<meta name='viewport' content='width=device-width, initial-scale=1'>",
+    parts = ["<!DOCTYPE html><html lang='ru'><head><meta charset='UTF-8'>",
+             "<meta name='viewport' content='width=device-width, initial-scale=1'>",
              f"<title>{title}</title><style>{css}</style></head><body><div class='wrap'>",
              f"<h1>{title}</h1>",
              f"<p class='meta'>Фото: {report['total']} · с GPS: {report['with_gps']} · "
