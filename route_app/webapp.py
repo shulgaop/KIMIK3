@@ -460,16 +460,38 @@ def run_step(name, step, payload: dict = Body(default={})):
 
 @app.post("/api/projects/{name}/note")
 def add_note(name, payload: dict = Body(...)):
-    """Дописка к отчёту: строка в входные/дописки.txt (префикс «день N:» — к дню)."""
+    """Дописка к отчёту: свободный текст И/ИЛИ файл-вложение (PDF/DOCX/TXT —
+    текст извлекается read_program.py). Абзац «день N: …» попадёт в день N."""
     d = project_dir(name)
+    parts = []
     text = (payload.get("text") or "").strip()
-    if not text:
+    if text:
+        parts.append(text)
+    fname = (payload.get("filename") or "").strip()
+    if fname:
+        src = d / IN_DIR / safe_name(fname)
+        if not src.is_file():
+            raise HTTPException(404, f"Файл «{fname}» не найден во входных")
+        if src.suffix.lower() in (".png", ".jpg", ".jpeg", ".heic"):
+            raise HTTPException(400, "Текст из изображений не распознаётся (нет OCR) — "
+                                     "опишите фото текстом")
+        spec = importlib.util.spec_from_file_location("read_program", SCRIPTS / "read_program.py")
+        rp = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(rp)
+        try:
+            extracted = rp.extract_text(str(src)).strip()
+        except SystemExit as e:
+            raise HTTPException(400, str(e))
+        if extracted:
+            parts.append(extracted)
+    if not parts:
         raise HTTPException(400, "Пустая дописка")
     p = d / IN_DIR / "дописки.txt"
     p.parent.mkdir(exist_ok=True)
     with open(p, "a", encoding="utf-8") as f:
-        f.write(text + "\n")
-    return {"ok": True, "lines": len(p.read_text(encoding="utf-8").splitlines())}
+        for part in parts:
+            f.write("\n\n" + part + "\n")
+    return {"ok": True, "added_chars": sum(len(x) for x in parts)}
 
 
 # ---------- мастер: результат ----------

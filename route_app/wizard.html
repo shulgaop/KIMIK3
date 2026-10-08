@@ -311,10 +311,12 @@
 </div>
 <div class="card">
   <h2><span class="ic"><svg width="19" height="19"><use href="#i-spark"/></svg></span>Дополнить отчёт</h2>
-  <p class="sub">Одна строка — одна заметка. С префиксом «день 3:» попадёт в третий день,
-  без префикса — в общие заметки. После добавления отчёт пересобирается.</p>
+  <p class="sub">Текст любого размера и/или файл (TXT, PDF, DOCX — текст распознаётся и попадёт в отчёт).
+  Абзац с префиксом «день 3:» попадёт в третий день, без префикса — в общие заметки.
+  После добавления отчёт пересобирается.</p>
+  <textarea id="noteText" style="min-height:140px" placeholder="день 2: у чайханы угостили лепёшкой, ночью был сильный ветер...&#10;&#10;Можно несколько абзацев — разделяйте пустой строкой."></textarea>
   <div class="row">
-    <input id="noteText" placeholder="день 2: у чайханы угостили лепёшкой">
+    <input type="file" id="noteFile" accept=".txt,.md,.pdf,.docx">
     <button class="primary" style="flex:0 0 auto" onclick="addNote()">Добавить и пересобрать</button>
   </div>
   <p class="hint" id="reportLink"></p>
@@ -654,9 +656,20 @@ async function buildReport(){
 }
 async function addNote(){
   if(!cur) return alert('Сначала выберите проект (Мастер, шаг 1)');
-  const text = $('noteText').value.trim(); if(!text) return;
-  await api(`/api/projects/${enc()}/note`, {method:'POST', body:JSON.stringify({text})});
-  $('noteText').value = '';
+  const text = $('noteText').value.trim();
+  const file = $('noteFile').files[0];
+  if(!text && !file) return alert('Напишите текст или прикрепите файл');
+  let filename = null;
+  if(file){  // вложение → во входные, сервер извлечёт текст
+    const rd = new FileReader();
+    const b64 = await new Promise(res => { rd.onload = () => res(String(rd.result).split(',')[1]); rd.readAsDataURL(file); });
+    await api(`/api/projects/${enc()}/upload`, {method:'POST',
+      body:JSON.stringify({filename:file.name, content_b64:b64})});
+    filename = file.name;
+  }
+  await api(`/api/projects/${enc()}/note`, {method:'POST',
+    body:JSON.stringify({text, filename})});
+  $('noteText').value = ''; $('noteFile').value = '';
   buildReport();
 }
 

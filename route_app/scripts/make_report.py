@@ -105,16 +105,19 @@ def split_description(text):
 
 
 def load_notes(path):
-    """Дописки: строка «день N: текст» → к дню; иначе — в общие."""
+    """Дописки: абзац «день N: …» → к дню; иначе — в общие.
+    Абзацы разделяются пустой строкой; внутри абзаца может быть много текста."""
     notes = {}
     if not path or not Path(path).is_file():
         return notes
-    for line in Path(path).read_text(encoding="utf-8").splitlines():
-        line = line.strip()
-        if not line:
+    text = Path(path).read_text(encoding="utf-8")
+    for chunk in re.split(r"\n\s*\n", text):
+        chunk = chunk.strip()
+        if not chunk:
             continue
-        m = re.match(r"день\s*(\d{1,2})\s*[:.—-]\s*(.+)", line, re.I)
-        notes.setdefault(int(m.group(1)) if m else None, []).append(m.group(2) if m else line)
+        m = re.match(r"день\s*(\d{1,2})\s*[:.—-]\s*(.+)", chunk, re.I | re.S)
+        notes.setdefault(int(m.group(1)) if m else None,
+                         []).append(m.group(2).strip() if m else chunk)
     return notes
 
 
@@ -141,7 +144,7 @@ def build_report_md(title, days, desc_blocks, notes, weather_fact, track_days):
         out = []
         out += desc_blocks.get(i, [])
         out += desc_blocks.get(("date", d.strftime("%m-%d")), [])
-        out += [f"_{n}_" for n in notes.get(i, [])]
+        out += notes.get(i, [])
         return out
 
     L.append("## Маршрут по дням")
@@ -155,7 +158,7 @@ def build_report_md(title, days, desc_blocks, notes, weather_fact, track_days):
         else:
             L.append("_(события дня не описаны — добавьте через «Дополнить» в модуле Отчёт)_")
     # общие заметки и дописки без дня
-    general = desc_blocks.get(None, []) + [f"_{n}_" for n in notes.get(None, [])]
+    general = desc_blocks.get(None, []) + notes.get(None, [])
     if general:
         L += ["", "## Общие заметки", ""]
         L += general
