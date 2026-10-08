@@ -407,10 +407,17 @@ def step_first_aid(d, params):
     return ok1 and ok2 and ok3, "", "\n".join(x.strip() for x in (err1, err2, err3) if x)
 
 
+def step_currency(d, params):
+    """Курсы валют стран маршрута (F10) → Деньги.md."""
+    codes = (params.get("currencies") or "BYN,UZS,TJS").strip()
+    return (*run_script([SCRIPTS / "currency.py", "--currencies", codes,
+                         "--md", d / OUT_DIR / "Деньги.md"]),)
+
+
 STEPS = {"program": step_program, "analyze": step_analyze, "weather": step_weather,
          "guide": step_guide, "guide_html": step_guide_html, "research": step_research,
          "audio_texts": step_audio_texts, "tts": step_tts,
-         "daylight": step_daylight, "first_aid": step_first_aid,
+         "daylight": step_daylight, "first_aid": step_first_aid, "currency": step_currency,
          "kml": step_kml, "ics": step_ics, "checklist": step_checklist,
          "photos": step_photos, "marks": step_marks,
          "photos_all": step_photos_all, "status": step_status}
@@ -607,12 +614,28 @@ def learn_example_del(idx: int):
     return {"ok": True, "count": len(ex)}
 
 
+def lan_ip():
+    """Локальный IP для доступа с телефона (та же Wi-Fi сеть)."""
+    import socket
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
+            s.connect(("8.8.8.8", 80))  # пакет не отправляется — лишь выбор интерфейса
+            return s.getsockname()[0]
+    except OSError:
+        return None
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--host", default="127.0.0.1")
+    ap.add_argument("--host", default="127.0.0.1",
+                    help="0.0.0.0 — доступ с телефона/из сети")
     ap.add_argument("--port", type=int, default=8077)
     args = ap.parse_args()
-    print(f"Мастер генерации маршрутов: http://{args.host}:{args.port}")
+    print(f"Мастер на этом компьютере: http://127.0.0.1:{args.port}")
+    if args.host == "0.0.0.0":
+        ip = lan_ip()
+        if ip:
+            print(f"С телефона (та же Wi-Fi):     http://{ip}:{args.port}")
     uvicorn.run(app, host=args.host, port=args.port, log_level="warning")
 
 

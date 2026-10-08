@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#3f6218">
 <title>TrailForge — мастер маршрутов</title>
 <style>
   :root{
@@ -47,15 +48,15 @@
   .stepper .st.done .num{background:var(--green);color:#fff}
   /* ── контролы ──────────────────────── */
   button{font:600 .92rem/1 inherit;padding:11px 18px;border-radius:999px;border:1.5px solid var(--green);
-         background:#fff;color:var(--green-d);cursor:pointer;transition:.15s}
+         background:#fff;color:var(--green-d);cursor:pointer;transition:.15s;min-height:42px}
   button:hover{background:var(--green-soft)}
   button:disabled{opacity:.45;cursor:default}
   button.primary{background:var(--green);color:#fff;border-color:var(--green)}
   button.primary:hover{background:var(--green-d)}
-  button.big{font-size:1.02rem;padding:14px 22px;width:100%;margin-top:10px;
+  button.big{font-size:1.02rem;padding:14px 22px;width:100%;margin-top:10px;min-height:50px;
              box-shadow:0 2px 6px rgba(94,132,36,.3)}
   button.small{font-size:.8rem;padding:7px 12px;border-color:var(--line);color:var(--muted)}
-  input,textarea,select{font:inherit;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;
+  input,textarea,select{font:inherit;font-size:16px;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;
                         background:#fff;width:100%;transition:.15s}
   input:focus,textarea:focus,select:focus{outline:none;border-color:var(--green);
                         box-shadow:0 0 0 3px rgba(120,162,47,.15)}
@@ -97,6 +98,12 @@
     .hero .art{display:none}
     .hero .logo svg{width:34px;height:34px}
     .card{padding:16px}
+    .row>*{min-width:100%}
+    .row button{width:100%}
+    .tabs button{flex:1;text-align:center}
+    ul.files li{padding:11px 0;font-size:1.02rem}
+    .modal .box{width:96vw;max-height:88vh}
+    button.small{width:auto}
   }
 </style>
 </head>
@@ -235,6 +242,10 @@
   </div>
   <div class="row">
     <button onclick="runStep('first_aid')" title="Чеклист аптечки по высотам маршрута + напоминания о приёме в календарь"><svg width="15" height="15" style="vertical-align:-2px"><use href="#i-pill"/></svg> Аптечка (чеклист + напоминания)</button>
+  </div>
+  <div class="row">
+    <div><label>Валюты стран маршрута (ISO через запятую)</label><input id="currencies" value="BYN,UZS,TJS"></div>
+    <div style="align-self:end"><button onclick="runStep('currency')">💱 Курсы валют на сегодня</button></div>
   </div>
   <details>
     <summary>События календаря (события.json)</summary>
@@ -432,6 +443,7 @@ async function runStep(step){
                       body.api_key = $('llmKey').value.trim(); }
   if(step==='weather' || step==='daylight' || step==='first_aid'){ body.start=$('pStart').value; body.end=$('pEnd').value; }
   if(step==='kml'){ body.split_km = $('splitKm').value.trim().split(/\s+/).filter(Boolean).map(Number); }
+  if(step==='currency'){ body.currencies = $('currencies').value.trim(); }
   if(step.startsWith('photos') || step==='marks'){ body.folder = photoFolder; body.start = $('pStart').value; }
   try{
     const r = await api(`/api/projects/${enc()}/run/${step}`, {method:'POST', body:JSON.stringify(body)});
