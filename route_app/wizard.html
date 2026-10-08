@@ -91,6 +91,20 @@
   .modal .cnt{font-size:.76rem;color:var(--muted)}
   .modal .foot{display:flex;gap:8px;margin-top:12px}
   a{color:var(--green-d)}
+  /* ── инструкция ────────────────────── */
+  .help-search{position:sticky;top:0;background:var(--bg);padding:6px 0 10px;z-index:5}
+  .answer h3{font-size:1rem;display:flex;align-items:center;gap:9px;margin-bottom:6px}
+  .answer .ic{flex:0 0 auto;width:30px;height:30px;border-radius:8px;background:var(--green-soft);
+              display:flex;align-items:center;justify-content:center;color:var(--green-d)}
+  .answer ol,.answer ul{margin:6px 0 6px 22px}
+  .answer li{margin:4px 0}
+  .answer table{margin:10px 0}
+  .kbd{background:var(--green-soft);border:1px solid var(--line);border-radius:6px;
+       padding:1px 8px;font-family:Consolas,monospace;font-size:.85em}
+  .toc a{display:inline-block;margin:2px 4px 2px 0;padding:4px 12px;background:#fff;
+         border:1px solid var(--line);border-radius:999px;font-size:.82rem;text-decoration:none}
+  .toc a:hover{border-color:var(--green);color:var(--green-d)}
+  @media print{ header,.help-search,.toc{display:none} .answer{break-inside:avoid} }
   @media (max-width:640px){
     .hero{padding:12px 16px;gap:12px}
     .hero h1{font-size:1.05rem}
@@ -144,6 +158,7 @@
     <button class="active" id="tabWizard">Мастер</button>
     <button id="tabReport">Отчёт</button>
     <button id="tabLearn">Обучение</button>
+    <button id="tabHelp">Инструкция</button>
   </div>
 </header>
 
@@ -340,6 +355,124 @@
   <label>Теги (через запятую)</label><input id="exTags" placeholder="день, перевал, аудиотекст">
   <button class="primary" onclick="addExample()" style="margin-top:8px">Добавить пример</button>
   <div id="exList"></div>
+</div>
+</div>
+
+<div id="pageHelp" style="display:none">
+<div class="help-search"><input id="helpQ" placeholder="Поиск по инструкции… (например: ключ, фото, телефон)" oninput="filterHelp()"></div>
+<div class="card toc"><b>Оглавление:</b><br>
+  <a href="#help-start">Быстрый старт</a><a href="#help-steps">Шаги мастера</a>
+  <a href="#help-report">Отчёт</a><a href="#help-learn">Обучение</a>
+  <a href="#help-llm">Ключ OpenRouter</a><a href="#help-photo">Фото и видео</a>
+  <a href="#help-phone">С телефона</a><a href="#help-files">Где файлы</a>
+  <a href="#help-faq">Проблемы</a>
+</div>
+
+<div class="card answer" id="help-start">
+  <h3><span class="ic"><svg width="16" height="16"><use href="#i-flag"/></svg></span>Быстрый старт за 5 минут</h3>
+  <ol>
+    <li><b>Мастер → шаг 1:</b> введите название похода и даты → «Создать проект».</li>
+    <li><b>Шаг 2:</b> загрузите программу (PDF/DOCX) или вставьте текст → «Прочитать программу».
+        Приложение само найдёт даты, дни и точки — проверьте их в спойлере и сохраните.
+        Туда же — плановый GPX-трек, а после похода — записанный трек с часов.</li>
+    <li>Дальше жмите большие зелёные кнопки по порядку: <b>Анализ</b> → <b>Погода</b> →
+        <b>Гид (ИИ)</b> → <b>Документы</b> → <b>Фото</b>. Пройденные шаги отмечаются галочкой ✓.</li>
+    <li><b>Шаг «Результат»:</b> «Скачать всё одним zip» — весь комплект (гид, карта, календарь,
+        чеклист, аудиогид, фотоотчёт) в одном архиве.</li>
+  </ol>
+</div>
+
+<div class="card answer" id="help-steps">
+  <h3><span class="ic"><svg width="16" height="16"><use href="#i-map"/></svg></span>Что делает каждый шаг мастера</h3>
+  <table>
+    <tr><th>Шаг</th><th>Что загрузить</th><th>Что получится</th></tr>
+    <tr><td>2 · Программа</td><td>PDF/DOCX/TXT с описанием или текст; плановый GPX; трек с часов (после похода)</td>
+        <td>программа.txt, черновик points.json</td></tr>
+    <tr><td>3 · Анализ</td><td>track.gpx + точки</td><td>анализ.json — км, высоты, уклоны, азимуты</td></tr>
+    <tr><td>4 · Погода</td><td>даты + точки</td><td>Погода.md (прогноз/климат/факт), Световой_день.md (рассветы, Луна)</td></tr>
+    <tr><td>5 · Гид (ИИ)</td><td>ключ OpenRouter</td><td>Гид.md + Гид.html, аудиотексты → mp3, факты из Википедии/OSM</td></tr>
+    <tr><td>6 · Документы</td><td>—</td><td>маршрут.kml, календарь.ics, Чеклист.html, Аптечка.html, Деньги.md</td></tr>
+    <tr><td>7 · Фото</td><td>папка с фото на компьютере</td><td>фото по дням, фотометки.kml, карта_похода.html</td></tr>
+    <tr><td>8 · Результат</td><td>—</td><td>zip всего проекта</td></tr>
+  </table>
+  <p class="hint">Совет: в шаге 5 сначала «🔎 Найти факты», потом «Сгенерировать путеводитель» — гид будет с факт-блоками и источниками.</p>
+</div>
+
+<div class="card answer" id="help-report">
+  <h3><span class="ic"><svg width="16" height="16"><use href="#i-doc"/></svg></span>Вкладка «Отчёт» — после похода</h3>
+  <ol>
+    <li>Загрузите <b>записанный трек с часов</b> (GPX с таймстемпами) — дни, километры и наборы посчитаются сами.</li>
+    <li>Добавьте <b>описание</b> текстом или файлом. Абзацы «День 2. …» попадут во второй день, остальное — в общие заметки.</li>
+    <li>«Собрать отчёт» → Отчёт.html в формате отчёта о категорийном походе.</li>
+    <li><b>Дополняйте</b>: поле принимает текст любого размера и файлы (TXT/PDF/DOCX — текст распознаётся).
+        Абзац «день 3: …» — в третий день. Отчёт пересобирается автоматически.</li>
+  </ol>
+  <p class="hint">Погода-факт (шаг 4 после дат похода) автоматически добавит в отчёт таблицу реальной погоды.</p>
+</div>
+
+<div class="card answer" id="help-learn">
+  <h3><span class="ic"><svg width="16" height="16"><use href="#i-spark"/></svg></span>Вкладка «Обучение»</h3>
+  <ul>
+    <li><b>Правила генерации</b> — короткие проверяемые правила для ИИ («числа в аудиотекстах прописью», «уклоны только из анализа»).</li>
+    <li><b>База примеров</b> — эталонные фрагменты выдачи: на них ИИ учится оформлять разделы.</li>
+  </ul>
+  <p class="hint">Всё хранится локально в <span class="kbd">route_app/learn/</span> и не попадает в git.</p>
+</div>
+
+<div class="card answer" id="help-llm">
+  <h3><span class="ic"><svg width="16" height="16"><use href="#i-check"/></svg></span>Ключ OpenRouter (бесплатно)</h3>
+  <ol>
+    <li>Откройте <a href="https://openrouter.ai/keys" target="_blank">openrouter.ai/keys</a> → Sign up (Google) → «Create Key».</li>
+    <li>Вставьте ключ в поле шага 5 — он сохранится локально (в git не попадает).</li>
+    <li>Бесплатные модели — в списке (по умолчанию самая сильная). Платные — впишите id
+        (например <span class="kbd">openai/gpt-5</span>) при платной подписке OpenRouter.</li>
+  </ol>
+  <p class="hint">Дневной лимит бесплатных моделей ~50 запросов. Исчерпали — дождитесь следующего дня или используйте платную модель.</p>
+</div>
+
+<div class="card answer" id="help-photo">
+  <h3><span class="ic"><svg width="16" height="16"><use href="#i-camera"/></svg></span>Фото и видео: как получить точную привязку</h3>
+  <ul>
+    <li><b>На телефоне включите геометки:</b> iPhone — Настройки → Конфиденциальность → Службы геолокации → Камера;
+        Android — в камере «Сохранять геопозицию». Фото из мессенджеров присылайте «файлом» — иначе EXIF вырезается.</li>
+    <li><b>Записывайте трек на часах/навигаторе</b> (Garmin, Suunto, Amazfit → экспорт GPX) и загрузите его в шаге 2 —
+        фото без GPS встанут на маршрут по времени съёмки.</li>
+    <li>Нет записи за день — позиция оценивается по плановому треку и честно помечается «по плану (оценка)».</li>
+  </ul>
+</div>
+
+<div class="card answer" id="help-phone">
+  <h3><span class="ic"><svg width="16" height="16"><use href="#i-mountain"/></svg></span>Открыть мастер с телефона</h3>
+  <ol>
+    <li>На компьютере: <span class="kbd">python webapp.py --host 0.0.0.0</span></li>
+    <li>В консоли появится адрес вида <span class="kbd">http://192.168.x.x:8077</span> — откройте его на телефоне (та же Wi-Fi сеть).</li>
+    <li>Готовые Гид.html, Чеклист.html и Отчёт.html работают офлайн — скопируйте в телефон перед выездом.</li>
+  </ol>
+</div>
+
+<div class="card answer" id="help-files">
+  <h3><span class="ic"><svg width="16" height="16"><use href="#i-folder"/></svg></span>Где лежат файлы</h3>
+  <table>
+    <tr><th>Что</th><th>Где</th></tr>
+    <tr><td>Проекты (входные и выдача)</td><td><span class="kbd">route_app/projects/&lt;название&gt;/входные|выходные</span></td></tr>
+    <tr><td>Снимок проекта</td><td><span class="kbd">СТАТУС_&lt;название&gt;.md</span> в папке проекта (обновляется сам)</td></tr>
+    <tr><td>Правила и примеры обучения</td><td><span class="kbd">route_app/learn/</span></td></tr>
+    <tr><td>Отчёт с картой по фото</td><td>прямо в папке с фото (карта_похода.html, отчёт_похода.xlsx)</td></tr>
+  </table>
+</div>
+
+<div class="card answer" id="help-faq">
+  <h3><span class="ic"><svg width="16" height="16"><use href="#i-search"/></svg></span>Частые проблемы</h3>
+  <table>
+    <tr><th>Симптом</th><th>Решение</th></tr>
+    <tr><td>«Ключ OpenRouter отклонён (401)»</td><td>Проверьте ключ в шаге 5 или создайте новый на openrouter.ai/keys</td></tr>
+    <tr><td>«HTTP 429 / rate-limited»</td><td>Дневной лимит бесплатных моделей исчерпан — подождите до завтра или впишите платную модель</td></tr>
+    <tr><td>Погода пишет «Open-Meteo недоступен»</td><td>Проверьте интернет; скрипт сам повторяет запрос 3 раза</td></tr>
+    <tr><td>Фото в «Неразобранном»</td><td>В файле нет EXIF (мессенджер вырезал) — просите оригиналы «файлом»</td></tr>
+    <tr><td>«Бинарный .doc не читается»</td><td>Пересохраните документ в Word как .docx</td></tr>
+    <tr><td>Порт 8077 занят</td><td><span class="kbd">python webapp.py --port 8080</span></td></tr>
+    <tr><td>Нужен офлайн-аудиогид</td><td>«Озвучить mp3» (шаг 5) → Аудиогид.zip; нужен edge-tts из requirements</td></tr>
+  </table>
 </div>
 </div>
 
@@ -610,12 +743,21 @@ async function delExample(i){
 $('tabWizard').onclick = ()=>{ showTab('Wizard'); };
 $('tabReport').onclick = ()=>{ showTab('Report'); };
 $('tabLearn').onclick = ()=>{ showTab('Learn'); loadLearn(); };
+$('tabHelp').onclick = ()=>{ showTab('Help'); };
 function showTab(t){
-  for(const p of ['Wizard','Report','Learn']){
+  for(const p of ['Wizard','Report','Learn','Help']){
     $('page'+p).style.display = p===t ? '' : 'none';
     $('tab'+p).classList.toggle('active', p===t);
   }
   if(t==='Report') $('repProject').textContent = cur || 'не выбран';
+}
+
+// ---- инструкция: живой поиск ----
+function filterHelp(){
+  const q = $('helpQ').value.trim().toLowerCase();
+  document.querySelectorAll('#pageHelp .answer').forEach(card=>{
+    card.style.display = !q || card.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
 }
 
 // ---- отчёт ----
