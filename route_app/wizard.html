@@ -142,6 +142,7 @@
   </div>
   <div class="tabs">
     <button class="active" id="tabWizard">Мастер</button>
+    <button id="tabReport">Отчёт</button>
     <button id="tabLearn">Обучение</button>
   </div>
 </header>
@@ -291,6 +292,32 @@
   </div>
   <ul class="files" id="filesOut"></ul>
   <p class="hint">СТАТУС проекта обновляется автоматически после каждого шага.</p>
+</div>
+</div>
+
+<div id="pageReport" style="display:none">
+<div class="card">
+  <h2><span class="ic"><svg width="19" height="19"><use href="#i-doc"/></svg></span>Отчёт о пройденном походе</h2>
+  <p class="sub">Записанный трек с часов + ваше описание → отчёт в формате категорийного похода
+  (статистика дней из трека, события из описания). Работает с текущим проектом: <b id="repProject">не выбран</b> —
+  выбрать можно на вкладке «Мастер», шаг 1.</p>
+  <label>1 · Записанный трек с часов (GPX с таймстемпами)</label>
+  <input type="file" accept=".gpx" onchange="uploadFile(this,'трек_с_часов.gpx')">
+  <label>2 · Описание похода (файл TXT/PDF/DOCX или текст)</label>
+  <input type="file" accept=".txt,.md,.pdf,.docx" onchange="uploadReportText(this)">
+  <textarea id="taReportText" placeholder="День 1. Выехали рано, граница заняла два часа...&#10;&#10;День 2. Долгий подъём на перевал, встретили сурков..."></textarea>
+  <button class="big primary" onclick="buildReport()">Собрать отчёт</button>
+  <pre id="logReport" style="display:none"></pre>
+</div>
+<div class="card">
+  <h2><span class="ic"><svg width="19" height="19"><use href="#i-spark"/></svg></span>Дополнить отчёт</h2>
+  <p class="sub">Одна строка — одна заметка. С префиксом «день 3:» попадёт в третий день,
+  без префикса — в общие заметки. После добавления отчёт пересобирается.</p>
+  <div class="row">
+    <input id="noteText" placeholder="день 2: у чайханы угостили лепёшкой">
+    <button class="primary" style="flex:0 0 auto" onclick="addNote()">Добавить и пересобрать</button>
+  </div>
+  <p class="hint" id="reportLink"></p>
 </div>
 </div>
 
@@ -578,10 +605,60 @@ async function delExample(i){
   loadLearn();
 }
 
-$('tabWizard').onclick = ()=>{ $('pageWizard').style.display=''; $('pageLearn').style.display='none';
-  $('tabWizard').classList.add('active'); $('tabLearn').classList.remove('active'); };
-$('tabLearn').onclick = ()=>{ $('pageWizard').style.display='none'; $('pageLearn').style.display='';
-  $('tabLearn').classList.add('active'); $('tabWizard').classList.remove('active'); loadLearn(); };
+$('tabWizard').onclick = ()=>{ showTab('Wizard'); };
+$('tabReport').onclick = ()=>{ showTab('Report'); };
+$('tabLearn').onclick = ()=>{ showTab('Learn'); loadLearn(); };
+function showTab(t){
+  for(const p of ['Wizard','Report','Learn']){
+    $('page'+p).style.display = p===t ? '' : 'none';
+    $('tab'+p).classList.toggle('active', p===t);
+  }
+  if(t==='Report') $('repProject').textContent = cur || 'не выбран';
+}
+
+// ---- отчёт ----
+async function uploadReportText(input){
+  const f = input.files[0]; if(!f || !cur) return alert('Сначала выберите проект (Мастер, шаг 1)');
+  if(/\.(txt|md)$/i.test(f.name)){
+    const rd = new FileReader();
+    rd.onload = async ()=>{
+      await api(`/api/projects/${enc()}/upload`, {method:'POST',
+        body:JSON.stringify({filename:'описание_похода.txt', text:rd.result})});
+      $('taReportText').value = rd.result;
+      log('logReport', '✓ Описание загружено.', true);
+    };
+    rd.readAsText(f, 'utf-8');
+  }else{
+    const rd = new FileReader();
+    rd.onload = async ()=>{
+      await api(`/api/projects/${enc()}/upload`, {method:'POST',
+        body:JSON.stringify({filename:f.name, content_b64:String(rd.result).split(',')[1]})});
+      log('logReport', '✓ Документ загружен (текст извлечётся при сборке: укажите его в программе или сохраните как .txt).', true);
+    };
+    rd.readAsDataURL(f);
+  }
+}
+async function buildReport(){
+  if(!cur) return alert('Сначала выберите проект (Мастер, шаг 1)');
+  if($('taReportText').value.trim())
+    await api(`/api/projects/${enc()}/upload`, {method:'POST',
+      body:JSON.stringify({filename:'описание_похода.txt', text:$('taReportText').value.trim()})});
+  log('logReport', '⏳ Собираю отчёт…');
+  try{
+    const r = await api(`/api/projects/${enc()}/run/report`, {method:'POST', body:'{}'});
+    log('logReport', (r.stderr||'').trim(), r.ok);
+    if(r.ok) $('reportLink').innerHTML =
+      `📄 <a href="/api/projects/${enc()}/download?path=${encodeURIComponent('выходные/Отчёт.html')}" target="_blank">Открыть Отчёт.html</a> ·
+       <a href="/api/projects/${enc()}/download?path=${encodeURIComponent('выходные/Отчёт.md')}">Отчёт.md</a>`;
+  }catch(e){ log('logReport', '✗ ' + e.message, false); }
+}
+async function addNote(){
+  if(!cur) return alert('Сначала выберите проект (Мастер, шаг 1)');
+  const text = $('noteText').value.trim(); if(!text) return;
+  await api(`/api/projects/${enc()}/note`, {method:'POST', body:JSON.stringify({text})});
+  $('noteText').value = '';
+  buildReport();
+}
 
 $('taEvents').value = eventsTemplate();
 $('taChecklist').value = CHECKLIST_TEMPLATE;

@@ -429,10 +429,16 @@ def step_currency(d, params):
                          "--md", d / OUT_DIR / "Деньги.md"]),)
 
 
+def step_report(d, params):
+    """Отчёт о пройденном походе: записанный трек + описание + дописки."""
+    return (*run_script([SCRIPTS / "make_report.py", d]),)
+
+
 STEPS = {"program": step_program, "analyze": step_analyze, "weather": step_weather,
          "guide": step_guide, "guide_html": step_guide_html, "research": step_research,
          "audio_texts": step_audio_texts, "tts": step_tts,
          "daylight": step_daylight, "first_aid": step_first_aid, "currency": step_currency,
+         "report": step_report,
          "kml": step_kml, "ics": step_ics, "checklist": step_checklist,
          "photos": step_photos, "marks": step_marks,
          "photos_all": step_photos_all, "status": step_status}
@@ -450,6 +456,20 @@ def run_step(name, step, payload: dict = Body(default={})):
     status_ok, status_err = (True, "") if step == "status" else update_status(d)
     return {"ok": ok, "stdout": out, "stderr": err,
             "status_ok": status_ok, "status_stderr": status_err}
+
+
+@app.post("/api/projects/{name}/note")
+def add_note(name, payload: dict = Body(...)):
+    """Дописка к отчёту: строка в входные/дописки.txt (префикс «день N:» — к дню)."""
+    d = project_dir(name)
+    text = (payload.get("text") or "").strip()
+    if not text:
+        raise HTTPException(400, "Пустая дописка")
+    p = d / IN_DIR / "дописки.txt"
+    p.parent.mkdir(exist_ok=True)
+    with open(p, "a", encoding="utf-8") as f:
+        f.write(text + "\n")
+    return {"ok": True, "lines": len(p.read_text(encoding="utf-8").splitlines())}
 
 
 # ---------- мастер: результат ----------
