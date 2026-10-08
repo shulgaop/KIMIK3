@@ -3,72 +3,150 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Мастер генерации маршрутов</title>
+<title>TrailForge — мастер маршрутов</title>
 <style>
-  :root{--paper:#b0c6b3;--ink:#111;--crim:#db3356;--card:#fdfdfb;--line:#7a947e;--ok:#1a7a34}
+  :root{
+    --green:#78a22f; --green-d:#5e8424; --green-soft:#eef4e2;
+    --ink:#1c2b21; --muted:#5c6f60; --card:#ffffff; --bg:#f4f6f1;
+    --line:#dbe4d3; --danger:#d64545; --radius:14px;
+  }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--paper);color:var(--ink);font:16px/1.55 -apple-system,"Segoe UI",Roboto,sans-serif;padding:18px}
-  .wrap{max-width:820px;margin:0 auto}
-  h1{font-family:Georgia,serif;font-size:1.5rem;margin:4px 0 12px}
-  h2{font-family:Georgia,serif;font-size:1.15rem;margin-bottom:6px;display:flex;align-items:center;gap:8px}
-  h2 .tick{color:var(--ok);font-size:1.2rem;display:none}
-  .card.done h2 .tick{display:inline}
-  .tabs{display:flex;gap:8px;margin-bottom:12px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:12px}
-  .card.done{border-color:var(--ok);border-width:2px}
-  button{font:600 .92rem/1 inherit;padding:9px 14px;border:2px solid var(--ink);background:var(--card);cursor:pointer;border-radius:8px}
-  button:hover{background:var(--ink);color:var(--paper)}
-  button:disabled{opacity:.4;cursor:default}
-  button.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-  button.primary:hover{background:var(--crim);border-color:var(--crim)}
-  button.big{font-size:1.05rem;padding:14px 20px;width:100%;margin-top:10px}
-  button.small{font-size:.8rem;padding:5px 10px;border-width:1px;opacity:.85}
-  input,textarea,select{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:#fff;width:100%}
-  textarea{font-family:Consolas,monospace;font-size:.85rem;min-height:120px}
-  label{display:block;font-size:.85rem;font-weight:600;margin:10px 0 4px}
-  .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
-  .row>*{flex:1;min-width:140px}
-  .steps{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
-  .steps span{padding:5px 11px;border:1px solid var(--line);border-radius:14px;font-size:.82rem;cursor:pointer;background:var(--card)}
-  .steps span.cur{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-  .steps span.done{border-color:var(--ok);color:var(--ok)}
-  pre{background:#f2f2ee;border:1px dashed var(--line);border-radius:8px;padding:10px;font-size:.8rem;max-height:280px;overflow:auto;white-space:pre-wrap;margin-top:10px}
-  .ok{color:var(--ok);font-weight:600}
-  .bad{color:var(--crim);font-weight:600}
-  ul.files{list-style:none;margin-top:8px}
-  ul.files li{padding:4px 0;border-bottom:1px dashed var(--line)}
-  ul.files a{color:var(--ink)}
-  .ex{border:1px dashed var(--line);border-radius:8px;padding:8px;margin-top:8px}
-  .hint{font-size:.85rem;opacity:.75;margin-top:4px}
-  .chip{display:inline-block;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:5px 12px;font-size:.85rem;margin-top:6px;word-break:break-all}
-  details{margin-top:10px}
-  summary{cursor:pointer;font-size:.85rem;font-weight:600;opacity:.8}
-  /* модальный выбор папки */
-  .modal{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:20}
+  body{background:var(--bg);color:var(--ink);
+       font:15.5px/1.55 -apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif}
+  /* ── шапка ─────────────────────────── */
+  header{background:linear-gradient(135deg,#3f6218 0%,#78a22f 100%);color:#fff;padding:0}
+  .hero{max-width:900px;margin:0 auto;display:flex;align-items:center;gap:18px;padding:18px 20px}
+  .hero .logo{flex:0 0 auto}
+  .hero h1{font-size:1.35rem;font-weight:700;letter-spacing:.2px}
+  .hero p{font-size:.85rem;opacity:.92}
+  .hero .art{margin-left:auto;flex:0 0 auto;opacity:.95}
+  .tabs{max-width:900px;margin:0 auto;display:flex;gap:6px;padding:0 20px 12px}
+  .tabs button{background:rgba(255,255,255,.16);color:#fff;border:none;border-radius:999px;padding:8px 18px}
+  .tabs button.active{background:#fff;color:var(--green-d)}
+  /* ── контент ───────────────────────── */
+  .wrap{max-width:900px;margin:18px auto;padding:0 20px 40px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+        padding:20px 22px;margin-bottom:14px;box-shadow:0 1px 3px rgba(28,43,33,.06)}
+  .card h2{font-size:1.08rem;font-weight:700;display:flex;align-items:center;gap:10px;margin-bottom:4px}
+  .card h2 .ic{flex:0 0 auto;width:34px;height:34px;border-radius:10px;background:var(--green-soft);
+               display:flex;align-items:center;justify-content:center}
+  .card .sub{color:var(--muted);font-size:.88rem;margin-bottom:8px}
+  .card.done{border-left:4px solid var(--green)}
+  .card.done .badge{display:inline-flex}
+  .badge{display:none;align-items:center;gap:4px;background:var(--green-soft);color:var(--green-d);
+         font-size:.75rem;font-weight:700;border-radius:999px;padding:3px 10px;margin-left:auto}
+  /* ── степпер ───────────────────────── */
+  .stepper{display:flex;gap:4px;overflow-x:auto;padding:4px 2px 12px;scrollbar-width:none}
+  .stepper::-webkit-scrollbar{display:none}
+  .stepper .st{flex:0 0 auto;display:flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;
+               background:#fff;border:1px solid var(--line);cursor:pointer;font-size:.8rem;font-weight:600;color:var(--muted)}
+  .stepper .st .num{width:22px;height:22px;border-radius:50%;background:var(--green-soft);color:var(--green-d);
+                    display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700}
+  .stepper .st.cur{background:var(--green);border-color:var(--green);color:#fff}
+  .stepper .st.cur .num{background:rgba(255,255,255,.25);color:#fff}
+  .stepper .st.done .num{background:var(--green);color:#fff}
+  /* ── контролы ──────────────────────── */
+  button{font:600 .92rem/1 inherit;padding:11px 18px;border-radius:999px;border:1.5px solid var(--green);
+         background:#fff;color:var(--green-d);cursor:pointer;transition:.15s}
+  button:hover{background:var(--green-soft)}
+  button:disabled{opacity:.45;cursor:default}
+  button.primary{background:var(--green);color:#fff;border-color:var(--green)}
+  button.primary:hover{background:var(--green-d)}
+  button.big{font-size:1.02rem;padding:14px 22px;width:100%;margin-top:10px;
+             box-shadow:0 2px 6px rgba(94,132,36,.3)}
+  button.small{font-size:.8rem;padding:7px 12px;border-color:var(--line);color:var(--muted)}
+  input,textarea,select{font:inherit;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;
+                        background:#fff;width:100%;transition:.15s}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--green);
+                        box-shadow:0 0 0 3px rgba(120,162,47,.15)}
+  textarea{font-family:Consolas,monospace;font-size:.84rem;min-height:110px}
+  label{display:block;font-size:.84rem;font-weight:600;margin:12px 0 5px;color:var(--ink)}
+  .row{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
+  .row>*{flex:1;min-width:150px}
+  pre{background:#f6f8f3;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:.8rem;
+      max-height:280px;overflow:auto;white-space:pre-wrap;margin-top:12px}
+  .ok{color:var(--green-d);font-weight:600}
+  .bad{color:var(--danger);font-weight:600}
+  ul.files{list-style:none;margin-top:10px}
+  ul.files li{padding:7px 0;border-bottom:1px solid var(--line)}
+  ul.files a{color:var(--green-d);font-weight:600;text-decoration:none}
+  ul.files a:hover{text-decoration:underline}
+  .ex{border:1px dashed var(--line);border-radius:10px;padding:10px;margin-top:8px}
+  .hint{font-size:.85rem;color:var(--muted);margin-top:6px}
+  .chip{display:inline-flex;align-items:center;gap:6px;background:var(--green-soft);color:var(--green-d);
+        border-radius:999px;padding:7px 14px;font-size:.85rem;font-weight:600;margin-top:8px;word-break:break-all}
+  details{margin-top:12px;border-top:1px solid var(--line);padding-top:10px}
+  summary{cursor:pointer;font-size:.86rem;font-weight:600;color:var(--muted)}
+  /* ── модальный выбор папки ─────────── */
+  .modal{position:fixed;inset:0;background:rgba(28,43,33,.45);display:none;align-items:center;justify-content:center;z-index:20}
   .modal.open{display:flex}
-  .modal .box{background:var(--card);border-radius:10px;padding:16px;width:min(560px,92vw);max-height:80vh;display:flex;flex-direction:column}
-  .modal .crumbs{font-size:.85rem;font-weight:600;margin-bottom:8px;word-break:break-all}
-  .modal .list{overflow:auto;flex:1;border:1px solid var(--line);border-radius:8px}
-  .modal .item{padding:8px 12px;cursor:pointer;border-bottom:1px dashed var(--line);display:flex;justify-content:space-between;gap:8px}
-  .modal .item:hover{background:var(--paper)}
-  .modal .cnt{font-size:.78rem;opacity:.7}
-  .modal .foot{display:flex;gap:8px;margin-top:10px}
+  .modal .box{background:#fff;border-radius:var(--radius);padding:18px;width:min(560px,92vw);
+              max-height:80vh;display:flex;flex-direction:column;box-shadow:0 8px 30px rgba(0,0,0,.2)}
+  .modal .crumbs{font-size:.85rem;font-weight:700;margin-bottom:10px;word-break:break-all}
+  .modal .list{overflow:auto;flex:1;border:1px solid var(--line);border-radius:10px}
+  .modal .item{padding:10px 14px;cursor:pointer;border-bottom:1px solid var(--line);
+               display:flex;justify-content:space-between;gap:8px;align-items:center}
+  .modal .item:hover{background:var(--green-soft)}
+  .modal .cnt{font-size:.76rem;color:var(--muted)}
+  .modal .foot{display:flex;gap:8px;margin-top:12px}
+  a{color:var(--green-d)}
+  @media (max-width:640px){
+    .hero{padding:12px 16px;gap:12px}
+    .hero h1{font-size:1.05rem}
+    .hero p{font-size:.78rem}
+    .hero .art{display:none}
+    .hero .logo svg{width:34px;height:34px}
+    .card{padding:16px}
+  }
 </style>
 </head>
 <body>
+
+<svg width="0" height="0" style="position:absolute"><defs>
+  <symbol id="i-mountain" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 20L9 8l3.5 6L15 9l6 11H3z"/><circle cx="18.5" cy="4.5" r="1.8" fill="currentColor"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M5 21V4m0 1h12l-2.5 4L17 13H5"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 2h9l5 5v13a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2z"/><path fill="none" stroke="currentColor" stroke-width="2" d="M14 2v6h6M8 13h8M8 17h5"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M3 21h18M6 21V10m6 11V4m6 17v-8"/></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M6 18a4 4 0 01-.6-7.97A5.5 5.5 0 0116.4 8.6 4.5 4.5 0 0118 18H6z"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4L12 3zM19 16l.9 2.6 2.6.9-2.6.9-.9 2.6-.9-2.6-2.6-.9 2.6-.9.9-2.6z"/></symbol>
+  <symbol id="i-map" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2zM9 4v14m6-12v14"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 8h3l2-3h6l2 3h3a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V9a1 1 0 011-1z"/><circle cx="12" cy="14" r="3.2" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M21 8l-9-5-9 5v8l9 5 9-5V8zM3 8l9 5 9-5M12 13v8"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M4 12.5l5 5L20 6.5"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4l1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-pill" viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="8" rx="4" transform="rotate(-45 12 12)" fill="none" stroke="currentColor" stroke-width="2"/><path stroke="currentColor" stroke-width="2" d="M8.5 11.5l7 7" transform="rotate(-45 12 12)"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M15.5 15.5L21 21"/></symbol>
+</defs></svg>
+
+<header>
+  <div class="hero">
+    <div class="logo">
+      <svg width="46" height="46" viewBox="0 0 48 48"><circle cx="24" cy="24" r="23" fill="rgba(255,255,255,.15)"/><path d="M10 33L19 15l5.5 9L28 18l10 15H10z" fill="#fff"/><circle cx="33.5" cy="13" r="2.6" fill="#ffd94d"/></svg>
+    </div>
+    <div>
+      <h1>TrailForge · Мастер маршрутов</h1>
+      <p>Гид, карта, погода, аудиогид, фотоотчёт — из программы и GPX</p>
+    </div>
+    <svg class="art" width="150" height="52" viewBox="0 0 150 52" aria-hidden="true">
+      <path d="M0 46 L28 14 L40 30 L52 8 L70 34 L82 20 L98 40 L112 26 L128 42 L150 46 Z" fill="rgba(255,255,255,.22)"/>
+      <path d="M0 48 L22 26 L36 40 L54 20 L74 44 L90 32 L110 46 L150 48 Z" fill="rgba(255,255,255,.35)"/>
+    </svg>
+  </div>
+  <div class="tabs">
+    <button class="active" id="tabWizard">Мастер</button>
+    <button id="tabLearn">Обучение</button>
+  </div>
+</header>
+
 <div class="wrap">
-<h1>⛰ Мастер генерации маршрутов</h1>
-
-<div class="tabs">
-  <button class="primary" id="tabWizard">Мастер</button>
-  <button id="tabLearn">Обучение</button>
-</div>
-
 <div id="pageWizard">
-<div class="steps" id="stepsBar"></div>
+<div class="stepper" id="stepsBar"></div>
 
 <div class="card" data-step="0">
-  <h2><span class="tick">✓</span>1 · Проект и даты</h2>
+  <h2><span class="ic"><svg width="19" height="19"><use href="#i-flag"/></svg></span>Проект и даты
+    <span class="badge"><svg width="12" height="12"><use href="#i-check"/></svg>готово</span></h2>
+  <p class="sub">Название похода и даты — всё остальное подстроится.</p>
   <div class="row">
     <div><label>Название похода</label><input id="pName" placeholder="Например: Фанские горы"></div>
     <div><label>Первый день</label><input id="pStart" type="date"></div>
@@ -82,9 +160,9 @@
 </div>
 
 <div class="card" data-step="1">
-  <h2><span class="tick">✓</span>2 · Программа похода</h2>
-  <p class="hint">Загрузите файл с описанием маршрута (PDF, DOCX, TXT) или просто вставьте текст —
-  приложение само найдёт даты, дни, точки и высоты.</p>
+  <h2><span class="ic"><svg width="19" height="19"><use href="#i-doc"/></svg></span>Программа похода
+    <span class="badge"><svg width="12" height="12"><use href="#i-check"/></svg>готово</span></h2>
+  <p class="sub">Файл (PDF, DOCX, TXT) или просто текст — найдём даты, дни, точки и высоты.</p>
   <input type="file" id="fProgram" accept=".pdf,.docx,.txt,.md" onchange="uploadBinary(this)">
   <label>…или текст программы</label>
   <textarea id="taProgram" placeholder="День 1. Артуч (2200 м) — Куликалонские озёра, 7 км&#10;День 2. Кемп Куликалон 2850 м (39.2551, 68.1723)&#10;..."></textarea>
@@ -101,27 +179,29 @@
 </div>
 
 <div class="card" data-step="2">
-  <h2><span class="tick">✓</span>3 · Анализ трека</h2>
-  <p class="hint">Километраж, высоты, уклоны по дням — считает скрипт по GPX, ничего «на глаз».</p>
+  <h2><span class="ic"><svg width="19" height="19"><use href="#i-chart"/></svg></span>Анализ трека
+    <span class="badge"><svg width="12" height="12"><use href="#i-check"/></svg>готово</span></h2>
+  <p class="sub">Километраж, высоты, уклоны по дням — считает скрипт по GPX, ничего «на глаз».</p>
   <button class="big primary" onclick="runStep('analyze')">Посчитать километраж и высоты</button>
   <pre id="logAnalyze" style="display:none"></pre>
 </div>
 
 <div class="card" data-step="3">
-  <h2><span class="tick">✓</span>4 · Погода на даты похода</h2>
-  <p class="hint">До похода — прогноз или климат с датой перепроверки; после — фактические наблюдения для отчёта.</p>
+  <h2><span class="ic"><svg width="19" height="19"><use href="#i-cloud"/></svg></span>Погода и световой день
+    <span class="badge"><svg width="12" height="12"><use href="#i-check"/></svg>готово</span></h2>
+  <p class="sub">Прогноз или климат с датой перепроверки; после похода — факт для отчёта.</p>
   <button class="big primary" onclick="runStep('weather')">Собрать погоду</button>
   <div class="row">
-    <button onclick="runStep('daylight')" title="Рассвет/закат и фазы Луны по датам похода (расчёт NOAA)">🌅 Световой день и ночное небо</button>
+    <button onclick="runStep('daylight')" title="Рассвет/закат и фазы Луны по датам похода (расчёт NOAA)"><svg width="15" height="15" style="vertical-align:-2px"><use href="#i-sun"/></svg> Световой день и ночное небо</button>
   </div>
   <pre id="logWeather" style="display:none"></pre>
 </div>
 
 <div class="card" data-step="4">
-  <h2><span class="tick">✓</span>5 · Гид (ИИ, OpenRouter)</h2>
-  <p class="hint">Генерация MD-путеводителя из данных проекта. Работают <b>бесплатные модели</b>
-  (нужен бесплатный ключ с <a href="https://openrouter.ai/keys" target="_blank">openrouter.ai/keys</a>);
-  при платной подписке можно вписать id любой платной модели.</p>
+  <h2><span class="ic"><svg width="19" height="19"><use href="#i-spark"/></svg></span>Гид (ИИ, OpenRouter)
+    <span class="badge"><svg width="12" height="12"><use href="#i-check"/></svg>готово</span></h2>
+  <p class="sub">Путеводитель из данных проекта. Бесплатные модели — с бесплатным ключом
+  <a href="https://openrouter.ai/keys" target="_blank">openrouter.ai/keys</a>; платные — по вашей подписке.</p>
   <div class="row">
     <div><label>Ключ OpenRouter</label>
       <input id="llmKey" type="password" placeholder="sk-or-..." onchange="saveLlmKey()">
@@ -129,11 +209,11 @@
     <div><label>Модель (бесплатные)</label>
       <select id="llmModel" onchange="saveLlmModel()"><option value="">загружаю список…</option></select></div>
     <div><label>или id платной модели</label>
-      <input id="llmModelCustom" placeholder="например openai/gpt-5, anthropic/claude-sonnet-4" onchange="saveLlmModel()"></div>
+      <input id="llmModelCustom" placeholder="например openai/gpt-5" onchange="saveLlmModel()"></div>
   </div>
   <button class="big primary" onclick="runStep('guide')">Сгенерировать путеводитель</button>
   <div class="row">
-    <button onclick="runStep('research')" title="Википедия + OpenStreetMap: история, география, флора, фауна, инфраструктура">🔎 Найти факты по маршруту</button>
+    <button onclick="runStep('research')" title="Википедия + OpenStreetMap: история, география, флора, фауна, инфраструктура"><svg width="15" height="15" style="vertical-align:-2px"><use href="#i-search"/></svg> Найти факты по маршруту</button>
     <button onclick="runStep('guide_html')">HTML-версия гида</button>
   </div>
   <div class="row">
@@ -141,18 +221,20 @@
     <button onclick="runStep('tts')">Озвучить mp3</button>
   </div>
   <p class="hint">Совет: сначала «Найти факты», потом «Сгенерировать путеводитель» —
-  гид получит факт-блоки (история, география, флора, фауна) с источниками.</p>
+  гид получит факт-блоки с источниками.</p>
   <pre id="logGuide" style="display:none"></pre>
 </div>
 
 <div class="card" data-step="5">
-  <h2><span class="tick">✓</span>6 · Документы</h2>
+  <h2><span class="ic"><svg width="19" height="19"><use href="#i-map"/></svg></span>Документы
+    <span class="badge"><svg width="12" height="12"><use href="#i-check"/></svg>готово</span></h2>
+  <p class="sub">Карта для Google Earth, календарь, чеклист сборов, аптечка.</p>
   <div class="row">
     <div><label>Границы дней по км (необязательно)</label><input id="splitKm" placeholder="8 16 24"></div>
     <div style="align-self:end"><button class="primary" onclick="runStep('kml')">Карта KML для Google Earth</button></div>
   </div>
   <div class="row">
-    <button onclick="runStep('first_aid')" title="Чеклист аптечки по высотам маршрута + напоминания о приёме в календарь">💊 Аптечка (чеклист + напоминания)</button>
+    <button onclick="runStep('first_aid')" title="Чеклист аптечки по высотам маршрута + напоминания о приёме в календарь"><svg width="15" height="15" style="vertical-align:-2px"><use href="#i-pill"/></svg> Аптечка (чеклист + напоминания)</button>
   </div>
   <details>
     <summary>События календаря (события.json)</summary>
@@ -170,10 +252,10 @@
 </div>
 
 <div class="card" data-step="6">
-  <h2><span class="tick">✓</span>7 · Фотографии и видео</h2>
-  <p class="hint">Выберите папку с фото — приложение рассортирует их по точкам и дням маршрута,
-  привяжет к аудиогиду (фотометки KML) и соберёт отчёт с картой.</p>
-  <button onclick="openPicker()">📁 Выбрать папку с фото…</button>
+  <h2><span class="ic"><svg width="19" height="19"><use href="#i-camera"/></svg></span>Фотографии и видео
+    <span class="badge"><svg width="12" height="12"><use href="#i-check"/></svg>готово</span></h2>
+  <p class="sub">Сортировка по точкам и дням, фотометки к аудиогиду, отчёт с картой.</p>
+  <button onclick="openPicker()"><svg width="15" height="15" style="vertical-align:-2px"><use href="#i-folder"/></svg> Выбрать папку с фото…</button>
   <span class="chip" id="folderChip" style="display:none"></span>
   <button class="big primary" id="btnPhotosAll" onclick="runStep('photos_all')" disabled>Обработать фото: сортировка + фотометки + отчёт</button>
   <pre id="logPhotos" style="display:none"></pre>
@@ -187,7 +269,9 @@
 </div>
 
 <div class="card" data-step="7">
-  <h2><span class="tick">✓</span>8 · Готово — забрать результат</h2>
+  <h2><span class="ic"><svg width="19" height="19"><use href="#i-box"/></svg></span>Готово — забрать результат
+    <span class="badge"><svg width="12" height="12"><use href="#i-check"/></svg>готово</span></h2>
+  <p class="sub">Все файлы выдачи одним архивом или по отдельности.</p>
   <div class="row">
     <button onclick="refreshFiles()">Обновить список</button>
     <button class="primary" id="btnZip" onclick="downloadZip()" disabled>Скачать всё одним zip</button>
@@ -199,15 +283,15 @@
 
 <div id="pageLearn" style="display:none">
 <div class="card">
-  <h2>Правила генерации</h2>
-  <p class="hint">Короткие проверяемые правила; агент подмешивает их в промпты при генерации гида (F4) и текстов аудиогида.</p>
+  <h2><span class="ic"><svg width="19" height="19"><use href="#i-spark"/></svg></span>Правила генерации</h2>
+  <p class="sub">Короткие проверяемые правила; агент подмешивает их в промпты при генерации гида и текстов аудиогида.</p>
   <textarea id="taRules" style="min-height:200px"></textarea>
   <button class="primary" onclick="saveRules()" style="margin-top:8px">Сохранить правила</button>
   <span id="rulesMsg"></span>
 </div>
 <div class="card">
-  <h2>База примеров (few-shot)</h2>
-  <p class="hint">Эталонные пары «вход → фрагмент выдачи». На них агент учится оформлять разделы гида.</p>
+  <h2><span class="ic"><svg width="19" height="19"><use href="#i-doc"/></svg></span>База примеров (few-shot)</h2>
+  <p class="sub">Эталонные пары «вход → фрагмент выдачи». На них агент учится оформлять разделы гида.</p>
   <label>Название примера</label><input id="exTitle" placeholder="День с перевалом — эталон">
   <label>Вход (что было дано)</label><textarea id="exInput" placeholder="День 4: Куликалон → Алаудин, 7 км, +950 м..."></textarea>
   <label>Эталонная выдача (фрагмент гида/аудиотекста)</label><textarea id="exOutput" placeholder="День 4. Выход в 08:00..."></textarea>
@@ -238,15 +322,18 @@ let photoFolder = '';
 let doneSteps = new Set();
 const STEP_NAMES = ['Проект','Программа','Анализ','Погода','Гид (ИИ)','Документы','Фото','Результат'];
 // какие файлы выдачи отмечают шаг выполненным
-const STEP_MARKS = {1:['программа.txt'], 2:['анализ.json'], 3:['погода.json','Погода.md'],
+const STEP_MARKS = {1:['программа.txt'], 2:['анализ.json'], 3:['погода.json','Погода.md','Световой_день.md'],
   4:['Гид.md','Гид.html','аудиотексты.json','Аудиогид.zip','Факты.md'],
-  5:['маршрут.kml','календарь.ics','Чеклист.html'],
+  5:['маршрут.kml','календарь.ics','Чеклист.html','Аптечка.html'],
   6:['фотоотчёт.html','фотометки.kml'], 7:[]};
 
 function drawSteps(active){
   $('stepsBar').innerHTML = STEP_NAMES.map((n,i)=>{
-    const cls = [i===active?'cur':'', doneSteps.has(i)?'done':''].join(' ');
-    return `<span class="${cls}" onclick="showStep(${i})">${doneSteps.has(i)&&i!==active?'✓ ':''}${i+1}·${n}</span>`;
+    const cls = ['st', i===active?'cur':'', doneSteps.has(i)?'done':''].join(' ');
+    const inner = doneSteps.has(i)
+      ? '<span class="num"><svg width="12" height="12"><use href="#i-check"/></svg></span>'
+      : `<span class="num">${i+1}</span>`;
+    return `<span class="${cls}" onclick="showStep(${i})">${inner}${n}</span>`;
   }).join('');
   document.querySelectorAll('#pageWizard .card[data-step]').forEach(c=>{
     c.style.display = +c.dataset.step===active ? '' : 'none';
@@ -254,7 +341,8 @@ function drawSteps(active){
   });
 }
 let activeStep = 0;
-function showStep(i){ activeStep=i; drawSteps(i); if(i===STEP_NAMES.length-1) refreshFiles(); }
+function showStep(i){ activeStep=i; drawSteps(i); if(i===STEP_NAMES.length-1) refreshFiles();
+  window.scrollTo({top:0, behavior:'smooth'}); }
 function nextStep(){ if(activeStep < STEP_NAMES.length-1) showStep(activeStep+1); }
 
 async function api(path, opts={}){
@@ -332,8 +420,6 @@ async function runStep(step){
                  photos:'logPhotos', marks:'logPhotos', photos_all:'logPhotos'}[step] || 'logDocs';
   log(logId, '⏳ Выполняю… это может занять до пары минут.');
   const body = {};
-  if(step==='guide' || step==='audio_texts'){ body.model = $('llmModelCustom').value.trim() || $('llmModel').value;
-                      body.api_key = $('llmKey').value.trim(); }
   if(step==='program'){
     if($('fProgram').files[0]) body.filename = $('fProgram').files[0].name;
     else if($('taProgram').value.trim()){
@@ -342,8 +428,9 @@ async function runStep(step){
       body.filename = 'программа.txt';
     }
   }
-  if(step==='weather' || step==='daylight'){ body.start=$('pStart').value; body.end=$('pEnd').value; }
-  if(step==='first_aid'){ body.start=$('pStart').value; body.end=$('pEnd').value; }
+  if(step==='guide' || step==='audio_texts'){ body.model = $('llmModelCustom').value.trim() || $('llmModel').value;
+                      body.api_key = $('llmKey').value.trim(); }
+  if(step==='weather' || step==='daylight' || step==='first_aid'){ body.start=$('pStart').value; body.end=$('pEnd').value; }
   if(step==='kml'){ body.split_km = $('splitKm').value.trim().split(/\s+/).filter(Boolean).map(Number); }
   if(step.startsWith('photos') || step==='marks'){ body.folder = photoFolder; body.start = $('pStart').value; }
   try{
@@ -389,7 +476,6 @@ async function refreshFiles(silent){
   $('filesOut').innerHTML = outs.map(n=>
     `<li><a href="/api/projects/${enc()}/download?path=${encodeURIComponent('выходные/'+n)}">${n}</a></li>`).join('')
     || '<li>пока пусто — пройдите шаги мастера</li>';
-  // отметки выполненных шагов
   for(const [step, marks] of Object.entries(STEP_MARKS)){
     if(marks.some(m => outs.includes(m) || ins.includes(m))) doneSteps.add(+step);
   }
@@ -457,7 +543,7 @@ async function loadLearn(){
 function drawExamples(list){
   $('exList').innerHTML = list.map((e,i)=>
     `<div class="ex"><b>${i+1}. ${esc(e.title||'без названия')}</b> <i>${esc(e.tags||'')}</i>
-     <button style="float:right" onclick="delExample(${i})">✕</button>
+     <button class="small" style="float:right" onclick="delExample(${i})">✕</button>
      <div class="hint">Вход: ${esc((e.input||'').slice(0,120))}…</div></div>`).join('')
     || '<p class="hint">Примеров пока нет.</p>';
 }
@@ -479,9 +565,9 @@ async function delExample(i){
 }
 
 $('tabWizard').onclick = ()=>{ $('pageWizard').style.display=''; $('pageLearn').style.display='none';
-  $('tabWizard').className='primary'; $('tabLearn').className=''; };
+  $('tabWizard').classList.add('active'); $('tabLearn').classList.remove('active'); };
 $('tabLearn').onclick = ()=>{ $('pageWizard').style.display='none'; $('pageLearn').style.display='';
-  $('tabLearn').className='primary'; $('tabWizard').className=''; loadLearn(); };
+  $('tabLearn').classList.add('active'); $('tabWizard').classList.remove('active'); loadLearn(); };
 
 $('taEvents').value = eventsTemplate();
 $('taChecklist').value = CHECKLIST_TEMPLATE;
