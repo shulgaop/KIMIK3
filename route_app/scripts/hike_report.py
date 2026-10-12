@@ -26,7 +26,11 @@
   3. Определяет название местности (офлайн-база, интернет не нужен).
   4. Строит маршрут по дням и создаёт три файла:
      - карта_похода.html     — интерактивная карта: линии маршрута
-       по дням, треки DJI, маркеры со всплывающими превью фото;
+       по дням, треки DJI, маркеры со всплывающими превью фото и видео.
+       Маркеры можно перетаскивать для уточнения позиции; кнопка
+       «Скачать правки» выгружает файл правки_координат.json — положите
+       его в папку и перезапустите скрипт, чтобы применить поправки
+       к маршруту и таблице;
      - отчёт_похода.xlsx     — таблица: файл (кликабельно), дата,
        координаты (кликабельная ссылка на Google Maps), местность,
        день маршрута;
@@ -38,15 +42,20 @@
 Установка зависимостей (один раз):
     pip install pillow folium openpyxl reverse-geocoder
     pip install pyosmogps        # для видео с DJI Osmo Action
+    pip install imageio-ffmpeg   # для превью-кадров видео на карте
     pip install pillow-heif      # только если есть HEIC-фото с iPhone
 
 Запуск:
     python hike_report.py                # обработать текущую папку
     python hike_report.py "D:\\Поход"    # или указать папку явно
 
-Если в папке есть видео DJI, при запуске будет предложен выбор:
-искать GPS в телеметрии видео, привязать к GPX-треку по времени
-или использовать оба способа.
+При запуске скрипт спросит:
+  - откуда брать координаты: из геоданных файлов, по времени съёмки
+    из трека/планового маршрута или комбинировать;
+  - как обрабатывать видео DJI (телеметрия / трек / комбо) —
+    если такие видео есть в папке;
+  - скачивать ли локальные тайлы для офлайн-карты.
+Enter в любом вопросе = вариант по умолчанию.
 
 ВАЖНО про DJI Osmo Action 6:
   У камеры НЕТ встроенного GPS. Координаты в видео появляются, только
@@ -63,6 +72,7 @@ import io
 import sys
 import mmap
 import base64
+import json
 import subprocess
 import importlib.util
 import html as html_mod
@@ -81,9 +91,8 @@ DJI_TIMEZONE_OFFSET = 5
 
 # --- Офлайн-карта ---
 # HIKE_OFFLINE_MAP=0 в окружении отключает скачивание тайлов (так делает
-# веб-мастер — иначе шаг «Фото» ждёт тайлы несколько минут)
+# веб-мастер — иначе шаг «Фотоотчёт» ждёт тайлы несколько минут)
 OFFLINE_MAP = os.environ.get("HIKE_OFFLINE_MAP", "1") != "0"
-                          # True — скачать локальные тайлы и добавить
                           # офлайн-слой (интернет нужен один раз, при запуске)
 OFFLINE_MIN_ZOOM = 10     # минимальный масштаб тайлов
 OFFLINE_MAX_ZOOM = 14     # максимальный масштаб; автоматически уменьшится,
@@ -124,6 +133,9 @@ if not HAVE_RG:
 if not HAVE_PYOSMO:
     print('[!] pyosmogps не установлен — GPS из видео DJI Osmo Action извлекаться не будет.')
     print('    Установите: pip install pyosmogps')
+if importlib.util.find_spec('imageio_ffmpeg') is None:
+    print('[!] imageio-ffmpeg не установлен — у видео на карте не будет превью-кадров.')
+    print('    Установите: pip install imageio-ffmpeg')
 
 
 # ------------------------------------------------------------------
@@ -414,6 +426,57 @@ def thumbnail_b64(path, max_px=320):
         return None
 
 
+def video_frame_b64(path, sec=1, max_px=320):
+    """Кадр-превью из видео через ffmpeg (ставится пакетом imageio-ffmpeg).
+    Берётся кадр на sec-й секунде, как миниатюра в Проводнике Windows."""
+    try:
+        import imageio_ffmpeg
+    except ImportError:
+        return None
+    exe = imageio_ffmpeg.get_ffmpeg_exe()
+    try:
+        r = subprocess.run(
+            [exe, '-hide_banner', '-loglevel', 'error',
+             '-ss', str(sec), '-i', path,
+             '-frames:v', '1', '-f', 'image2pipe', '-vcodec', 'mjpeg', '-'],
+            capture_output=True, timeout=120)
+        if r.returncode != 0 or not r.stdout.startswith(b'\xff\xd8'):
+            return None
+        from PIL import Image
+        with Image.open(io.BytesIO(r.stdout)) as img:
+            img.thumbnail((max_px, max_px))
+            buf = io.BytesIO()
+            img.convert('RGB').save(buf, 'JPEG', quality=70)
+        return base64.b64encode(buf.getvalue()).decode()
+    except Exception:
+        return None
+
+
+CORRECTIONS_FILE = 'правки_координат.json'
+
+
+def load_corrections(root):
+    """Читает файл ручных правок {файл: [lat, lon]}, скачанный с карты."""
+    path = os.path.join(root, CORRECTIONS_FILE)
+    if not os.path.exists(path):
+        return {}
+    try:
+        with open(path, encoding='utf-8') as f:
+            data = json.load(f)
+        corr = {}
+        for k, v in data.items():
+            try:
+                lat, lon = float(v[0]), float(v[1])
+                if -90 <= lat <= 90 and -180 <= lon <= 180:
+                    corr[k] = (lat, lon)
+            except (TypeError, ValueError, IndexError):
+                continue
+        return corr
+    except Exception as e:
+        print(f'[!] Не удалось прочитать {CORRECTIONS_FILE}: {e}')
+        return {}
+
+
 def scan_folder(root):
     files = []
     for dirpath, _, names in os.walk(root):
@@ -475,6 +538,40 @@ def interp_plan(plan, anchors, dt):
     return None
 
 
+def ask_coord_mode():
+    """Спрашивает, откуда брать координаты для файлов."""
+    print('\nОткуда брать координаты для фото и видео?')
+    print('  1 — из геоданных файлов (EXIF/телеметрия); где их нет —')
+    print('      по времени съёмки из трека и планового маршрута')
+    print('  2 — только по времени съёмки из трека и планового маршрута')
+    print('      (геоданные в файлах игнорируются)')
+    print('  3 — только из геоданных файлов (трек не использовать)')
+    try:
+        ans = input('Ваш выбор [1/2/3, Enter = 1]: ').strip()
+    except (EOFError, KeyboardInterrupt):
+        ans = ''
+    mode = {'2': 2, '3': 3}.get(ans, 1)
+    print('Режим координат:', {1: 'файлы -> трек -> план',
+                               2: 'только трек/план',
+                               3: 'только файлы'}[mode])
+    return mode
+
+
+def ask_offline():
+    """Спрашивает, скачивать ли локальные тайлы для офлайн-карты."""
+    print('\nСкачать локальные тайлы для офлайн-карты?')
+    print('  1 — да (карта будет работать без интернета;')
+    print('      интернет нужен сейчас, объём ~20-60 МБ)')
+    print('  2 — нет (карта будет подгружать подложку онлайн)')
+    try:
+        ans = input('Ваш выбор [1/2, Enter = 1]: ').strip()
+    except (EOFError, KeyboardInterrupt):
+        ans = ''
+    offline = ans != '2'
+    print('Офлайн-карта:', 'включена' if offline else 'отключена')
+    return offline
+
+
 def ask_dji_mode():
     """Интерактивный выбор способа обработки видео DJI.
     1 — только телеметрия, 2 — только по треку, 3 — комбо (по умолчанию)."""
@@ -499,12 +596,13 @@ def ask_dji_mode():
 # ------------------------------------------------------------------
 def main():
     # python hike_report.py [папка] [--gpx файл1 файл2 ...] [--tz-offset N]
-    #         [--max-gap-min N] [--no-offline] [--no-plan]
-    # --gpx: треки из проекта (записанный с часов, плановый маршрут) — читаются
-    # в дополнение к GPX из папки с фото; записанный приоритетнее планового.
-    # --tz-offset: часовой пояс похода (UTC+N) для GPX и видео DJI сразу.
-    # --max-gap-min: макс. разрыв фото↔точка трека, минут (TRACK_MAX_GAP_MIN).
-    # --no-plan: отключить оценку позиции по плановому маршруту.
+    #         [--max-gap-min N] [--coord-mode 1|2|3] [--no-offline] [--no-plan]
+    # --gpx: треки проекта (записанный с часов, плановый) в дополнение к GPX
+    # из папки с фото; записанный приоритетнее планового.
+    # --coord-mode: 1 — файлы→трек→план (умолч.), 2 — только трек/план
+    # (геоданные файлов игнорируются), 3 — только геоданные файлов.
+    # Остальные вопросы (DJI, тайлы) при вызове из мастера гасятся Enter
+    # (stdin «\n\n\n») — то есть варианты по умолчанию.
     global GPX_TIMEZONE_OFFSET, DJI_TIMEZONE_OFFSET, TRACK_MAX_GAP_MIN
     global PLAN_INTERPOLATION, OFFLINE_MAP
     argv = sys.argv[1:]
@@ -529,6 +627,7 @@ def main():
     gap = take_value("--max-gap-min")
     if gap is not None:
         TRACK_MAX_GAP_MIN = float(gap)
+    coord_mode_cli = take_value("--coord-mode")
     if "--no-offline" in argv:
         OFFLINE_MAP = False
         argv.remove("--no-offline")
@@ -576,18 +675,29 @@ def main():
         print('GPX-трек не найден (положите .gpx в папку, '
               'чтобы привязать файлы без координат).')
 
-    # --- Выбор режима обработки видео DJI ---
+    # --- Вопросы пользователю ---
     has_dji = any(os.path.splitext(f)[1].lower() in VIDEO_EXT
                   and DJI_NAME_RE.search(os.path.basename(f))
                   for f in files)
-    dji_mode = ask_dji_mode() if has_dji else 3
-    if has_dji:
-        if dji_mode in (1, 3) and not HAVE_PYOSMO:
-            print('[!] Телеметрия недоступна: pyosmogps не установлен '
-                  '(pip install pyosmogps).')
-        if dji_mode in (2, 3) and not gpx_points:
-            print('[!] Выбрана привязка к треку, но GPX не найден — '
-                  'видео DJI без телеметрии останутся без координат.')
+
+    coord_mode = int(coord_mode_cli) if coord_mode_cli else ask_coord_mode()
+    use_track_geo = coord_mode in (1, 2)
+
+    if coord_mode == 2:
+        dji_mode = 2                     # DJI только по треку
+    elif coord_mode == 3:
+        dji_mode = 1 if has_dji else 3   # DJI только телеметрия
+    else:
+        dji_mode = ask_dji_mode() if has_dji else 3
+
+    if has_dji and dji_mode in (1, 3) and not HAVE_PYOSMO:
+        print('[!] Телеметрия недоступна: pyosmogps не установлен '
+              '(pip install pyosmogps).')
+    if use_track_geo and not gpx_points and not plan_points:
+        print('[!] Ни записанного трека, ни планового маршрута не найдено —')
+        print('    привязка по времени невозможна. Положите .gpx в папку.')
+
+    offline_wanted = ask_offline() if OFFLINE_MAP else False
 
     print('Обработка...')
     records, no_gps, pending = [], [], []
@@ -602,6 +712,8 @@ def main():
         # У DJI дата/время съёмки зашиты в имя файла (DJI_20260906095623_...)
         # — это надёжнее метаданных mvhd
         dt = dt_from_filename(path) or dt
+        if coord_mode == 2:
+            lat = lon = None  # по выбору пользователя геоданные игнорируются
 
         # Видео DJI: если в контейнере координат нет — пробуем телеметрию
         # (режимы 1 и 3)
@@ -625,7 +737,7 @@ def main():
         # (для видео DJI — только в режимах 2 и 3)
         skip_track = is_dji and dji_mode == 1
         if (not coords_ok(lat, lon) and gpx_points and dt is not None
-                and not skip_track):
+                and not skip_track and use_track_geo):
             m = nearest_track_point(gpx_points, dt, TRACK_MAX_GAP_MIN)
             if m:
                 lat, lon, gap_min = m
@@ -653,7 +765,7 @@ def main():
 
     # --- Дни без записанного трека: оценка позиции по плановому маршруту ---
     n_plan = 0
-    if pending and plan_points and PLAN_INTERPOLATION:
+    if pending and plan_points and PLAN_INTERPOLATION and use_track_geo:
         anchors = build_plan_anchors(plan_points, gpx_points,
                                      [r['dt'] for r in pending])
         for r in pending:
@@ -671,6 +783,17 @@ def main():
                   f'(оценочные позиции!)')
     else:
         no_gps.extend(r['file'] for r in pending)
+
+    # --- Ручные правки с карты (файл правки_координат.json) ---
+    corrections = load_corrections(root)
+    if corrections:
+        n_corr = 0
+        for r in records:
+            if r['file'] in corrections:
+                r['lat'], r['lon'] = corrections[r['file']]
+                r['source'] = 'вручную'
+                n_corr += 1
+        print(f'Применены ручные правки с карты: {n_corr} шт.')
 
     if not records:
         print('\nНи в одном файле не найдено координат.')
@@ -705,7 +828,7 @@ def main():
 
     # Офлайн-тайлы: скачиваем заранее, пока есть интернет
     offline_ok, off_max_z = False, OFFLINE_MAX_ZOOM
-    if OFFLINE_MAP:
+    if OFFLINE_MAP and offline_wanted:
         offline_ok, n_tiles, off_max_z = download_offline_tiles(
             records, os.path.join(root, 'tiles_offline'))
         if offline_ok:
@@ -771,6 +894,7 @@ def main():
     colors = ['red', 'blue', 'green', 'purple', 'orange', 'darkred',
               'cadetblue', 'darkgreen', 'darkpurple', 'pink']
 
+    drag_handlers = []
     for day in day_of.values():
         pts = [r for r in records if r['day'] == day]
         color = colors[(day - 1) % len(colors)]
@@ -792,19 +916,58 @@ def main():
             place = html_mod.escape(r['place'])
             body = (f'<b>{title}</b><br>{r["dt"]:%d.%m.%Y %H:%M}<br>'
                     f'{place}<br><i>{r["source"]}</i><br>')
-            if r['kind'] == 'фото':
-                b64 = thumbnail_b64(r['abs'])
-                if b64:
-                    body += f'<img src="data:image/jpeg;base64,{b64}" width="300">'
+            b64 = (thumbnail_b64(r['abs']) if r['kind'] == 'фото'
+                   else video_frame_b64(r['abs']))
+            if b64:
+                body += f'<img src="data:image/jpeg;base64,{b64}" width="300">'
             icon = 'camera' if r['kind'] == 'фото' else 'facetime-video'
-            folium.Marker(
+            marker = folium.Marker(
                 location=(r['lat'], r['lon']),
                 popup=folium.Popup(body, max_width=320),
                 icon=folium.Icon(color=color, icon=icon, prefix='fa'),
-            ).add_to(group)
+                draggable=True,
+            )
+            marker.add_to(group)
+            drag_handlers.append(
+                f'{marker.get_name()}.on("dragend", function(e) {{'
+                f'var ll = e.target.getLatLng();'
+                f'corrections[{json.dumps(r["file"])}] = '
+                f'[Math.round(ll.lat * 1e6) / 1e6, '
+                f'Math.round(ll.lng * 1e6) / 1e6];'
+                f'corrChanged();}});')
         group.add_to(fmap)
 
     folium.LayerControl(collapsed=False).add_to(fmap)
+
+    # --- Перетаскивание маркеров + кнопка выгрузки правок ---
+    drag_js = (
+        '<script>'
+        'var corrections = {};'
+        'function corrChanged(){'
+        'var b=document.getElementById("corr-btn");'
+        'var n=Object.keys(corrections).length;'
+        'b.innerHTML="Скачать правки ("+n+")";b.style.display="block";}'
+        'function corrDownload(){'
+        'var blob=new Blob([JSON.stringify(corrections,null,1)],'
+        '{type:"application/json"});'
+        'var a=document.createElement("a");a.href=URL.createObjectURL(blob);'
+        'a.download="правки_координат.json";a.click();}'
+        'window.addEventListener("load", function(){'
+        + ''.join(drag_handlers) +
+        '});'
+        '</script>'
+        '<div style="position:fixed;bottom:20px;left:20px;z-index:9999">'
+        '<div style="background:rgba(255,255,255,.92);padding:6px 10px;'
+        'border-radius:6px;font-size:12px;margin-bottom:6px;'
+        'box-shadow:0 1px 4px rgba(0,0,0,.3)">Маркеры можно перетаскивать '
+        'для уточнения позиции</div>'
+        '<button id="corr-btn" onclick="corrDownload()" style="display:none;'
+        'padding:10px 16px;background:#2a7ae2;color:#fff;border:none;'
+        'border-radius:8px;font-size:14px;cursor:pointer;'
+        'box-shadow:0 2px 8px rgba(0,0,0,.3)">Скачать правки</button></div>'
+    )
+    fmap.get_root().html.add_child(folium.Element(drag_js))
+
     map_path = os.path.join(root, 'карта_похода.html')
     fmap.save(map_path)
 
