@@ -461,10 +461,21 @@ def step_report(d, params):
     return (*run_script([SCRIPTS / "make_report.py", d]),)
 
 
+def step_gear(d, params):
+    """F12: весовой чеклист снаряжения (LighterPack) → Снаряжение.md."""
+    src = d / IN_DIR / "gear.json"
+    if not src.is_file():
+        raise HTTPException(400, "Сохраните gear.json (редактор в карточке «Документы»)")
+    members = int(params.get("members") or 1)
+    return (*run_script([SCRIPTS / "gear.py", src, "--members", members,
+                         "--out", d / OUT_DIR / "Снаряжение.md"]),)
+
+
 STEPS = {"program": step_program, "analyze": step_analyze, "weather": step_weather,
          "guide": step_guide, "guide_html": step_guide_html, "research": step_research,
          "audio_texts": step_audio_texts, "tts": step_tts,
          "daylight": step_daylight, "first_aid": step_first_aid, "currency": step_currency,
+         "gear": step_gear,
          "report": step_report,
          "kml": step_kml, "ics": step_ics, "checklist": step_checklist,
          "photos": step_photos, "marks": step_marks, "photos_all": step_photos_all,

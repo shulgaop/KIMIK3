@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Трансфер Самарканд → Пенджикент · Гайд для группы 14 человек</title>
+<style>
+:root{
+  --paper:#b0c6b3;
+  --paper-light:#cddccf;
+  --card:#dce7de;
+  --ink:#111111;
+  --ink-soft:#2e3a30;
+  --ink-mute:#4a5a4c;
+  --accent:#db3356;
+  --line:rgba(17,17,17,.18);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:17px;line-height:1.65;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;opacity:.35;
+  background-image:radial-gradient(rgba(17,17,17,.10) 1px, transparent 1px);
+  background-size:22px 22px;
+}
+.wrap{max-width:860px;margin:0 auto;padding:0 22px 90px;position:relative}
+header{padding:64px 0 40px;border-bottom:3px double var(--line)}
+.kicker{
+  font-family:-apple-system,'Segoe UI',Roboto,sans-serif;
+  font-size:12px;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--ink-mute);margin-bottom:14px;
+}
+h1{font-size:clamp(32px,5.5vw,52px);line-height:1.05;font-weight:700;letter-spacing:-.01em}
+h1 em{font-style:normal;color:var(--accent)}
+.sub{margin-top:16px;font-size:19px;color:var(--ink-soft);max-width:60ch}
+nav.toc{margin:38px 0 0;columns:2;column-gap:38px}
+nav.toc a{
+  display:block;break-inside:avoid;padding:7px 0;border-bottom:1px dotted var(--line);
+  color:var(--ink);text-decoration:none;font-size:16px;
+}
+nav.toc a:hover{color:var(--accent)}
+nav.toc a span{font-family:-apple-system,'Segoe UI',Roboto,sans-serif;font-size:12px;color:var(--ink-mute);margin-right:8px}
+section{margin-top:56px}
+h2{font-size:clamp(24px,4vw,32px);line-height:1.15;margin-bottom:6px}
+h2 .no{color:var(--accent);font-family:-apple-system,'Segoe UI',Roboto,sans-serif;font-size:.62em;letter-spacing:.15em;display:block;margin-bottom:4px;font-weight:600}
+h3{font-size:19px;margin:26px 0 8px;font-family:-apple-system,'Segoe UI',Roboto,sans-serif;font-weight:700}
+p{margin:10px 0;max-width:72ch}
+.lead{font-size:19px;color:var(--ink-soft)}
+table{
+  width:100%;border-collapse:collapse;margin:16px 0;
+  font-family:-apple-system,'Segoe UI',Roboto,sans-serif;font-size:14px;
+  background:var(--card);border:1px solid var(--line);
+}
+th,td{padding:9px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-mute);border-bottom:2px solid var(--ink)}
+tr:last-child td{border-bottom:none}
+.fact,.warn,.tip{
+  margin:16px 0;padding:14px 18px;border:1px solid var(--line);background:var(--card);
+  font-size:15.5px;
+}
+.fact{border-left:4px solid var(--ink)}
+.warn{border-left:4px solid var(--accent)}
+.tip{border-left:4px solid var(--ink-mute)}
+.fact b.tag,.warn b.tag,.tip b.tag{
+  display:block;font-family:-apple-system,'Segoe UI',Roboto,sans-serif;
+  font-size:11px;letter-spacing:.22em;text-transform:uppercase;margin-bottom:6px;color:var(--ink-mute);
+}
+.warn b.tag{color:var(--accent)}
+.chip{border:1px solid var(--ink);padding:3px 10px;border-radius:999px;background:var(--paper-light);
+  font-family:-apple-system,'Segoe UI',Roboto,sans-serif;font-size:12.5px;display:inline-block;margin:3px 4px 3px 0}
+.chip.hot{background:var(--accent);border-color:var(--accent);color:#fff}
+ul,ol{margin:10px 0 10px 22px;max-width:70ch}
+li{margin:5px 0}
+.route{
+  margin:20px 0;padding:18px;background:var(--card);border:1px solid var(--line);
+  font-family:-apple-system,'Segoe UI',Roboto,sans-serif;font-size:14px;line-height:2;
+}
+.route b{font-size:15px}
+footer{
+  margin-top:70px;padding-top:24px;border-top:3px double var(--line);
+  font-family:-apple-system,'Segoe UI',Roboto,sans-serif;font-size:13px;color:var(--ink-mute);
+}
+@media (max-width:640px){nav.toc{columns:1}body{font-size:16px}}
+@media print{
+  body{background:#fff;font-size:12pt}
+  body::before{display:none}
+  .fact,.warn,.tip,table,.route{background:#fff}
+  nav.toc{display:none}
+  section{page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">Логистика · день 2 похода · 07.09.2026</div>
+  <h1>Самарканд → <em>Пенджикент</em>:<br>трансфер для 14 человек</h1>
+  <p class="sub">Цены, официальные сервисы, схема границы Джартепе–Саразм. Проверено 06.09.2026 по отчётам путешественников 2024–2026 и тарифам сервисов.</p>
+  <div style="margin-top:20px">
+    <span class="chip">~45 км до границы</span>
+    <span class="chip">граница пешком</span>
+    <span class="chip">~20 км до Пенджикента</span>
+    <span class="chip hot">группа 14 чел.</span>
+  </div>
+</header>
+
+<nav class="toc">
+  <a href="#scheme"><span>01</span>Схема переезда</a>
+  <a href="#leg1"><span>02</span>Плечо 1: Самарканд → граница</a>
+  <a href="#border"><span>03</span>Граница пешком</a>
+  <a href="#leg2"><span>04</span>Плечо 2: граница → Пенджикент</a>
+  <a href="#group"><span>05</span>Рекомендации для 14 человек</a>
+  <a href="#services"><span>06</span>Сервисы и контакты</a>
+  <a href="index.html"><span>←</span>Главный гид: Фанские горы</a>
+</nav>
+
+<section id="scheme">
+  <h2><span class="no">01 · Схема</span>Главное: граница проходится пешком</h2>
+  <p class="lead">Ни одна машина не везёт «сквозь» границу. Любой трансфер Самарканд → Пенджикент — это <b>два отдельных плеча</b> с пешим переходом посередине (~500 м нейтральной полосы).</p>
+  <div class="route">
+    <b>ОТЕЛЬ (Самарканд)</b> → 45 км, 40–50 мин → <b>КПП ДЖАРТЕПЕ (Узбекистан)</b> → выход из УЗ → <b>пешком ~500 м</b> → <b>КПП САРАЗМ (Таджикистан)</b> → вход в ТД → 20 км, 15–20 мин → <b>ПЕНДЖИКЕНТ</b> (базар / отель) → 60 км, ~1,5 ч → <b>АРТУЧ</b> (плечо организатора)
+  </div>
+  <div class="fact"><b class="tag">Бюджет группы целиком</b>
+  Эконом-вариант: <b>~$50–60 на всех 14 человек</b> (сборные такси на обоих плечах). Комфорт-вариант: <b>~$250–400</b> (микроавтобус до границы + заказной минивэн после).</div>
+</section>
+
+<section id="leg1">
+  <h2><span class="no">02 · Плечо 1</span>Самарканд → граница Джартепе (45 км)</h2>
+  <table>
+    <tr><th>Вариант</th><th>Цена</th><th>Для 14 чел.</th><th>Комментарий</th></tr>
+    <tr><td><b>Сборное такси с автовокзала Кафтархона</b> (восточная окраина)</td><td>~20 000 сум / место (~$1,7)</td><td><b>~280 000 сум (~$24)</b></td><td>Отправление по заполнению; для 14 чел. заполните 3–4 машины сразу — ждать почти не придётся. Самый дешёвый и проверенный вариант</td></tr>
+    <tr><td><b>Частная машина через сервис</b> (caj.uz — от $60; Safar Expeditions — от $80 за машину до 4 чел.)</td><td>$60–80 / машина</td><td>4 машины = $240–320</td><td>Фиксированная цена, водитель ждёт у отеля, кондиционер</td></tr>
+    <tr><td><b>Микроавтобус с водителем</b> (minivan24.uz, Orexca — 9–16 мест)</td><td>по запросу, ориентир $120–180</td><td><b>1 машина на всех</b></td><td>Оптимум для группы: все вместе, багаж вместе, цена известна заранее</td></tr>
+    <tr><td><b>Yandex Go</b> до границы</td><td>по приложению (~150–250 тыс. сум за машину)</td><td>4 машины ≈ $60–100</td><td>Работает в Самарканде; цена в приложении честная, без торга</td></tr>
+  </table>
+  <div class="warn"><b class="tag">Осторожно: «такси-мафия» у границы</b>
+  На выходе с КПП и на подъездах водители требуют $30–50 за 40-минутную поездку до Самарканда — это в 10+ раз выше честной цены. Реальная цена сборного места — ~20–30 тыс. сум ($2–2,5). Правило: цену называем первыми («двадцать тысяч с человека») или уходим к Yandex Go.</div>
+</section>
+
+<section id="border">
+  <h2><span class="no">03 · Граница</span>Джартепе → Саразм пешком</h2>
+  <ul>
+    <li><b>Порядок:</b> выход из Узбекистана (паспортный контроль, иногда досмотр багажа сканером) → ~500 м пешком → вход в Таджикистан (паспортный контроль, вопрос о сроке пребывания).</li>
+    <li><b>Время:</b> 15–60 минут в зависимости от очереди; на таджикской стороне бывает один работающий офицер — заложить запас.</li>
+    <li><b>Документы:</b> паспорта под рукой; <b>регистрационные slips из отелей Узбекистана сохранить</b> — при выезде из УЗ могут попросить показать (спрашивают выборочно).</li>
+    <li><b>Регистрация в Таджикистане:</b> белорусам виза не нужна; при пребывании до 10 дней миграционную карту обычно не оформляют — на всякий случай называть срок «10 дней».</li>
+    <li><b>Деньги:</b> менять на <b>узбекской</b> стороне (курс лучше); на таджикской обменник у ворот есть, но курс хуже (ориентир: 100 000 сум ≈ 70–90 сомони). Сомони нужны сразу — за такси до Пенджикента платят ими.</li>
+    <li><b>Связь:</b> офлайн-карты (MAPS.ME / Google Maps офлайн) скачать заранее — интернет на переходе нестабилен.</li>
+  </ul>
+</section>
+
+<section id="leg2">
+  <h2><span class="no">04 · Плечо 2</span>Граница → Пенджикент (20 км)</h2>
+  <table>
+    <tr><th>Вариант</th><th>Цена</th><th>Для 14 чел.</th><th>Комментарий</th></tr>
+    <tr><td><b>Сборное такси</b> — стоят сразу за воротами КПП</td><td>15–20 сомони / место (~$1,6–2,2)</td><td>210–280 сомони (~$23–30)</td><td>Машины набираются за 5–10 минут; высаживают у базара Пенджикента</td></tr>
+    <tr><td><b>Машина целиком</b> (седан)</td><td>~60 сомони</td><td>4 машины ≈ 240 сомони (~$26)</td><td>Без ожидания заполнения; торгуйтесь от 60 сомони за машину</td></tr>
+    <tr><td><b>Заказной минивэн</b> через контакты в Пенджикенте</td><td>~250–350 сомони</td><td>1 машина на всех</td><td>Договориться заранее через Хайринисо (WA +992 92 616 0359) или Sim-Sim Hostel (+992 927 513 010)</td></tr>
+  </table>
+  <div class="tip"><b class="tag">Куда ехать в Пенджикенте</b>
+  Точка высадки по умолчанию — центральный базар. Отсюда пешком: Sim-Sim Hostel (ул. Беруни 15) ~10 мин; газовые баллоны у Хайринисо (доставка в отель); обменники и банкомат Амонатбонк у базара; автовокзал — маршрутка №1 или такси.</div>
+</section>
+
+<section id="group">
+  <h2><span class="no">05 · Для группы 14</span>Три сценария</h2>
+  <h3>Сценарий А — Эконом (~$50–60 на всех)</h3>
+  <ol>
+    <li>Отель → Кафтархона: 3–4 Yandex Go (~15–30 тыс. сум за машину по городу).</li>
+    <li>Кафтархона → граница: сборные такси, 14 мест по 20 000 сум = 280 000 сум.</li>
+    <li>Граница пешком (30–60 мин).</li>
+    <li>Граница → Пенджикент: 3–4 машины целиком по ~60 сомони ≈ 240 сомони.</li>
+  </ol>
+  <h3>Сценарий B — Комфорт (~$250–400)</h3>
+  <ol>
+    <li>Микроавтобус Sprinter/Hiace 14–16 мест от отеля до границы (minivan24.uz / Orexca / caj.uz — запросить цену за 1–2 дня до выезда, ориентир $120–180).</li>
+    <li>На таджикской стороне — заказной минивэн через Хайринисо или Sim-Sim Hostel (~250–350 сомони), ждёт у ворот.</li>
+  </ol>
+  <h3>Сценарий C — Минимум хлопот</h3>
+  <p>Плечо «граница → Артуч» (~$100/машина) у вас уже в программе организатора — уточните у него, могут ли те же машины забрать группу <b>от отеля в Самарканде</b> и довести до КПП. Таджикским машинам нельзя на узбекскую сторону, но организаторы часто имеют партнёрский транспорт в Самарканде.</p>
+  <div class="fact"><b class="tag">Тайминг на 07.09</b>
+  Выезд из отеля 8:30–9:00 → граница ~9:30–10:00 (утром меньше очередей) → Пенджикент ~11:00–11:30 → обмен, баллоны, обед → трансфер в Артуч ~13:00 → на месте ~15:00. Плов в Пенджикенте — строго до 15:00!</div>
+</section>
+
+<section id="services">
+  <h2><span class="no">06 · Сервисы</span>Контакты и где заказывать</h2>
+  <table>
+    <tr><th>Сервис</th><th>Что даёт</th><th>Тариф-ориентир</th></tr>
+    <tr><td><b>CAJ.uz</b> (caj.uz/ru/transfersinsamarkand)</td><td>Официальные трансферы из Самарканда с фиксированными ценами, маршрут «Самарканд → Джартепа/Саразм»</td><td>от $60 за машину</td></tr>
+    <tr><td><b>Minivan24.uz</b></td><td>Аренда микроавтобусов с водителем по Узбекистану, 8–20 мест</td><td>по запросу (ориентир $120–180 за рейс)</td></tr>
+    <tr><td><b>Orexca.com</b></td><td>Транспортные услуги: минивэн до 9 мест, автобусы до 45 мест, трансферы и аренда на день</td><td>минивэн-день ~$110; междугородние — по запросу</td></tr>
+    <tr><td><b>Safar Expeditions</b></td><td>Частный трансфер Самарканд → КПП Пенджикент</td><td>от $80 за машину (до 4 чел.)</td></tr>
+    <tr><td><b>Yandex Go</b></td><td>Такси по Самарканду и до границы; цена в приложении</td><td>по городу 15–30 тыс. сум</td></tr>
+    <tr><td><b>Автовокзал Кафтархона</b> (Samarkand, восточная окраина)</td><td>Сборные такси и «дамасы» на Джартепе; до вокзала — маршрутка №41 от Регистана или Yandex</td><td>20 000 сум / место до границы</td></tr>
+    <tr><td><b>Хайринисо</b> (Пенджикент)</td><td>WhatsApp +992 92 616 0359 — местный фиксер: транспорт, газовые баллоны, доставка в отель</td><td>договорная</td></tr>
+    <tr><td><b>Sim-Sim Hostel</b> (Пенджикент, ул. Беруни 15)</td><td>+992 927 513 010 — помощь с транспортом и баллонами</td><td>договорная</td></tr>
+  </table>
+  <div class="warn"><b class="tag">Правила торга</b>
+  ① Цену называйте первыми и до посадки. ② Честные референсы: 20 000 сум/место до границы; 15–20 сомони/место или 60 сомони/машина до Пенджикента. ③ Требования $30–50 — игнорировать и идти к следующей машине: желающих всегда много.</div>
+</section>
+
+<footer>
+  Гайд «Самарканд → Пенджикент» · день 2 похода, 07.09.2026 · цены проверены 06.09.2026 по отчётам 2024–2026 (Caravanistan, AWD, блоги) и тарифам сервисов. Курсы: $1 = 11 795 сум = 9,25 сомони (04.09.2026). · <a href="index.html" style="color:var(--accent)">← Главный гид: Фанские горы</a>
+</footer>
+
+</div>
+</body>
+</html>

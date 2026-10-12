@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Снаряжение и одежда · Фанские горы 05–17.09.2026</title>
+<style>
+  :root{--paper:#b0c6b3;--ink:#111;--crim:#db3356;--card:#fdfdfb;--line:#7a947e}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font:16px/1.55 -apple-system,"Segoe UI",Roboto,"Microsoft YaHei",sans-serif;padding:18px}
+  .wrap{max-width:760px;margin:0 auto}
+  h1{font-family:Georgia,serif;font-size:1.7rem;margin:8px 0 2px}
+  .sub{font-size:.9rem;opacity:.85;margin-bottom:14px}
+  .toolbar{position:sticky;top:0;background:var(--paper);padding:8px 0;border-bottom:2px solid var(--ink);display:flex;gap:8px;flex-wrap:wrap;z-index:5;margin-bottom:14px}
+  button{font:600 .92rem/1 inherit;padding:9px 14px;border:2px solid var(--ink);background:var(--card);cursor:pointer;border-radius:6px}
+  button:hover{background:var(--ink);color:var(--paper)}
+  button.reading{background:var(--crim);border-color:var(--crim);color:#fff}
+  .progress{font:600 .95rem/1 Georgia,serif;align-self:center;margin-left:auto}
+  section{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin-bottom:14px}
+  h2{font-family:Georgia,serif;font-size:1.15rem;display:flex;align-items:center;gap:10px;margin-bottom:8px;cursor:pointer}
+  h2 .speak{font-size:.8rem;padding:5px 10px;border-width:1px}
+  h2 .cnt{margin-left:auto;font:600 .85rem/1 inherit;color:var(--crim)}
+  ul{list-style:none}
+  li{display:flex;gap:10px;padding:6px 2px;border-bottom:1px dashed var(--line);align-items:flex-start}
+  li:last-child{border-bottom:none}
+  input[type=checkbox]{width:20px;height:20px;margin-top:2px;accent-color:var(--crim);flex-shrink:0;cursor:pointer}
+  label{cursor:pointer;flex:1}
+  li.done label{text-decoration:line-through;opacity:.5}
+  .note{font-size:.85rem;opacity:.8;margin-top:8px;font-style:italic}
+  .crit{color:var(--crim);font-weight:700}
+  @media print{ body{background:#fff} .toolbar{display:none} section{break-inside:avoid;border:1px solid #999} }
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Снаряжение и одежда · Фанские горы</h1>
+<p class="sub">05–17.09.2026 · ночёвки до 4400 м, прогноз −6…−10 °C · <span class="crit">красным</span> — критично для этого маршрута · 🔊 читает раздел вслух</p>
+
+<div class="toolbar">
+  <button id="readAll">🔊 Читать всё</button>
+  <button id="stopRead">⏹ Стоп</button>
+  <button id="reset">↺ Сбросить отметки</button>
+  <span class="progress" id="progress">0 / 0</span>
+</div>
+
+<section data-sec>
+<h2 onclick="speakSec(this)">1 · Одежда: слои на ходу <button class="speak" onclick="event.stopPropagation();speakSec(this.parentElement)">🔊</button><span class="cnt"></span></h2>
+<ul>
+<li><input type="checkbox" id="g1"><label for="g1">Термобельё верх, тонкое (синтетика/меринос — НЕ хлопок) ×2</label></li>
+<li><input type="checkbox" id="g2"><label for="g2">Термобельё низ ×1–2</label></li>
+<li><input type="checkbox" id="g3"><label for="g3">Треккинговые штаны (быстросохнущие) ×2</label></li>
+<li><input type="checkbox" id="g4"><label for="g4">Футболки/рунницы синтетика ×3 (хлопок на высоте не сохнет и холодит)</label></li>
+<li><input type="checkbox" id="g5"><label for="g5">Рубашка с длинным рукавом (от солнца в долинах)</label></li>
+<li><input type="checkbox" id="g6"><label for="g6"><span class="crit">Флиска/полартек</span> — средний слой</label></li>
+<li><input type="checkbox" id="g7"><label for="g7"><span class="crit">Пуховка/синтепон</span> — лагерь 4400 м и перевалы; пакуется в пакет «на перевал» наверху рюкзака</label></li>
+<li><input type="checkbox" id="g8"><label for="g8"><span class="crit">Мембранная куртка</span> (ветер 8–15 м/с на седловине Чимтарги)</label></li>
+<li><input type="checkbox" id="g9"><label for="g9">Мембранные штаны/самосбросы (осадков не ждём, но от ветра и росы)</label></li>
+<li><input type="checkbox" id="g10"><label for="g10">Шорты — для городов и дня в Самарканде (в мечетях — ниже колена)</label></li>
+<li><input type="checkbox" id="g11"><label for="g11">Кепка/панама с полями + баф/бандана (УФ на 3000–4700 м)</label></li>
+<li><input type="checkbox" id="g12"><label for="g12"><span class="crit">Шапка тёплая</span> + перчатки (лёгкие флис + ветрозащитные/горнолыжные на Чимтаргу)</label></li>
+<li><input type="checkbox" id="g13"><label for="g13">Баф-маска/шарф от пыли и ветра</label></li>
+<li><input type="checkbox" id="g14"><label for="g14">Носки треккинговые ×4–5 пар (синтетика/шерсть) + носки спальные толстые ×1</label></li>
+<li><input type="checkbox" id="g15"><label for="g15">Сменное бельё ×4–5</label></li>
+<li><input type="checkbox" id="g16"><label for="g16">Одежда для городов: лёгкие длинные брюки + футболка + рубашка (Самарканд/Ташкент, +27…+31)</label></li>
+<li><input type="checkbox" id="g17"><label for="g17">Купальник/полотенце быстросохнущее (баня в Артуче, озёра — по желанию)</label></li>
+</ul>
+</section>
+
+<section data-sec>
+<h2 onclick="speakSec(this)">2 · Обувь <button class="speak" onclick="event.stopPropagation();speakSec(this.parentElement)">🔊</button><span class="cnt"></span></h2>
+<ul>
+<li><input type="checkbox" id="g18"><label for="g18"><span class="crit">Ботинки треккинговые жёсткие, разношенные</span>, с протектором (осыпи 30–39°); НЕ новые — мозоль гарантирован</label></li>
+<li><input type="checkbox" id="g19"><label for="g19"><span class="crit">Гамаши/гетры</span> — от мелкой осыпи в ботинках</label></li>
+<li><input type="checkbox" id="g20"><label for="g20">Кроссовки/сандалии лагерные (давать ногам отдых вечером)</label></li>
+<li><input type="checkbox" id="g21"><label for="g21">Сандалии/кроксы для бродов и душа</label></li>
+<li><input type="checkbox" id="g22"><label for="g22">Обувь городская лёгкая (день в Самарканде, поезд)</label></li>
+</ul>
+</section>
+
+<section data-sec>
+<h2 onclick="speakSec(this)">3 · Сон и лагерь <button class="speak" onclick="event.stopPropagation();speakSec(this.parentElement)">🔊</button><span class="cnt"></span></h2>
+<ul>
+<li><input type="checkbox" id="g23"><label for="g23"><span class="crit">Спальник комфорт −10 °C</span> (ночёвка 4400 м; прогноз −6…−10, но запас обязателен)</label></li>
+<li><input type="checkbox" id="g24"><label for="g24"><span class="crit">Коврик R≥4</span> (снег/морена под палаткой) — самонадувной или ижевка+пена</label></li>
+<li><input type="checkbox" id="g25"><label for="g25">Палатка — по распределению группы (своя/походная): проверить комплектность дуг и колышков</label></li>
+<li><input type="checkbox" id="g26"><label for="g26">Подушка надувная/чехол с флиской</label></li>
+<li><input type="checkbox" id="g27"><label for="g27">Компрессионный мешок для спальника</label></li>
+<li><input type="checkbox" id="g28"><label for="g28">Сидушка (привалы на камнях и фирне)</label></li>
+<li><input type="checkbox" id="g29"><label for="g29">Тент/дождевик на рюкзак</label></li>
+</ul>
+</section>
+
+<section data-sec>
+<h2 onclick="speakSec(this)">4 · Высотное и техническое <button class="speak" onclick="event.stopPropagation();speakSec(this.parentElement)">🔊</button><span class="cnt"></span></h2>
+<ul>
+<li><input type="checkbox" id="g30"><label for="g30"><span class="crit">Кошки мягкие («цепочки»/микроспайки)</span> — фирн и старый снег на Чимтарге, дни 11–12.09</label></li>
+<li><input type="checkbox" id="g31"><label for="g31"><span class="crit">Треккинговые палки</span> — осыпные спуски 1480 м бьют по коленям; в самолёт — ТОЛЬКО в багаж</label></li>
+<li><input type="checkbox" id="g32"><label for="g32">Рюкзак 60–75 л с поясом (вес: вещи + ~5 кг продуктов)</label></li>
+<li><input type="checkbox" id="g33"><label for="g33">Чехол/лайнер-гермомешок внутренний (вещи сухими)</label></li>
+<li><input type="checkbox" id="g34"><label for="g34">Налобный фонарь + запасной комплект батареек (выход на Чимтаргу в 05:00 — темно)</label></li>
+<li><input type="checkbox" id="g35"><label for="g35">Фонарь запасной малый/фонарик в лагерь</label></li>
+<li><input type="checkbox" id="g36"><label for="g36"><span class="crit">Очки горные категории 3–4</span> (снежная слепота на 4740 м!) + ремешок</label></li>
+<li><input type="checkbox" id="g37"><label for="g37">Очки запасные/контактные линзы с запасом (если носите)</label></li>
+<li><input type="checkbox" id="g38"><label for="g38">Компас (склонение +4,7°E: магнитный азимут = истинный − 5°)</label></li>
+<li><input type="checkbox" id="g39"><label for="g39">Нож (в багаж!), свисток, часы</label></li>
+<li><input type="checkbox" id="g40"><label for="g40">Ремнабор: изолента, кабельные стяжки, иголка с ниткой, запасная пряжка, верёвка 5 м</label></li>
+</ul>
+</section>
+
+<section data-sec>
+<h2 onclick="speakSec(this)">5 · Кухня и вода <button class="speak" onclick="event.stopPropagation();speakSec(this.parentElement)">🔊</button><span class="cnt"></span></h2>
+<ul>
+<li><input type="checkbox" id="g41"><label for="g41">КЛМН: кружка, ложка, миска, нож (походный комплект)</label></li>
+<li><input type="checkbox" id="g42"><label for="g42"><span class="crit">Фляги/бутылки суммарно 2 л</span> (на Чимтарге воды нет — нести 1,5–2 л)</label></li>
+<li><input type="checkbox" id="g43"><label for="g43"><span class="crit">Термос 0,5–0,75 л</span> — кипяток в спальник на 4400 м</label></li>
+<li><input type="checkbox" id="g44"><label for="g44">Горелка — по группе (газ НЕ ввозить в Узбекистан: баллоны выдадут/купят на месте)</label></li>
+<li><input type="checkbox" id="g45"><label for="g45">Аквабриз/таблетки обеззараживания воды (1 таб/л, 60 мин)</label></li>
+<li><input type="checkbox" id="g46"><label for="g46">Перекусы в ходу на первые дни: орехи, сухофрукты, сникерсы (остальное — выдача продуктов)</label></li>
+<li><input type="checkbox" id="g47"><label for="g47">Пакеты мусорные крепкие — всё уносим с собой</label></li>
+</ul>
+</section>
+
+<section data-sec>
+<h2 onclick="speakSec(this)">6 · Электроника <button class="speak" onclick="event.stopPropagation();speakSec(this.parentElement)">🔊</button><span class="cnt"></span></h2>
+<ul>
+<li><input type="checkbox" id="g48"><label for="g48"><span class="crit">Пауэрбанк 20 000 mAh</span> (розеток после 10.09 нет до Газзы) — заряжен на 100 %</label></li>
+<li><input type="checkbox" id="g49"><label for="g49">Кабели: телефон, пауэрбанк, фонарь (+запасной короткий)</label></li>
+<li><input type="checkbox" id="g50"><label for="g50">Зарядное устройство сетевое (Артуч, «Вертикаль», отели)</label></li>
+<li><input type="checkbox" id="g51"><label for="g51">Телефон: офлайн-карты, GPX, аудиогиды (12+8 треков), календарь — всё скачано ДО выезда</label></li>
+<li><input type="checkbox" id="g52"><label for="g52">Наушники (поезд, вечер — аудиогид)</label></li>
+<li><input type="checkbox" id="g53"><label for="g53">Камера/экшн-камера + карты памяти (по желанию)</label></li>
+</ul>
+</section>
+
+<section data-sec>
+<h2 onclick="speakSec(this)">7 · Гигиена и мелочи <button class="speak" onclick="event.stopPropagation();speakSec(this.parentElement)">🔊</button><span class="cnt"></span></h2>
+<ul>
+<li><input type="checkbox" id="g54"><label for="g54"><span class="crit">SPF 50+</span> + гигиеническая помада с SPF</label></li>
+<li><input type="checkbox" id="g55"><label for="g55">Зубная щётка/паста, мыло мыльное кусок/гель малый</label></li>
+<li><input type="checkbox" id="g56"><label for="g56">Влажные салфетки ×2 пачки + туалетная бумага (компактно)</label></li>
+<li><input type="checkbox" id="g57"><label for="g57">Крем для рук и стоп (сухость высокогорья), ножницы/клиппер (ногти коротко ДО похода)</label></li>
+<li><input type="checkbox" id="g58"><label for="g58">ДЭТА-репеллент (клещи в долинах Зиндон/Арчамайдан)</label></li>
+<li><input type="checkbox" id="g59"><label for="g59">Полотенце быстросохнущее малое</label></li>
+<li><input type="checkbox" id="g60"><label for="g60">Гермопакеты ×3–4 (документы, деньги, телефон, аптечка)</label></li>
+<li><input type="checkbox" id="g61"><label for="g61">Очки для сна и беруши (ночь в самолёте, лагерь)</label></li>
+</ul>
+</section>
+
+<section data-sec>
+<h2 onclick="speakSec(this)">8 · Аптечка — напоминание <button class="speak" onclick="event.stopPropagation();speakSec(this.parentElement)">🔊</button><span class="cnt"></span></h2>
+<ul>
+<li><input type="checkbox" id="g62"><label for="g62"><span class="crit">Конкор (бисопролол) 5 мг</span> — на все дни + запас 30 %; НЕ пропускать</label></li>
+<li><input type="checkbox" id="g63"><label for="g63">Аптечка по чеклисту «Аптечка_Фанские_горы.xlsx» (~714 г): Диакарб, дексаметазон, азитромицин (рецепт!), ибупрофен 600, лоперамид, каптоприл, перевязка, бетадин</label></li>
+<li><input type="checkbox" id="g64"><label for="g64">Милдронат 500 мг — курс с 07.09</label></li>
+<li><input type="checkbox" id="g65"><label for="g65">Личные БАДы: Chela-Ferr Forte, BCAA (железо и азитромицин — разносить на 2 ч!)</label></li>
+</ul>
+</section>
+
+<section data-sec>
+<h2 onclick="speakSec(this)">9 · Взвешивание и упаковка (финальный контроль) <button class="speak" onclick="event.stopPropagation();speakSec(this.parentElement)">🔊</button><span class="cnt"></span></h2>
+<ul>
+<li><input type="checkbox" id="g66"><label for="g66"><span class="crit">Багаж ≤ 23 кг</span> (норма HY710: 1 место) + ручная кладь ≤ 8 кг — взвешено дома с запасом 1 кг</label></li>
+<li><input type="checkbox" id="g67"><label for="g67">В ручной клади НЕТ: палок, ножей, горелки, жидкостей &gt;100 мл</label></li>
+<li><input type="checkbox" id="g68"><label for="g68">В ручной клади: документы, деньги, аптечка-на-день, пауэрбанк, тёплый слой, очки для сна</label></li>
+<li><input type="checkbox" id="g69"><label for="g69">Место и вес под ~5 кг продуктов заложены (выдача в Самарканде/Артуче)</label></li>
+<li><input type="checkbox" id="g70"><label for="g70">Лишнее для городов — отдельным пакетом: останется в отеле Самарканда на время трека</label></li>
+</ul>
+</section>
+
+</div>
+<script>
+const synth = window.speechSynthesis;
+function secText(h2){
+  const sec = h2.closest('section');
+  let t = h2.childNodes[0].textContent.trim() + '. ';
+  sec.querySelectorAll('label').forEach(l=>{ if(!l.closest('li').classList.contains('done')) t += l.textContent.trim() + '. '; });
+  return t;
+}
+function speak(txt){
+  synth.cancel();
+  const u = new SpeechSynthesisUtterance(txt);
+  u.lang = 'ru-RU'; u.rate = 0.95;
+  synth.speak(u);
+}
+function speakSec(h2){ speak(secText(h2)); }
+document.getElementById('readAll').onclick = ()=>{
+  synth.cancel();
+  const secs = [...document.querySelectorAll('section[data-sec]')];
+  let i = 0;
+  const btn = document.getElementById('readAll');
+  btn.classList.add('reading'); btn.textContent = '🔊 Читаю…';
+  function next(){
+    if(i >= secs.length){ btn.classList.remove('reading'); btn.textContent='🔊 Читать всё'; return; }
+    const u = new SpeechSynthesisUtterance(secText(secs[i].querySelector('h2')));
+    u.lang='ru-RU'; u.rate=0.95; u.onend = ()=>{ i++; next(); };
+    synth.speak(u);
+  }
+  next();
+};
+document.getElementById('stopRead').onclick = ()=>{
+  synth.cancel();
+  const btn = document.getElementById('readAll');
+  btn.classList.remove('reading'); btn.textContent='🔊 Читать всё';
+};
+const boxes = [...document.querySelectorAll('input[type=checkbox]')];
+function refresh(){
+  let done = 0;
+  boxes.forEach(b=>{
+    b.closest('li').classList.toggle('done', b.checked);
+    if(b.checked) done++;
+  });
+  document.getElementById('progress').textContent = done + ' / ' + boxes.length;
+  document.querySelectorAll('section[data-sec]').forEach(s=>{
+    const bs = [...s.querySelectorAll('input[type=checkbox]')];
+    const d = bs.filter(b=>b.checked).length;
+    s.querySelector('.cnt').textContent = d + '/' + bs.length;
+  });
+  localStorage.setItem('fannGear', JSON.stringify(boxes.map(b=>b.checked)));
+}
+boxes.forEach(b=>b.addEventListener('change', refresh));
+try{
+  const saved = JSON.parse(localStorage.getItem('fannGear')||'[]');
+  saved.forEach((v,i)=>{ if(boxes[i]) boxes[i].checked = v; });
+}catch(e){}
+refresh();
+document.getElementById('reset').onclick = ()=>{ if(confirm('Сбросить все отметки?')){ boxes.forEach(b=>b.checked=false); refresh(); } };
+</script>
+</body>
+</html>

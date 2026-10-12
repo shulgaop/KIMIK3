@@ -42,6 +42,16 @@ _first_aid.py — модуль «Аптечка»: чеклист медикам
 - `build_reminders(points, start, end, tzid)` — События-напоминания (формат make_ics.py): ежедневный приём + старт профилактики.
 - `main()` — —
 
+## `scripts/gear.py`
+_gear.py — весовой чеклист снаряжения по методике LighterPack (F12)._
+
+Константы: `ORIENTERS`
+
+- `load_items(path)` — —
+- `totals(items, members)` — Итоги LighterPack. Всё в граммах; shared делится на членов команды.
+- `to_markdown(items, t, members)` — —
+- `main()` — —
+
 ## `scripts/gpx_analyze.py`
 _gpx_analyze.py — разбор GPX-трека горного маршрута._
 
@@ -309,6 +319,7 @@ _webapp.py — веб-интерфейс мастера генерации ма�
 - `step_first_aid(d, params)` — Аптечка: чеклист (HTML + Keep) и ICS-напоминания о приёме.
 - `step_currency(d, params)` — Курсы валют стран маршрута (F10) → Деньги.md.
 - `step_report(d, params)` — Отчёт о пройденном походе: записанный трек + описание + дописки.
+- `step_gear(d, params)` — F12: весовой чеклист снаряжения (LighterPack) → Снаряжение.md.
 - `run_step(name, step, payload)` — —
 - `add_note(name, payload)` — Дописка к отчёту: свободный текст И/ИЛИ файл-вложение (PDF/DOCX/TXT —
 - `browse(path)` — Проводник по папкам компьютера для выбора директории с фото.

@@ -287,6 +287,15 @@
     <div class="row"><button onclick="saveJsonTo('чеклист.json',$('taChecklist').value,'logDocs')">Сохранить</button>
     <button class="primary" onclick="runStep('checklist')">Сделать Чеклист.html</button></div>
   </details>
+  <details>
+    <summary>⚖️ Снаряжение — веса по LighterPack (gear.json)</summary>
+    <div class="row">
+      <div><label>Участников (групповое делится)</label><input id="gearMembers" type="number" value="1" min="1"></div>
+    </div>
+    <textarea id="taGear"></textarea>
+    <div class="row"><button onclick="saveJsonTo('gear.json',$('taGear').value,'logDocs')">Сохранить список</button>
+    <button class="primary" onclick="runStep('gear')">Посчитать веса (Снаряжение.md)</button></div>
+  </details>
   <pre id="logDocs" style="display:none"></pre>
 </div>
 
@@ -641,6 +650,7 @@ async function runStep(step){
   if(step==='weather' || step==='daylight' || step==='first_aid'){ body.start=$('pStart').value; body.end=$('pEnd').value; }
   if(step==='kml'){ body.split_km = $('splitKm').value.trim().split(/\s+/).filter(Boolean).map(Number); }
   if(step==='currency'){ body.currencies = $('currencies').value.trim(); }
+  if(step==='gear'){ body.members = $('gearMembers').value; }
   if(step.startsWith('photos') || step==='marks' || step==='report_map'){
     body.folder = photoFolder; body.start = $('pStart').value;
     body.tz_offset = $('phTz').value; body.max_gap_min = $('phGap').value;
@@ -681,6 +691,15 @@ const CHECKLIST_TEMPLATE = JSON.stringify({
     {title:'Документы и билеты', items:['Паспорт — в гермопакет','Билеты распечатаны / офлайн-PDF']},
     {title:'Снаряжение', items:['Спальник по прогнозу ночей','Треккинговые палки'], note:'Полный список — в памятке организатора.'}
   ]}, null, 1);
+const GEAR_TEMPLATE = JSON.stringify([
+  {category:'Рюкзак и перенос', item:'Рюкзак 80 л', model:'', weight_g:2100, qty:1},
+  {category:'Сон', item:'Спальник', model:'комфорт −10 °C', weight_g:1450, qty:1},
+  {category:'Лагерь', item:'Палатка 2-местная', weight_g:2600, qty:1, shared:true},
+  {category:'Кухня и вода', item:'Газ 230 г', weight_g:380, qty:2, consumable:true},
+  {category:'Еда', item:'Продукты на старте', weight_g:5000, qty:1, consumable:true},
+  {category:'Одежда на себе', item:'Ботинки треккинговые', weight_g:1300, qty:1, worn:true},
+  {category:'Электроника', item:'Пауэрбанк', weight_g:null, qty:1}
+], null, 1);
 
 async function refreshFiles(silent){
   if(!cur) return;
@@ -866,6 +885,7 @@ async function addNote(){
 
 $('taEvents').value = eventsTemplate();
 $('taChecklist').value = CHECKLIST_TEMPLATE;
+$('taGear').value = GEAR_TEMPLATE;
 setCur(cur); loadProjects(); drawSteps(0); loadLlm();
 </script>
 </body>

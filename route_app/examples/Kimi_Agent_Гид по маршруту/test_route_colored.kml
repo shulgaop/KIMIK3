@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='utf-8'?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Маршрут по дням</name>
+    <description>Маршрут, раскрашенный по дням</description>
+    <Style id="style_day_0">
+      <LineStyle>
+        <color>ff0000ff</color>
+        <width>4</width>
+      </LineStyle>
+    </Style>
+    <Style id="style_day_1">
+      <LineStyle>
+        <color>ff00ff00</color>
+        <width>4</width>
+      </LineStyle>
+    </Style>
+    <Style id="style_day_2">
+      <LineStyle>
+        <color>ffff0000</color>
+        <width>4</width>
+      </LineStyle>
+    </Style>
+    <Folder>
+      <name>Дни маршрута</name>
+      <open>1</open>
+      <Placemark>
+        <name>День 1: 15.07.2024</name>
+        <styleUrl>#style_day_0</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>37.6173,55.7558,150.0 37.62,55.76,152.0 37.625,55.765,155.0 37.63,55.77,158.0 37.635,55.775,160.0</coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>День 2: 16.07.2024</name>
+        <styleUrl>#style_day_1</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>37.635,55.775,160.0 37.64,55.78,162.0 37.645,55.785,165.0 37.65,55.79,168.0 37.655,55.795,170.0</coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>День 3: 17.07.2024</name>
+        <styleUrl>#style_day_2</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>37.655,55.795,170.0 37.66,55.8,172.0 37.665,55.805,175.0 37.67,55.81,178.0 37.675,55.815,180.0</coordinates>
+        </LineString>
+      </Placemark>
+    </Folder>
+  </Document>
+</kml>
