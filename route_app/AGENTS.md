@@ -105,9 +105,9 @@ python3 webapp.py                                               # веб-мас�
 - Погода — Open-Meteo (без ключа): forecast API и архив ERA5; `weather.py` сам
   выбирает режим по датам (fact/forecast/climate) и пересчитывает температуры
   на высоту точек градиентом −0,6 °C/100 м от высоты сетки модели.
-- LLM — OpenRouter (`scripts/llm.py`): ключ из OPENROUTER_API_KEY или
-  `learn/llm_config.json` (gitignored); по умолчанию сильнейшая бесплатная
-  модель из живого списка `/models`, платные — тем же ключом по id.
+- LLM — `scripts/llm.py`, три провайдера: OpenRouter (бесплатные «:free» с живой
+  цепочкой фолбэков), Kimi/Moonshot (kimi-k2), Claude/Anthropic (claude-sonnet);
+  ключи по провайдерам в `learn/llm_config.json` (gitignored), CLI: --provider.
 - `hike_report.py` (гео-фото-отчёт с картой, видео, DJI) — отдельные зависимости:
   `pip install pillow folium openpyxl reverse-geocoder pyosmogps` (+pillow-heif
   для iPhone); инструкция для пользователя — `ИНСТРУКЦИЯ_фотоотчёт.md`.

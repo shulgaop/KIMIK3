@@ -226,15 +226,24 @@
 <div class="card" data-step="4">
   <h2><span class="ic"><svg width="19" height="19"><use href="#i-spark"/></svg></span>Гид (ИИ, OpenRouter)
     <span class="badge"><svg width="12" height="12"><use href="#i-check"/></svg>готово</span></h2>
-  <p class="sub">Путеводитель из данных проекта. Бесплатные модели — с бесплатным ключом
-  <a href="https://openrouter.ai/keys" target="_blank">openrouter.ai/keys</a>; платные — по вашей подписке.</p>
+  <p class="sub">Путеводитель из данных проекта. Провайдеры: <b>OpenRouter</b> (бесплатные модели,
+  бесплатный ключ на <a href="https://openrouter.ai/keys" target="_blank">openrouter.ai/keys</a>),
+  <b>Kimi (Moonshot)</b> и <b>Claude (Anthropic)</b> — по вашей подписке/балансу.</p>
   <div class="row">
-    <div><label>Ключ OpenRouter</label>
-      <input id="llmKey" type="password" placeholder="sk-or-..." onchange="saveLlmKey()">
+    <div><label>Провайдер</label>
+      <select id="llmProvider" onchange="providerChanged()">
+        <option value="openrouter">OpenRouter (есть бесплатные)</option>
+        <option value="moonshot">Kimi (Moonshot AI)</option>
+        <option value="anthropic">Claude (Anthropic)</option>
+      </select></div>
+    <div><label>Ключ провайдера</label>
+      <input id="llmKey" type="password" placeholder="sk-..." onchange="saveLlmKey()">
       <p class="hint" id="llmKeyState"></p></div>
-    <div><label>Модель (бесплатные)</label>
+  </div>
+  <div class="row">
+    <div><label>Модель (у OpenRouter — бесплатные)</label>
       <select id="llmModel" onchange="saveLlmModel()"><option value="">загружаю список…</option></select></div>
-    <div><label>или id платной модели</label>
+    <div><label>или id другой модели (платной)</label>
       <input id="llmModelCustom" placeholder="например openai/gpt-5" onchange="saveLlmModel()"></div>
   </div>
   <button class="big primary" onclick="runStep('guide')">Сгенерировать путеводитель</button>
@@ -437,14 +446,15 @@
 </div>
 
 <div class="card answer" id="help-llm">
-  <h3><span class="ic"><svg width="16" height="16"><use href="#i-check"/></svg></span>Ключ OpenRouter (бесплатно)</h3>
+  <h3><span class="ic"><svg width="16" height="16"><use href="#i-check"/></svg></span>Ключи LLM-провайдеров</h3>
+  <p>Провайдер выбирается в шаге 5 («Гид»):</p>
   <ol>
-    <li>Откройте <a href="https://openrouter.ai/keys" target="_blank">openrouter.ai/keys</a> → Sign up (Google) → «Create Key».</li>
-    <li>Вставьте ключ в поле шага 5 — он сохранится локально (в git не попадает).</li>
-    <li>Бесплатные модели — в списке (по умолчанию самая сильная). Платные — впишите id
-        (например <span class="kbd">openai/gpt-5</span>) при платной подписке OpenRouter.</li>
+    <li><b>OpenRouter</b> — есть бесплатные модели: <a href="https://openrouter.ai/keys" target="_blank">openrouter.ai/keys</a> → Sign up (Google) → «Create Key».</li>
+    <li><b>Kimi (Moonshot)</b> — ключ с platform.moonshot.ai (ваша подписка Kimi).</li>
+    <li><b>Claude (Anthropic)</b> — ключ с console.anthropic.com (ваша подписка Claude).</li>
   </ol>
-  <p class="hint">Дневной лимит бесплатных моделей ~50 запросов. Исчерпали — дождитесь следующего дня или используйте платную модель.</p>
+  <p class="hint">Ключи сохраняются локально по каждому провайдеру отдельно (в git не попадают).
+  Дневной лимит бесплатных моделей OpenRouter ~50 запросов: исчерпали — переключитесь на Kimi/Claude или подождите.</p>
 </div>
 
 <div class="card answer" id="help-photo">
@@ -626,7 +636,8 @@ async function runStep(step){
     }
   }
   if(step==='guide' || step==='audio_texts'){ body.model = $('llmModelCustom').value.trim() || $('llmModel').value;
-                      body.api_key = $('llmKey').value.trim(); }
+                      body.api_key = $('llmKey').value.trim();
+                      body.provider = $('llmProvider').value; }
   if(step==='weather' || step==='daylight' || step==='first_aid'){ body.start=$('pStart').value; body.end=$('pEnd').value; }
   if(step==='kml'){ body.split_km = $('splitKm').value.trim().split(/\s+/).filter(Boolean).map(Number); }
   if(step==='currency'){ body.currencies = $('currencies').value.trim(); }
@@ -712,28 +723,38 @@ function choosePicked(){
   closePicker();
 }
 
-// ---- LLM (OpenRouter) ----
+// ---- LLM (OpenRouter / Kimi / Claude) ----
 async function loadLlm(){
+  const provider = $('llmProvider').value;
   try{
     const cfg = await api('/api/llm');
-    $('llmKeyState').textContent = cfg.has_key ? `✓ ключ сохранён (${cfg.key_masked})` : 'ключ не задан';
-    if(cfg.model) $('llmModelCustom').placeholder = cfg.model;
-    const m = await api('/api/llm/models');
+    const masked = (cfg.keys_masked||{})[provider];
+    $('llmKeyState').textContent = masked ? `✓ ключ сохранён (${masked})` : 'ключ не задан';
+    const m = await api('/api/llm/models?provider=' + provider);
     $('llmModel').innerHTML = m.free.map(x=>
-      `<option value="${x.id}" ${x.id===m.default?'selected':''}>${x.id.replace(':free','')} (${Math.round(x.context/1024)}K)</option>`).join('');
-    if(cfg.model && [...$('llmModel').options].some(o=>o.value===cfg.model)) $('llmModel').value = cfg.model;
-  }catch(e){ $('llmModel').innerHTML = '<option value="">OpenRouter недоступен</option>'; }
+      `<option value="${x.id}" ${x.id===m.default?'selected':''}>${x.id.replace(':free','')}${x.context?' ('+Math.round(x.context/1024)+'K)':''}</option>`).join('')
+      || '<option value="">—</option>';
+    const saved = (cfg.models||{})[provider];
+    if(saved && [...$('llmModel').options].some(o=>o.value===saved)) $('llmModel').value = saved;
+    else if(saved) $('llmModelCustom').placeholder = saved;
+  }catch(e){ $('llmModel').innerHTML = '<option value="">список недоступен</option>'; }
+}
+async function providerChanged(){
+  await api('/api/llm', {method:'PUT', body:JSON.stringify({provider:$('llmProvider').value})});
+  loadLlm();
 }
 async function saveLlmKey(){
   const key = $('llmKey').value.trim();
   if(!key) return;
-  await api('/api/llm', {method:'PUT', body:JSON.stringify({api_key:key})});
+  await api('/api/llm', {method:'PUT',
+    body:JSON.stringify({provider:$('llmProvider').value, api_key:key})});
   $('llmKey').value = '';
   loadLlm();
 }
 async function saveLlmModel(){
   const model = $('llmModelCustom').value.trim() || $('llmModel').value;
-  await api('/api/llm', {method:'PUT', body:JSON.stringify({model})});
+  await api('/api/llm', {method:'PUT',
+    body:JSON.stringify({provider:$('llmProvider').value, model})});
 }
 
 // ---- обучение ----

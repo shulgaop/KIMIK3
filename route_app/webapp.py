@@ -355,13 +355,15 @@ def step_report_map(d, params):
 
 
 def step_guide(d, params):
-    """F4: генерация MD-гида через OpenRouter (модель из настроек шага)."""
+    """F4: генерация MD-гида через выбранного LLM-провайдера (настройки шага)."""
     llm = _llm_mod()
     model = (params.get("model") or "").strip() or None
     key = (params.get("api_key") or "").strip() or None
+    provider = (params.get("provider") or "").strip() or None
     try:
-        out = llm.generate_guide(d, model=model, key=key)
-        return True, "", f"✓ Гид записан: {out.name} (модель: {model or llm.load_config().get('model') or 'по умолчанию'})"
+        out = llm.generate_guide(d, model=model, key=key, provider=provider)
+        prov = provider or llm.load_config().get("provider") or "openrouter"
+        return True, "", f"✓ Гид записан: {out.name} (провайдер: {prov})"
     except SystemExit as e:
         return False, "", str(e)
 
@@ -387,8 +389,9 @@ def step_audio_texts(d, params):
     llm = _llm_mod()
     model = (params.get("model") or "").strip() or None
     key = (params.get("api_key") or "").strip() or None
+    provider = (params.get("provider") or "").strip() or None
     try:
-        out = llm.generate_audio_texts(d, model=model, key=key)
+        out = llm.generate_audio_texts(d, model=model, key=key, provider=provider)
         return True, "", f"✓ Тексты аудиогида: {out.name}"
     except SystemExit as e:
         return False, "", str(e)
@@ -606,29 +609,39 @@ def _llm_mod():
 def llm_get():
     llm = _llm_mod()
     cfg = llm.load_config()
-    key = cfg.get("api_key") or os.environ.get("OPENROUTER_API_KEY", "")
-    return {"model": cfg.get("model") or "",
-            "has_key": bool(key),
-            "key_masked": (key[:7] + "…" + key[-4:]) if key else "",
-            "default_free": None}
+    provider = cfg.get("provider") or "openrouter"
+    keys = {p: (k[:7] + "…" + k[-4:]) for p, k in cfg.get("keys", {}).items() if k}
+    return {"provider": provider,
+            "providers": {p: v["title"] for p, v in llm.PROVIDERS.items()},
+            "keys_masked": keys,
+            "models": cfg.get("models", {})}
 
 
 @app.put("/api/llm")
 def llm_put(payload: dict = Body(...)):
     llm = _llm_mod()
     cfg = llm.load_config()
-    if "api_key" in payload:
-        cfg["api_key"] = payload["api_key"].strip()
-    if "model" in payload:
-        cfg["model"] = payload["model"].strip()
+    cfg.setdefault("keys", {})
+    cfg.setdefault("models", {})
+    provider = payload.get("provider")
+    if provider in llm.PROVIDERS:
+        cfg["provider"] = provider
+        if payload.get("api_key"):
+            cfg["keys"][provider] = payload["api_key"].strip()
+        if "model" in payload:
+            cfg["models"][provider] = payload["model"].strip()
     llm.save_config(cfg)
-    return {"ok": True, "model": cfg.get("model") or "", "has_key": bool(cfg.get("api_key"))}
+    return {"ok": True, "provider": cfg.get("provider")}
 
 
 @app.get("/api/llm/models")
-def llm_models():
-    """Живой список бесплатных моделей + рекомендуемая по умолчанию."""
+def llm_models(provider: str = "openrouter"):
+    """Модели провайдера: OpenRouter — живой список free; Kimi/Claude — дефолт."""
     llm = _llm_mod()
+    if provider != "openrouter":
+        default = llm.PROVIDERS.get(provider, {}).get("default_model")
+        return {"free": [{"id": default, "context": 0}] if default else [],
+                "default": default}
     try:
         free = llm.list_free_models()
     except Exception as e:

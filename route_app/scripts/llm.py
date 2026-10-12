@@ -23,6 +23,20 @@ from pathlib import Path
 API = "https://openrouter.ai/api/v1"
 CONFIG = Path(__file__).parent.parent / "learn" / "llm_config.json"
 
+# Провайдеры LLM. openai-схема — POST /chat/completions (Authorization: Bearer);
+# anthropic — POST /messages (x-api-key, anthropic-version; system отдельным полем).
+PROVIDERS = {
+    "openrouter": {"title": "OpenRouter — бесплатные и платные модели",
+                   "base": "https://openrouter.ai/api/v1", "schema": "openai",
+                   "default_model": None},  # None → живая цепочка free-моделей
+    "moonshot": {"title": "Kimi (Moonshot AI, подписка/баланс Kimi)",
+                 "base": "https://api.moonshot.ai/v1", "schema": "openai",
+                 "default_model": "kimi-k2-0905-preview"},
+    "anthropic": {"title": "Claude (Anthropic, подписка/баланс)",
+                  "base": "https://api.anthropic.com/v1", "schema": "anthropic",
+                  "default_model": "claude-sonnet-4-5"},
+}
+
 # предпочтение бесплатных: сначала самые сильные/современные с большим контекстом
 FREE_PREFERENCE = [
     "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -55,9 +69,16 @@ GUIDE_SYSTEM = """Ты — опытный руководитель горных 
 
 
 def load_config():
-    if CONFIG.is_file():
-        return json.loads(CONFIG.read_text(encoding="utf-8"))
-    return {}
+    """Конфиг: {"provider": ..., "keys": {провайдер: ключ}, "models": {...}}.
+    Старый плоский формат (api_key/model) мигрирует автоматически."""
+    if not CONFIG.is_file():
+        return {}
+    cfg = json.loads(CONFIG.read_text(encoding="utf-8"))
+    if "api_key" in cfg:  # миграция со старого формата (только OpenRouter)
+        cfg = {"provider": "openrouter",
+               "keys": {"openrouter": cfg.get("api_key", "")},
+               "models": {"openrouter": cfg.get("model", "")}}
+    return cfg
 
 
 def save_config(cfg):
@@ -65,54 +86,84 @@ def save_config(cfg):
     CONFIG.write_text(json.dumps(cfg, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
 
 
-def get_key(cli_key=None):
-    key = cli_key or os.environ.get("OPENROUTER_API_KEY") or load_config().get("api_key")
+def get_provider(cli=None):
+    p = cli or load_config().get("provider") or "openrouter"
+    if p not in PROVIDERS:
+        sys.exit(f"⚠️  Неизвестный провайдер {p!r}; есть: {', '.join(PROVIDERS)}")
+    return p
+
+
+def get_key(cli_key=None, provider="openrouter"):
+    key = cli_key or load_config().get("keys", {}).get(provider)
+    if not key and provider == "openrouter":
+        key = os.environ.get("OPENROUTER_API_KEY")
     if not key:
-        sys.exit("⚠️  Нет ключа OpenRouter: задайте OPENROUTER_API_KEY, --key "
-                 "или сохраните ключ в мастере (шаг «Гид»). Ключ бесплатный: openrouter.ai/keys")
+        sys.exit(f"⚠️  Нет ключа для {PROVIDERS[provider]['title']}: задайте --key "
+                 "или сохраните ключ в мастере (шаг «Гид»).")
     return key
 
 
-def _post(path, payload, key, timeout=300):
-    req = urllib.request.Request(API + path, data=json.dumps(payload).encode(),
-        headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json",
-                 "HTTP-Referer": "https://github.com/shulgaop/KIMIK3",
-                 "X-Title": "Route Guide Generator"})
+def _post(url, payload, key, provider, timeout=300):
+    headers = {"Content-Type": "application/json"}
+    if PROVIDERS[provider]["schema"] == "anthropic":
+        headers.update({"x-api-key": key, "anthropic-version": "2023-06-01"})
+    else:
+        headers["Authorization"] = f"Bearer {key}"
+        if provider == "openrouter":
+            headers.update({"HTTP-Referer": "https://github.com/shulgaop/KIMIK3",
+                            "X-Title": "Route Guide Generator"})
+    req = urllib.request.Request(url, data=json.dumps(payload).encode(), headers=headers)
     try:
         with urllib.request.urlopen(req, timeout=timeout) as r:
             return json.load(r)
     except urllib.error.HTTPError as e:
         body = e.read().decode("utf-8", "replace")[:300]
         if e.code == 401:
-            sys.exit("⚠️  Ключ OpenRouter отклонён (401) — проверьте ключ в шаге «Гид»")
+            sys.exit(f"⚠️  Ключ отклонён (401, {provider}) — проверьте ключ в шаге «Гид»")
         if e.code >= 500:
             raise RuntimeError(f"HTTP {e.code}: {body[:150]}")
-        sys.exit(f"⚠️  OpenRouter HTTP {e.code}: {body}")
+        sys.exit(f"⚠️  {provider} HTTP {e.code}: {body}")
 
 
-def chat(messages, model, key, max_tokens=16000, temperature=0.4):
-    """Один запрос chat/completions с ретраями на сетевые сбои."""
-    payload = {"model": model, "messages": messages,
-               "max_tokens": max_tokens, "temperature": temperature}
+def chat(messages, model, key, provider="openrouter", max_tokens=16000, temperature=0.4):
+    """Один запрос к провайдеру с ретраями на сетевые сбои.
+    OpenAI-схема: /chat/completions; Anthropic: /messages (system — отдельно)."""
+    schema = PROVIDERS[provider]["schema"]
+    if schema == "anthropic":
+        system = "\n".join(m["content"] for m in messages if m["role"] == "system")
+        msgs = [m for m in messages if m["role"] != "system"]
+        payload = {"model": model, "max_tokens": max_tokens, "system": system,
+                   "messages": msgs}
+        url = PROVIDERS[provider]["base"] + "/messages"
+    else:
+        payload = {"model": model, "messages": messages,
+                   "max_tokens": max_tokens, "temperature": temperature}
+        url = PROVIDERS[provider]["base"] + "/chat/completions"
     last = None
     for attempt, pause in enumerate((5, 15), start=1):
         try:
-            r = _post("/chat/completions", payload, key)
+            r = _post(url, payload, key, provider)
         except (urllib.error.URLError, OSError) as e:  # URLError, обрывы TLS/соединения
             last = e
             print(f"⚠️  {e} — повтор через {pause} с", file=sys.stderr)
             time.sleep(pause)
             continue
         if "error" in r:  # OpenRouter отвечает 200 с объектом error (напр. провайдер перегружен)
-            raise RuntimeError(f"{model}: {r['error'].get('message', r['error'])}")
+            err = r["error"]
+            raise RuntimeError(f"{model}: {err.get('message', err)}")
+        if schema == "anthropic":
+            return "".join(b.get("text", "") for b in r.get("content", []))
         return r["choices"][0]["message"]["content"]
     sys.exit(f"⚠️  Сеть недоступна: {last}")
 
 
-def candidate_models(preferred=None, key=None):
-    """Очередь моделей: явно заданная (без фолбэка) или free-предпочтения по живому списку."""
+def candidate_models(preferred=None, key=None, provider="openrouter"):
+    """Очередь моделей: явно заданная (без фолбэка) или цепочка бесплатных
+    OpenRouter по живому списку; у Kimi/Claude — дефолт провайдера."""
     if preferred:
         return [preferred]
+    if provider != "openrouter":
+        return [PROVIDERS[provider]["default_model"]]
     try:
         ids = [m["id"] for m in list_free_models(key)]
     except Exception:
@@ -172,25 +223,26 @@ def build_guide_context(project):
     return "\n\n".join(parts)
 
 
-def chat_with_fallback(messages, explicit_model, key, max_tokens=16000):
+def chat_with_fallback(messages, explicit_model, key, provider="openrouter", max_tokens=16000):
     """Запрос с перебором бесплатных моделей (провайдеры бывают перегружены).
     Возвращает (текст, использованная_модель)."""
     last_err = None
-    for m in candidate_models(explicit_model, key):
+    for m in candidate_models(explicit_model, key, provider):
         try:
-            print(f"Модель: {m}", file=sys.stderr)
-            return chat(messages, m, key, max_tokens=max_tokens), m
+            print(f"Провайдер: {provider}, модель: {m}", file=sys.stderr)
+            return chat(messages, m, key, provider, max_tokens=max_tokens), m
         except RuntimeError as e:
             last_err = e
             print(f"⚠️  {e} — пробую следующую бесплатную модель", file=sys.stderr)
     sys.exit(f"⚠️  Доступные модели не ответили. Последняя ошибка: {last_err}")
 
 
-def generate_guide(project, model=None, key=None, out_name="Гид.md"):
+def generate_guide(project, model=None, key=None, provider=None, out_name="Гид.md"):
     """Генерация MD-гида проекта → выходные/Гид.md. Возвращает путь."""
     project = Path(project)
-    key = get_key(key)
-    explicit = model or load_config().get("model")
+    provider = get_provider(provider)
+    key = get_key(key, provider)
+    explicit = model or load_config().get("models", {}).get(provider)
     context = build_guide_context(project)
     if not context.strip():
         sys.exit("⚠️  В проекте нет данных: пройдите шаги «Программа», «Анализ», «Погода»")
@@ -198,7 +250,7 @@ def generate_guide(project, model=None, key=None, out_name="Гид.md"):
             "Напиши полный путеводитель по правилам из system-промпта.")
     print(f"Контекст {len(context)} символов", file=sys.stderr)
     text, _ = chat_with_fallback([{"role": "system", "content": GUIDE_SYSTEM},
-                                  {"role": "user", "content": user}], explicit, key)
+                                  {"role": "user", "content": user}], explicit, key, provider)
     out = project / "выходные" / out_name
     out.parent.mkdir(exist_ok=True)
     out.write_text(text + "\n", encoding="utf-8")
@@ -224,11 +276,12 @@ AUDIO_SYSTEM = """Ты — автор аудиогидов для горных �
 """
 
 
-def generate_audio_texts(project, model=None, key=None, out_name="аудиотексты.json"):
+def generate_audio_texts(project, model=None, key=None, provider=None, out_name="аудиотексты.json"):
     """Тексты аудиогида (формат tts_audioguide.py) → выходные/аудиотексты.json."""
     project = Path(project)
-    key = get_key(key)
-    explicit = model or load_config().get("model")
+    provider = get_provider(provider)
+    key = get_key(key, provider)
+    explicit = model or load_config().get("models", {}).get(provider)
     context = build_guide_context(project)
     guide = project / "выходные" / "Гид.md"
     if guide.is_file():
@@ -241,7 +294,7 @@ def generate_audio_texts(project, model=None, key=None, out_name="аудиоте
                  f"Проект: {project.name}\n\n{context}\n\n"
                  "Составь тексты аудиогида (8–14 треков) и верни строго JSON."}]
     for attempt in (1, 2):  # вторая попытка — просим починить JSON
-        raw, _ = chat_with_fallback(messages, explicit, key, max_tokens=12000)
+        raw, _ = chat_with_fallback(messages, explicit, key, provider, max_tokens=12000)
         raw = raw.strip()
         if raw.startswith("```"):
             raw = raw.split("\n", 1)[1].rsplit("```", 1)[0]
@@ -274,22 +327,26 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("cmd", choices=["models", "guide", "audio"])
     ap.add_argument("project", nargs="?")
-    ap.add_argument("--model", help="id модели OpenRouter (платные — тоже, по вашему ключу)")
-    ap.add_argument("--key", help="ключ OpenRouter (или OPENROUTER_API_KEY / мастер)")
+    ap.add_argument("--model", help="id модели (платные — тоже, по вашему ключу)")
+    ap.add_argument("--provider", choices=list(PROVIDERS),
+                    help="openrouter (по умолчанию) / moonshot (Kimi) / anthropic (Claude)")
+    ap.add_argument("--key", help="ключ провайдера (или сохранённый в мастере)")
     args = ap.parse_args()
 
     if args.cmd == "models":
         free = list_free_models()
-        print(f"Бесплатных моделей: {len(free)}. По умолчанию: {default_model()}")
+        print(f"Бесплатных моделей OpenRouter: {len(free)}. По умолчанию: {default_model()}")
         for m in free:
             print(f"  {m['id']}  (контекст {m['context'] // 1024}K)")
+        print("Kimi (Moonshot):", PROVIDERS["moonshot"]["default_model"],
+              "| Claude (Anthropic):", PROVIDERS["anthropic"]["default_model"])
     else:
         if not args.project:
             sys.exit(f"Укажите папку проекта: llm.py {args.cmd} projects/<маршрут>")
         if args.cmd == "guide":
-            generate_guide(args.project, model=args.model, key=args.key)
+            generate_guide(args.project, model=args.model, key=args.key, provider=args.provider)
         else:
-            generate_audio_texts(args.project, model=args.model, key=args.key)
+            generate_audio_texts(args.project, model=args.model, key=args.key, provider=args.provider)
 
 
 if __name__ == "__main__":

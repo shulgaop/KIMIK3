@@ -60,7 +60,7 @@ _gpx_analyze.py — разбор GPX-трека горного маршрута.
 ## `scripts/hike_report.py`
 _============================================================_
 
-Константы: `PHOTO_EXT, VIDEO_EXT, EPOCH_1904, DJI_TIMEZONE_OFFSET, OFFLINE_MAP, OFFLINE_MIN_ZOOM, OFFLINE_MAX_ZOOM, MAX_OFFLINE_TILES, OFFLINE_TILE_URL, GPX_TIMEZONE_OFFSET, TRACK_MAX_GAP_MIN, PLAN_INTERPOLATION, HAVE_RG, HAVE_PYOSMO, ISO6709_RE, DJI_NAME_RE`
+Константы: `PHOTO_EXT, VIDEO_EXT, EPOCH_1904, DJI_TIMEZONE_OFFSET, OFFLINE_MAP, OFFLINE_MIN_ZOOM, OFFLINE_MAX_ZOOM, MAX_OFFLINE_TILES, OFFLINE_TILE_URL, GPX_TIMEZONE_OFFSET, TRACK_MAX_GAP_MIN, PLAN_INTERPOLATION, HAVE_RG, HAVE_PYOSMO, ISO6709_RE, DJI_NAME_RE, CORRECTIONS_FILE`
 
 - `_dms_to_deg(dms, ref)` — Градусы/минуты/секунды из EXIF -> десятичные градусы.
 - `photo_meta(path)` — Возвращает (lat, lon, dt) для фотографии.
@@ -73,30 +73,35 @@ _============================================================_
 - `download_offline_tiles(records, folder)` — Скачивает тайлы (источник — OFFLINE_TILE_URL), покрывающие весь
 - `coords_ok(lat, lon)` — —
 - `thumbnail_b64(path, max_px)` — Маленькое превью фото в base64 для всплывающего окна на карте.
+- `video_frame_b64(path, sec, max_px)` — Кадр-превью из видео через ffmpeg (ставится пакетом imageio-ffmpeg).
+- `load_corrections(root)` — Читает файл ручных правок {файл: [lat, lon]}, скачанный с карты.
 - `scan_folder(root)` — —
 - `nearest_plan_idx(plan, lat, lon)` — Индекс ближайшей точки планового маршрута к (lat, lon).
 - `build_plan_anchors(plan, track, pending_dts)` — Опорные точки [(время, индекс_на_плане)] для интерполяции:
 - `interp_plan(plan, anchors, dt)` — Позиция на плановом маршруте для момента dt: линейная
+- `ask_coord_mode()` — Спрашивает, откуда брать координаты для файлов.
+- `ask_offline()` — Спрашивает, скачивать ли локальные тайлы для офлайн-карты.
 - `ask_dji_mode()` — Интерактивный выбор способа обработки видео DJI.
 - `main()` — —
 
 ## `scripts/llm.py`
 _llm.py — LLM-слой через OpenRouter (F4: генерация гида и др.)._
 
-Константы: `API, CONFIG, FREE_PREFERENCE, GUIDE_SYSTEM, AUDIO_SYSTEM`
+Константы: `API, CONFIG, PROVIDERS, FREE_PREFERENCE, GUIDE_SYSTEM, AUDIO_SYSTEM`
 
-- `load_config()` — —
+- `load_config()` — Конфиг: {"provider": ..., "keys": {провайдер: ключ}, "models": {...}}.
 - `save_config(cfg)` — —
-- `get_key(cli_key)` — —
-- `_post(path, payload, key, timeout)` — —
-- `chat(messages, model, key, max_tokens, temperature)` — Один запрос chat/completions с ретраями на сетевые сбои.
-- `candidate_models(preferred, key)` — Очередь моделей: явно заданная (без фолбэка) или free-предпочтения по живому списку.
+- `get_provider(cli)` — —
+- `get_key(cli_key, provider)` — —
+- `_post(url, payload, key, provider, timeout)` — —
+- `chat(messages, model, key, provider, max_tokens, temperature)` — Один запрос к провайдеру с ретраями на сетевые сбои.
+- `candidate_models(preferred, key, provider)` — Очередь моделей: явно заданная (без фолбэка) или цепочка бесплатных
 - `list_free_models(key)` — Живой список бесплатных моделей OpenRouter (ключ не нужен).
 - `default_model(key)` — Самая предпочтительная из доступных бесплатных моделей.
 - `build_guide_context(project)` — Контекст генерации из файлов проекта + обучающих материалов.
-- `chat_with_fallback(messages, explicit_model, key, max_tokens)` — Запрос с перебором бесплатных моделей (провайдеры бывают перегружены).
-- `generate_guide(project, model, key, out_name)` — Генерация MD-гида проекта → выходные/Гид.md. Возвращает путь.
-- `generate_audio_texts(project, model, key, out_name)` — Тексты аудиогида (формат tts_audioguide.py) → выходные/аудиотексты.json.
+- `chat_with_fallback(messages, explicit_model, key, provider, max_tokens)` — Запрос с перебором бесплатных моделей (провайдеры бывают перегружены).
+- `generate_guide(project, model, key, provider, out_name)` — Генерация MD-гида проекта → выходные/Гид.md. Возвращает путь.
+- `generate_audio_texts(project, model, key, provider, out_name)` — Тексты аудиогида (формат tts_audioguide.py) → выходные/аудиотексты.json.
 - `main()` — —
 
 ## `scripts/make_checklist.py`
@@ -295,7 +300,7 @@ _webapp.py — веб-интерфейс мастера генерации ма�
 - `step_photos_all(d, params)` — Всё про фото одной кнопкой: сортировка → фотометки → гео-отчёт с картой.
 - `run_hike_report(d, folder, params)` — Запуск hike_report.py с настройками модуля «Фотоотчёт»:
 - `step_report_map(d, params)` — Только гео-фото-отчёт с картой (hike_report) с настройками модуля.
-- `step_guide(d, params)` — F4: генерация MD-гида через OpenRouter (модель из настроек шага).
+- `step_guide(d, params)` — F4: генерация MD-гида через выбранного LLM-провайдера (настройки шага).
 - `step_research(d, params)` — Сбор фактов по маршруту (Википедия + OSM) → Факты.md для LLM-гида.
 - `step_guide_html(d, params)` — HTML-версия Гид.md (офлайн, профиль высот, печать).
 - `step_audio_texts(d, params)` — Тексты аудиогида через LLM (числа прописью) → аудиотексты.json.
@@ -312,7 +317,7 @@ _webapp.py — веб-интерфейс мастера генерации ма�
 - `_llm_mod()` — Модуль llm.py (OpenRouter) — ленивый импорт, чтобы без ключа мастер работал.
 - `llm_get()` — —
 - `llm_put(payload)` — —
-- `llm_models()` — Живой список бесплатных моделей + рекомендуемая по умолчанию.
+- `llm_models(provider)` — Модели провайдера: OpenRouter — живой список free; Kimi/Claude — дефолт.
 - `read_examples()` — —
 - `learn_get()` — —
 - `learn_rules(payload)` — —
