@@ -38,6 +38,10 @@ nav a.l3{padding-left:18px;font-size:.85rem}
 .profile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px;margin:16px 0}
 .profile svg{width:100%;height:auto;display:block}
 blockquote{border-left:4px solid var(--crim);margin:10px 0;padding:4px 14px;background:rgba(255,255,255,.4)}
+.photos{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.photos img{height:110px;border-radius:8px;border:1px solid var(--line);cursor:zoom-in}
+.photos img:active{position:fixed;inset:5%;height:auto;max-width:90%;z-index:9;background:#fff}
+@media print{.photos img{height:60px}}
 html{scroll-behavior:smooth}
 @media print{
   body{background:#fff;font-size:12px}
@@ -105,6 +109,42 @@ def profile_svg(gpx_path, points_path, width=760, height=220):
     return "\n".join(parts)
 
 
+def photos_by_day(project):
+    """Фото по дням из выходные/фото_карта.json (photo_sort) и фотометки.json
+    (photo_marks, имена 🎧 с «День N»). Возвращает {номер_дня: [отн. пути]}."""
+    out = Path(project) / "выходные"
+    by_day = {}
+    card = out / "фото_карта.json"
+    if card.is_file():
+        for rec in json.loads(card.read_text(encoding="utf-8")):
+            m = re.match(r"День (\d+)", rec.get("group") or "")
+            if m and rec.get("rel"):
+                by_day.setdefault(int(m.group(1)), []).append(rec["rel"])
+    marks = out / "фотометки.json"
+    if marks.is_file():
+        for rec in json.loads(marks.read_text(encoding="utf-8")).get("marks", []):
+            m = re.search(r"День (\d+)", rec.get("audio") or "")
+            if m:
+                by_day.setdefault(int(m.group(1)), []).append(f"фото_метки/{rec['stored_as']}")
+    return by_day
+
+
+def inject_photos(md_text, by_day):
+    """После заголовков «##/### День N …» вставить ряд превью фото дня (raw HTML)."""
+    if not by_day:
+        return md_text, 0
+    lines, added = md_text.split("\n"), 0
+    out = []
+    for ln in lines:
+        out.append(ln)
+        m = re.match(r"^#{2,3}\s*(?:День|Дни)\s+(\d+)", ln)
+        if m and int(m.group(1)) in by_day:
+            imgs = "".join(f"<img src='{p}' loading='lazy'>" for p in by_day[int(m.group(1))])
+            out.append(f"\n<div class='photos'>{imgs}</div>\n")
+            added += len(by_day[int(m.group(1))])
+    return "\n".join(out), added
+
+
 def build_html(md_text, title, svg=None):
     body = markdown.markdown(md_text, extensions=["tables", "toc", "fenced_code"],
                              extension_configs={"toc": {"slugify": lambda v, s: re.sub(r"\s+", "-", v.strip())}})
@@ -139,6 +179,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("source", help="папка проекта или путь к Гид.md")
     ap.add_argument("--out", help="выходной HTML (по умолчанию выходные/Гид.html)")
+    ap.add_argument("--no-photos", action="store_true",
+                    help="не вставлять фото дней (по умолчанию — из фото_карта.json/фотометки.json)")
     args = ap.parse_args()
 
     src = Path(args.source)
@@ -161,7 +203,13 @@ def main():
         svg = profile_svg(gpx, points)
         print("✓ Профиль высот построен из track.gpx", file=sys.stderr)
 
-    html = build_html(md_path.read_text(encoding="utf-8"), title, svg)
+    md_text = md_path.read_text(encoding="utf-8")
+    if src.is_dir() and not args.no_photos:
+        by_day = photos_by_day(src)
+        if by_day:
+            md_text, added = inject_photos(md_text, by_day)
+            print(f"✓ Фото в днях: {added} шт. в {len(by_day)} днях", file=sys.stderr)
+    html = build_html(md_text, title, svg)
     out.write_text(html + "\n", encoding="utf-8")
     print(f"✓ {out}: {len(html)} символов, офлайн, печать A4", file=sys.stderr)
 

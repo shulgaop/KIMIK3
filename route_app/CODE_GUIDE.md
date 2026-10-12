@@ -131,6 +131,8 @@ _make_guide_html.py — офлайн HTML-версия путеводителя 
 
 - `load_gpx_analyze()` — —
 - `profile_svg(gpx_path, points_path, width, height)` — SVG-профиль высот: линия трека + точки программы с подписями.
+- `photos_by_day(project)` — Фото по дням из выходные/фото_карта.json (photo_sort) и фотометки.json
+- `inject_photos(md_text, by_day)` — После заголовков «##/### День N …» вставить ряд превью фото дня (raw HTML).
 - `build_html(md_text, title, svg)` — —
 - `main()` — —
 
