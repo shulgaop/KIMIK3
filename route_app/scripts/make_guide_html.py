@@ -49,7 +49,8 @@ html{scroll-behavior:smooth}
   h2{page-break-before:always}
   table,figure{page-break-inside:avoid}
 }
-@media (max-width:640px){ body{padding:12px} }
+@media (max-width:640px){ body{padding:12px}
+  table{display:block;overflow-x:auto} }
 """
 
 

@@ -427,7 +427,7 @@
    "ext": ".md",
    "size": 23519,
    "sha1": "08019c564c3610e336354edd8424068088934a7e",
-   "mtime": 1795366387,
+   "mtime": 1795371470,
    "outline": {
     "headings": [
      "CODE_GUIDE.md — справочник функций",
@@ -953,9 +953,9 @@
   {
    "path": "route_app/scripts/make_guide_html.py",
    "ext": ".py",
-   "size": 10390,
-   "sha1": "31f821da216ba078921a05988aea33b2538ecc79",
-   "mtime": 1795366387,
+   "size": 10430,
+   "sha1": "70809489babe5353c2c466a957a98f34ca25a133",
+   "mtime": 1795371338,
    "outline": {
     "symbols": [
      "load_gpx_analyze",
@@ -966,7 +966,7 @@
      "build_html",
      "main"
     ],
-    "lines": 219
+    "lines": 220
    },
    "keywords": [
     "var",
@@ -1597,9 +1597,9 @@
   {
    "path": "routes/japan/CONTEXT.md",
    "ext": ".md",
-   "size": 6790,
-   "sha1": "a628b7594cda14f97a8f6e0f38681704bbff4d0f",
-   "mtime": 1795369678,
+   "size": 7244,
+   "sha1": "e9087579629e154194188e27bbadf0fb5409c002",
+   "mtime": 1795371525,
    "outline": {
     "headings": [
      "CONTEXT.md — маршрут «Япония» (единственный операционный снимок)",
@@ -1610,20 +1610,20 @@
      "Ссылки",
      "Замечания"
     ],
-    "lines": 85,
+    "lines": 89,
     "snippet": "Обновлён: 2026-11-22. Поддерживается по `routes/japan/AGENTS.md` §13."
    },
    "keywords": [
     "routes",
     "japan",
-    "фудзи",
     "github",
+    "фудзи",
     "agents",
     "data",
     "gpx",
-    "ожидается",
-    "research",
-    "только"
+    "t-006",
+    "аудиогид",
+    "pages"
    ],
    "part_numbers": [
     "D-001",
@@ -1891,36 +1891,38 @@
   {
    "path": "routes/japan/TASKS/T-005.md",
    "ext": ".md",
-   "size": 1070,
-   "sha1": "3632d8baac547e4d07b4c0d20d56dc5412483ec2",
-   "mtime": 1795366697,
+   "size": 3157,
+   "sha1": "17dd7d5280d861e8e524f1d30760cc637d9d7a64",
+   "mtime": 1795371507,
    "outline": {
     "headings": [
      "T-005 — Вертикальный срез: день 6 (Цугизакура → Хонгу)",
      "Цель",
      "Критерии готовности",
+     "Результат проверки",
+     "Что ждёт подтверждения пользователя",
      "Затронутые файлы"
     ],
-    "lines": 20,
-    "snippet": "Статус: pending"
+    "lines": 42,
+    "snippet": "Статус: done (2026-11-22), формат — на утверждении пользователя"
    },
    "keywords": [
-    "день",
-    "гида",
-    "t-005",
-    "вертикальный",
+    "routes",
+    "japan",
+    "data",
+    "дня",
+    "osm",
     "срез",
-    "цугизакура",
-    "хонгу",
-    "статус",
-    "pending",
-    "создана"
+    "make_guide_html",
+    "generated",
+    "slice-day6",
+    "fetch_points_day6"
    ],
    "part_numbers": [
-    "T-002",
-    "T-003",
+    "S-041",
     "T-004",
-    "T-005"
+    "T-005",
+    "T-006"
    ]
   },
   {
@@ -2028,6 +2030,20 @@
    "part_numbers": []
   },
   {
+   "path": "routes/japan/data/day5_takijiri_tsugizakura.gpx",
+   "ext": ".gpx",
+   "size": 52105,
+   "sha1": "160eca6f563b97120673e07cf3e2798d212de1a4",
+   "mtime": 1795370866
+  },
+  {
+   "path": "routes/japan/data/day6_tsugizakura_hongu.gpx",
+   "ext": ".gpx",
+   "size": 56856,
+   "sha1": "5493cf06f4c80bd143118555ef93d29e2f40a3a2",
+   "mtime": 1795370866
+  },
+  {
    "path": "routes/japan/data/fetch_osm_gpx.py",
    "ext": ".py",
    "size": 2829,
@@ -2055,6 +2071,37 @@
     "ele"
    ],
    "part_numbers": []
+  },
+  {
+   "path": "routes/japan/data/fetch_points_day6.py",
+   "ext": ".py",
+   "size": 4909,
+   "sha1": "2b626b521c11f7c22f16c4d3834bd019f5dde016",
+   "mtime": 1795370970,
+   "outline": {
+    "symbols": [
+     "nominatim",
+     "collect",
+     "main"
+    ],
+    "lines": 105
+   },
+   "keywords": [
+    "lat",
+    "lon",
+    "json",
+    "name",
+    "nominatim",
+    "query",
+    "trkpts",
+    "import",
+    "dist",
+    "points_day6"
+   ],
+   "part_numbers": [
+    "E402",
+    "S-041"
+   ]
   },
   {
    "path": "routes/japan/data/fuji_area2.osm",
@@ -2092,6 +2139,13 @@
    "mtime": 1795369105
   },
   {
+   "path": "routes/japan/data/kumano_area.osm",
+   "ext": ".osm",
+   "size": 5888320,
+   "sha1": "fc9096cba1736498f70ba3ec22e1153c43867e60",
+   "mtime": 1795370932
+  },
+  {
    "path": "routes/japan/data/nakahechi_final.gpx",
    "ext": ".gpx",
    "size": 99092,
@@ -2111,6 +2165,13 @@
    "size": 95926,
    "sha1": "dcce14cd76441c6f0346300afd5cf52e3d57e7da",
    "mtime": 1795368395
+  },
+  {
+   "path": "routes/japan/data/points_day6.json",
+   "ext": ".json",
+   "size": 1802,
+   "sha1": "a4c05e0af21f6c959128877ca08326e81249b27c",
+   "mtime": 1795370998
   },
   {
    "path": "routes/japan/data/process_tracks.py",
@@ -2141,6 +2202,38 @@
     "way"
    ],
    "part_numbers": []
+  },
+  {
+   "path": "routes/japan/data/split_days.py",
+   "ext": ".py",
+   "size": 2781,
+   "sha1": "2779b5b97d0f3323b722ce4f416c9b1486bb1b82",
+   "mtime": 1795370859,
+   "outline": {
+    "symbols": [
+     "write_gpx",
+     "main"
+    ],
+    "lines": 59
+   },
+   "keywords": [
+    "gpx",
+    "seg",
+    "path",
+    "trkpts",
+    "ele",
+    "день",
+    "name",
+    "lat",
+    "lon",
+    "lines"
+   ],
+   "part_numbers": [
+    "E402",
+    "S-038",
+    "T-004",
+    "T-006"
+   ]
   },
   {
    "path": "routes/japan/data/track-stats.md",
@@ -2182,6 +2275,103 @@
    "size": 79844,
    "sha1": "166a71d589484828c10f8eadcc5a58b09c9ae94a",
    "mtime": 1795368252
+  },
+  {
+   "path": "routes/japan/generated/slice-day6/входные/points.json",
+   "ext": ".json",
+   "size": 1802,
+   "sha1": "a4c05e0af21f6c959128877ca08326e81249b27c",
+   "mtime": 1795371056
+  },
+  {
+   "path": "routes/japan/generated/slice-day6/входные/track.gpx",
+   "ext": ".gpx",
+   "size": 56856,
+   "sha1": "5493cf06f4c80bd143118555ef93d29e2f40a3a2",
+   "mtime": 1795371056
+  },
+  {
+   "path": "routes/japan/generated/slice-day6/выходные/Гид.html",
+   "ext": ".html",
+   "size": 19672,
+   "sha1": "b1959a0f6d5cdaee15d95d6057f95dc1939a11d6",
+   "mtime": 1795371350,
+   "outline": {
+    "headings": [],
+    "lines": 284,
+    "snippet": "<!DOCTYPE html>"
+   },
+   "keywords": [
+    "text",
+    "strong",
+    "font-size",
+    "fill",
+    "var",
+    "font-family",
+    "sans-serif",
+    "мин",
+    "background",
+    "table"
+   ],
+   "part_numbers": [
+    "D-012",
+    "S-006",
+    "S-008",
+    "S-013",
+    "S-020",
+    "S-021",
+    "S-033",
+    "S-037",
+    "S-038",
+    "S-039",
+    "T-005",
+    "T-006"
+   ]
+  },
+  {
+   "path": "routes/japan/generated/slice-day6/выходные/Гид.md",
+   "ext": ".md",
+   "size": 6552,
+   "sha1": "cf7df9953bdb5230cda81650dc9003b32654ebc1",
+   "mtime": 1795371283,
+   "outline": {
+    "headings": [
+     "День 6 · Цугизакура → Хонгу · Кумано Кодо Накахэти",
+     "План по точкам",
+     "Аудиогид дня",
+     "Вечер: Оюнохара и Юноминэ",
+     "Запасные сценарии",
+     "Что взять с утра"
+    ],
+    "lines": 87,
+    "snippet": "> Вертикальный срез веб-гида (T-005): один полный пеший день с профилем,"
+   },
+   "keywords": [
+    "мин",
+    "хонгу",
+    "автобус",
+    "день",
+    "кумано",
+    "хоссиммон-одзи",
+    "оюнохара",
+    "дня",
+    "пути",
+    "юноминэ"
+   ],
+   "part_numbers": [
+    "D-012",
+    "S-006",
+    "S-008",
+    "S-013",
+    "S-020",
+    "S-021",
+    "S-033",
+    "S-037",
+    "S-038",
+    "S-039",
+    "T-005",
+    "T-006"
+   ]
   },
   {
    "path": "routes/japan/research/engine-audit.md",
