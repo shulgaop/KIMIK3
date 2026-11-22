@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Япония 2027 — вход</title>
+<style>
+:root{--paper:#f4efe3;--ink:#1c1a16;--ai:#1f3a5f;--shu:#b23a2a;--card:#fcfbf6;--line:#c9c0a8}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font:16px/1.65 Georgia,"Times New Roman",serif;
+     margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+      box-shadow:0 1px 3px rgba(28,26,22,.08);padding:32px 28px;max-width:380px;width:100%}
+h1{font-size:1.4rem;color:var(--ai);margin:0 0 4px;border-bottom:3px double var(--ai);padding-bottom:8px}
+.sub{font-family:-apple-system,"Segoe UI",Roboto,sans-serif;font-size:.85rem;opacity:.75;margin:8px 0 20px}
+label{display:block;font-family:-apple-system,"Segoe UI",Roboto,sans-serif;font-size:.85rem;
+      color:var(--ai);margin-bottom:6px}
+input{width:100%;padding:10px 12px;font-size:1rem;border:1px solid var(--line);border-radius:8px;
+      background:var(--paper);color:var(--ink)}
+input:focus{outline:2px solid var(--ai);outline-offset:1px}
+button{width:100%;margin-top:14px;padding:11px;font-size:1rem;font-weight:600;color:#f8f5ec;
+       background:var(--ai);border:none;border-radius:8px;cursor:pointer}
+button:hover{background:var(--shu)}
+.err{display:none;margin-top:12px;color:var(--shu);
+     font-family:-apple-system,"Segoe UI",Roboto,sans-serif;font-size:.85rem}
+</style>
+</head>
+<body>
+<form class="card" id="gate">
+<h1>Япония 2027</h1>
+<p class="sub">Фудзи и Кумано Кодо · приватный путеводитель</p>
+<label for="word">Кодовое слово</label>
+<input id="word" type="password" autocomplete="off" autofocus>
+<button type="submit">Открыть гид</button>
+<p class="err" id="err">Не подошло. Проверьте слово и попробуйте ещё раз.</p>
+</form>
+<script>
+const HASH = "52f7a7e05869a4a9083588aa8160dd94fbd011d31ae55145db3331b5c4c595b2";
+const KEY = "japanGate";
+async function sha256(текст) {
+  const данные = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(текст));
+  return [...new Uint8Array(данные)].map(b => b.toString(16).padStart(2, "0")).join("");
+}
+document.getElementById("gate").addEventListener("submit", async (событие) => {
+  событие.preventDefault();
+  const слово = document.getElementById("word").value.trim().toLowerCase();
+  if (await sha256(слово) === HASH) {
+    localStorage.setItem(KEY, HASH);
+    location.replace("Гид.html");
+  } else {
+    document.getElementById("err").style.display = "block";
+    document.getElementById("word").select();
+  }
+});
+if (localStorage.getItem(KEY) === HASH) location.replace("Гид.html");
+</script>
+</body>
+</html>
