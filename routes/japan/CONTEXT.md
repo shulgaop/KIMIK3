@@ -76,8 +76,8 @@ iPhone 375 px без прокрутки (локально и на живом URL
 - Живой сайт: https://shulgaop.github.io/KIMIK3/ (кодовое слово — в чате
   и `data/make_site.py`); откат — тег `site-2026-11-23` ветки `gh-pages`.
 - Ветка: `feature/japan-guide` (от `main` @ 313e2c4); коммиты: `646785a`,
-  `69572a0`, `c57c3bb`, `a9d24ae`, `2d8946c` (T-006), `5cbcfa4` — все push
-  подтверждены.
+  `69572a0`, `c57c3bb`, `a9d24ae`, `2d8946c` (T-006), `5cbcfa4`, `1ba96c6`
+  (T-007) — все push подтверждены; автодеплой на `1ba96c6` — success.
 - Правила: корневой `AGENTS.md`, `routes/japan/AGENTS.md`, `route_app/AGENTS.md`.
 - Карта проекта: `ATLAS.md`, обновляется `python scripts/atlas.py update .`.
 - Задачи: `routes/japan/TASKS/` (T-001 … T-007; T-001…T-006 done).
