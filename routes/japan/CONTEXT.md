@@ -72,7 +72,7 @@ S-016, S-028 и броней S-008.
 ## Ссылки
 
 - Ветка: `feature/japan-guide` (от `main` @ 313e2c4); коммиты: `646785a`,
-  `69572a0`, `c57c3bb`, `a9d24ae` — все push подтверждены.
+  `69572a0`, `c57c3bb`, `a9d24ae`, `2d8946c` (T-006) — все push подтверждены.
 - Правила: корневой `AGENTS.md`, `routes/japan/AGENTS.md`, `route_app/AGENTS.md`.
 - Карта проекта: `ATLAS.md`, обновляется `python scripts/atlas.py update .`.
 - Задачи: `routes/japan/TASKS/` (T-001 … T-007; T-001…T-006 done).
