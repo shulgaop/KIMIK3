@@ -47,7 +47,8 @@ T-002: аудит `route_app/scripts/` на жёстко зашитые пара
 
 ## Ссылки
 
-- Ветка: `feature/japan-guide` (от `main` @ 313e2c4, создана 2026-11-22).
+- Ветка: `feature/japan-guide` (от `main` @ 313e2c4, создана 2026-11-22);
+  коммит этапа 1: `646785a` (push подтверждён, файлы проверены на GitHub).
 - Правила: корневой `AGENTS.md`, `routes/japan/AGENTS.md`, `route_app/AGENTS.md`.
 - Карта проекта: `ATLAS.md` (51 файл), построена 2026-11-22.
 - Задачи: `routes/japan/TASKS/` (T-001 … T-007).

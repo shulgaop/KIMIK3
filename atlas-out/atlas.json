@@ -1597,9 +1597,9 @@
   {
    "path": "routes/japan/CONTEXT.md",
    "ext": ".md",
-   "size": 4876,
-   "sha1": "3db608e55d1625dc73da96683a14b774b95b8b18",
-   "mtime": 1795366604,
+   "size": 4989,
+   "sha1": "d4d1e135176564f44135065ff65be1041a179486",
+   "mtime": 1795366813,
    "outline": {
     "headings": [
      "CONTEXT.md — маршрут «Япония» (единственный операционный снимок)",
@@ -1610,14 +1610,14 @@
      "Ссылки",
      "Замечания"
     ],
-    "lines": 68,
+    "lines": 69,
     "snippet": "Обновлён: 2026-11-22. Поддерживается по `routes/japan/AGENTS.md` §13."
    },
    "keywords": [
     "routes",
     "japan",
-    "agents",
     "github",
+    "agents",
     "этап",
     "ветка",
     "фудзи",
