@@ -1597,9 +1597,9 @@
   {
    "path": "routes/japan/CONTEXT.md",
    "ext": ".md",
-   "size": 5386,
-   "sha1": "b4ccb4e0aa66433d3c4f77d85391ed6d72b23af6",
-   "mtime": 1795367413,
+   "size": 6303,
+   "sha1": "3ca551793a2cc9e8c885f4271e054d71ebefc792",
+   "mtime": 1795369412,
    "outline": {
     "headings": [
      "CONTEXT.md — маршрут «Япония» (единственный операционный снимок)",
@@ -1610,20 +1610,20 @@
      "Ссылки",
      "Замечания"
     ],
-    "lines": 74,
+    "lines": 81,
     "snippet": "Обновлён: 2026-11-22. Поддерживается по `routes/japan/AGENTS.md` §13."
    },
    "keywords": [
     "routes",
     "japan",
     "github",
+    "фудзи",
     "agents",
-    "источники",
-    "yoshida",
-    "research",
+    "data",
     "gpx",
-    "накахэти",
-    "фудзи"
+    "ожидается",
+    "research",
+    "только"
    ],
    "part_numbers": [
     "D-001",
@@ -1635,17 +1635,17 @@
     "D-008",
     "D-009",
     "D-010",
+    "D-011",
     "S-001",
-    "S-006",
     "S-007",
     "S-008",
-    "S-010",
-    "S-014",
-    "S-032",
-    "T-001",
-    "T-002",
-    "T-003",
-    "T-004"
+    "S-011",
+    "S-013",
+    "S-033",
+    "S-034",
+    "S-037",
+    "S-038",
+    "T-001"
    ]
   },
   {
@@ -1693,15 +1693,15 @@
   {
    "path": "routes/japan/SOURCES.md",
    "ext": ".md",
-   "size": 9657,
-   "sha1": "f016e3cd4c1e435d6f441f98334f234d4bf7b2c2",
-   "mtime": 1795367397,
+   "size": 11507,
+   "sha1": "b4eb9aaf95de3e643eb1103c483b9aa89496c2a3",
+   "mtime": 1795369352,
    "outline": {
     "headings": [
      "SOURCES.md — реестр источников маршрута «Япония»",
      "Правила ведения"
     ],
-    "lines": 49,
+    "lines": 55,
     "snippet": "Статусы: `ожидается`, `получен`, `учтён`, `конфликтует`, `устарел`."
    },
    "keywords": [
@@ -1710,11 +1710,11 @@
     "день",
     "дни",
     "кумано",
-    "ожидается",
+    "накахэти",
+    "фудзи",
     "japan",
     "правила",
-    "кодо",
-    "накахэти"
+    "кодо"
    ],
    "part_numbers": [
     "S-001",
@@ -1809,67 +1809,80 @@
   {
    "path": "routes/japan/TASKS/T-003.md",
    "ext": ".md",
-   "size": 1045,
-   "sha1": "486cba5faf07e2ef1c3ad8a483cf0a7a79267bc6",
-   "mtime": 1795366697,
+   "size": 1810,
+   "sha1": "c03ceee50fed027c399bf35d7077c70df941d7e3",
+   "mtime": 1795369379,
    "outline": {
     "headings": [
      "T-003 — Исследование официальных источников",
      "Цель",
      "Критерии готовности",
+     "Результат проверки",
      "Затронутые файлы"
     ],
-    "lines": 19,
-    "snippet": "Статус: pending"
+    "lines": 27,
+    "snippet": "Статус: done (2026-11-22)"
    },
    "keywords": [
     "sources",
+    "правила",
+    "фудзи",
     "routes",
     "japan",
     "источников",
-    "research",
-    "t-003",
-    "исследование",
-    "официальных",
-    "статус",
-    "pending"
+    "официальные",
+    "tb-kumano",
+    "накахэти",
+    "бронирование"
    ],
    "part_numbers": [
+    "S-001",
+    "S-011",
+    "S-012",
+    "S-013",
+    "S-028",
+    "S-030",
+    "S-034",
+    "S-038",
     "T-003"
    ]
   },
   {
    "path": "routes/japan/TASKS/T-004.md",
    "ext": ".md",
-   "size": 934,
-   "sha1": "cf95120ed5f81877157e39f0aa9fac58f01a67e0",
-   "mtime": 1795366697,
+   "size": 2325,
+   "sha1": "0b3ddf2a0b192266fdc58aedac1b0a5bfafbd3ae",
+   "mtime": 1795369379,
    "outline": {
     "headings": [
      "T-004 — GPX Накахэти и Yoshida: сбор и анализ",
      "Цель",
      "Критерии готовности",
+     "Результат проверки",
      "Затронутые файлы"
     ],
-    "lines": 19,
-    "snippet": "Статус: pending"
+    "lines": 34,
+    "snippet": "Статус: done (2026-11-22)"
    },
    "keywords": [
+    "data",
+    "routes",
+    "japan",
     "gpx",
     "накахэти",
     "yoshida",
-    "routes",
-    "japan",
-    "data",
-    "t-004",
-    "сбор",
-    "анализ",
-    "статус"
+    "дня",
+    "daylight",
+    "климат",
+    "weather"
    ],
    "part_numbers": [
     "D-007",
+    "S-034",
+    "S-035",
     "T-003",
-    "T-004"
+    "T-004",
+    "T-006"
    ]
   },
   {
@@ -1982,6 +1995,190 @@
    "size": 4147,
    "sha1": "d0a1c39e491e1bc3fda00e00011d0f39faff9dc8",
    "mtime": 1795366654
+  },
+  {
+   "path": "routes/japan/data/build_gpx_from_osm.py",
+   "ext": ".py",
+   "size": 4345,
+   "sha1": "be0811965d2a2fd67bb6f7e9b42c9466ee766ac8",
+   "mtime": 1795368387,
+   "outline": {
+    "symbols": [
+     "parse_osm",
+     "chain_segments",
+     "main"
+    ],
+    "lines": 99
+   },
+   "keywords": [
+    "chain",
+    "gpx",
+    "pool",
+    "get",
+    "ways",
+    "osm",
+    "sys",
+    "nodes",
+    "pop",
+    "subelement"
+   ],
+   "part_numbers": []
+  },
+  {
+   "path": "routes/japan/data/fetch_osm_gpx.py",
+   "ext": ".py",
+   "size": 2829,
+   "sha1": "657be2e7c160d9b17f44c6bf52e68cee4dc24a3e",
+   "mtime": 1795367699,
+   "outline": {
+    "symbols": [
+     "fetch_relation",
+     "relation_to_points",
+     "write_gpx",
+     "main"
+    ],
+    "lines": 74
+   },
+   "keywords": [
+    "gpx",
+    "lat",
+    "lon",
+    "pts",
+    "overpass",
+    "name",
+    "sys",
+    "data",
+    "subelement",
+    "ele"
+   ],
+   "part_numbers": []
+  },
+  {
+   "path": "routes/japan/data/fuji_area2.osm",
+   "ext": ".osm",
+   "size": 2750275,
+   "sha1": "c8580953136a245ee248a51409d7c16fa949b95c",
+   "mtime": 1795369050
+  },
+  {
+   "path": "routes/japan/data/fuji_kawaguchiko_osm.gpx",
+   "ext": ".gpx",
+   "size": 25497,
+   "sha1": "912337ad223342d08558cd477af3612da382795f",
+   "mtime": 1795369112
+  },
+  {
+   "path": "routes/japan/data/fuji_yoshida_final.gpx",
+   "ext": ".gpx",
+   "size": 28508,
+   "sha1": "25db15b234674a8898086af57c12640430516c44",
+   "mtime": 1795369229
+  },
+  {
+   "path": "routes/japan/data/fuji_yoshida_osm.gpx",
+   "ext": ".gpx",
+   "size": 20604,
+   "sha1": "5cbb02db4d2977c41485f91967d1425dca0e729b",
+   "mtime": 1795367815
+  },
+  {
+   "path": "routes/japan/data/kawaguchiko_full.osm",
+   "ext": ".osm",
+   "size": 92459,
+   "sha1": "149977fae19a83d3f1f4ad78c2151bd5b3fee412",
+   "mtime": 1795369105
+  },
+  {
+   "path": "routes/japan/data/nakahechi_final.gpx",
+   "ext": ".gpx",
+   "size": 99092,
+   "sha1": "b65c7a73a242ae6f35a8d7e850c6a38a57269251",
+   "mtime": 1795369220
+  },
+  {
+   "path": "routes/japan/data/nakahechi_full.osm",
+   "ext": ".osm",
+   "size": 375531,
+   "sha1": "5c46c4f7951142cbd0fee66a55d6fc6012aaf06c",
+   "mtime": 1795368360
+  },
+  {
+   "path": "routes/japan/data/nakahechi_osm.gpx",
+   "ext": ".gpx",
+   "size": 95926,
+   "sha1": "dcce14cd76441c6f0346300afd5cf52e3d57e7da",
+   "mtime": 1795368395
+  },
+  {
+   "path": "routes/japan/data/process_tracks.py",
+   "ext": ".py",
+   "size": 6486,
+   "sha1": "8ea2a62eebee6309e8e1ac3d374cbc673a72b597",
+   "mtime": 1795369184,
+   "outline": {
+    "symbols": [
+     "load_points",
+     "load_connector",
+     "save_gpx",
+     "enrich_elevation",
+     "main"
+    ],
+    "lines": 122
+   },
+   "keywords": [
+    "gpx",
+    "fuji",
+    "ele",
+    "osm",
+    "lat",
+    "lon",
+    "get",
+    "naka",
+    "connector",
+    "way"
+   ],
+   "part_numbers": []
+  },
+  {
+   "path": "routes/japan/data/track-stats.md",
+   "ext": ".md",
+   "size": 3631,
+   "sha1": "5800c3d0c5ad57b6b3ffe8a17d4878aa3fa30aed",
+   "mtime": 1795369317,
+   "outline": {
+    "headings": [
+     "Контрольные числа треков (вычислено кодом, 2026-11-22)",
+     "Накахэти (Такидзири → Хонгу) — `nakahechi_final.gpx`",
+     "Разбивка по дням (срез на Цугизакура-одзи, 33.8285044, 135.6341448 — OSM/Nominatim, точка трека в 41 м)",
+     "Фудзи, тропа Yoshida/Kawaguchiko (5-я станция → вершина) — `fuji_yoshida_final.gpx`",
+     "Важное уточнение геометрии",
+     "Статус"
+    ],
+    "lines": 52,
+    "snippet": "Расчёты: `route_app/scripts/gpx_analyze.py` и скрипты `routes/japan/data/`."
+   },
+   "keywords": [
+    "gpx",
+    "osm",
+    "офиц",
+    "высоты",
+    "такидзири",
+    "хонгу",
+    "длина",
+    "набор",
+    "сброс",
+    "совпадает"
+   ],
+   "part_numbers": [
+    "D-002"
+   ]
+  },
+  {
+   "path": "routes/japan/data/wmt.json",
+   "ext": ".json",
+   "size": 79844,
+   "sha1": "166a71d589484828c10f8eadcc5a58b09c9ae94a",
+   "mtime": 1795368252
   },
   {
    "path": "routes/japan/research/engine-audit.md",
