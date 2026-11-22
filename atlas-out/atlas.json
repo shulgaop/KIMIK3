@@ -1891,9 +1891,9 @@
   {
    "path": "routes/japan/TASKS/T-005.md",
    "ext": ".md",
-   "size": 5057,
-   "sha1": "bfcfe4ccc39dfc1472fb4998ad06dd08989a955f",
-   "mtime": 1795375432,
+   "size": 5041,
+   "sha1": "79679590ebaacd9a57cfcb8d0caee517ad12a902",
+   "mtime": 1795381832,
    "outline": {
     "headings": [
      "T-005 — Вертикальный срез: день 6 (Цугизакура → Хонгу)",
@@ -2288,9 +2288,9 @@
   {
    "path": "routes/japan/generated/slice-day6/входные/texts.json",
    "ext": ".json",
-   "size": 14306,
-   "sha1": "7cbd2e4f6f2a4572f1b6e7e981e903850b2aaa83",
-   "mtime": 1795373131
+   "size": 14472,
+   "sha1": "8ab41b8bdc3321e8d2f4dc6acddacd35a218f41e",
+   "mtime": 1795376940
   },
   {
    "path": "routes/japan/generated/slice-day6/входные/track.gpx",
@@ -2385,65 +2385,65 @@
   {
    "path": "routes/japan/generated/slice-day6/выходные/аудио/01 — Цугизакура-одзи.mp3",
    "ext": ".mp3",
-   "size": 420624,
-   "sha1": "43a8b919271a745a29390abc9c9772b5686d2653",
-   "mtime": 1795373705
+   "size": 419760,
+   "sha1": "3c78bf35775b1250715d0c682f310e951ff7f1eb",
+   "mtime": 1795380908
   },
   {
    "path": "routes/japan/generated/slice-day6/выходные/аудио/02 — Инохана-одзи.mp3",
    "ext": ".mp3",
-   "size": 360000,
-   "sha1": "171a11684e8b8155aacec62724ef6e74f0c63050",
-   "mtime": 1795373789
+   "size": 360288,
+   "sha1": "6029428e567ba1433d23ee3798a9a509848b1aa7",
+   "mtime": 1795378757
   },
   {
    "path": "routes/japan/generated/slice-day6/выходные/аудио/03 — Хоссиммон-одзи.mp3",
    "ext": ".mp3",
-   "size": 358848,
-   "sha1": "74ab323319697fed19831caa6c7eeadd7815efc0",
-   "mtime": 1795373889
+   "size": 360000,
+   "sha1": "0bee658349ef362ca40dac2cb5e25ce63ab7196f",
+   "mtime": 1795380670
   },
   {
    "path": "routes/japan/generated/slice-day6/выходные/аудио/04 — Мидзуноми-одзи.mp3",
    "ext": ".mp3",
-   "size": 363024,
-   "sha1": "045b261aeffa39c8819aba6972779f2e80762b81",
-   "mtime": 1795373956
+   "size": 362880,
+   "sha1": "a198a60274cf35b67700e40b18e7d0f7357304cc",
+   "mtime": 1795380410
   },
   {
    "path": "routes/japan/generated/slice-day6/выходные/аудио/05 — Фусиогами-одзи.mp3",
    "ext": ".mp3",
-   "size": 365760,
-   "sha1": "724ea912caa2b6046b48aa2dba036d59002c5fbd",
-   "mtime": 1795374035
+   "size": 367200,
+   "sha1": "83946caea74c000d8c106c41987a89a1baf7870c",
+   "mtime": 1795381130
   },
   {
    "path": "routes/japan/generated/slice-day6/выходные/аудио/06 — Сангэн-дзяя.mp3",
    "ext": ".mp3",
-   "size": 487357,
-   "sha1": "5efed8b6352e21f40d17ee639d5a848d4b949550",
-   "mtime": 1795375370
+   "size": 371376,
+   "sha1": "2b6105ab680c3b7519f7b5ada87d76ab14daa43c",
+   "mtime": 1795379723
   },
   {
    "path": "routes/japan/generated/slice-day6/выходные/аудио/07 — Кумано Хонгу-тайся.mp3",
    "ext": ".mp3",
-   "size": 489238,
-   "sha1": "764654e68ce9ca502ad52e2ae7897912f4ce97fa",
-   "mtime": 1795375371
+   "size": 371952,
+   "sha1": "40432c1f5ddd9c4a3b19683a0a0b456dd49d67cf",
+   "mtime": 1795377808
   },
   {
    "path": "routes/japan/generated/slice-day6/выходные/аудио/08 — Оюнохара.mp3",
    "ext": ".mp3",
-   "size": 481871,
-   "sha1": "302d2e3bd482e744226ab6ba2da53abdef03c6ec",
-   "mtime": 1795375372
+   "size": 367920,
+   "sha1": "e29f6e4cef0b87e7a513c1b945ca264f147c0454",
+   "mtime": 1795378192
   },
   {
    "path": "routes/japan/generated/slice-day6/выходные/аудио/09 — Юноминэ-онсэн.mp3",
    "ext": ".mp3",
-   "size": 516196,
-   "sha1": "3fc57206dba1d4f57c512c83c380416357d37bd6",
-   "mtime": 1795375373
+   "size": 396000,
+   "sha1": "dddcadd998063d52ea456495657382dade56e30a",
+   "mtime": 1795381461
   },
   {
    "path": "routes/japan/research/engine-audit.md",
