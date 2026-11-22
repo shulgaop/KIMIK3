@@ -1,0 +1,2065 @@
+{
+ "root": "C:\\Users\\AlehShulha\\OneDrive\\Документы\\Kimi\\Workspaces\\ЯПОНИЯ 2027\\Kimi_Agent_Гид Япония_ отдельный проект\\KIMIK3",
+ "files": [
+  {
+   "path": ".gitignore",
+   "ext": "",
+   "size": 700,
+   "sha1": "e31bd92832966b1885aa647507d3a5f6d881e02b",
+   "mtime": 1795366387
+  },
+  {
+   "path": "AGENTS.md",
+   "ext": ".md",
+   "size": 2739,
+   "sha1": "c0c3e9c032da134f25eb201e4717183ebd0598ed",
+   "mtime": 1795366387,
+   "outline": {
+    "headings": [
+     "AGENTS.md — KIMIK3 (корень)",
+     "Git-процесс (постоянное правило владельца, действует на весь репозиторий)",
+     "Контракт выдачи (кратко, детали — в route_app/AGENTS.md)",
+     "Стандарты кода (обязательные, детали — route_app/AGENTS.md)"
+    ],
+    "lines": 30,
+    "snippet": "Проект «Фанские горы · Кольцо Чимтарги»: офлайн HTML-гид (`app/`) и генератор"
+   },
+   "keywords": [
+    "route_app",
+    "agents",
+    "без",
+    "перед",
+    "push",
+    "scripts",
+    "код",
+    "офлайн",
+    "html-гид",
+    "app"
+   ],
+   "part_numbers": []
+  },
+  {
+   "path": "INSTALL.md",
+   "ext": ".md",
+   "size": 5766,
+   "sha1": "31eb501d23e5c75953f51e61611f2800a590fcae",
+   "mtime": 1795366387,
+   "outline": {
+    "headings": [
+     "INSTALL.md — установка и запуск",
+     "1. Что понадобится",
+     "2. Windows 11",
+     "3. macOS",
+     "4. Ubuntu / Debian",
+     "5. Другие Linux (Fedora, Arch)",
+     "6. Запуск на сервере (доступ из сети)",
+     "7. Проверка установки",
+     "из папки route_app, при активированном .venv",
+     "8. Обновление до новой версии",
+     "9. Частые проблемы"
+    ],
+    "lines": 142,
+    "snippet": "Приложение «Генератор путеводителей горных походов» (KIMIK3):"
+   },
+   "keywords": [
+    "git",
+    "install",
+    "python",
+    "python3",
+    "venv",
+    "route_app",
+    "kimik3",
+    "pip",
+    "webapp",
+    "https"
+   ],
+   "part_numbers": []
+  },
+  {
+   "path": "README.md",
+   "ext": ".md",
+   "size": 4829,
+   "sha1": "b0e476775665d755db3fd1d836bd5faf09966a76",
+   "mtime": 1795366753,
+   "outline": {
+    "headings": [
+     "Фанские горы · Кольцо Чимтарги — гид и генератор походных документов",
+     "Структура",
+     "Быстрый старт",
+     "Работа с Kimi Code",
+     "Публикация гида на GitHub Pages"
+    ],
+    "lines": 76,
+    "snippet": "Проект похода **Фанские горы, кольцо Чимтарги, 06–16.09.2026**: офлайн-гид"
+   },
+   "keywords": [
+    "python3",
+    "kimi",
+    "html",
+    "документов",
+    "похода",
+    "route_app",
+    "генерации",
+    "kml",
+    "code",
+    "проекта"
+   ],
+   "part_numbers": []
+  },
+  {
+   "path": "ROADMAP.md",
+   "ext": ".md",
+   "size": 4135,
+   "sha1": "be0531d6367f652c48b89d627f9134776e1a929f",
+   "mtime": 1795366387,
+   "outline": {
+    "headings": [
+     "ROADMAP.md — план развития по модулям (route_app)",
+     "Модуль «Мастер» (подготовка похода)",
+     "Модуль «Гид (ИИ)»",
+     "Модуль «Фотоотчёт»",
+     "Модуль «Отчёт» (после похода)",
+     "Модуль «Обучение»",
+     "Инфраструктура"
+    ],
+    "lines": 49,
+    "snippet": "Легенда: ✅ готово · 🚧 в работе · ⏳ отложено (причина) · ⬜ план"
+   },
+   "keywords": [
+    "модуль",
+    "гид",
+    "отложено",
+    "llm",
+    "html",
+    "план",
+    "причина",
+    "похода",
+    "импорт",
+    "текст"
+   ],
+   "part_numbers": [
+    "F10",
+    "F11",
+    "F12"
+   ]
+  },
+  {
+   "path": "USER_GUIDE.md",
+   "ext": ".md",
+   "size": 17626,
+   "sha1": "b84a4c69911766896ff1cf8f12e426aa67d1149e",
+   "mtime": 1795366387,
+   "outline": {
+    "headings": [
+     "USER_GUIDE.md — как пользоваться мастером генерации маршрутов",
+     "Понятия",
+     "Модуль «Отчёт» (вторая вкладка)",
+     "Мастер: шаг за шагом",
+     "1 · Проект",
+     "2 · Программа и точки",
+     "3 · Анализ трека",
+     "4 · Погода",
+     "5 · Гид (ИИ)",
+     "6 · Документы",
+     "7 · Фотографии и видео — вкладка «Фотоотчёт»",
+     "8 · Результат",
+     "Обучение (вкладка «Обучение»)",
+     "Эквиваленты в командной строке",
+     "Хорошие практики"
+    ],
+    "lines": 200,
+    "snippet": "Мастер — локальный веб-интерфейс (`route_app/webapp.py`), который запускает"
+   },
+   "keywords": [
+    "json",
+    "python3",
+    "выходные",
+    "фото",
+    "scripts",
+    "gpx",
+    "отчёт",
+    "points",
+    "похода",
+    "html"
+   ],
+   "part_numbers": []
+  },
+  {
+   "path": "app/breathing.html",
+   "ext": ".html",
+   "size": 14200,
+   "sha1": "08e3c7abd7d451e82c13455c242428f9367face6",
+   "mtime": 1795366387,
+   "outline": {
+    "headings": [],
+    "lines": 148,
+    "snippet": "<!DOCTYPE html>"
+   },
+   "keywords": [
+    "class",
+    "button",
+    "section",
+    "onclick",
+    "speaksec",
+    "var",
+    "speak",
+    "секунд",
+    "дыхание",
+    "data-sec"
+   ],
+   "part_numbers": []
+  },
+  {
+   "path": "app/checklist.html",
+   "ext": ".html",
+   "size": 20434,
+   "sha1": "c5361b289b5968b8678ac58a3c45a3a341403bd0",
+   "mtime": 1795366387,
+   "outline": {
+    "headings": [],
+    "lines": 231,
+    "snippet": "<!DOCTYPE html>"
+   },
+   "keywords": [
+    "label",
+    "input",
+    "type",
+    "checkbox",
+    "button",
+    "class",
+    "section",
+    "onclick",
+    "span",
+    "speaksec"
+   ],
+   "part_numbers": [
+    "HY709",
+    "HY710"
+   ]
+  },
+  {
+   "path": "app/gear.html",
+   "ext": ".html",
+   "size": 19989,
+   "sha1": "c8d9b05738621e15f1229ce83b1efed1add570e9",
+   "mtime": 1795366387,
+   "outline": {
+    "headings": [],
+    "lines": 230,
+    "snippet": "<!DOCTYPE html>"
+   },
+   "keywords": [
+    "label",
+    "input",
+    "type",
+    "checkbox",
+    "span",
+    "class",
+    "button",
+    "section",
+    "onclick",
+    "crit"
+   ],
+   "part_numbers": [
+    "HY710"
+   ]
+  },
+  {
+   "path": "app/index.html",
+   "ext": ".html",
+   "size": 82973,
+   "sha1": "8bdffb199e1008f66c6eb9636d33226a033a8bde",
+   "mtime": 1795366387,
+   "outline": {
+    "headings": [],
+    "lines": 626,
+    "snippet": "<!DOCTYPE html>"
+   },
+   "keywords": [
+    "span",
+    "class",
+    "div",
+    "section",
+    "chip",
+    "день",
+    "tag",
+    "алло",
+    "var",
+    "table"
+   ],
+   "part_numbers": [
+    "HY709",
+    "HY710"
+   ]
+  },
+  {
+   "path": "app/samarkand.html",
+   "ext": ".html",
+   "size": 28300,
+   "sha1": "7d56a4d23f9f0bb2d78a4e8c35bc59abad3a5121",
+   "mtime": 1795366387,
+   "outline": {
+    "headings": [],
+    "lines": 274,
+    "snippet": "<!DOCTYPE html>"
+   },
+   "keywords": [
+    "div",
+    "class",
+    "span",
+    "var",
+    "font-size",
+    "color",
+    "section",
+    "tag",
+    "accent",
+    "font-family"
+   ],
+   "part_numbers": [
+    "EN417"
+   ]
+  },
+  {
+   "path": "app/transfer.html",
+   "ext": ".html",
+   "size": 18256,
+   "sha1": "b38376af28d1541cd95c0160cf31b468e8398175",
+   "mtime": 1795366387,
+   "outline": {
+    "headings": [],
+    "lines": 214,
+    "snippet": "<!DOCTYPE html>"
+   },
+   "keywords": [
+    "span",
+    "var",
+    "class",
+    "font-size",
+    "div",
+    "color",
+    "section",
+    "сомони",
+    "граница",
+    "пенджикент"
+   ],
+   "part_numbers": []
+  },
+  {
+   "path": "route_app/AGENTS.md",
+   "ext": ".md",
+   "size": 12008,
+   "sha1": "850f98e7bed35eea69b4f237b75d39800c020b14",
+   "mtime": 1795366387,
+   "outline": {
+    "headings": [
+     "AGENTS.md — инструкции для Kimi Code",
+     "Проект: Генератор путеводителей горных походов (route_app)",
+     "Читай перед работой (порядок обязателен)",
+     "Контракт качества (нарушать нельзя)",
+     "Стандарты кода (обязательные правила владельца)",
+     "Проверка перед завершением (обязательно)",
+     "Git-процесс (постоянное правило)",
+     "Рабочий процесс",
+     "Команды",
+     "Чеклист снаряжения (LighterPack-методика, F12)",
+     "Заметки по среде"
+    ],
+    "lines": 121,
+    "snippet": "Ты — кодовый агент Kimi Code. Проект строит приложение, которое по программе похода"
+   },
+   "keywords": [
+    "scripts",
+    "python3",
+    "json",
+    "points",
+    "gpx",
+    "маршрут",
+    "kml",
+    "без",
+    "projects",
+    "llm"
+   ],
+   "part_numbers": [
+    "F10",
+    "F12"
+   ]
+  },
+  {
+   "path": "route_app/CLAUDE.md",
+   "ext": ".md",
+   "size": 10700,
+   "sha1": "3f7aded82d1f1ef7c1eac335f3487fe22a1d0e01",
+   "mtime": 1795366387,
+   "outline": {
+    "headings": [
+     "CLAUDE.md — инструкции для Claude Code",
+     "Проект: Генератор путеводителей горных походов (route_app)",
+     "Источники истины (читай в первую очередь)",
+     "Жёсткие правила",
+     "Структура репозитория",
+     "Команды",
+     "Чеклист снаряжения (LighterPack-методика, F12)",
+     "Поток работы над фичей",
+     "Git-процесс (постоянное правило)"
+    ],
+    "lines": 108,
+    "snippet": "Ты работаешь над приложением, которое по программе похода (PDF), GPX-треку и датам"
+   },
+   "keywords": [
+    "scripts",
+    "python3",
+    "без",
+    "kml",
+    "json",
+    "gpx",
+    "фанские_горы",
+    "чеклист",
+    "html",
+    "инструкции"
+   ],
+   "part_numbers": [
+    "F10",
+    "F12"
+   ]
+  },
+  {
+   "path": "route_app/CODE_GUIDE.md",
+   "ext": ".md",
+   "size": 23519,
+   "sha1": "08019c564c3610e336354edd8424068088934a7e",
+   "mtime": 1795366387,
+   "outline": {
+    "headings": [
+     "CODE_GUIDE.md — справочник функций",
+     "`scripts/color_route_by_days.py`",
+     "`scripts/currency.py`",
+     "`scripts/daylight.py`",
+     "`scripts/first_aid.py`",
+     "`scripts/gear.py`",
+     "`scripts/gpx_analyze.py`",
+     "`scripts/hike_report.py`",
+     "`scripts/llm.py`",
+     "`scripts/make_checklist.py`",
+     "`scripts/make_guide_html.py`",
+     "`scripts/make_ics.py`",
+     "`scripts/make_kml.py`",
+     "`scripts/make_report.py`",
+     "`scripts/make_status.py`",
+     "`scripts/photo_marks.py`",
+     "`scripts/photo_sort.py`",
+     "`scripts/read_program.py`",
+     "`scripts/research.py`",
+     "`scripts/test_regression.py`",
+     "`scripts/tts_audioguide.py`",
+     "`scripts/weather.py`",
+     "`webapp.py`"
+    ],
+    "lines": 342,
+    "snippet": "Генерируется из кода (`python3 scripts/make_code_guide.py` из route_app/) —"
+   },
+   "keywords": [
+    "scripts",
+    "main",
+    "api",
+    "params",
+    "константы",
+    "path",
+    "name",
+    "lat",
+    "lon",
+    "точки"
+   ],
+   "part_numbers": [
+    "DJI_20260906095623_0004_D",
+    "F10",
+    "F12",
+    "ISO6709_RE"
+   ]
+  },
+  {
+   "path": "route_app/examples/Фанские_горы/Гид_Фанские_горы_06-16.09.2026.md",
+   "ext": ".md",
+   "size": 125225,
+   "sha1": "e32a0bae1f911e9f4ae87aff9394a67d264b3d6f",
+   "mtime": 1795366387,
+   "outline": {
+    "headings": [
+     "ПУТЕВОДИТЕЛЬ: Фанские горы — кольцо Чимтарги (пеший горный поход)",
+     "1. Логистика и билеты",
+     "1.1. Курсы валют и оплата картами (проверено 04.09.2026)",
+     "2. Погода, ветер, высоты (06–16.09)",
+     "Фактическая погода 06–16.09.2026 (наблюдения, уточнено 28.09.2026)",
+     "Климатическая норма середины сентября",
+     "Ветер и направление движения по маршруту",
+     "Световой день: рассвет и закат (маршрут, UTC+5)",
+     "Ночное небо 06–16.09.2026 — что вы увидите (39.5°N, без светового загрязнения)",
+     "3. Высотный профиль и акклиматизация",
+     "3.5. Характер троп, поверхность и градиенты",
+     "3.6. Навигация по компасу: азимуты, ориентиры, работа с картой и без",
+     "Таблица азимутов по участкам (истинный / магнитный / обратный магнитный)",
+     "Техника с картой",
+     "Техника без карты (туман, белая пелена, потеря тропы)",
+     "4. Маршрут по дням",
+     "День 1 — 06.09 · Самарканд (700 м). Сбор группы",
+     "День 2 — 07.09 · Самарканд → граница → Пенджикент → Артуч (2160 м). Авто ~250 км",
+     "День 3 — 08.09 · Артуч (2160 м) → Куликалонские озёра (2850 м)",
+     "День 4 — 09.09 · Куликалон → пер. Алаудин (3860 м) → Алауддинское озеро (2820 м)",
+     "День 5 — 10.09 · Алауддинское оз. (2820 м) → Мутные озёра (3520 м)",
+     "День 6 — 11.09 · Мутные (3520 м) → лагерь под Чимтаргой (4100–4400 м)",
+     "День 7 — 12.09 · Лагерь (4400 м) → пер. ЧИМТАРГА (4740 м) → оз. Большое Алло (3160 м)",
+     "День 8 — 13.09 · Дневка на Б. Алло (3160 м). Радиалка к Верхнему Алло (3400 м) — по желанию",
+     "День 9 — 14.09 · Б. Алло (3160 м) → М. Алло → ущелье Зиндон (2370–2400 м)",
+     "День 10 — 15.09 · Зиндон (2370 м) → долина Арчамайдан (1850 м) → с. Газза (1700 м)",
+     "День 11 — 16.09 · Газза → Самарканд → поездом в Ташкент",
+     "5. Сводная таблица точек маршрута (для Organic Maps / Maps.me / Garmin)",
+     "5.5. Вода, чайханы, спасатели, альплагеря, сходы",
+     "Источники воды (по дням)"
+    ],
+    "lines": 681,
+    "snippet": "**Даты:** 06–16 сентября 2026 г. (перелёты 05.09 и 17.09) · **Формат:** горный пеший туризм, палатки · **Регион:** Памиро-Алай, Таджикистан (Согдийская область)"
+   },
+   "keywords": [
+    "день",
+    "алло",
+    "артуч",
+    "зиндон",
+    "мин",
+    "чимтарга",
+    "при",
+    "газза",
+    "пенджикент",
+    "лагерь"
+   ],
+   "part_numbers": [
+    "EN417",
+    "HY709",
+    "HY710"
+   ]
+  },
+  {
+   "path": "route_app/examples/Фанские_горы/СТАТУС_Фанские_горы.md",
+   "ext": ".md",
+   "size": 13751,
+   "sha1": "ef2007eae2e16f4b15249e429ca969e094c6ae79",
+   "mtime": 1795366387,
+   "outline": {
+    "headings": [
+     "СТАТУС проекта: Фанские горы — кольцо Чимтарги (передаточный снимок)",
+     "1. Задача и входные данные",
+     "2. Что сделано (файлы выдачи, /mnt/agents/output/)",
+     "3. Принятые решения и исправленные ошибки (не откатывать!)",
+     "4. Не сделано / открытые вопросы",
+     "5. Как продолжить"
+    ],
+    "lines": 52,
+    "snippet": "*Обновлён: 04.09.2026. Читать первым при продолжении работы в любой модели. Методика: `Инструкция_генерация_горных_маршрутов.md`.*"
+   },
+   "keywords": [
+    "html",
+    "гид",
+    "самарканд",
+    "артуч",
+    "пенджикент",
+    "место",
+    "версия",
+    "сайта",
+    "день",
+    "сомони"
+   ],
+   "part_numbers": [
+    "HY709",
+    "HY710"
+   ]
+  },
+  {
+   "path": "route_app/examples/Фанские_горы/Фанские_горы_ФАКТ_треки_с_часов.gpx",
+   "ext": ".gpx",
+   "size": 279948,
+   "sha1": "b23d0a060aafbc1ad790033c921bab6278564070",
+   "mtime": 1795366387
+  },
+  {
+   "path": "route_app/examples/Фанские_горы/Фанские_горы_Чимтарга_GoogleEarth.kml",
+   "ext": ".kml",
+   "size": 49691,
+   "sha1": "73fd668edf4df73b7b8f8286ca474941d9e982ea",
+   "mtime": 1795366387
+  },
+  {
+   "path": "route_app/examples/Фанские_горы/Фанские_горы_Чимтарга_трек.gpx",
+   "ext": ".gpx",
+   "size": 1041927,
+   "sha1": "7e10221a010ce4accbe5f6e8873bdc648989534c",
+   "mtime": 1795366387
+  },
+  {
+   "path": "route_app/requirements-web.txt",
+   "ext": ".txt",
+   "size": 103,
+   "sha1": "fb2673f03135bce933347deb56397a3e878e2f01",
+   "mtime": 1795366387,
+   "outline": {
+    "headings": [],
+    "lines": 8,
+    "snippet": "fastapi>=0.110"
+   },
+   "keywords": [
+    "fastapi",
+    "uvicorn",
+    "pypdf",
+    "pillow",
+    "markdown",
+    "edge-tts",
+    "tzdata"
+   ],
+   "part_numbers": []
+  },
+  {
+   "path": "route_app/scripts/color_route_by_days.py",
+   "ext": ".py",
+   "size": 7961,
+   "sha1": "271d931ed8a37c1a4f34f5c3355fda9966fd0418",
+   "mtime": 1795366387,
+   "outline": {
+    "symbols": [
+     "parse_gpx",
+     "group_by_day",
+     "create_kml",
+     "main"
+    ],
+    "lines": 222
+   },
+   "keywords": [
+    "subelement",
+    "print",
+    "text",
+    "kml",
+    "points",
+    "days",
+    "day",
+    "len",
+    "sys",
+    "gpx"
+   ],
+   "part_numbers": []
+  },
+  {
+   "path": "route_app/scripts/currency.py",
+   "ext": ".py",
+   "size": 3420,
+   "sha1": "26f051b5a60beaa898f304f83200f1f14c2efece",
+   "mtime": 1795366387,
+   "outline": {
+    "symbols": [
+     "fetch_rates",
+     "main"
+    ],
+    "lines": 79
+   },
+   "keywords": [
+    "usd",
+    "sys",
+    "args",
+    "rates",
+    "currency",
+    "eur",
+    "курсы",
+    "деньги",
+    "base",
+    "data"
+   ],
+   "part_numbers": [
+    "F10"
+   ]
+  },
+  {
+   "path": "route_app/scripts/daylight.py",
+   "ext": ".py",
+   "size": 6811,
+   "sha1": "e9f444fc95e4bf4d5fd6c5a490aca530c254109d",
+   "mtime": 1795366387,
+   "outline": {
+    "symbols": [
+     "tz_offset",
+     "sun_times",
+     "calc",
+     "moon",
+     "fmt_utc",
+     "main"
+    ],
+    "lines": 130
+   },
+   "keywords": [
+    "math",
+    "args",
+    "lat",
+    "lon",
+    "return",
+    "radians",
+    "points",
+    "json",
+    "age",
+    "days"
+   ],
+   "part_numbers": []
+  },
+  {
+   "path": "route_app/scripts/first_aid.py",
+   "ext": ".py",
+   "size": 9695,
+   "sha1": "d6f902171dc5bf0c24e30002fe508fd79bb72cc1",
+   "mtime": 1795366387,
+   "outline": {
+    "symbols": [
+     "build_checklist",
+     "build_reminders",
+     "main"
+    ],
+    "lines": 144
+   },
+   "keywords": [
+    "json",
+    "start",
+    "points",
+    "end",
+    "назначению",
+    "врача",
+    "день",
+    "sections",
+    "title",
+    "items"
+   ],
+   "part_numbers": [
+    "T07",
+    "T08"
+   ]
+  },
+  {
+   "path": "route_app/scripts/gear.py",
+   "ext": ".py",
+   "size": 6800,
+   "sha1": "b69fb50542b6527c352c536eefb81e03666b37a6",
+   "mtime": 1795366387,
+   "outline": {
+    "symbols": [
+     "load_items",
+     "totals",
+     "eff",
+     "to_markdown",
+     "g",
+     "main"
+    ],
+    "lines": 132
+   },
+   "keywords": [
+    "get",
+    "items",
+    "worn",
+    "members",
+    "base",
+    "append",
+    "gear",
+    "json",
+    "eff",
+    "notes"
+   ],
+   "part_numbers": [
+    "F12"
+   ]
+  },
+  {
+   "path": "route_app/scripts/gpx_analyze.py",
+   "ext": ".py",
+   "size": 6868,
+   "sha1": "76d204feb448e37618fe3088f02d472a871830c4",
+   "mtime": 1795366387,
+   "outline": {
+    "symbols": [
+     "haversine",
+     "azimuth",
+     "compass",
+     "load_gpx",
+     "cumulative",
+     "project",
+     "leg_stats",
+     "window_gradients",
+     "main"
+    ],
+    "lines": 166
+   },
+   "keywords": [
+    "trkpts",
+    "math",
+    "dist",
+    "round",
+    "lat",
+    "lon",
+    "def",
+    "report",
+    "name",
+    "return"
+   ],
+   "part_numbers": []
+  },
+  {
+   "path": "route_app/scripts/hike_report.py",
+   "ext": ".py",
+   "size": 52296,
+   "sha1": "9af716dd89340c12903ce8a0af9e97e682cb806f",
+   "mtime": 1795366387,
+   "outline": {
+    "symbols": [
+     "_dms_to_deg",
+     "photo_meta",
+     "video_meta",
+     "dt_from_filename",
+     "parse_gpx",
+     "nearest_track_point",
+     "dji_track",
+     "_deg2num",
+     "download_offline_tiles",
+     "tile_ranges",
+     "coords_ok",
+     "thumbnail_b64",
+     "video_frame_b64",
+     "load_corrections",
+     "scan_folder",
+     "nearest_plan_idx",
+     "build_plan_anchors",
+     "interp_plan",
+     "ask_coord_mode",
+     "ask_offline",
+     "ask_dji_mode",
+     "main",
+     "take_value"
+    ],
+    "lines": 1041
+   },
+   "keywords": [
+    "print",
+    "lat",
+    "lon",
+    "path",
+    "none",
+    "return",
+    "видео",
+    "len",
+    "фото",
+    "import"
+   ],
+   "part_numbers": [
+    "DJI_20260906095623_0004_D",
+    "ISO6709_RE"
+   ]
+  },
+  {
+   "path": "route_app/scripts/llm.py",
+   "ext": ".py",
+   "size": 20992,
+   "sha1": "917c77742a27167d306d1c05050f35d72e6ff186",
+   "mtime": 1795366387,
+   "outline": {
+    "symbols": [
+     "load_config",
+     "save_config",
+     "get_provider",
+     "get_key",
+     "_post",
+     "chat",
+     "candidate_models",
+     "list_free_models",
+     "default_model",
+     "build_guide_context",
+     "add",
+     "chat_with_fallback",
+     "generate_guide",
+     "generate_audio_texts",
+     "main"
+    ],
+    "lines": 354
+   },
+   "keywords": [
+    "provider",
+    "key",
+    "json",
+    "openrouter",
+    "project",
+    "sys",
+    "model",
+    "return",
+    "none",
+    "get"
+   ],
+   "part_numbers": []
+  },
+  {
+   "path": "route_app/scripts/make_checklist.py",
+   "ext": ".py",
+   "size": 9157,
+   "sha1": "24477c97314d6c3bf2e64e0312a00b60055320d2",
+   "mtime": 1795366387,
+   "outline": {
+    "symbols": [
+     "esc_html",
+     "render_sections",
+     "validate",
+     "main"
+    ],
+    "lines": 207
+   },
+   "keywords": [
+    "var",
+    "sec",
+    "title",
+    "spec",
+    "sections",
+    "button",
+    "const",
+    "json",
+    "note",
+    "document"
+   ],
+   "part_numbers": []
+  },
+  {
+   "path": "route_app/scripts/make_code_guide.py",
+   "ext": ".py",
+   "size": 3620,
+   "sha1": "e60fe82ab90e7977d514b4f476789e5e5bfc49a4",
+   "mtime": 1795366387,
+   "outline": {
+    "symbols": [
+     "docline",
+     "consts_of",
+     "routes_of",
+     "main"
+    ],
+    "lines": 79
+   },
+   "keywords": [
+    "ast",
+    "tree",
+    "isinstance",
+    "dec",
+    "path",
+    "args",
+    "кода",
+    "code_guide",
+    "base",
+    "name"
+   ],
+   "part_numbers": []
+  },
+  {
+   "path": "route_app/scripts/make_guide_html.py",
+   "ext": ".py",
+   "size": 10390,
+   "sha1": "31f821da216ba078921a05988aea33b2538ecc79",
+   "mtime": 1795366387,
+   "outline": {
+    "symbols": [
+     "load_gpx_analyze",
+     "profile_svg",
+     "xy",
+     "photos_by_day",
+     "inject_photos",
+     "build_html",
+     "main"
+    ],
+    "lines": 219
+   },
+   "keywords": [
+    "var",
+    "html",
+    "by_day",
+    "src",
+    "font-size",
+    "text",
+    "json",
+    "nav",
+    "svg",
+    "height"
+   ],
+   "part_numbers": []
+  },
+  {
+   "path": "route_app/scripts/make_ics.py",
+   "ext": ".py",
+   "size": 3135,
+   "sha1": "327c1537c9362772bd6e4d281968bb73861236a3",
+   "mtime": 1795366387,
+   "outline": {
+    "symbols": [
+     "esc",
+     "make_event",
+     "main"
+    ],
+    "lines": 73
+   },
+   "keywords": [
+    "lines",
+    "tzid",
+    "replace",
+    "events",
+    "json",
+    "end",
+    "date",
+    "description",
+    "esc",
+    "get"
+   ],
+   "part_numbers": []
+  },
+  {
+   "path": "route_app/scripts/make_kml.py",
+   "ext": ".py",
+   "size": 6129,
+   "sha1": "4fcb81d44cc6c6f2cba367a5f9b3e4f57af81913",
+   "mtime": 1795366387,
+   "outline": {
+    "symbols": [
+     "load_track",
+     "cumdist",
+     "style_block",
+     "build",
+     "validate",
+     "main"
+    ],
+    "lines": 126
+   },
+   "keywords": [
+    "kml",
+    "bbox",
+    "pts",
+    "marks",
+    "lon",
+    "lat",
+    "math",
+    "args",
+    "name",
+    "sid"
+   ],
+   "part_numbers": []
+  },
+  {
+   "path": "route_app/scripts/make_report.py",
+   "ext": ".py",
+   "size": 13134,
+   "sha1": "a70483d181975ff3b24f47cdc28b5db8a666c29a",
+   "mtime": 1795366387,
+   "outline": {
+    "symbols": [
+     "hav",
+     "load_recorded_track",
+     "day_stats",
+     "split_days",
+     "split_description",
+     "load_notes",
+     "build_report_md",
+     "day_events",
+     "weather_fact_md",
+     "main"
+    ],
+    "lines": 263
+   },
+   "keywords": [
+    "text",
+    "days",
+    "notes",
+    "path",
+    "pts",
+    "args",
+    "gpx",
+    "return",
+    "отчёт",
+    "none"
+   ],
+   "part_numbers": []
+  },
+  {
+   "path": "route_app/scripts/make_status.py",
+   "ext": ".py",
+   "size": 6961,
+   "sha1": "cdb289af63dfd8a2a1e6ef5e6a349befbf55a9c3",
+   "mtime": 1795366387,
+   "outline": {
+    "symbols": [
+     "scan",
+     "is_output",
+     "human_size",
+     "load_prev",
+     "diff",
+     "main"
+    ],
+    "lines": 139
+   },
+   "keywords": [
+    "project",
+    "cur",
+    "files",
+    "len",
+    "prev",
+    "names",
+    "проекта",
+    "status_path",
+    "прошлого",
+    "снимка"
+   ],
+   "part_numbers": []
+  },
+  {
+   "path": "route_app/scripts/photo_marks.py",
+   "ext": ".py",
+   "size": 9414,
+   "sha1": "dbe890321f3abf0708aec9f5f257f7c5632d5aee",
+   "mtime": 1795366387,
+   "outline": {
+    "symbols": [
+     "xesc",
+     "load_audio_points",
+     "media_datetime",
+     "build_kml",
+     "main"
+    ],
+    "lines": 180
+   },
+   "keywords": [
+    "name",
+    "lat",
+    "lon",
+    "gpx",
+    "audio_pts",
+    "append",
+    "marks",
+    "json",
+    "none",
+    "фото"
+   ],
+   "part_numbers": [
+    "DJI_20260906095623_001"
+   ]
+  },
+  {
+   "path": "route_app/scripts/photo_sort.py",
+   "ext": ".py",
+   "size": 11730,
+   "sha1": "9e4c45561b55423512739b23fa06d0a4c04f55cf",
+   "mtime": 1795366387,
+   "outline": {
+    "symbols": [
+     "haversine",
+     "read_exif",
+     "to_deg",
+     "load_track_times",
+     "interp_track",
+     "nearest_point",
+     "day_number",
+     "build_html",
+     "main"
+    ],
+    "lines": 243
+   },
+   "keywords": [
+    "lat",
+    "lon",
+    "none",
+    "title",
+    "gps",
+    "track",
+    "return",
+    "фото",
+    "math",
+    "else"
+   ],
+   "part_numbers": []
+  },
+  {
+   "path": "route_app/scripts/read_program.py",
+   "ext": ".py",
+   "size": 8473,
+   "sha1": "772378356d80acd88d3736cdd6b31458a5dbef34",
+   "mtime": 1795366387,
+   "outline": {
+    "symbols": [
+     "extract_text",
+     "find_points",
+     "find_dates",
+     "main"
+    ],
+    "lines": 166
+   },
+   "keywords": [
+    "text",
+    "name",
+    "points",
+    "docx",
+    "len",
+    "int",
+    "sys",
+    "pdf",
+    "compile",
+    "append"
+   ],
+   "part_numbers": []
+  },
+  {
+   "path": "route_app/scripts/research.py",
+   "ext": ".py",
+   "size": 9749,
+   "sha1": "bbf32fc56d3d349ce9ae51359e00ae847b1a6447",
+   "mtime": 1795366387,
+   "outline": {
+    "symbols": [
+     "get_json",
+     "wiki_search",
+     "wiki_extract",
+     "wiki_geosearch",
+     "overpass_pois",
+     "collect_facts",
+     "to_markdown",
+     "main"
+    ],
+    "lines": 206
+   },
+   "keywords": [
+    "facts",
+    "points",
+    "lang",
+    "title",
+    "url",
+    "json",
+    "query",
+    "return",
+    "bbox",
+    "get"
+   ],
+   "part_numbers": []
+  },
+  {
+   "path": "route_app/scripts/test_regression.py",
+   "ext": ".py",
+   "size": 6971,
+   "sha1": "3b61577b540de8b29f2f21faaa5d99e6e95a9d9f",
+   "mtime": 1795366387,
+   "outline": {
+    "symbols": [
+     "check",
+     "run",
+     "main"
+    ],
+    "lines": 122
+   },
+   "keywords": [
+    "tmp",
+    "check",
+    "json",
+    "utf-8",
+    "code",
+    "encoding",
+    "run",
+    "html",
+    "keep",
+    "pts"
+   ],
+   "part_numbers": []
+  },
+  {
+   "path": "route_app/scripts/tts_audioguide.py",
+   "ext": ".py",
+   "size": 3501,
+   "sha1": "78c5e3f1c0e785985bd3ce00bbdbb5af02b2c905",
+   "mtime": 1795366387,
+   "outline": {
+    "symbols": [
+     "probe_duration"
+    ],
+    "lines": 82
+   },
+   "keywords": [
+    "path",
+    "texts",
+    "rate",
+    "outdir",
+    "voice",
+    "sys",
+    "text",
+    "return",
+    "true",
+    "ffprobe"
+   ],
+   "part_numbers": []
+  },
+  {
+   "path": "route_app/scripts/weather.py",
+   "ext": ".py",
+   "size": 13893,
+   "sha1": "c8e4c5c2ddff87c10917c32714cf3502bbd2d473",
+   "mtime": 1795366387,
+   "outline": {
+    "symbols": [
+     "fetch",
+     "lapse_correct",
+     "compass",
+     "mode_for",
+     "days_from_daily",
+     "point_fact",
+     "point_forecast",
+     "point_climate",
+     "recheck_date",
+     "to_markdown",
+     "main"
+    ],
+    "lines": 262
+   },
+   "keywords": [
+    "start",
+    "end",
+    "days",
+    "today",
+    "report",
+    "ele",
+    "daily",
+    "grid",
+    "date",
+    "return"
+   ],
+   "part_numbers": []
+  },
+  {
+   "path": "route_app/web_app.py",
+   "ext": ".py",
+   "size": 203,
+   "sha1": "db25ec5174996ca216528f6fb44cf41a6316d9a9",
+   "mtime": 1795366387,
+   "outline": {
+    "symbols": [],
+    "lines": 7
+   },
+   "keywords": [
+    "webapp",
+    "main",
+    "usr",
+    "bin",
+    "env",
+    "python3",
+    "web_app",
+    "алиас-запускалка",
+    "мастера",
+    "основной"
+   ],
+   "part_numbers": []
+  },
+  {
+   "path": "route_app/webapp.py",
+   "ext": ".py",
+   "size": 33951,
+   "sha1": "0fc7666dd104405dda2c55022cb5f2fb63736072",
+   "mtime": 1795366387,
+   "outline": {
+    "symbols": [
+     "safe_name",
+     "project_dir",
+     "run_script",
+     "update_status",
+     "load_script_module",
+     "track_bbox",
+     "index",
+     "list_projects",
+     "create_project",
+     "upload",
+     "files",
+     "ls",
+     "read_file",
+     "step_program",
+     "step_analyze",
+     "step_weather",
+     "step_kml",
+     "step_ics",
+     "step_checklist",
+     "step_status",
+     "watch_and_planned",
+     "step_photos",
+     "step_marks",
+     "step_photos_all",
+     "run_hike_report",
+     "step_report_map",
+     "step_guide",
+     "step_research",
+     "step_guide_html",
+     "step_audio_texts",
+     "step_tts",
+     "step_daylight",
+     "step_first_aid",
+     "step_currency",
+     "step_report",
+     "step_gear",
+     "run_step",
+     "add_note",
+     "browse",
+     "add"
+    ],
+    "lines": 744
+   },
+   "keywords": [
+    "name",
+    "return",
+    "get",
+    "params",
+    "def",
+    "json",
+    "httpexception",
+    "raise",
+    "args",
+    "in_dir"
+   ],
+   "part_numbers": [
+    "F10",
+    "F12",
+    "F401"
+   ]
+  },
+  {
+   "path": "route_app/wizard.html",
+   "ext": ".html",
+   "size": 62345,
+   "sha1": "3d1e76b0574eb6eea297586f82197f12f27f3d23",
+   "mtime": 1795366387,
+   "outline": {
+    "headings": [],
+    "lines": 893,
+    "snippet": "<!DOCTYPE html>"
+   },
+   "keywords": [
+    "div",
+    "class",
+    "button",
+    "span",
+    "svg",
+    "value",
+    "api",
+    "var",
+    "const",
+    "width"
+   ],
+   "part_numbers": [
+    "L110",
+    "L112",
+    "L128",
+    "L150",
+    "L22",
+    "L28",
+    "L36",
+    "L40",
+    "L52",
+    "L54",
+    "L70",
+    "L74",
+    "L82",
+    "L90",
+    "L98",
+    "M10",
+    "M12",
+    "M14",
+    "M15",
+    "M21"
+   ]
+  },
+  {
+   "path": "route_app/ИНСТРУКЦИЯ_фотоотчёт.md",
+   "ext": ".md",
+   "size": 17756,
+   "sha1": "423796752c6ced1c36c12c43901728eaf25b4b73",
+   "mtime": 1795366387,
+   "outline": {
+    "headings": [
+     "Инструкция: отчёт о походе из фото и видео",
+     "Самый простой способ: установщик в один клик",
+     "Шаг 1. Установка Python",
+     "Проверка установки",
+     "Шаг 2. Установка библиотек",
+     "Шаг 3. Подготовка папки с файлами",
+     "Шаг 4. Запуск скрипта",
+     "Вопросы при запуске",
+     "Шаг 5. Что получится",
+     "Настройки (необязательно)",
+     "Корректировка позиций на карте (вручную)",
+     "Частые проблемы",
+     "Перенос карты на другой компьютер"
+    ],
+    "lines": 280,
+    "snippet": "Полный путь от установки Python до готовой карты маршрута."
+   },
+   "keywords": [
+    "python",
+    "фото",
+    "скрипт",
+    "видео",
+    "без",
+    "папку",
+    "файл",
+    "времени",
+    "нажмите",
+    "это"
+   ],
+   "part_numbers": []
+  },
+  {
+   "path": "route_app/ТЗ_приложение_генератор_горных_маршрутов.md",
+   "ext": ".md",
+   "size": 9526,
+   "sha1": "f1fa9094a8891f5306defb55e48a4c787c3cffe1",
+   "mtime": 1795366387,
+   "outline": {
+    "headings": [
+     "ТЗ: Приложение «Генератор путеводителей горных походов»",
+     "1. Назначение",
+     "2. Пользователи и сценарии",
+     "3. Функциональные требования (ядро)",
+     "4. Нефункциональные требования",
+     "5. Архитектура (предложение)",
+     "6. Этапы",
+     "7. Приёмочные критерии MVP (чек-лист из раздела 10 инструкции)",
+     "8. Открытые вопросы ТЗ (заполнить)"
+    ],
+    "lines": 66,
+    "snippet": "*Черновик ТЗ. Версия 0.1 (27.09.2026). Основано на методике `Инструкция_генерация_горных_маршрутов.md` и эталонном проекте «Фанские горы — кольцо Чимтарги».*"
+   },
+   "keywords": [
+    "scripts",
+    "must",
+    "gpx",
+    "похода",
+    "инструкции",
+    "html",
+    "api",
+    "реализовано",
+    "печать",
+    "проекта"
+   ],
+   "part_numbers": [
+    "F10",
+    "F11",
+    "F12"
+   ]
+  },
+  {
+   "path": "route_app/запуск_мастера.bat",
+   "ext": ".bat",
+   "size": 249,
+   "sha1": "a0d4247a22b5ed0dd3412caccec91545b7f91402",
+   "mtime": 1795366387
+  },
+  {
+   "path": "routes/japan/AGENTS.md",
+   "ext": ".md",
+   "size": 21050,
+   "sha1": "277b777a6d96fcb5ac0afec354e3122bd075a3ba",
+   "mtime": 1795366550,
+   "outline": {
+    "headings": [
+     "AGENTS.md — маршрут «Япония» (routes/japan/)",
+     "0. Привязка путей и инструментов (фактическая адаптация)",
+     "1. Главные принципы",
+     "2. Обязательный порядок начала работы",
+     "3. Ответственность файлов",
+     "4. Project Atlas — обязательный протокол",
+     "5. Экономия контекста",
+     "6. Разделение маршрутов и данных",
+     "7. Исследования и источники",
+     "7.1. Протокол новых источников",
+     "8. Инженерный контракт",
+     "9. География, GPX и KML",
+     "10. Веб-интерфейс",
+     "11. Обязательная проверка",
+     "12. Git и публикация",
+     "13. Завершение задачи и handoff",
+     "14. Обязательная остановка"
+    ],
+    "lines": 269,
+    "snippet": "Постоянные правила работы над японским маршрутом. Основаны на утверждённом"
+   },
+   "keywords": [
+    "routes",
+    "japan",
+    "atlas",
+    "файлы",
+    "после",
+    "только",
+    "context",
+    "без",
+    "проверки",
+    "agents"
+   ],
+   "part_numbers": [
+    "D-001"
+   ]
+  },
+  {
+   "path": "routes/japan/CONTEXT.md",
+   "ext": ".md",
+   "size": 4876,
+   "sha1": "3db608e55d1625dc73da96683a14b774b95b8b18",
+   "mtime": 1795366604,
+   "outline": {
+    "headings": [
+     "CONTEXT.md — маршрут «Япония» (единственный операционный снимок)",
+     "Активный этап",
+     "Подтверждённое состояние",
+     "Блокировки и ожидания",
+     "Следующий шаг",
+     "Ссылки",
+     "Замечания"
+    ],
+    "lines": 68,
+    "snippet": "Обновлён: 2026-11-22. Поддерживается по `routes/japan/AGENTS.md` §13."
+   },
+   "keywords": [
+    "routes",
+    "japan",
+    "agents",
+    "github",
+    "этап",
+    "ветка",
+    "фудзи",
+    "yoshida",
+    "pages",
+    "git"
+   ],
+   "part_numbers": [
+    "D-001",
+    "D-002",
+    "D-004",
+    "D-005",
+    "D-006",
+    "D-007",
+    "D-008",
+    "D-009",
+    "D-010",
+    "S-001",
+    "S-006",
+    "S-007",
+    "S-008",
+    "S-010",
+    "T-001",
+    "T-002",
+    "T-003",
+    "T-004",
+    "T-007"
+   ]
+  },
+  {
+   "path": "routes/japan/DECISIONS.md",
+   "ext": ".md",
+   "size": 5118,
+   "sha1": "adcb9cfc949bd771e2cca1a7e79e2ad19fe17f25",
+   "mtime": 1795366604,
+   "outline": {
+    "headings": [
+     "DECISIONS.md — маршрут «Япония»"
+    ],
+    "lines": 65,
+    "snippet": "Формат: ID, дата, решение, причина, альтернативы, статус."
+   },
+   "keywords": [
+    "подтверждено",
+    "github",
+    "причина",
+    "pages",
+    "через",
+    "накахэти",
+    "фудзи",
+    "корне",
+    "маршрута",
+    "decisions"
+   ],
+   "part_numbers": [
+    "D-001",
+    "D-002",
+    "D-003",
+    "D-004",
+    "D-005",
+    "D-006",
+    "D-007",
+    "D-008",
+    "D-009",
+    "D-010",
+    "T-006"
+   ]
+  },
+  {
+   "path": "routes/japan/SOURCES.md",
+   "ext": ".md",
+   "size": 5261,
+   "sha1": "e346b57bd5466cbdc9fd6d991b075c4f20570199",
+   "mtime": 1795366654,
+   "outline": {
+    "headings": [
+     "SOURCES.md — реестр источников маршрута «Япония»",
+     "Правила ведения"
+    ],
+    "lines": 30,
+    "snippet": "Статусы: `ожидается`, `получен`, `учтён`, `конфликтует`, `устарел`."
+   },
+   "keywords": [
+    "com",
+    "ожидается",
+    "учтён",
+    "правила",
+    "получен",
+    "japan",
+    "кумано",
+    "кодо",
+    "день",
+    "https"
+   ],
+   "part_numbers": [
+    "S-001",
+    "S-002",
+    "S-003",
+    "S-004",
+    "S-005",
+    "S-006",
+    "S-007",
+    "S-008",
+    "S-009",
+    "S-010",
+    "S-011",
+    "S-012",
+    "S-013",
+    "T-003",
+    "T-004",
+    "T-006"
+   ]
+  },
+  {
+   "path": "routes/japan/TASKS/T-001.md",
+   "ext": ".md",
+   "size": 932,
+   "sha1": "b46cc0e646f70ef5a691d1bb4174f0302567da22",
+   "mtime": 1795366735,
+   "outline": {
+    "headings": [
+     "T-001 — Файловая система управления, ветка, Atlas",
+     "Критерии готовности",
+     "Затронутые файлы",
+     "Результат проверки"
+    ],
+    "lines": 18,
+    "snippet": "Статус: done"
+   },
+   "keywords": [
+    "atlas",
+    "ветка",
+    "создана",
+    "routes",
+    "japan",
+    "scripts",
+    "построен",
+    "файл",
+    "t-001",
+    "файловая"
+   ],
+   "part_numbers": [
+    "T-001"
+   ]
+  },
+  {
+   "path": "routes/japan/TASKS/T-002.md",
+   "ext": ".md",
+   "size": 1046,
+   "sha1": "b65ba4f6f636726e61405559a82637d633df2953",
+   "mtime": 1795366696,
+   "outline": {
+    "headings": [
+     "T-002 — Аудит скриптов движка на региональные параметры",
+     "Цель",
+     "Критерии готовности",
+     "Затронутые файлы"
+    ],
+    "lines": 18,
+    "snippet": "Статус: pending"
+   },
+   "keywords": [
+    "скриптов",
+    "параметры",
+    "route_app",
+    "scripts",
+    "правки",
+    "кода",
+    "t-002",
+    "аудит",
+    "движка",
+    "региональные"
+   ],
+   "part_numbers": [
+    "T-002"
+   ]
+  },
+  {
+   "path": "routes/japan/TASKS/T-003.md",
+   "ext": ".md",
+   "size": 1045,
+   "sha1": "486cba5faf07e2ef1c3ad8a483cf0a7a79267bc6",
+   "mtime": 1795366697,
+   "outline": {
+    "headings": [
+     "T-003 — Исследование официальных источников",
+     "Цель",
+     "Критерии готовности",
+     "Затронутые файлы"
+    ],
+    "lines": 19,
+    "snippet": "Статус: pending"
+   },
+   "keywords": [
+    "sources",
+    "routes",
+    "japan",
+    "источников",
+    "research",
+    "t-003",
+    "исследование",
+    "официальных",
+    "статус",
+    "pending"
+   ],
+   "part_numbers": [
+    "T-003"
+   ]
+  },
+  {
+   "path": "routes/japan/TASKS/T-004.md",
+   "ext": ".md",
+   "size": 934,
+   "sha1": "cf95120ed5f81877157e39f0aa9fac58f01a67e0",
+   "mtime": 1795366697,
+   "outline": {
+    "headings": [
+     "T-004 — GPX Накахэти и Yoshida: сбор и анализ",
+     "Цель",
+     "Критерии готовности",
+     "Затронутые файлы"
+    ],
+    "lines": 19,
+    "snippet": "Статус: pending"
+   },
+   "keywords": [
+    "gpx",
+    "накахэти",
+    "yoshida",
+    "routes",
+    "japan",
+    "data",
+    "t-004",
+    "сбор",
+    "анализ",
+    "статус"
+   ],
+   "part_numbers": [
+    "D-007",
+    "T-003",
+    "T-004"
+   ]
+  },
+  {
+   "path": "routes/japan/TASKS/T-005.md",
+   "ext": ".md",
+   "size": 1070,
+   "sha1": "3632d8baac547e4d07b4c0d20d56dc5412483ec2",
+   "mtime": 1795366697,
+   "outline": {
+    "headings": [
+     "T-005 — Вертикальный срез: день 6 (Цугизакура → Хонгу)",
+     "Цель",
+     "Критерии готовности",
+     "Затронутые файлы"
+    ],
+    "lines": 20,
+    "snippet": "Статус: pending"
+   },
+   "keywords": [
+    "день",
+    "гида",
+    "t-005",
+    "вертикальный",
+    "срез",
+    "цугизакура",
+    "хонгу",
+    "статус",
+    "pending",
+    "создана"
+   ],
+   "part_numbers": [
+    "T-002",
+    "T-003",
+    "T-004",
+    "T-005"
+   ]
+  },
+  {
+   "path": "routes/japan/TASKS/T-006.md",
+   "ext": ".md",
+   "size": 1136,
+   "sha1": "b793f37a47abffd3cea007f049e1741403700700",
+   "mtime": 1795366697,
+   "outline": {
+    "headings": [
+     "T-006 — Наполнение маршрута, KML, ICS, чеклист, аудиогид",
+     "Цель",
+     "Критерии готовности",
+     "Затронутые файлы"
+    ],
+    "lines": 20,
+    "snippet": "Статус: pending"
+   },
+   "keywords": [
+    "kml",
+    "чеклист",
+    "аудиогид",
+    "пользователя",
+    "кодом",
+    "routes",
+    "japan",
+    "t-006",
+    "наполнение",
+    "маршрута"
+   ],
+   "part_numbers": [
+    "D-009",
+    "S-008",
+    "T-005",
+    "T-006"
+   ]
+  },
+  {
+   "path": "routes/japan/TASKS/T-007.md",
+   "ext": ".md",
+   "size": 1171,
+   "sha1": "49a3e79e5556d9c50202219446725f88d0504d23",
+   "mtime": 1795366697,
+   "outline": {
+    "headings": [
+     "T-007 — Проверка и приватная публикация",
+     "Цель",
+     "Критерии готовности",
+     "Затронутые файлы"
+    ],
+    "lines": 21,
+    "snippet": "Статус: pending"
+   },
+   "keywords": [
+    "github",
+    "pages",
+    "проверка",
+    "публикация",
+    "парольный",
+    "экран",
+    "workflows",
+    "yml",
+    "t-007",
+    "приватная"
+   ],
+   "part_numbers": [
+    "D-001",
+    "T-006",
+    "T-007"
+   ]
+  },
+  {
+   "path": "routes/japan/config/route.yaml",
+   "ext": ".yaml",
+   "size": 4147,
+   "sha1": "d0a1c39e491e1bc3fda00e00011d0f39faff9dc8",
+   "mtime": 1795366654
+  },
+  {
+   "path": "scripts/atlas.py",
+   "ext": ".py",
+   "size": 21271,
+   "sha1": "e61a8bf6035efc310e0fb96899aa560281e0943d",
+   "mtime": 1795366406,
+   "outline": {
+    "symbols": [
+     "sha1_file",
+     "_docx_outline",
+     "_xlsx_outline",
+     "_pdf_outline",
+     "_text_outline",
+     "extract_file",
+     "scan",
+     "build_clusters",
+     "render_atlas_md",
+     "out_root",
+     "cmd_build",
+     "cmd_update",
+     "cmd_query",
+     "cmd_related",
+     "_job_path",
+     "cmd_manifest",
+     "_set_status",
+     "cmd_status",
+     "jobs_summary",
+     "main"
+    ],
+    "lines": 504
+   },
+   "keywords": [
+    "path",
+    "root",
+    "files",
+    "job",
+    "get",
+    "text",
+    "return",
+    "len",
+    "rec",
+    "ext"
+   ],
+   "part_numbers": []
+  },
+  {
+   "path": "Инструкция_генерация_горных_маршрутов.md",
+   "ext": ".md",
+   "size": 36418,
+   "sha1": "a557cfec15c484aa6dc5dbbd5d426f9a05c5c8d2",
+   "mtime": 1795366387,
+   "outline": {
+    "headings": [
+     "Инструкция: генерация путеводителя горного пешего похода (+ HTML-версия + аудиогид)",
+     "0. ОБЯЗАТЕЛЬНОЕ ПРАВИЛО: MD-снимок проекта для продолжения в другой модели",
+     "1. Входные данные — что спросить / взять у пользователя",
+     "1. Сбор маршрутной информации (источники по приоритету)",
+     "2. Разбор GPX (обязательная вычислительная часть, Python)",
+     "3. Погода, ветер, высоты — обязательный анализ",
+     "4. Содержание путеводителя (структура)",
+     "5. Факт-блоки по точкам (история, география, культура, природа)",
+     "6. HTML-путеводитель (открывается в Edge и любом браузере)",
+     "7. Аудиогид (принципы написания и генерации)",
+     "8. Файлы выдачи",
+     "9. Типовые грабли",
+     "10. Чек-лист перед выдачей",
+     "11. Автоматизация: скрипты и инструкции для кодовых агентов (Claude Code / Kimi Code)",
+     "12. Чеклист снаряжения по методике LighterPack (весовой учёт)",
+     "12.1. Формат таблицы",
+     "12.2. Обязательные итоги (считать скриптом, не в уме)",
+     "12.3. Правила для ИИ-генерации"
+    ],
+    "lines": 253,
+    "snippet": "*По методике, отработанной на маршруте «Фанские горы — кольцо Чимтарги», 06–16.09.2026 (Артуч → Куликалон → пер. Алаудин → Алауддинские оз. → Мутные оз. → лагерь 4400 → пер. Чимтарга 4740 → Б. Алло → "
+   },
+   "keywords": [
+    "даты",
+    "маршрут",
+    "высоты",
+    "gpx",
+    "без",
+    "день",
+    "таблица",
+    "точки",
+    "перевал",
+    "вес"
+   ],
+   "part_numbers": []
+  }
+ ]
+}
