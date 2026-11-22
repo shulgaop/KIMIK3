@@ -26,3 +26,4 @@ route_app/examples/Полный отчёт по Фанским горам*/
 # эталоны: mp3/zip-аудиогиды и архивы не коммитим (тяжёлые бинарники)
 route_app/examples/**/*.zip
 route_app/examples/**/*.mp3
+routes/japan/site/
