@@ -1,0 +1,152 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//routegen//RU
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:8442210734715757494@routegen
+DTSTAMP:20261122T215240Z
+DTSTART;VALUE=DATE:20270902
+DTEND;VALUE=DATE:20270902
+SUMMARY:День 1 · Прилёт в Токио\, ночь у Синдзюку
+LOCATION:Токио\, Синдзюку
+DESCRIPTION:Перелёт. N'EX/монорельс до Синдзюку. Ранний отбой — завтра Фудзи. Автобус на 5-ю станцию утром 03.09 (бронь ожидается).
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:День 1 · Прилёт в Токио\, ночь у Синдзюку
+TRIGGER:-PT720M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:8875736345003776076@routegen
+DTSTAMP:20261122T215240Z
+DTSTART;TZID=Asia/Tokyo:20270903T060000
+DTEND;TZID=Asia/Tokyo:20270903T170000
+SUMMARY:День 2 · Фудзи: подъём до хижины 8-й станции (~3370 м)
+LOCATION:Busta Shinjuku → Fuji Subaru Line 5th Station
+DESCRIPTION:Автобус ~2 ч 25 мин до 5-й станции. Подъём 6\,63 км\, +1477 м\, ~6 ч 05 мин по официальным данным. Взнос ¥4000. Ночёвка в хижине (бронь ожидается).
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:День 2 · Фудзи: подъём до хижины 8-й станции (~3370 м)
+TRIGGER:-PT720M
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:День 2 · Фудзи: подъём до хижины 8-й станции (~3370 м)
+TRIGGER:-PT60M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:2212213671748083727@routegen
+DTSTAMP:20261122T215240Z
+DTSTART;TZID=Asia/Tokyo:20270904T033000
+DTEND;TZID=Asia/Tokyo:20270904T200000
+SUMMARY:День 3 · Рассвет на вершине Фудзи → спуск → Киото
+LOCATION:Гребень кратера Фудзи → Киото
+DESCRIPTION:Подъём 03:30\, рассвет ≈05:28 (расчёт NOAA). Спуск ~3 ч 10 мин до 5-й станции\; в Сита-Эдоя — жёлтые указатели Yoshida. Синкансэн Нодзоми в Киото ~2 ч 15 мин.
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:День 3 · Рассвет на вершине Фудзи → спуск → Киото
+TRIGGER:-PT180M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:4620957421028977438@routegen
+DTSTAMP:20261122T215240Z
+DTSTART;TZID=Asia/Tokyo:20270905T080000
+DTEND;TZID=Asia/Tokyo:20270905T190000
+SUMMARY:День 4 · Киото (полдня) → экспресс Куросио → Кии-Танабэ
+LOCATION:Киото → Кии-Танабэ
+DESCRIPTION:Утро: Хигасияма или Фусими Инари. Куросио Син-Осака → Кии-Танабэ ~2–2\,5 ч. Вечер — квартал Аджикоджи\; проверить автобус на Такидзири.
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:День 4 · Киото (полдня) → экспресс Куросио → Кии-Танабэ
+TRIGGER:-PT720M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:4207054090826398980@routegen
+DTSTAMP:20261122T215240Z
+DTSTART;TZID=Asia/Tokyo:20270906T070000
+DTEND;TZID=Asia/Tokyo:20270906T170000
+SUMMARY:День 5 · Трек: Такидзири → Такахара → Цугизакура (16\,4 км)
+LOCATION:Такидзири-одзи → Цугизакура-одзи
+DESCRIPTION:Автобус из Кии-Танабэ ~40 мин. Трек 16\,43 км\, +1499/−1074 м\, ходом ~5 ч 46 мин + привалы. Ночёвка в минсюку Цугизакура/Нонака (бронь ожидается).
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:День 5 · Трек: Такидзири → Такахара → Цугизакура (16\,4 км)
+TRIGGER:-PT720M
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:День 5 · Трек: Такидзири → Такахара → Цугизакура (16\,4 км)
+TRIGGER:-PT60M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:5331054161361080818@routegen
+DTSTAMP:20261122T215240Z
+DTSTART;TZID=Asia/Tokyo:20270907T070000
+DTEND;TZID=Asia/Tokyo:20270907T173000
+SUMMARY:День 6 · Трек: Цугизакура → Кумано Хонгу-тайся (19\,5 км)
+LOCATION:Цугизакура-одзи → Кумано Хонгу-тайся
+DESCRIPTION:19\,50 км\, +1197/−1629 м\, ходом ~5 ч 53 мин + привалы. Фусиогами-одзи — первый вид на Оюнохара. Вечер: Оюнохара\, автобус в Юноминэ-онсэн (бронь ожидается).
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:День 6 · Трек: Цугизакура → Кумано Хонгу-тайся (19\,5 км)
+TRIGGER:-PT720M
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:День 6 · Трек: Цугизакура → Кумано Хонгу-тайся (19\,5 км)
+TRIGGER:-PT60M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:7883227979541291760@routegen
+DTSTAMP:20261122T215240Z
+DTSTART;TZID=Asia/Tokyo:20270908T070000
+DTEND;TZID=Asia/Tokyo:20270908T170000
+SUMMARY:День 7 · Когумотори-гоэ: Хонгу → Когути → Кацуура (12\,2 км)
+LOCATION:Укэгава → перевал Когумотори → Когути → Кацуура
+DESCRIPTION:Подход 2\,5 км до Укэгава. Перевал 12\,16 км\, +945/−943 м\, ходом ~4 ч. Автобус Когути → Нати ~25 мин. Ночёвка в Кацуура\, бани в гротах (бронь ожидается).
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:День 7 · Когумотори-гоэ: Хонгу → Когути → Кацуура (12\,2 км)
+TRIGGER:-PT720M
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:День 7 · Когумотори-гоэ: Хонгу → Когути → Кацуура (12\,2 км)
+TRIGGER:-PT60M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:8135220204126407722@routegen
+DTSTAMP:20261122T215240Z
+DTSTART;TZID=Asia/Tokyo:20270909T080000
+DTEND;TZID=Asia/Tokyo:20270909T200000
+SUMMARY:День 8 · Нати и Сингу → переезд в Осаку
+LOCATION:Кацуура → Нати → Сингу → Син-Осака
+DESCRIPTION:Даймон-дзака (1\,3 км)\, Нати-тайся\, Сэйганто-дзи\, водопад 133 м\; Хаятама-тайся и Камикура-дзиндзя в Сингу. Куросио Сингу → Син-Осака ~4–4\,5 ч. Вечер — Дотонбори.
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:День 8 · Нати и Сингу → переезд в Осаку
+TRIGGER:-PT720M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:6719389205075988220@routegen
+DTSTAMP:20261122T215240Z
+DTSTART;VALUE=DATE:20270910
+DTEND;VALUE=DATE:20270910
+SUMMARY:День 9 · Вылет из Кансая
+LOCATION:Осака → аэропорт Кансай
+DESCRIPTION:Экспресс Нанкай из Намбы ~45–50 мин или Харука из Син-Осаки ~50–70 мин. В аэропорт за 3 ч до рейса.
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:День 9 · Вылет из Кансая
+TRIGGER:-PT720M
+END:VALARM
+END:VEVENT
+END:VCALENDAR

@@ -1597,9 +1597,9 @@
   {
    "path": "routes/japan/CONTEXT.md",
    "ext": ".md",
-   "size": 7931,
-   "sha1": "f7fd8bfbc04e8652892fb17e57c3285daba2f42a",
-   "mtime": 1795374403,
+   "size": 7635,
+   "sha1": "116c4c706b50acd642fb77d409e56456a09bc059",
+   "mtime": 1795387947,
    "outline": {
     "headings": [
      "CONTEXT.md — маршрут «Япония» (единственный операционный снимок)",
@@ -1610,20 +1610,20 @@
      "Ссылки",
      "Замечания"
     ],
-    "lines": 95,
-    "snippet": "Обновлён: 2026-11-22. Поддерживается по `routes/japan/AGENTS.md` §13."
+    "lines": 96,
+    "snippet": "Обновлён: 2026-11-23. Поддерживается по `routes/japan/AGENTS.md` §13."
    },
    "keywords": [
     "routes",
     "japan",
     "github",
+    "generated",
     "фудзи",
-    "дня",
-    "аудиогид",
-    "t-006",
-    "agents",
-    "data",
-    "gpx"
+    "дней",
+    "ожидается",
+    "pages",
+    "d-001",
+    "публикации"
    ],
    "part_numbers": [
     "D-001",
@@ -1641,11 +1641,11 @@
     "S-008",
     "S-011",
     "S-013",
+    "S-016",
+    "S-028",
     "S-033",
     "S-034",
-    "S-037",
-    "S-039",
-    "S-040"
+    "S-037"
    ]
   },
   {
@@ -1696,15 +1696,15 @@
   {
    "path": "routes/japan/SOURCES.md",
    "ext": ".md",
-   "size": 13631,
-   "sha1": "ed0608fc1c1a340e9ee2023cb7082801b50ad1cf",
-   "mtime": 1795370651,
+   "size": 14225,
+   "sha1": "e065a3dbe49af21dc3cdd373d0fceebf4f046a93",
+   "mtime": 1795385106,
    "outline": {
     "headings": [
      "SOURCES.md — реестр источников маршрута «Япония»",
      "Правила ведения"
     ],
-    "lines": 59,
+    "lines": 60,
     "snippet": "Статусы: `ожидается`, `получен`, `учтён`, `конфликтует`, `устарел`."
    },
    "keywords": [
@@ -1712,11 +1712,11 @@
     "com",
     "день",
     "дни",
+    "фудзи",
     "кумано",
     "накахэти",
-    "фудзи",
-    "кодо",
     "дней",
+    "кодо",
     "japan"
    ],
    "part_numbers": [
@@ -1930,34 +1930,39 @@
   {
    "path": "routes/japan/TASKS/T-006.md",
    "ext": ".md",
-   "size": 1136,
-   "sha1": "b793f37a47abffd3cea007f049e1741403700700",
-   "mtime": 1795366697,
+   "size": 4938,
+   "sha1": "89da784564baacdfdc21af3168d8d30375c6e52f",
+   "mtime": 1795387903,
    "outline": {
     "headings": [
      "T-006 — Наполнение маршрута, KML, ICS, чеклист, аудиогид",
      "Цель",
      "Критерии готовности",
+     "Результат (проверено 2026-11-23)",
+     "Известные ограничения (не блокеры)",
      "Затронутые файлы"
     ],
-    "lines": 20,
-    "snippet": "Статус: pending"
+    "lines": 69,
+    "snippet": "Статус: done"
    },
    "keywords": [
-    "kml",
-    "чеклист",
+    "data",
+    "generated",
+    "дней",
     "аудиогид",
-    "пользователя",
     "кодом",
-    "routes",
-    "japan",
-    "t-006",
-    "наполнение",
-    "маршрута"
+    "день",
+    "html",
+    "движка",
+    "чеклист",
+    "routes"
    ],
    "part_numbers": [
     "D-009",
+    "S-007",
     "S-008",
+    "S-040",
+    "S-043",
     "T-005",
     "T-006"
    ]
@@ -1997,11 +2002,63 @@
    ]
   },
   {
+   "path": "routes/japan/config/days.json",
+   "ext": ".json",
+   "size": 34039,
+   "sha1": "ac4c9ce300c9f43c28ae0ab4448071413e56f1c7",
+   "mtime": 1795385011
+  },
+  {
    "path": "routes/japan/config/route.yaml",
    "ext": ".yaml",
    "size": 4147,
    "sha1": "d0a1c39e491e1bc3fda00e00011d0f39faff9dc8",
    "mtime": 1795366654
+  },
+  {
+   "path": "routes/japan/data/_chain.json",
+   "ext": ".json",
+   "size": 9945,
+   "sha1": "fd4b729b4f9ff87a46d67762f12c994db356b9a4",
+   "mtime": 1795382634
+  },
+  {
+   "path": "routes/japan/data/budget.py",
+   "ext": ".py",
+   "size": 6378,
+   "sha1": "095dfb266bfad5f595858efb99ac9fc7a0dbd563",
+   "mtime": 1795384457,
+   "outline": {
+    "symbols": [
+     "main"
+    ],
+    "lines": 99
+   },
+   "keywords": [
+    "проверить",
+    "ночь",
+    "eur",
+    "lines",
+    "jpy",
+    "path",
+    "main_eur",
+    "total",
+    "d-009",
+    "import"
+   ],
+   "part_numbers": [
+    "D-009",
+    "S-007",
+    "S-008",
+    "S-011",
+    "S-013",
+    "S-020",
+    "S-021",
+    "S-022",
+    "S-028",
+    "S-031",
+    "T-006"
+   ]
   },
   {
    "path": "routes/japan/data/build_gpx_from_osm.py",
@@ -2032,6 +2089,13 @@
    "part_numbers": []
   },
   {
+   "path": "routes/japan/data/checklist.json",
+   "ext": ".json",
+   "size": 4582,
+   "sha1": "57474d6b6bc8b2714a5216b520a7f13208706208",
+   "mtime": 1795384390
+  },
+  {
    "path": "routes/japan/data/day5_takijiri_tsugizakura.gpx",
    "ext": ".gpx",
    "size": 52105,
@@ -2044,6 +2108,27 @@
    "size": 56856,
    "sha1": "5493cf06f4c80bd143118555ef93d29e2f40a3a2",
    "mtime": 1795370866
+  },
+  {
+   "path": "routes/japan/data/day7_hongu_koguchi.gpx",
+   "ext": ".gpx",
+   "size": 23371,
+   "sha1": "69673a119407fd83df1e80324b50e4b08c5ba23b",
+   "mtime": 1795382659
+  },
+  {
+   "path": "routes/japan/data/daylight_err.log",
+   "ext": ".log",
+   "size": 88,
+   "sha1": "aeb598ced65477ef19288def01f1622e0d25928b",
+   "mtime": 1795384173
+  },
+  {
+   "path": "routes/japan/data/events.json",
+   "ext": ".json",
+   "size": 4999,
+   "sha1": "23dc9e4b83018e47b6c9eb9e23986d1ae81ac67b",
+   "mtime": 1795384345
   },
   {
    "path": "routes/japan/data/fetch_osm_gpx.py",
@@ -2075,6 +2160,37 @@
    "part_numbers": []
   },
   {
+   "path": "routes/japan/data/fetch_points_day5.py",
+   "ext": ".py",
+   "size": 4145,
+   "sha1": "e06a0aca6cb6fe4153cb49e0bb05ce47cba65858",
+   "mtime": 1795382369,
+   "outline": {
+    "symbols": [
+     "nominatim",
+     "collect",
+     "main"
+    ],
+    "lines": 93
+   },
+   "keywords": [
+    "lat",
+    "lon",
+    "json",
+    "nominatim",
+    "query",
+    "name",
+    "import",
+    "trkpts",
+    "points_day5",
+    "dist"
+   ],
+   "part_numbers": [
+    "E402",
+    "S-041"
+   ]
+  },
+  {
    "path": "routes/japan/data/fetch_points_day6.py",
    "ext": ".py",
    "size": 4909,
@@ -2103,6 +2219,67 @@
    "part_numbers": [
     "E402",
     "S-041"
+   ]
+  },
+  {
+   "path": "routes/japan/data/fetch_points_day7.py",
+   "ext": ".py",
+   "size": 4340,
+   "sha1": "9a298282b3aa456060f4bfe7b2e5999855f1ce9b",
+   "mtime": 1795383708,
+   "outline": {
+    "symbols": [
+     "nominatim",
+     "collect",
+     "main"
+    ],
+    "lines": 100
+   },
+   "keywords": [
+    "lat",
+    "lon",
+    "json",
+    "query",
+    "nominatim",
+    "name",
+    "import",
+    "trkpts",
+    "points_day7",
+    "dist"
+   ],
+   "part_numbers": [
+    "E402",
+    "S-041"
+   ]
+  },
+  {
+   "path": "routes/japan/data/fetch_points_fuji.py",
+   "ext": ".py",
+   "size": 4099,
+   "sha1": "7219a288f11d0a2fa1f913ddbe46db3f7ec348e5",
+   "mtime": 1795383804,
+   "outline": {
+    "symbols": [
+     "nominatim",
+     "collect",
+     "main"
+    ],
+    "lines": 94
+   },
+   "keywords": [
+    "lat",
+    "lon",
+    "json",
+    "query",
+    "nominatim",
+    "name",
+    "import",
+    "trkpts",
+    "points_fuji",
+    "dist"
+   ],
+   "part_numbers": [
+    "E402"
    ]
   },
   {
@@ -2141,11 +2318,116 @@
    "mtime": 1795369105
   },
   {
+   "path": "routes/japan/data/kogumotori_full.json",
+   "ext": ".json",
+   "size": 24903,
+   "sha1": "93ec524418475201206843cab15803a2e473166f",
+   "mtime": 1795382594
+  },
+  {
+   "path": "routes/japan/data/kogumotori_osm.gpx",
+   "ext": ".gpx",
+   "size": 24039,
+   "sha1": "5095a8febe0e8f182b19d9bca103d024c942879c",
+   "mtime": 1795382616
+  },
+  {
    "path": "routes/japan/data/kumano_area.osm",
    "ext": ".osm",
    "size": 5888320,
    "sha1": "fc9096cba1736498f70ba3ec22e1153c43867e60",
    "mtime": 1795370932
+  },
+  {
+   "path": "routes/japan/data/make_day_guides.py",
+   "ext": ".py",
+   "size": 7445,
+   "sha1": "232d082ac5f25d372de819c72fee7add1792e71c",
+   "mtime": 1795384110,
+   "outline": {
+    "symbols": [
+     "track_stats",
+     "naismith_between",
+     "fmt_hm",
+     "build_points_table",
+     "render_day",
+     "main"
+    ],
+    "lines": 163
+   },
+   "keywords": [
+    "cfg",
+    "trkpts",
+    "lines",
+    "dist",
+    "get",
+    "json",
+    "gain",
+    "append",
+    "gpx",
+    "loss"
+   ],
+   "part_numbers": [
+    "E402",
+    "S-037",
+    "T-006"
+   ]
+  },
+  {
+   "path": "routes/japan/data/make_index.py",
+   "ext": ".py",
+   "size": 7341,
+   "sha1": "c7b0338b353e156fc54b909563cac40d16d02425",
+   "mtime": 1795385217,
+   "outline": {
+    "symbols": [
+     "_css_",
+     "_",
+     "main"
+    ],
+    "lines": 152
+   },
+   "keywords": [
+    "html",
+    "days",
+    "гид",
+    "номер",
+    "json",
+    "дни",
+    "var",
+    "str",
+    "code",
+    "make_guide_html"
+   ],
+   "part_numbers": [
+    "T-005"
+   ]
+  },
+  {
+   "path": "routes/japan/data/make_route_kml.py",
+   "ext": ".py",
+   "size": 3156,
+   "sha1": "28b90d1d0f57635cb1b8337a73e5fcc1974ec571",
+   "mtime": 1795384302,
+   "outline": {
+    "symbols": [
+     "main"
+    ],
+    "lines": 66
+   },
+   "keywords": [
+    "json",
+    "name",
+    "gpx",
+    "parts",
+    "path",
+    "фудзи",
+    "styleurl",
+    "lat",
+    "bbox",
+    "import"
+   ],
+   "part_numbers": []
   },
   {
    "path": "routes/japan/data/nakahechi_final.gpx",
@@ -2169,11 +2451,39 @@
    "mtime": 1795368395
   },
   {
+   "path": "routes/japan/data/points_day5.json",
+   "ext": ".json",
+   "size": 1180,
+   "sha1": "810724842e6747915d0269cb107d6d5c28459d5f",
+   "mtime": 1795382384
+  },
+  {
    "path": "routes/japan/data/points_day6.json",
    "ext": ".json",
    "size": 1802,
    "sha1": "a4c05e0af21f6c959128877ca08326e81249b27c",
    "mtime": 1795370998
+  },
+  {
+   "path": "routes/japan/data/points_day7.json",
+   "ext": ".json",
+   "size": 1377,
+   "sha1": "6d551aa8ca24cc53b09171304249af55042f0fc8",
+   "mtime": 1795383715
+  },
+  {
+   "path": "routes/japan/data/points_fuji.json",
+   "ext": ".json",
+   "size": 1059,
+   "sha1": "2a7984079930cbdd32a965f56bf48be021d7addd",
+   "mtime": 1795383812
+  },
+  {
+   "path": "routes/japan/data/points_route.json",
+   "ext": ".json",
+   "size": 971,
+   "sha1": "d966d5691f8195985dc2c0ac4f8ff03bb7e81b96",
+   "mtime": 1795384163
   },
   {
    "path": "routes/japan/data/process_tracks.py",
@@ -2238,6 +2548,35 @@
    ]
   },
   {
+   "path": "routes/japan/data/stress_audioguide.py",
+   "ext": ".py",
+   "size": 6992,
+   "sha1": "0d2fc04313486528fa837404695c71c7fd49d695",
+   "mtime": 1795384939,
+   "outline": {
+    "symbols": [
+     "_",
+     "main"
+    ],
+    "lines": 138
+   },
+   "keywords": [
+    "json",
+    "str",
+    "текст",
+    "счёт",
+    "формы",
+    "хонгу",
+    "путь",
+    "без",
+    "sys",
+    "основа"
+   ],
+   "part_numbers": [
+    "T-005"
+   ]
+  },
+  {
    "path": "routes/japan/data/track-stats.md",
    "ext": ".md",
    "size": 3631,
@@ -2272,11 +2611,552 @@
    ]
   },
   {
+   "path": "routes/japan/data/tts_ru_audioguide.py",
+   "ext": ".py",
+   "size": 4799,
+   "sha1": "33881c9b4c5e4cb134c0359d9d415618e107cff9",
+   "mtime": 1795385059,
+   "outline": {
+    "symbols": [
+     "main"
+    ],
+    "lines": 94
+   },
+   "keywords": [
+    "import",
+    "пауза",
+    "текст",
+    "путь",
+    "имя",
+    "print",
+    "time",
+    "план",
+    "осталось",
+    "json"
+   ],
+   "part_numbers": [
+    "D-008",
+    "D-012"
+   ]
+  },
+  {
    "path": "routes/japan/data/wmt.json",
    "ext": ".json",
    "size": 79844,
    "sha1": "166a71d589484828c10f8eadcc5a58b09c9ae94a",
    "mtime": 1795368252
+  },
+  {
+   "path": "routes/japan/data/Климат.md",
+   "ext": ".md",
+   "size": 8589,
+   "sha1": "8c7ae4079283a6547a5d9aa851b9af584f08fcfb",
+   "mtime": 1795384206,
+   "outline": {
+    "headings": [
+     "Погода (2027-09-02 — 2027-09-10)",
+     "Токио (Синдзюку) (40 м)",
+     "Фудзи 5-я станция (2305 м)",
+     "Фудзи вершина (3699 м)",
+     "Киото (50 м)",
+     "Кии-Танабэ (10 м)",
+     "Такидзири (94 м)",
+     "Цугизакура (517 м)",
+     "Хонгу (83 м)",
+     "Когути (64 м)",
+     "Кацуура (10 м)",
+     "Сингу (10 м)",
+     "Осака (20 м)"
+    ],
+    "lines": 173,
+    "snippet": "_Open-Meteo, климатические нормы ERA5 за 10 лет. Прогноз ещё недоступен: нормы по тем же датам прошлых лет, перепроверить в указанную дату. Температуры — на высоте точек._"
+   },
+   "keywords": [
+    "дата",
+    "ночь",
+    "мин",
+    "день",
+    "макс",
+    "осадки",
+    "сут",
+    "годов",
+    "дождём",
+    "нормы"
+   ],
+   "part_numbers": []
+  },
+  {
+   "path": "routes/japan/data/Световой_день.md",
+   "ext": ".md",
+   "size": 1051,
+   "sha1": "686c20476ae5d5df9bf120b4bfd5af0089fd25ca",
+   "mtime": 1795384173,
+   "outline": {
+    "headings": [
+     "Световой день и ночное небо (2027-09-02 — 2027-09-10)"
+    ],
+    "lines": 16,
+    "snippet": "_Расчёт для центра маршрута (34.3694N, 136.5405E), пояс Asia/Tokyo; рассвет/закат по NOAA, фаза Луны — по синодическому циклу._"
+   },
+   "keywords": [
+    "первая",
+    "четверть",
+    "молодая",
+    "световой",
+    "день",
+    "рассвет",
+    "закат",
+    "новолуние",
+    "ночное",
+    "небо"
+   ],
+   "part_numbers": []
+  },
+  {
+   "path": "routes/japan/data/климат.json",
+   "ext": ".json",
+   "size": 29020,
+   "sha1": "d2fd429384e6b586891e7dcd418b834f3bcd7cc0",
+   "mtime": 1795384206
+  },
+  {
+   "path": "routes/japan/generated/slice-day1/выходные/Гид.html",
+   "ext": ".html",
+   "size": 7240,
+   "sha1": "2cc113cf0beacdd8c3596ebea24d20f705e9407d",
+   "mtime": 1795384245,
+   "outline": {
+    "headings": [],
+    "lines": 115,
+    "snippet": "<!DOCTYPE html>"
+   },
+   "keywords": [
+    "var",
+    "strong",
+    "code",
+    "background",
+    "color",
+    "padding",
+    "font-size",
+    "nav",
+    "margin",
+    "line"
+   ],
+   "part_numbers": [
+    "S-006",
+    "S-008",
+    "S-013",
+    "S-028"
+   ]
+  },
+  {
+   "path": "routes/japan/generated/slice-day1/выходные/Гид.md",
+   "ext": ".md",
+   "size": 3218,
+   "sha1": "ccdd7b3d7130af81624e3d8c4fd1cb5e350ff493",
+   "mtime": 1795384237,
+   "outline": {
+    "headings": [
+     "День 1 · Токио · прилёт",
+     "Прилёт и трансфер",
+     "Вечер",
+     "Запасные сценарии",
+     "Что сделать заранее (до вылета)"
+    ],
+    "lines": 38,
+    "snippet": "**Дата:** четверг, 2 сентября 2027 · **Формат:** перелёт, городская логистика"
+   },
+   "keywords": [
+    "синдзюку",
+    "ожидается",
+    "автобус",
+    "s-028",
+    "токио",
+    "прилёт",
+    "фудзи",
+    "busta",
+    "shinjuku",
+    "бронь"
+   ],
+   "part_numbers": [
+    "S-006",
+    "S-008",
+    "S-013",
+    "S-028"
+   ]
+  },
+  {
+   "path": "routes/japan/generated/slice-day2/входные/points.json",
+   "ext": ".json",
+   "size": 1813,
+   "sha1": "8b027bb7bb6f31e71ff5e3dd8023f809efce76cb",
+   "mtime": 1795384237
+  },
+  {
+   "path": "routes/japan/generated/slice-day2/входные/track.gpx",
+   "ext": ".gpx",
+   "size": 28508,
+   "sha1": "25db15b234674a8898086af57c12640430516c44",
+   "mtime": 1795384237
+  },
+  {
+   "path": "routes/japan/generated/slice-day2/выходные/Гид.html",
+   "ext": ".html",
+   "size": 22178,
+   "sha1": "c12ef629aa661e9509259a07780f1d43391c709c",
+   "mtime": 1795384246,
+   "outline": {
+    "headings": [],
+    "lines": 206,
+    "snippet": "<!DOCTYPE html>"
+   },
+   "keywords": [
+    "var",
+    "font-size",
+    "text",
+    "fill",
+    "background",
+    "code",
+    "станция",
+    "мин",
+    "c1a16",
+    "font-family"
+   ],
+   "part_numbers": [
+    "D-006",
+    "S-008",
+    "S-011",
+    "S-027",
+    "S-028",
+    "S-029",
+    "S-031",
+    "S-034",
+    "S-037",
+    "S-038"
+   ]
+  },
+  {
+   "path": "routes/japan/generated/slice-day2/выходные/Гид.md",
+   "ext": ".md",
+   "size": 5708,
+   "sha1": "e816025a12e0796ceec737c4f3cc7c5589cfe0bc",
+   "mtime": 1795384237,
+   "outline": {
+    "headings": [
+     "День 2 · Фудзи · 5-я станция → хижина 8-й станции",
+     "План по точкам",
+     "Как идти",
+     "Вечер в хижине",
+     "Запасные сценарии",
+     "Что взять с утра"
+    ],
+    "lines": 59,
+    "snippet": "> Подъём по тропе Yoshida с ночёвкой в хижине: классика восхождения (D-006). Рассвет — завтра."
+   },
+   "keywords": [
+    "мин",
+    "станция",
+    "станции",
+    "подъём",
+    "тропе",
+    "хижина",
+    "s-029",
+    "фудзи",
+    "yoshida",
+    "завтра"
+   ],
+   "part_numbers": [
+    "D-006",
+    "S-008",
+    "S-011",
+    "S-027",
+    "S-028",
+    "S-029",
+    "S-031",
+    "S-034",
+    "S-037",
+    "S-038"
+   ]
+  },
+  {
+   "path": "routes/japan/generated/slice-day3/выходные/Гид.html",
+   "ext": ".html",
+   "size": 7414,
+   "sha1": "1f20a9fb80b6bd5184e1abdba3abde6968bc87de",
+   "mtime": 1795384246,
+   "outline": {
+    "headings": [],
+    "lines": 117,
+    "snippet": "<!DOCTYPE html>"
+   },
+   "keywords": [
+    "var",
+    "background",
+    "киото",
+    "strong",
+    "color",
+    "padding",
+    "font-size",
+    "code",
+    "nav",
+    "margin"
+   ],
+   "part_numbers": [
+    "S-008",
+    "S-013",
+    "S-027",
+    "S-028",
+    "S-029",
+    "S-030",
+    "S-043"
+   ]
+  },
+  {
+   "path": "routes/japan/generated/slice-day3/выходные/Гид.md",
+   "ext": ".md",
+   "size": 3555,
+   "sha1": "08f92c162ae7efde16492fdea82830e4c6e55928",
+   "mtime": 1795384237,
+   "outline": {
+    "headings": [
+     "День 3 · Фудзи · рассвет и спуск → Киото",
+     "Утро: горайко",
+     "Спуск",
+     "Переезд в Киото",
+     "Вечер в Киото"
+    ],
+    "lines": 37,
+    "snippet": "**Дата:** суббота, 4 сентября 2027 · **Формат:** утренний выход на вершину, спуск, переезд"
+   },
+   "keywords": [
+    "киото",
+    "спуск",
+    "мин",
+    "рассвет",
+    "станции",
+    "автобус",
+    "день",
+    "переезд",
+    "кратера",
+    "станция"
+   ],
+   "part_numbers": [
+    "S-008",
+    "S-013",
+    "S-027",
+    "S-028",
+    "S-029",
+    "S-030",
+    "S-043"
+   ]
+  },
+  {
+   "path": "routes/japan/generated/slice-day4/выходные/Гид.html",
+   "ext": ".html",
+   "size": 6417,
+   "sha1": "7eca591df81c9d6f80e183cbcd22ebe0aa758073",
+   "mtime": 1795384246,
+   "outline": {
+    "headings": [],
+    "lines": 109,
+    "snippet": "<!DOCTYPE html>"
+   },
+   "keywords": [
+    "var",
+    "strong",
+    "background",
+    "color",
+    "padding",
+    "font-size",
+    "nav",
+    "margin",
+    "кии-танабэ",
+    "rem"
+   ],
+   "part_numbers": [
+    "S-006",
+    "S-008",
+    "S-013",
+    "S-016"
+   ]
+  },
+  {
+   "path": "routes/japan/generated/slice-day4/выходные/Гид.md",
+   "ext": ".md",
+   "size": 2518,
+   "sha1": "de599cb53238417710a7fc2175db7cf67b6cfd5f",
+   "mtime": 1795384237,
+   "outline": {
+    "headings": [
+     "День 4 · Киото (полдня) → экспресс Куросио → Кии-Танабэ",
+     "Утро в Киото — два варианта",
+     "Переезд в Кии-Танабэ",
+     "Вечер в Танабэ"
+    ],
+    "lines": 32,
+    "snippet": "**Дата:** воскресенье, 5 сентября 2027 · **Формат:** город + переезд"
+   },
+   "keywords": [
+    "кии-танабэ",
+    "вокзала",
+    "киото",
+    "день",
+    "экспресс",
+    "куросио",
+    "завтра",
+    "переезд",
+    "кинокуни",
+    "проверить"
+   ],
+   "part_numbers": [
+    "S-006",
+    "S-008",
+    "S-013",
+    "S-016"
+   ]
+  },
+  {
+   "path": "routes/japan/generated/slice-day5/входные/points.json",
+   "ext": ".json",
+   "size": 2191,
+   "sha1": "b773b8aa72fd3f49cd7716344710e389a3ae024e",
+   "mtime": 1795385016
+  },
+  {
+   "path": "routes/japan/generated/slice-day5/входные/texts.json",
+   "ext": ".json",
+   "size": 9706,
+   "sha1": "22d7c43989d4d51bbba1d980bb0d1968f2f56435",
+   "mtime": 1795384949
+  },
+  {
+   "path": "routes/japan/generated/slice-day5/входные/track.gpx",
+   "ext": ".gpx",
+   "size": 52105,
+   "sha1": "160eca6f563b97120673e07cf3e2798d212de1a4",
+   "mtime": 1795385016
+  },
+  {
+   "path": "routes/japan/generated/slice-day5/выходные/Гид.html",
+   "ext": ".html",
+   "size": 19295,
+   "sha1": "31224e1c18cc664c5d09f66970878356ec714c99",
+   "mtime": 1795385017,
+   "outline": {
+    "headings": [],
+    "lines": 245,
+    "snippet": "<!DOCTYPE html>"
+   },
+   "keywords": [
+    "var",
+    "font-size",
+    "text",
+    "fill",
+    "strong",
+    "c1a16",
+    "background",
+    "href",
+    "font-family",
+    "sans-serif"
+   ],
+   "part_numbers": [
+    "D-012",
+    "S-006",
+    "S-008",
+    "S-016",
+    "S-017",
+    "S-033",
+    "S-037",
+    "S-038",
+    "S-039",
+    "T-006"
+   ]
+  },
+  {
+   "path": "routes/japan/generated/slice-day5/выходные/Гид.md",
+   "ext": ".md",
+   "size": 6575,
+   "sha1": "cca93d33c1a6f632b2fed360e72fe1324fca33f8",
+   "mtime": 1795385016,
+   "outline": {
+    "headings": [
+     "День 5 · Такидзири → Такахара → Цугизакура · Кумано Кодо Накахэти",
+     "План по точкам",
+     "Про начало пути",
+     "Аудиогид дня",
+     "Вечер в Цугизакура/Нонака",
+     "Запасные сценарии",
+     "Что взять с утра"
+    ],
+    "lines": 68,
+    "snippet": "> Первый трековый день: официальный вход в священные горы Кумано и самый длинный подъём похода."
+   },
+   "keywords": [
+    "мин",
+    "аудио",
+    "mp3",
+    "чикатацию",
+    "такахара",
+    "такидзири-одзи",
+    "день",
+    "цугизакура",
+    "цугизакура-одзи",
+    "старт"
+   ],
+   "part_numbers": [
+    "D-012",
+    "S-006",
+    "S-008",
+    "S-016",
+    "S-017",
+    "S-033",
+    "S-037",
+    "S-038",
+    "S-039",
+    "T-006"
+   ]
+  },
+  {
+   "path": "routes/japan/generated/slice-day5/выходные/аудио/01 — Такидзири-одзи.mp3",
+   "ext": ".mp3",
+   "size": 396288,
+   "sha1": "5fbad94cded65a48822c9fee6b85747aac6f5494",
+   "mtime": 1795386866
+  },
+  {
+   "path": "routes/japan/generated/slice-day5/выходные/аудио/02 — Тайнай-кугури.mp3",
+   "ext": ".mp3",
+   "size": 389808,
+   "sha1": "e5237643f1ebb43510b9202f3ad5360bb569f1e3",
+   "mtime": 1795386904
+  },
+  {
+   "path": "routes/japan/generated/slice-day5/выходные/аудио/03 — Такахара.mp3",
+   "ext": ".mp3",
+   "size": 379152,
+   "sha1": "1529c04c563ecd93c6a6f0aeea8d9a151cdda61e",
+   "mtime": 1795385983
+  },
+  {
+   "path": "routes/japan/generated/slice-day5/выходные/аудио/04 — Гюба-додзи.mp3",
+   "ext": ".mp3",
+   "size": 384192,
+   "sha1": "59a0ac90c560b00fb32fce81284cb704c26df104",
+   "mtime": 1795386054
+  },
+  {
+   "path": "routes/japan/generated/slice-day5/выходные/аудио/05 — Чикатацию.mp3",
+   "ext": ".mp3",
+   "size": 370224,
+   "sha1": "9b1ee269050506978b11f99c25ab80e762bbd4dd",
+   "mtime": 1795386959
+  },
+  {
+   "path": "routes/japan/generated/slice-day5/выходные/аудио/06 — Цугизакура-одзи.mp3",
+   "ext": ".mp3",
+   "size": 381024,
+   "sha1": "a26133ae5114563ee3e8dbd11e14de32f4b87268",
+   "mtime": 1795387694
   },
   {
    "path": "routes/japan/generated/slice-day6/входные/points.json",
@@ -2444,6 +3324,509 @@
    "size": 396000,
    "sha1": "dddcadd998063d52ea456495657382dade56e30a",
    "mtime": 1795381461
+  },
+  {
+   "path": "routes/japan/generated/slice-day7/входные/points.json",
+   "ext": ".json",
+   "size": 2345,
+   "sha1": "47078d6cccc2a31a2c2b197167a8c394496fe15f",
+   "mtime": 1795385016
+  },
+  {
+   "path": "routes/japan/generated/slice-day7/входные/texts.json",
+   "ext": ".json",
+   "size": 10075,
+   "sha1": "470251de3a0cf56ce7090987ef9617051080a495",
+   "mtime": 1795384949
+  },
+  {
+   "path": "routes/japan/generated/slice-day7/входные/track.gpx",
+   "ext": ".gpx",
+   "size": 23371,
+   "sha1": "69673a119407fd83df1e80324b50e4b08c5ba23b",
+   "mtime": 1795385016
+  },
+  {
+   "path": "routes/japan/generated/slice-day7/выходные/Гид.html",
+   "ext": ".html",
+   "size": 23240,
+   "sha1": "b146cf5bfc073871738cf894367e94f4fe04d421",
+   "mtime": 1795385017,
+   "outline": {
+    "headings": [],
+    "lines": 264,
+    "snippet": "<!DOCTYPE html>"
+   },
+   "keywords": [
+    "var",
+    "text",
+    "font-size",
+    "strong",
+    "fill",
+    "code",
+    "c1a16",
+    "href",
+    "когути",
+    "мин"
+   ],
+   "part_numbers": [
+    "D-012",
+    "S-008",
+    "S-013",
+    "S-022",
+    "S-024",
+    "S-025",
+    "S-026",
+    "S-034",
+    "S-037",
+    "S-038",
+    "S-039",
+    "T-006"
+   ]
+  },
+  {
+   "path": "routes/japan/generated/slice-day7/выходные/Гид.md",
+   "ext": ".md",
+   "size": 7510,
+   "sha1": "24e42c5273f5fc2854c86d823dc2fc65066a017e",
+   "mtime": 1795385016,
+   "outline": {
+    "headings": [
+     "День 7 · Когумотори-гоэ · Хонгу → Когути → Кацуура",
+     "План по точкам",
+     "Почему Когумотори",
+     "Аудиогид дня",
+     "Вечер в Кацуура",
+     "Запасные сценарии",
+     "Что взять с утра"
+    ],
+    "lines": 73,
+    "snippet": "> «Схватить малое облако»: самый тихий и лесной перевал Накахэти — и выход к Тихому океану."
+   },
+   "keywords": [
+    "мин",
+    "когути",
+    "нати",
+    "автобус",
+    "аудио",
+    "mp3",
+    "укэгава",
+    "кацуура",
+    "перевал",
+    "хонгу"
+   ],
+   "part_numbers": [
+    "D-012",
+    "S-008",
+    "S-013",
+    "S-022",
+    "S-024",
+    "S-025",
+    "S-026",
+    "S-034",
+    "S-037",
+    "S-038",
+    "S-039",
+    "T-006"
+   ]
+  },
+  {
+   "path": "routes/japan/generated/slice-day7/выходные/аудио/01 — Укэгава.mp3",
+   "ext": ".mp3",
+   "size": 384624,
+   "sha1": "789cb4ef168ce2bfa596a7dcc61dc549f6f09593",
+   "mtime": 1795386623
+  },
+  {
+   "path": "routes/japan/generated/slice-day7/выходные/аудио/02 — Мацухата-дзяя.mp3",
+   "ext": ".mp3",
+   "size": 329184,
+   "sha1": "e8443be254c9b0aa9659d11d2554994fcb526909",
+   "mtime": 1795385662
+  },
+  {
+   "path": "routes/japan/generated/slice-day7/выходные/аудио/03 — Хяккэн-гура.mp3",
+   "ext": ".mp3",
+   "size": 333648,
+   "sha1": "d90cdce654e17f57b764a5549377d518e0bfb17b",
+   "mtime": 1795387045
+  },
+  {
+   "path": "routes/japan/generated/slice-day7/выходные/аудио/04 — Сай-но-Кавара Дзидзо.mp3",
+   "ext": ".mp3",
+   "size": 328032,
+   "sha1": "41ef904952815a9f6f7438cf52574df9fabc6cc3",
+   "mtime": 1795387316
+  },
+  {
+   "path": "routes/japan/generated/slice-day7/выходные/аудио/05 — Исидо-дзяя.mp3",
+   "ext": ".mp3",
+   "size": 317232,
+   "sha1": "8ff8831a833294fdfd47fa84201b0f5bd742a19f",
+   "mtime": 1795387130
+  },
+  {
+   "path": "routes/japan/generated/slice-day7/выходные/аудио/06 — Сакура-дзяя.mp3",
+   "ext": ".mp3",
+   "size": 344160,
+   "sha1": "1859e43b1d71979138d947d2e8b85fa6e1e6dc7c",
+   "mtime": 1795386244
+  },
+  {
+   "path": "routes/japan/generated/slice-day7/выходные/аудио/07 — Когути.mp3",
+   "ext": ".mp3",
+   "size": 348768,
+   "sha1": "fb25730ca3180d2d214f826bad2140cc9306cfe6",
+   "mtime": 1795386335
+  },
+  {
+   "path": "routes/japan/generated/slice-day8/выходные/Гид.html",
+   "ext": ".html",
+   "size": 7285,
+   "sha1": "4944c980d5968ba5addc790a8f2086463257de39",
+   "mtime": 1795384248,
+   "outline": {
+    "headings": [],
+    "lines": 110,
+    "snippet": "<!DOCTYPE html>"
+   },
+   "keywords": [
+    "strong",
+    "var",
+    "background",
+    "color",
+    "padding",
+    "font-size",
+    "code",
+    "nav",
+    "сингу",
+    "margin"
+   ],
+   "part_numbers": [
+    "S-008",
+    "S-013",
+    "S-022",
+    "S-023",
+    "S-024",
+    "S-025",
+    "S-026"
+   ]
+  },
+  {
+   "path": "routes/japan/generated/slice-day8/выходные/Гид.md",
+   "ext": ".md",
+   "size": 3211,
+   "sha1": "b4cb9c4282ffc1a29f70aef1e242963165ac8e70",
+   "mtime": 1795384237,
+   "outline": {
+    "headings": [
+     "День 8 · Нати и Сингу → переезд в Осаку",
+     "Утро: Нати (если не успели вчера)",
+     "Сингу: Хаятама-тайся и Камикура-дзиндзя",
+     "Переезд в Осаку"
+    ],
+    "lines": 33,
+    "snippet": "**Дата:** четверг, 9 сентября 2027 · **Формат:** города и святыни + дальний переезд"
+   },
+   "keywords": [
+    "сингу",
+    "нати",
+    "кумано",
+    "переезд",
+    "лет",
+    "кацуура",
+    "син-осака",
+    "куросио",
+    "проверить",
+    "s-013"
+   ],
+   "part_numbers": [
+    "S-008",
+    "S-013",
+    "S-022",
+    "S-023",
+    "S-024",
+    "S-025",
+    "S-026"
+   ]
+  },
+  {
+   "path": "routes/japan/generated/slice-day9/выходные/Гид.html",
+   "ext": ".html",
+   "size": 5247,
+   "sha1": "88b0fbad4651dfcf1a390972b8ad329a7874f06f",
+   "mtime": 1795384248,
+   "outline": {
+    "headings": [],
+    "lines": 102,
+    "snippet": "<!DOCTYPE html>"
+   },
+   "keywords": [
+    "var",
+    "background",
+    "color",
+    "padding",
+    "font-size",
+    "nav",
+    "margin",
+    "rem",
+    "line",
+    "solid"
+   ],
+   "part_numbers": [
+    "S-013"
+   ]
+  },
+  {
+   "path": "routes/japan/generated/slice-day9/выходные/Гид.md",
+   "ext": ".md",
+   "size": 1660,
+   "sha1": "c8b3439eafc77b0fbea294f19b197f8c7fcbcccc",
+   "mtime": 1795384237,
+   "outline": {
+    "headings": [
+     "День 9 · Осака · вылет из Кансая",
+     "Утро",
+     "Вылет",
+     "Что проверить накануне"
+    ],
+    "lines": 28,
+    "snippet": "**Дата:** пятница, 10 сентября 2027 · **Формат:** выезд"
+   },
+   "keywords": [
+    "мин",
+    "при",
+    "день",
+    "осака",
+    "вылет",
+    "аэропорт",
+    "кансай",
+    "трансфер",
+    "намбы",
+    "проверить"
+   ],
+   "part_numbers": [
+    "S-013"
+   ]
+  },
+  {
+   "path": "routes/japan/generated/Бронирования.html",
+   "ext": ".html",
+   "size": 9254,
+   "sha1": "bf1af03a9b6fc0e2e7fb278ce3a080aa71d54b3b",
+   "mtime": 1795385167,
+   "outline": {
+    "headings": [],
+    "lines": 223,
+    "snippet": "<!DOCTYPE html>"
+   },
+   "keywords": [
+    "code",
+    "var",
+    "ожидается",
+    "background",
+    "мес",
+    "color",
+    "padding",
+    "font-size",
+    "table",
+    "nav"
+   ],
+   "part_numbers": [
+    "S-007",
+    "S-008",
+    "S-011",
+    "S-016",
+    "S-021",
+    "S-028",
+    "S-029",
+    "S-031"
+   ]
+  },
+  {
+   "path": "routes/japan/generated/Бронирования.md",
+   "ext": ".md",
+   "size": 4324,
+   "sha1": "b77989d3ece4e01a2ee4a47b23d69007784c3635",
+   "mtime": 1795384512,
+   "outline": {
+    "headings": [
+     "Список бронирований · Япония 02–10.09.2027",
+     "Критичные (закрываются первыми)",
+     "Города (гибкие)",
+     "Транспорт",
+     "На месте (без предброни)"
+    ],
+    "lines": 42,
+    "snippet": "Статусы: `ожидается` — бронирует пользователь; окна открытия — по правилам 2026,"
+   },
+   "keywords": [
+    "ожидается",
+    "мес",
+    "ночь",
+    "объект",
+    "дата",
+    "окно",
+    "срок",
+    "статус",
+    "фудзи",
+    "полупансион"
+   ],
+   "part_numbers": [
+    "S-007",
+    "S-008",
+    "S-011",
+    "S-016",
+    "S-021",
+    "S-028",
+    "S-029",
+    "S-031"
+   ]
+  },
+  {
+   "path": "routes/japan/generated/Бюджет.html",
+   "ext": ".html",
+   "size": 9039,
+   "sha1": "d2cd5eea84b655cc3dceb5deabdb0faebe4f475e",
+   "mtime": 1795385166,
+   "outline": {
+    "headings": [],
+    "lines": 231,
+    "snippet": "<!DOCTYPE html>"
+   },
+   "keywords": [
+    "code",
+    "var",
+    "проверить",
+    "background",
+    "table",
+    "color",
+    "padding",
+    "font-size",
+    "nav",
+    "margin"
+   ],
+   "part_numbers": [
+    "D-009",
+    "S-007",
+    "S-008",
+    "S-011",
+    "S-013",
+    "S-020",
+    "S-021",
+    "S-022",
+    "S-028",
+    "S-031"
+   ]
+  },
+  {
+   "path": "routes/japan/generated/Бюджет.md",
+   "ext": ".md",
+   "size": 3912,
+   "sha1": "309af3ec3601219eaf2f27652f0d0a6a0f4324e5",
+   "mtime": 1795384467,
+   "outline": {
+    "headings": [
+     "Бюджет маршрута Японии (02–10.09.2027)",
+     "Транспорт — ¥49,800 (≈ €286)",
+     "Жильё (8 ночей) — ¥91,500 (≈ €525)",
+     "Питание — ¥28,500 (≈ €164)",
+     "Прочее — ¥10,500 (≈ €60)",
+     "Итого: ¥180,300 ≈ **€1035**"
+    ],
+    "lines": 57,
+    "snippet": "Курс: 1 € = 174.18 ¥ (open.er-api.com, обновлено Sun, 22 Nov 2026 00:02:32 +0000)."
+   },
+   "keywords": [
+    "проверить",
+    "ночь",
+    "статья",
+    "пометка",
+    "киото",
+    "синдзюку",
+    "фудзи",
+    "токио",
+    "нати",
+    "кацуура"
+   ],
+   "part_numbers": [
+    "D-009",
+    "S-007",
+    "S-008",
+    "S-011",
+    "S-013",
+    "S-020",
+    "S-021",
+    "S-022",
+    "S-028",
+    "S-031"
+   ]
+  },
+  {
+   "path": "routes/japan/generated/Гид.html",
+   "ext": ".html",
+   "size": 8119,
+   "sha1": "0165517b6c88687eb8587666cb7f63c504f7da12",
+   "mtime": 1795385225,
+   "outline": {
+    "headings": [],
+    "lines": 105,
+    "snippet": "<!DOCTYPE html>"
+   },
+   "keywords": [
+    "var",
+    "div",
+    "html",
+    "href",
+    "background",
+    "color",
+    "class",
+    "meta",
+    "font-size",
+    "margin"
+   ],
+   "part_numbers": []
+  },
+  {
+   "path": "routes/japan/generated/Чеклист.html",
+   "ext": ".html",
+   "size": 12581,
+   "sha1": "8334614d6539d2f6aea1f4dd94b7337888d16782",
+   "mtime": 1795384398,
+   "outline": {
+    "headings": [],
+    "lines": 184,
+    "snippet": "<!DOCTYPE html>"
+   },
+   "keywords": [
+    "label",
+    "input",
+    "type",
+    "checkbox",
+    "button",
+    "section",
+    "class",
+    "var",
+    "onclick",
+    "span"
+   ],
+   "part_numbers": [
+    "SPF50"
+   ]
+  },
+  {
+   "path": "routes/japan/generated/маршрут.ics",
+   "ext": ".ics",
+   "size": 7484,
+   "sha1": "474d8732766de82ff914a3eb0dbd8e6d46d1760b",
+   "mtime": 1795384360
+  },
+  {
+   "path": "routes/japan/generated/маршрут.kml",
+   "ext": ".kml",
+   "size": 73178,
+   "sha1": "2df997a421023ae1881963adacf0c467f4f3305d",
+   "mtime": 1795384310
   },
   {
    "path": "routes/japan/research/engine-audit.md",
