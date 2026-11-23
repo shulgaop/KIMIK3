@@ -1604,9 +1604,9 @@
   {
    "path": "routes/japan/CONTEXT.md",
    "ext": ".md",
-   "size": 10255,
-   "sha1": "53c75d97bd18e7c27b16fbfa95ba5af796d0c835",
-   "mtime": 1795389664,
+   "size": 11125,
+   "sha1": "048cb43f50fe2246a6669be20a68d6393d685b5d",
+   "mtime": 1795390946,
    "outline": {
     "headings": [
      "CONTEXT.md — маршрут «Япония» (единственный операционный снимок)",
@@ -1617,7 +1617,7 @@
      "Ссылки",
      "Замечания"
     ],
-    "lines": 122,
+    "lines": 132,
     "snippet": "Обновлён: 2026-11-23. Поддерживается по `routes/japan/AGENTS.md` §13."
    },
    "keywords": [
@@ -1629,8 +1629,8 @@
     "data",
     "pages",
     "mp3",
-    "kimik3",
-    "make_site"
+    "generated",
+    "kimik3"
    ],
    "part_numbers": [
     "D-001",
@@ -2014,9 +2014,9 @@
   {
    "path": "routes/japan/config/days.json",
    "ext": ".json",
-   "size": 34039,
-   "sha1": "ac4c9ce300c9f43c28ae0ab4448071413e56f1c7",
-   "mtime": 1795385011
+   "size": 35133,
+   "sha1": "2df74c2e60e34ff2634bd52ed4c1b3b225bc2b22",
+   "mtime": 1795390131
   },
   {
    "path": "routes/japan/config/route.yaml",
@@ -2413,9 +2413,9 @@
   {
    "path": "routes/japan/data/make_index.py",
    "ext": ".py",
-   "size": 7341,
-   "sha1": "c7b0338b353e156fc54b909563cac40d16d02425",
-   "mtime": 1795385217,
+   "size": 7355,
+   "sha1": "f2f1ebd6d9442b93efca099a784208a95c505683",
+   "mtime": 1795390183,
    "outline": {
     "symbols": [
      "_css_",
@@ -2650,27 +2650,27 @@
   {
    "path": "routes/japan/data/stress_audioguide.py",
    "ext": ".py",
-   "size": 6992,
-   "sha1": "0d2fc04313486528fa837404695c71c7fd49d695",
-   "mtime": 1795384939,
+   "size": 7624,
+   "sha1": "068f1ac965faadd26f78fced0b4f03715430e135",
+   "mtime": 1795390100,
    "outline": {
     "symbols": [
      "_",
      "main"
     ],
-    "lines": 138
+    "lines": 148
    },
    "keywords": [
     "json",
     "str",
     "текст",
-    "счёт",
     "формы",
+    "счёт",
+    "основа",
     "хонгу",
     "путь",
     "без",
-    "sys",
-    "основа"
+    "texts"
    ],
    "part_numbers": [
     "T-005"
@@ -2893,34 +2893,41 @@
    "ext": ".json",
    "size": 1813,
    "sha1": "8b027bb7bb6f31e71ff5e3dd8023f809efce76cb",
-   "mtime": 1795384237
+   "mtime": 1795390138
+  },
+  {
+   "path": "routes/japan/generated/slice-day2/входные/texts.json",
+   "ext": ".json",
+   "size": 3481,
+   "sha1": "54667dac993047007197427b9a0b18153b3282e1",
+   "mtime": 1795390106
   },
   {
    "path": "routes/japan/generated/slice-day2/входные/track.gpx",
    "ext": ".gpx",
    "size": 28508,
    "sha1": "25db15b234674a8898086af57c12640430516c44",
-   "mtime": 1795384237
+   "mtime": 1795390138
   },
   {
    "path": "routes/japan/generated/slice-day2/выходные/Гид.html",
    "ext": ".html",
-   "size": 22178,
-   "sha1": "c12ef629aa661e9509259a07780f1d43391c709c",
-   "mtime": 1795384246,
+   "size": 23547,
+   "sha1": "470411f04623f4e7b1abc85fe94d0612497c73c1",
+   "mtime": 1795390169,
    "outline": {
     "headings": [],
-    "lines": 206,
+    "lines": 237,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
     "var",
     "font-size",
     "text",
-    "fill",
-    "background",
     "code",
+    "fill",
     "станция",
+    "background",
     "мин",
     "c1a16",
     "font-family"
@@ -2935,38 +2942,40 @@
     "S-031",
     "S-034",
     "S-037",
-    "S-038"
+    "S-038",
+    "S-040"
    ]
   },
   {
    "path": "routes/japan/generated/slice-day2/выходные/Гид.md",
    "ext": ".md",
-   "size": 5708,
-   "sha1": "e816025a12e0796ceec737c4f3cc7c5589cfe0bc",
-   "mtime": 1795384237,
+   "size": 6712,
+   "sha1": "7a7693b3d6b6f19a0f6c489b74c6fdb0601163ef",
+   "mtime": 1795390138,
    "outline": {
     "headings": [
      "День 2 · Фудзи · 5-я станция → хижина 8-й станции",
      "План по точкам",
      "Как идти",
      "Вечер в хижине",
+     "Аудиогид дня",
      "Запасные сценарии",
      "Что взять с утра"
     ],
-    "lines": 59,
+    "lines": 70,
     "snippet": "> Подъём по тропе Yoshida с ночёвкой в хижине: классика восхождения (D-006). Рассвет — завтра."
    },
    "keywords": [
     "мин",
     "станция",
     "станции",
-    "подъём",
     "тропе",
+    "подъём",
+    "хижины",
+    "фудзи",
     "хижина",
     "s-029",
-    "фудзи",
-    "yoshida",
-    "завтра"
+    "дня"
    ],
    "part_numbers": [
     "D-006",
@@ -2978,8 +2987,30 @@
     "S-031",
     "S-034",
     "S-037",
-    "S-038"
+    "S-038",
+    "S-040"
    ]
+  },
+  {
+   "path": "routes/japan/generated/slice-day2/выходные/аудио/01 — 5-я станция.mp3",
+   "ext": ".mp3",
+   "size": 294480,
+   "sha1": "8aa341bb4890fb047f2f407babc7e1f0262f20fd",
+   "mtime": 1795390946
+  },
+  {
+   "path": "routes/japan/generated/slice-day2/выходные/аудио/02 — Хижины 8-й станции.mp3",
+   "ext": ".mp3",
+   "size": 279792,
+   "sha1": "79ccdca4aece5c817321121075b9172be2901b80",
+   "mtime": 1795390345
+  },
+  {
+   "path": "routes/japan/generated/slice-day2/выходные/аудио/03 — Вершина и горайко.mp3",
+   "ext": ".mp3",
+   "size": 262368,
+   "sha1": "5532a7cc6769f0094876c32a711af813736713c6",
+   "mtime": 1795391835
   },
   {
    "path": "routes/japan/generated/slice-day3/выходные/Гид.html",
@@ -3715,25 +3746,25 @@
   {
    "path": "routes/japan/generated/Бронирования.html",
    "ext": ".html",
-   "size": 9254,
-   "sha1": "bf1af03a9b6fc0e2e7fb278ce3a080aa71d54b3b",
-   "mtime": 1795385167,
+   "size": 10804,
+   "sha1": "72b99cf798193ff6077320aaa7a28085409602b0",
+   "mtime": 1795390307,
    "outline": {
     "headings": [],
-    "lines": 223,
+    "lines": 229,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
     "code",
+    "href",
     "var",
+    "https",
+    "com",
     "ожидается",
+    "www",
     "background",
     "мес",
-    "color",
-    "padding",
-    "font-size",
-    "table",
-    "nav"
+    "color"
    ],
    "part_numbers": [
     "S-007",
@@ -3749,9 +3780,9 @@
   {
    "path": "routes/japan/generated/Бронирования.md",
    "ext": ".md",
-   "size": 4324,
-   "sha1": "b77989d3ece4e01a2ee4a47b23d69007784c3635",
-   "mtime": 1795384512,
+   "size": 5626,
+   "sha1": "784b83e4efae4e20f3df62220794fa53420dd020",
+   "mtime": 1795390298,
    "outline": {
     "headings": [
      "Список бронирований · Япония 02–10.09.2027",
@@ -3760,20 +3791,20 @@
      "Транспорт",
      "На месте (без предброни)"
     ],
-    "lines": 42,
+    "lines": 43,
     "snippet": "Статусы: `ожидается` — бронирует пользователь; окна открытия — по правилам 2026,"
    },
    "keywords": [
+    "https",
+    "com",
     "ожидается",
+    "www",
     "мес",
     "ночь",
-    "объект",
-    "дата",
-    "окно",
-    "срок",
-    "статус",
-    "фудзи",
-    "полупансион"
+    "booking",
+    "бронировать",
+    "travel",
+    "фудзи"
    ],
    "part_numbers": [
     "S-007",
@@ -3868,9 +3899,9 @@
   {
    "path": "routes/japan/generated/Гид.html",
    "ext": ".html",
-   "size": 8119,
-   "sha1": "0165517b6c88687eb8587666cb7f63c504f7da12",
-   "mtime": 1795385225,
+   "size": 8133,
+   "sha1": "0677c9cd6aebe006cbe78047c526d71fb8c61cab",
+   "mtime": 1795390190,
    "outline": {
     "headings": [],
     "lines": 105,
@@ -4161,14 +4192,14 @@
    "ext": "",
    "size": 0,
    "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
-   "mtime": 1795388749
+   "mtime": 1795392052
   },
   {
    "path": "routes/japan/site/index.html",
    "ext": ".html",
    "size": 2983,
    "sha1": "8a347855cdf9f03ccbf80d148632235fd8bd076d",
-   "mtime": 1795388749,
+   "mtime": 1795392052,
    "outline": {
     "headings": [],
     "lines": 59,
@@ -4195,7 +4226,7 @@
    "ext": ".html",
    "size": 7441,
    "sha1": "a420cbd56c4b5079dbf2f342c4c0206ee9eb0d0f",
-   "mtime": 1795388748,
+   "mtime": 1795392052,
    "outline": {
     "headings": [],
     "lines": 116,
@@ -4225,34 +4256,41 @@
    "ext": ".json",
    "size": 1813,
    "sha1": "8b027bb7bb6f31e71ff5e3dd8023f809efce76cb",
-   "mtime": 1795384237
+   "mtime": 1795390138
+  },
+  {
+   "path": "routes/japan/site/slice-day2/входные/texts.json",
+   "ext": ".json",
+   "size": 3481,
+   "sha1": "54667dac993047007197427b9a0b18153b3282e1",
+   "mtime": 1795390106
   },
   {
    "path": "routes/japan/site/slice-day2/входные/track.gpx",
    "ext": ".gpx",
    "size": 28508,
    "sha1": "25db15b234674a8898086af57c12640430516c44",
-   "mtime": 1795384237
+   "mtime": 1795390138
   },
   {
    "path": "routes/japan/site/slice-day2/выходные/Гид.html",
    "ext": ".html",
-   "size": 22379,
-   "sha1": "fc4f7054dc83a52c8d01847a39d16238638ba229",
-   "mtime": 1795388748,
+   "size": 23748,
+   "sha1": "ec3838675e5c8db783976b4f4fe2b93b1873537b",
+   "mtime": 1795392052,
    "outline": {
     "headings": [],
-    "lines": 207,
+    "lines": 238,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
     "var",
     "font-size",
     "text",
-    "fill",
-    "background",
     "code",
+    "fill",
     "станция",
+    "background",
     "мин",
     "c1a16",
     "font-family"
@@ -4267,15 +4305,37 @@
     "S-031",
     "S-034",
     "S-037",
-    "S-038"
+    "S-038",
+    "S-040"
    ]
+  },
+  {
+   "path": "routes/japan/site/slice-day2/выходные/аудио/01 — 5-я станция.mp3",
+   "ext": ".mp3",
+   "size": 294480,
+   "sha1": "8aa341bb4890fb047f2f407babc7e1f0262f20fd",
+   "mtime": 1795390946
+  },
+  {
+   "path": "routes/japan/site/slice-day2/выходные/аудио/02 — Хижины 8-й станции.mp3",
+   "ext": ".mp3",
+   "size": 279792,
+   "sha1": "79ccdca4aece5c817321121075b9172be2901b80",
+   "mtime": 1795390345
+  },
+  {
+   "path": "routes/japan/site/slice-day2/выходные/аудио/03 — Вершина и горайко.mp3",
+   "ext": ".mp3",
+   "size": 262368,
+   "sha1": "5532a7cc6769f0094876c32a711af813736713c6",
+   "mtime": 1795391835
   },
   {
    "path": "routes/japan/site/slice-day3/выходные/Гид.html",
    "ext": ".html",
    "size": 7615,
    "sha1": "a3b354bd641467e0aabba5ca8cd7d0a6d085ed59",
-   "mtime": 1795388748,
+   "mtime": 1795392052,
    "outline": {
     "headings": [],
     "lines": 118,
@@ -4308,7 +4368,7 @@
    "ext": ".html",
    "size": 6618,
    "sha1": "65c5af9dfc11c4adbbb298cb90c310baa5b1eb3f",
-   "mtime": 1795388748,
+   "mtime": 1795392052,
    "outline": {
     "headings": [],
     "lines": 110,
@@ -4359,7 +4419,7 @@
    "ext": ".html",
    "size": 19496,
    "sha1": "014b3d22718a9ef8a21d54e28b1a7167e52c1115",
-   "mtime": 1795388748,
+   "mtime": 1795392052,
    "outline": {
     "headings": [],
     "lines": 246,
@@ -4458,7 +4518,7 @@
    "ext": ".html",
    "size": 22344,
    "sha1": "805f518fb471da793761a991a0d5499aaad0c81b",
-   "mtime": 1795388749,
+   "mtime": 1795392052,
    "outline": {
     "headings": [],
     "lines": 352,
@@ -4580,7 +4640,7 @@
    "ext": ".html",
    "size": 23441,
    "sha1": "ef49c33d51e3fe63b4e91a54f33afb1e2a900b57",
-   "mtime": 1795388749,
+   "mtime": 1795392052,
    "outline": {
     "headings": [],
     "lines": 265,
@@ -4667,7 +4727,7 @@
    "ext": ".html",
    "size": 7486,
    "sha1": "8d72dd9c7ae6ccc76f4b8a9dccf1e539d46765ea",
-   "mtime": 1795388749,
+   "mtime": 1795392052,
    "outline": {
     "headings": [],
     "lines": 111,
@@ -4700,7 +4760,7 @@
    "ext": ".html",
    "size": 5448,
    "sha1": "da54672cff03ec303a6600d822b59c145bbda41a",
-   "mtime": 1795388749,
+   "mtime": 1795392052,
    "outline": {
     "headings": [],
     "lines": 103,
@@ -4725,25 +4785,25 @@
   {
    "path": "routes/japan/site/Бронирования.html",
    "ext": ".html",
-   "size": 9449,
-   "sha1": "351465a1d5092e883c3ebea11e115a7b658fced6",
-   "mtime": 1795388748,
+   "size": 10999,
+   "sha1": "97f0f64e42a95fb22a86f5bd15a77840ac99593f",
+   "mtime": 1795392052,
    "outline": {
     "headings": [],
-    "lines": 224,
+    "lines": 230,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
     "code",
+    "href",
     "var",
+    "https",
+    "com",
     "ожидается",
+    "www",
     "background",
     "мес",
-    "color",
-    "padding",
-    "font-size",
-    "table",
-    "nav"
+    "color"
    ],
    "part_numbers": [
     "S-007",
@@ -4761,7 +4821,7 @@
    "ext": ".html",
    "size": 9234,
    "sha1": "fc352bcc3fa3c083db3bf344333bac1113fee385",
-   "mtime": 1795388748,
+   "mtime": 1795392052,
    "outline": {
     "headings": [],
     "lines": 232,
@@ -4795,9 +4855,9 @@
   {
    "path": "routes/japan/site/Гид.html",
    "ext": ".html",
-   "size": 8314,
-   "sha1": "1e2e547747c4604ec133c8df83deba02cf978fae",
-   "mtime": 1795388748,
+   "size": 8328,
+   "sha1": "baeee40f3621e10ebcdccf541ef086677f516108",
+   "mtime": 1795392052,
    "outline": {
     "headings": [],
     "lines": 106,
@@ -4822,7 +4882,7 @@
    "ext": ".html",
    "size": 12776,
    "sha1": "ec4450b792714aa94dc8d90efb796c9b89ccf9f0",
-   "mtime": 1795388748,
+   "mtime": 1795392052,
    "outline": {
     "headings": [],
     "lines": 185,
