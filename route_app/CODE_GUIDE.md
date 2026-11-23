@@ -4,6 +4,56 @@
 не править руками. Обязателен к обновлению в том же коммите, что и код
 (AGENTS.md, раздел «Стандарты кода»).
 
+## `scripts/atlas.py`
+_project-atlas: persistent project memory for agent work on large corpora._
+
+Константы: `OUT_DIR, ATLAS_JSON, ATLAS_MD, JOBS_DIR, RESULTS_DIR, SKIP_DIRS, SKIP_FILES, MAX_FILE_SIZE, CODE_EXTS, DOC_EXTS, SHEET_EXTS, IMG_EXTS, STOPWORDS, PART_NUM_RE, WORD_RE, PY_SYMBOL_RE, JS_SYMBOL_RE`
+
+- `sha1_file(path)` — —
+- `_docx_outline(path)` — Outline from .docx using only stdlib (docx is a zip of XML).
+- `_xlsx_outline(path)` — —
+- `_pdf_outline(path)` — —
+- `_text_outline(path, ext)` — —
+- `extract_file(path, rel)` — —
+- `scan(root)` — —
+- `build_clusters(files, min_shared, max_clusters)` — LLM-free clustering: files sharing >= min_shared keywords form a cluster.
+- `render_atlas_md(root, files, clusters, jobs_summary)` — —
+- `out_root(root)` — —
+- `cmd_build(root)` — —
+- `cmd_update(root)` — —
+- `cmd_query(root, text)` — —
+- `cmd_related(root, target)` — —
+- `_job_path(root, job)` — —
+- `cmd_manifest(root, job, targets)` — —
+- `_set_status(root, job, file, status, note)` — —
+- `cmd_status(root, job)` — —
+- `jobs_summary(root)` — —
+- `main()` — —
+
+## `scripts/budget.py`
+_budget.py — бюджет поездки кодом (обобщение budget.py проекта Япония)._
+
+- `load_currency_module()` — —
+- `compute(items, members, days, base)` — Итоги по валютам + конвертация в базовую по живому курсу.
+- `to_markdown(rows, totals, base, converted, rate_note, members, days)` — —
+- `main()` — —
+
+## `scripts/build_gpx_from_osm.py`
+_Сборка GPX из файла OSM API (/relation/<id>/full)._
+
+Константы: `SKIP_ROLES`
+
+- `parse_osm(path)` — Возвращает (узлы, линии, список way-участков отношения в порядке членов).
+- `chain_segments(segments)` — Склеивает список сегментов в цепочку по совпадающим концам.
+- `main()` — Точка входа: читает OSM XML, пишет GPX, печатает число точек.
+
+## `scripts/check_links.py`
+_check_links.py — проверка комплекта выдачи перед публикацией._
+
+- `internal_links(folder)` — Все внутренние ссылки HTML-файлов → абсолютные пути целей.
+- `http_links(folder)` — Все внешние http(s)-ссылки.
+- `main()` — —
+
 ## `scripts/color_route_by_days.py`
 _Скрипт для раскраски маршрута по дням в Google Earth._
 
@@ -32,6 +82,16 @@ _daylight.py — световой день и ночное небо для то�
 - `moon(d)` — Возраст Луны (сутки), фаза, освещённость диска.
 - `fmt_utc(utc_min, offset)` — —
 - `main()` — —
+
+## `scripts/fetch_osm_gpx.py`
+_Сборка GPX из OSM-отношения (Overpass API) для маршрута Японии._
+
+Константы: `OVERPASS`
+
+- `fetch_relation(rel_id)` — Возвращает JSON Overpass с полной геометрией отношения (зеркала по очереди).
+- `relation_to_points(data)` — Собирает точки всех way-участков отношения в один список (lat, lon).
+- `write_gpx(points, path, name)` — Пишет точки в GPX 1.1 (trkpt lat/lon, ele=0 при отсутствии данных).
+- `main()` — Точка входа: relation_id, выходной файл, имя трека из argv.
 
 ## `scripts/first_aid.py`
 _first_aid.py — модуль «Аптечка»: чеклист медикаментов + напоминания о приёме._
@@ -103,7 +163,7 @@ _import_audioguide.py — импорт готового аудиогида (mp3)
 ## `scripts/llm.py`
 _llm.py — LLM-слой через OpenRouter (F4: генерация гида и др.)._
 
-Константы: `API, CONFIG, PROVIDERS, FREE_PREFERENCE, GUIDE_SYSTEM, AUDIO_SYSTEM`
+Константы: `API, CONFIG, PROVIDERS, FREE_PREFERENCE, ROUTE_TYPES, GUIDE_SYSTEM, AUDIO_SYSTEM`
 
 - `load_config()` — Конфиг: {"provider": ..., "keys": {провайдер: ключ}, "models": {...}}.
 - `save_config(cfg)` — —
@@ -345,6 +405,9 @@ _webapp.py — веб-интерфейс мастера генерации ма�
 - `step_sources(d, params)` — Реестр источников SOURCES.md (входные + источники фактов).
 - `step_audio_import(d, params)` — Импорт готового аудиогида (mp3-папка) с привязкой к точкам 🎧 по именам.
 - `step_publish(d, params)` — Публикация выдачи на GitHub Pages: app/guides/<проект>/ + git push.
+- `step_osm_gpx(d, params)` — GPX-трек из OSM-отношения (Overpass), если у пользователя нет трека.
+- `step_budget(d, params)` — Бюджет поездки кодом (бюджет.json) → Бюджет.md; курсы через currency.py.
+- `step_check_links(d, params)` — Проверка внутренних ссылок выдачи перед публикацией.
 - `run_step(name, step, payload)` — —
 - `add_note(name, payload)` — Дописка к отчёту: свободный текст И/ИЛИ файл-вложение (PDF/DOCX/TXT —
 - `browse(path)` — Проводник по папкам компьютера для выбора директории с фото.

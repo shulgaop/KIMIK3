@@ -179,9 +179,14 @@
   <div class="row">
     <div><label>Тип маршрута</label>
       <select id="cfgType">
-        <option value="горный">горный (перевалы, высота)</option>
-        <option value="городской">городской</option>
-        <option value="культурный">культурный (храмы, онсэны, города)</option>
+        <option value="горный">⛰ горный (перевалы, высота)</option>
+        <option value="пеший">🥾 пеший (трекинг без перевалов)</option>
+        <option value="болотный">🌿 болотный (топи, броды)</option>
+        <option value="культурно-городской">🏯 культурно-городской</option>
+        <option value="вело">🚲 вело</option>
+        <option value="байдарка">🛶 байдарка</option>
+        <option value="сапборд">🏄 сапборд (SUP)</option>
+        <option value="рафтинг">🚣 рафтинг</option>
       </select></div>
     <div><label>Часовой пояс (IANA)</label><input id="cfgTz" value="Asia/Dushanbe"></div>
     <div><label>Сдвиг от UTC (фото/треки)</label><input id="cfgTzOff" type="number" value="5"></div>
@@ -214,9 +219,14 @@
   </details>
   <label>GPX-трек маршрута (плановый)</label>
   <input type="file" id="fGpx" accept=".gpx" onchange="uploadFile(this,'track.gpx')">
+  <label>Нет GPX? Собрать трек из OpenStreetMap по id отношения (relation)</label>
+  <div class="row">
+    <input id="osmRel" placeholder="например 1240535 (Kumano Kodo Nakahechi)">
+    <button style="flex:0 0 auto" onclick="runStep('osm_gpx')">Собрать из OSM</button>
+  </div>
+  <pre id="logIn" style="display:none"></pre>
   <label>Трек с часов — записанный GPX (необязательно): фото без GPS привяжутся по времени точно к нему; дни без записи — оценка по плановому треку</label>
   <input type="file" accept=".gpx" onchange="uploadFile(this,'трек_с_часов.gpx')">
-  <pre id="logIn" style="display:none"></pre>
 </div>
 
 <div class="card" data-step="2">
@@ -317,6 +327,12 @@
     <div class="row"><button onclick="saveJsonTo('gear.json',$('taGear').value,'logDocs')">Сохранить список</button>
     <button class="primary" onclick="runStep('gear')">Посчитать веса (Снаряжение.md)</button></div>
   </details>
+  <details>
+    <summary>💴 Бюджет поездки (бюджет.json)</summary>
+    <textarea id="taBudget"></textarea>
+    <div class="row"><button onclick="saveJsonTo('бюджет.json',$('taBudget').value,'logDocs')">Сохранить бюджет</button>
+    <button class="primary" onclick="runStep('budget')">Посчитать бюджет (Бюджет.md)</button></div>
+  </details>
   <pre id="logDocs" style="display:none"></pre>
 </div>
 
@@ -328,6 +344,7 @@
     <button onclick="refreshFiles()">Обновить список</button>
     <button class="primary" id="btnZip" onclick="downloadZip()" disabled>Скачать всё одним zip</button>
     <button onclick="runStep('publish')" title="Копия выдачи в app/guides/ + git push → GitHub Pages">🌐 Опубликовать (GitHub Pages)</button>
+    <button onclick="runStep('check_links')" title="Битые внутренние ссылки в HTML выдачи">Проверить ссылки</button>
   </div>
   <ul class="files" id="filesOut"></ul>
   <pre id="logResult" style="display:none"></pre>
@@ -675,7 +692,8 @@ async function runStep(step){
                  guide:'logGuide', guide_html:'logGuide', audio_texts:'logGuide', tts:'logGuide',
                  research:'logGuide', daylight:'logWeather',
                  photos:'logPhotos', marks:'logPhotos', photos_all:'logPhotos',
-                 report_map:'logPhotos', audio_import:'logGuide', publish:'logResult'}[step] || 'logDocs';
+                 report_map:'logPhotos', audio_import:'logGuide', publish:'logResult',
+                 osm_gpx:'logIn', check_links:'logResult'}[step] || 'logDocs';
   log(logId, '⏳ Выполняю… это может занять до пары минут.');
   const body = {};
   if(step==='program'){
@@ -699,6 +717,12 @@ async function runStep(step){
     body.plan_interp = $('phPlan').checked; body.offline_tiles = $('phTiles').checked;
   }
   if(step==='audio_import'){ body.folder = audioFolder; }
+  if(step==='osm_gpx'){ body.relation = $('osmRel').value.trim(); }
+  if(step==='budget'){
+    if($('pStart').value && $('pEnd').value){
+      body.days = Math.round((new Date($('pEnd').value) - new Date($('pStart').value))/86400000) + 1;
+    }
+  }
   try{
     const r = await api(`/api/projects/${enc()}/run/${step}`, {method:'POST', body:JSON.stringify(body)});
     let t = (r.stderr||'').trim();
@@ -743,6 +767,12 @@ const GEAR_TEMPLATE = JSON.stringify([
   {category:'Еда', item:'Продукты на старте', weight_g:5000, qty:1, consumable:true},
   {category:'Одежда на себе', item:'Ботинки треккинговые', weight_g:1300, qty:1, worn:true},
   {category:'Электроника', item:'Пауэрбанк', weight_g:null, qty:1}
+], null, 1);
+const BUDGET_TEMPLATE = JSON.stringify([
+  {item:'Билеты (авиа/жд)', amount:null, currency:'EUR', note:'проверить цену'},
+  {item:'Отель', amount:60, currency:'EUR', per_day:true},
+  {item:'Питание', amount:25, currency:'EUR', per_person:true, per_day:true},
+  {item:'Транспорт по маршруту', amount:12000, currency:'JPY', per_person:true, note:'проверить расписание'}
 ], null, 1);
 
 async function refreshFiles(silent){
@@ -939,6 +969,7 @@ async function addNote(){
 $('taEvents').value = eventsTemplate();
 $('taChecklist').value = CHECKLIST_TEMPLATE;
 $('taGear').value = GEAR_TEMPLATE;
+$('taBudget').value = BUDGET_TEMPLATE;
 setCur(cur); loadProjects(); drawSteps(0); loadLlm();
 </script>
 </body>

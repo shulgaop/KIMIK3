@@ -52,6 +52,10 @@ def route_config(d):
             cfg.update(json.loads(p.read_text(encoding="utf-8")))
         except json.JSONDecodeError:
             pass
+    # миграция старых значений типа маршрута
+    cfg["route_type"] = {"культурный": "культурно-городской",
+                         "городской": "культурно-городской"}.get(cfg["route_type"],
+                                                                  cfg["route_type"])
     return cfg
 
 app = FastAPI(title="Генератор путеводителей горных походов")
@@ -577,12 +581,38 @@ def step_publish(d, params):
                       f"1–2 мин; workflow pages.yml публикует app/)")
 
 
+def step_osm_gpx(d, params):
+    """GPX-трек из OSM-отношения (Overpass), если у пользователя нет трека."""
+    rel = str(params.get("relation") or "").strip()
+    if not rel.isdigit():
+        raise HTTPException(400, "Укажите числовой id OSM-отношения (relation)")
+    return (*run_script([SCRIPTS / "fetch_osm_gpx.py", rel, d / IN_DIR / "track.gpx",
+                         d.name], timeout=300),)
+
+
+def step_budget(d, params):
+    """Бюджет поездки кодом (бюджет.json) → Бюджет.md; курсы через currency.py."""
+    src = d / IN_DIR / "бюджет.json"
+    if not src.is_file():
+        raise HTTPException(400, "Сохраните бюджет.json (редактор в «Документах»)")
+    cfg = route_config(d)
+    return (*run_script([SCRIPTS / "budget.py", src, "--members", cfg["members"],
+                         "--days", max(int(params.get("days") or 1), 1),
+                         "--out", d / OUT_DIR / "Бюджет.md"], timeout=120),)
+
+
+def step_check_links(d, params):
+    """Проверка внутренних ссылок выдачи перед публикацией."""
+    return (*run_script([SCRIPTS / "check_links.py", d / OUT_DIR]),)
+
+
 STEPS = {"program": step_program, "analyze": step_analyze, "weather": step_weather,
          "guide": step_guide, "guide_html": step_guide_html, "research": step_research,
          "audio_texts": step_audio_texts, "tts": step_tts,
          "daylight": step_daylight, "first_aid": step_first_aid, "currency": step_currency,
          "gear": step_gear, "sources": step_sources, "publish": step_publish,
-         "audio_import": step_audio_import,
+         "audio_import": step_audio_import, "osm_gpx": step_osm_gpx,
+         "budget": step_budget, "check_links": step_check_links,
          "report": step_report,
          "kml": step_kml, "ics": step_ics, "checklist": step_checklist,
          "photos": step_photos, "marks": step_marks, "photos_all": step_photos_all,
