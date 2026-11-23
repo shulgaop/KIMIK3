@@ -177,8 +177,23 @@
     <div><label>Последний день</label><input id="pEnd" type="date"></div>
   </div>
   <div class="row">
+    <div><label>Тип маршрута</label>
+      <select id="cfgType">
+        <option value="горный">горный (перевалы, высота)</option>
+        <option value="городской">городской</option>
+        <option value="культурный">культурный (храмы, онсэны, города)</option>
+      </select></div>
+    <div><label>Часовой пояс (IANA)</label><input id="cfgTz" value="Asia/Dushanbe"></div>
+    <div><label>Сдвиг от UTC (фото/треки)</label><input id="cfgTzOff" type="number" value="5"></div>
+  </div>
+  <div class="row">
+    <div><label>Валюты стран (ISO)</label><input id="cfgCurr" value="BYN,UZS,TJS"></div>
+    <div><label>Участников</label><input id="cfgMembers" type="number" value="1" min="1"></div>
+  </div>
+  <div class="row">
     <button class="primary" onclick="createProject()">Создать проект</button>
     <select id="pList" onchange="pickProject(this.value)"><option value="">— открыть существующий —</option></select>
+    <button onclick="saveConfig()" title="Сохранить настройки маршрута для текущего проекта">Сохранить настройки</button>
   </div>
   <p class="hint" id="curProject">Проект не выбран — начните с названия и дат.</p>
 </div>
@@ -255,6 +270,11 @@
     <button onclick="runStep('audio_texts')">Тексты аудиогида (ИИ)</button>
     <button onclick="runStep('tts')">Озвучить mp3</button>
   </div>
+  <div class="row">
+    <button onclick="openPicker('audio')">🎧 Папка готового аудиогида (mp3)…</button>
+    <button id="btnAudioImport" onclick="runStep('audio_import')" disabled>Привязать к точкам и упаковать</button>
+  </div>
+  <span class="chip" id="audioChip" style="display:none"></span>
   <p class="hint">Совет: сначала «Найти факты», потом «Сгенерировать путеводитель» —
   гид получит факт-блоки с источниками.</p>
   <pre id="logGuide" style="display:none"></pre>
@@ -270,6 +290,7 @@
   </div>
   <div class="row">
     <button onclick="runStep('first_aid')" title="Чеклист аптечки по высотам маршрута + напоминания о приёме в календарь"><svg width="15" height="15" style="vertical-align:-2px"><use href="#i-pill"/></svg> Аптечка (чеклист + напоминания)</button>
+    <button onclick="runStep('sources')" title="Таблица всех источников проекта с датами проверки">Реестр источников (SOURCES.md)</button>
   </div>
   <div class="row">
     <div><label>Валюты стран маршрута (ISO через запятую)</label><input id="currencies" value="BYN,UZS,TJS"></div>
@@ -306,8 +327,10 @@
   <div class="row">
     <button onclick="refreshFiles()">Обновить список</button>
     <button class="primary" id="btnZip" onclick="downloadZip()" disabled>Скачать всё одним zip</button>
+    <button onclick="runStep('publish')" title="Копия выдачи в app/guides/ + git push → GitHub Pages">🌐 Опубликовать (GitHub Pages)</button>
   </div>
   <ul class="files" id="filesOut"></ul>
+  <pre id="logResult" style="display:none"></pre>
   <p class="hint">Фото и видео — во вкладке «Фотоотчёт». СТАТУС проекта обновляется автоматически.</p>
 </div>
 </div>
@@ -533,6 +556,7 @@
 const $ = id => document.getElementById(id);
 let cur = localStorage.getItem('routeWizardProject') || '';
 let photoFolder = '';
+let audioFolder = '';
 let doneSteps = new Set();
 const STEP_NAMES = ['Проект','Программа','Анализ','Погода','Гид (ИИ)','Документы','Результат'];
 // какие файлы выдачи отмечают шаг выполненным
@@ -575,7 +599,7 @@ function setCur(name){
   $('repProject').textContent = name || 'не выбран';
   $('btnZip').disabled = !name;
   doneSteps = new Set(name ? [0] : []);
-  if(name) refreshFiles(true);
+  if(name) { refreshFiles(true); loadConfig(); }
 }
 async function loadProjects(){
   const list = await api('/api/projects');
@@ -584,8 +608,26 @@ async function loadProjects(){
 }
 async function createProject(){
   const name = $('pName').value.trim(); if(!name) return alert('Введите название похода');
-  await api('/api/projects', {method:'POST', body:JSON.stringify({name})});
+  await api('/api/projects', {method:'POST', body:JSON.stringify({name, config: collectConfig()})});
   setCur(name); loadProjects(); nextStep();
+}
+function collectConfig(){
+  return {route_type: $('cfgType').value, tz: $('cfgTz').value.trim() || 'Asia/Dushanbe',
+          tz_offset: +$('cfgTzOff').value || 0, currencies: $('cfgCurr').value.trim(),
+          members: +$('cfgMembers').value || 1};
+}
+async function saveConfig(){
+  if(!cur) return alert('Сначала выберите проект');
+  await api(`/api/projects/${enc()}/config`, {method:'PUT', body:JSON.stringify(collectConfig())});
+  $('curProject').textContent = `Текущий проект: «${cur}». Настройки сохранены ✓`;
+}
+async function loadConfig(){
+  if(!cur) return;
+  const c = await api(`/api/projects/${enc()}/config`);
+  $('cfgType').value = c.route_type; $('cfgTz').value = c.tz;
+  $('cfgTzOff').value = c.tz_offset; $('cfgCurr').value = c.currencies;
+  $('cfgMembers').value = c.members; $('phTz').value = c.tz_offset;
+  $('currencies').value = c.currencies; $('gearMembers').value = c.members;
 }
 function pickProject(name){ if(name) setCur(name); }
 
@@ -633,7 +675,7 @@ async function runStep(step){
                  guide:'logGuide', guide_html:'logGuide', audio_texts:'logGuide', tts:'logGuide',
                  research:'logGuide', daylight:'logWeather',
                  photos:'logPhotos', marks:'logPhotos', photos_all:'logPhotos',
-                 report_map:'logPhotos'}[step] || 'logDocs';
+                 report_map:'logPhotos', audio_import:'logGuide', publish:'logResult'}[step] || 'logDocs';
   log(logId, '⏳ Выполняю… это может занять до пары минут.');
   const body = {};
   if(step==='program'){
@@ -656,6 +698,7 @@ async function runStep(step){
     body.tz_offset = $('phTz').value; body.max_gap_min = $('phGap').value;
     body.plan_interp = $('phPlan').checked; body.offline_tiles = $('phTiles').checked;
   }
+  if(step==='audio_import'){ body.folder = audioFolder; }
   try{
     const r = await api(`/api/projects/${enc()}/run/${step}`, {method:'POST', body:JSON.stringify(body)});
     let t = (r.stderr||'').trim();
@@ -679,9 +722,10 @@ async function runStep(step){
 
 function eventsTemplate(){
   const s=$('pStart').value||'2026-09-06', e=$('pEnd').value||'2026-09-16';
+  const tz=$('cfgTz').value.trim()||'Asia/Dushanbe';
   return JSON.stringify([
-    {summary:'Старт похода', date:s, tzid:'Asia/Dushanbe', alarms_min:[720]},
-    {summary:'Финиш похода', date:e, tzid:'Asia/Dushanbe', alarms_min:[720]}
+    {summary:'Старт похода', date:s, tzid:tz, alarms_min:[720]},
+    {summary:'Финиш похода', date:e, tzid:tz, alarms_min:[720]}
   ], null, 1);
 }
 const CHECKLIST_TEMPLATE = JSON.stringify({
@@ -717,7 +761,9 @@ function downloadZip(){ location.href = `/api/projects/${enc()}/zip`; }
 
 // ---- выбор папки с фото (проводник по компьютеру) ----
 let pkPath = '';
-async function openPicker(){
+let pickerTarget = 'photos';
+async function openPicker(target){
+  pickerTarget = target || 'photos';
   $('picker').classList.add('open');
   await pickerGo('');
 }
@@ -735,10 +781,17 @@ function pickerUp(){ if(pkPath) api('/api/browse?path='+encodeURIComponent(pkPat
 function closePicker(){ $('picker').classList.remove('open'); }
 function choosePicked(){
   if(!pkPath) return alert('Зайдите в нужную папку');
-  photoFolder = pkPath;
-  $('folderChip').style.display = '';
-  $('folderChip').textContent = '📂 ' + photoFolder;
-  $('btnPhotosAll').disabled = false;
+  if(pickerTarget === 'audio'){
+    audioFolder = pkPath;
+    $('audioChip').style.display = '';
+    $('audioChip').textContent = '🎧 ' + audioFolder;
+    $('btnAudioImport').disabled = false;
+  }else{
+    photoFolder = pkPath;
+    $('folderChip').style.display = '';
+    $('folderChip').textContent = '📂 ' + photoFolder;
+    $('btnPhotosAll').disabled = false;
+  }
   closePicker();
 }
 

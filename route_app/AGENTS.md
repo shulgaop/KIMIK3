@@ -93,6 +93,8 @@ python3 scripts/daylight.py points.json --start Д --end Д --md Блок.md    
 python3 scripts/first_aid.py points.json --start Д --end Д --out выходные/  # аптечка+напоминания
 python3 scripts/currency.py --currencies BYN,UZS,TJS --md Деньги.md       # F10: курсы валют
 python3 scripts/gear.py gear.json --members 2 --out Снаряжение.md         # F12: веса LighterPack
+python3 scripts/sources.py projects/<маршрут>                             # реестр источников
+python3 scripts/import_audioguide.py mp3/ --gpx track.gpx --out выходные/ # внешний аудиогид
 python3 scripts/test_regression.py                                        # регрессия (14 проверок)
 python3 scripts/hike_report.py /папка/фото   # гео-фото-отчёт: видео, DJI, офлайн-карта
 python3 scripts/color_route_by_days.py track.gpx out.kml        # трек по дням (из таймстемпов)

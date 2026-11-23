@@ -94,6 +94,12 @@ _============================================================_
 - `ask_dji_mode()` — Интерактивный выбор способа обработки видео DJI.
 - `main()` — —
 
+## `scripts/import_audioguide.py`
+_import_audioguide.py — импорт готового аудиогида (mp3) и привязка к точкам 🎧._
+
+- `norm(s)` — Нормализация имени для сопоставления: мелкие буквы, только слова.
+- `main()` — —
+
 ## `scripts/llm.py`
 _llm.py — LLM-слой через OpenRouter (F4: генерация гида и др.)._
 
@@ -231,6 +237,15 @@ _research.py — сбор фактов по маршруту из открыты
 - `to_markdown(facts)` — Дайджест фактов для LLM: по точкам + инфраструктура + источники.
 - `main()` — —
 
+## `scripts/sources.py`
+_sources.py — реестр источников проекта SOURCES.md (по протоколу проекта Япония)._
+
+Константы: `STATUSES`
+
+- `collect(project)` — Записи реестра: файлы входных + URL источников фактов.
+- `load_manual(project)` — Ручные строки прошлого SOURCES.md (статусы «ожидается» и др.) — переносим.
+- `main()` — —
+
 ## `scripts/test_regression.py`
 _test_regression.py — регрессия на эталоне «Фанские горы» (без pytest)._
 
@@ -267,11 +282,13 @@ _weather.py — погодный движок (F3) для точек маршр�
 ## `webapp.py`
 _webapp.py — веб-интерфейс мастера генерации маршрутов (ТЗ, v2)._
 
-Константы: `BASE, SCRIPTS, PROJECTS, LEARN, RULES_FILE, EXAMPLES_FILE, STEPS, MEDIA_EXT, DEFAULT_RULES`
+Константы: `BASE, SCRIPTS, PROJECTS, LEARN, RULES_FILE, EXAMPLES_FILE, DEFAULT_ROUTE_CONFIG, STEPS, MEDIA_EXT, DEFAULT_RULES`
 
 - `GET /` → `index()`
 - `GET /api/projects` → `list_projects()`
 - `POST /api/projects` → `create_project()`
+- `GET /api/projects/{name}/config` → `get_config()`
+- `PUT /api/projects/{name}/config` → `put_config()`
 - `POST /api/projects/{name}/upload` → `upload()`
 - `GET /api/projects/{name}/files` → `files()`
 - `GET /api/projects/{name}/read` → `read_file()`
@@ -287,6 +304,7 @@ _webapp.py — веб-интерфейс мастера генерации ма�
 - `PUT /api/learn/rules` → `learn_rules()`
 - `POST /api/learn/examples` → `learn_example_add()`
 - `DELETE /api/learn/examples/{idx}` → `learn_example_del()`
+- `route_config(d)` — Конфиг маршрута проекта: route.json поверх значений по умолчанию.
 - `safe_name(name)` — Имя проекта/файла: без слэшей и служебных символов, кириллица разрешена.
 - `project_dir(name)` — —
 - `run_script(args, cwd, timeout, stdin_text, env_extra)` — Запуск скрипта из scripts/ с UTF-8-окружением; возвращает (ok, stdout, stderr).
@@ -296,6 +314,8 @@ _webapp.py — веб-интерфейс мастера генерации ма�
 - `index()` — —
 - `list_projects()` — —
 - `create_project(payload)` — —
+- `get_config(name)` — —
+- `put_config(name, payload)` — —
 - `upload(name, payload)` — Сохранить входной файл: {"filename", "text"} для текста или
 - `files(name)` — —
 - `read_file(name, path)` — —
@@ -322,6 +342,9 @@ _webapp.py — веб-интерфейс мастера генерации ма�
 - `step_currency(d, params)` — Курсы валют стран маршрута (F10) → Деньги.md.
 - `step_report(d, params)` — Отчёт о пройденном походе: записанный трек + описание + дописки.
 - `step_gear(d, params)` — F12: весовой чеклист снаряжения (LighterPack) → Снаряжение.md.
+- `step_sources(d, params)` — Реестр источников SOURCES.md (входные + источники фактов).
+- `step_audio_import(d, params)` — Импорт готового аудиогида (mp3-папка) с привязкой к точкам 🎧 по именам.
+- `step_publish(d, params)` — Публикация выдачи на GitHub Pages: app/guides/<проект>/ + git push.
 - `run_step(name, step, payload)` — —
 - `add_note(name, payload)` — Дописка к отчёту: свободный текст И/ИЛИ файл-вложение (PDF/DOCX/TXT —
 - `browse(path)` — Проводник по папкам компьютера для выбора директории с фото.
