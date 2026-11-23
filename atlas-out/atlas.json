@@ -2413,16 +2413,16 @@
   {
    "path": "routes/japan/data/make_index.py",
    "ext": ".py",
-   "size": 7355,
-   "sha1": "f2f1ebd6d9442b93efca099a784208a95c505683",
-   "mtime": 1795390183,
+   "size": 7580,
+   "sha1": "b956a92b15a237a2bb11ebcec625606a182b34a7",
+   "mtime": 1795413668,
    "outline": {
     "symbols": [
      "_css_",
      "_",
      "main"
     ],
-    "lines": 152
+    "lines": 154
    },
    "keywords": [
     "html",
@@ -3899,9 +3899,9 @@
   {
    "path": "routes/japan/generated/Гид.html",
    "ext": ".html",
-   "size": 8133,
-   "sha1": "0677c9cd6aebe006cbe78047c526d71fb8c61cab",
-   "mtime": 1795390190,
+   "size": 8369,
+   "sha1": "76b8e307e79dea08538c7902f7489eab1b7d7ab1",
+   "mtime": 1795413846,
    "outline": {
     "headings": [],
     "lines": 105,
@@ -3920,6 +3920,70 @@
     "margin"
    ],
    "part_numbers": []
+  },
+  {
+   "path": "routes/japan/generated/Источники.html",
+   "ext": ".html",
+   "size": 12714,
+   "sha1": "380404a18ca246629ef926a929921dc4ebd85e3b",
+   "mtime": 1795413668,
+   "outline": {
+    "headings": [],
+    "lines": 128,
+    "snippet": "<!DOCTYPE html>"
+   },
+   "keywords": [
+    "href",
+    "https",
+    "com",
+    "www",
+    "var",
+    "background",
+    "color",
+    "padding",
+    "font-size",
+    "code"
+   ],
+   "part_numbers": [
+    "S-001",
+    "S-043"
+   ]
+  },
+  {
+   "path": "routes/japan/generated/Источники.md",
+   "ext": ".md",
+   "size": 7964,
+   "sha1": "01c29a101985bdf2ec6610091dda58a8be63e811",
+   "mtime": 1795413634,
+   "outline": {
+    "headings": [
+     "Источники · Япония 02–10.09.2027",
+     "Официальные сайты",
+     "Маршрутные данные и карты",
+     "Транспорт и билеты",
+     "Гиды и статьи",
+     "Видео",
+     "Приложения"
+    ],
+    "lines": 71,
+    "snippet": "На чём построен гид: официальные сайты, маршрутные данные, транспорт и"
+   },
+   "keywords": [
+    "https",
+    "com",
+    "www",
+    "кумано",
+    "накахэти",
+    "фудзи",
+    "travel",
+    "japan",
+    "fujisan-climb",
+    "кодо"
+   ],
+   "part_numbers": [
+    "S-001",
+    "S-043"
+   ]
   },
   {
    "path": "routes/japan/generated/Чеклист.html",
@@ -4192,14 +4256,14 @@
    "ext": "",
    "size": 0,
    "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
-   "mtime": 1795392052
+   "mtime": 1795413847
   },
   {
    "path": "routes/japan/site/index.html",
    "ext": ".html",
    "size": 2983,
    "sha1": "8a347855cdf9f03ccbf80d148632235fd8bd076d",
-   "mtime": 1795392052,
+   "mtime": 1795413847,
    "outline": {
     "headings": [],
     "lines": 59,
@@ -4226,7 +4290,7 @@
    "ext": ".html",
    "size": 7441,
    "sha1": "a420cbd56c4b5079dbf2f342c4c0206ee9eb0d0f",
-   "mtime": 1795392052,
+   "mtime": 1795413847,
    "outline": {
     "headings": [],
     "lines": 116,
@@ -4277,7 +4341,7 @@
    "ext": ".html",
    "size": 23748,
    "sha1": "ec3838675e5c8db783976b4f4fe2b93b1873537b",
-   "mtime": 1795392052,
+   "mtime": 1795413847,
    "outline": {
     "headings": [],
     "lines": 238,
@@ -4335,7 +4399,7 @@
    "ext": ".html",
    "size": 7615,
    "sha1": "a3b354bd641467e0aabba5ca8cd7d0a6d085ed59",
-   "mtime": 1795392052,
+   "mtime": 1795413847,
    "outline": {
     "headings": [],
     "lines": 118,
@@ -4368,7 +4432,7 @@
    "ext": ".html",
    "size": 6618,
    "sha1": "65c5af9dfc11c4adbbb298cb90c310baa5b1eb3f",
-   "mtime": 1795392052,
+   "mtime": 1795413847,
    "outline": {
     "headings": [],
     "lines": 110,
@@ -4419,7 +4483,7 @@
    "ext": ".html",
    "size": 19496,
    "sha1": "014b3d22718a9ef8a21d54e28b1a7167e52c1115",
-   "mtime": 1795392052,
+   "mtime": 1795413847,
    "outline": {
     "headings": [],
     "lines": 246,
@@ -4518,7 +4582,7 @@
    "ext": ".html",
    "size": 22344,
    "sha1": "805f518fb471da793761a991a0d5499aaad0c81b",
-   "mtime": 1795392052,
+   "mtime": 1795413847,
    "outline": {
     "headings": [],
     "lines": 352,
@@ -4640,7 +4704,7 @@
    "ext": ".html",
    "size": 23441,
    "sha1": "ef49c33d51e3fe63b4e91a54f33afb1e2a900b57",
-   "mtime": 1795392052,
+   "mtime": 1795413847,
    "outline": {
     "headings": [],
     "lines": 265,
@@ -4727,7 +4791,7 @@
    "ext": ".html",
    "size": 7486,
    "sha1": "8d72dd9c7ae6ccc76f4b8a9dccf1e539d46765ea",
-   "mtime": 1795392052,
+   "mtime": 1795413847,
    "outline": {
     "headings": [],
     "lines": 111,
@@ -4760,7 +4824,7 @@
    "ext": ".html",
    "size": 5448,
    "sha1": "da54672cff03ec303a6600d822b59c145bbda41a",
-   "mtime": 1795392052,
+   "mtime": 1795413847,
    "outline": {
     "headings": [],
     "lines": 103,
@@ -4787,7 +4851,7 @@
    "ext": ".html",
    "size": 10999,
    "sha1": "97f0f64e42a95fb22a86f5bd15a77840ac99593f",
-   "mtime": 1795392052,
+   "mtime": 1795413847,
    "outline": {
     "headings": [],
     "lines": 230,
@@ -4821,7 +4885,7 @@
    "ext": ".html",
    "size": 9234,
    "sha1": "fc352bcc3fa3c083db3bf344333bac1113fee385",
-   "mtime": 1795392052,
+   "mtime": 1795413847,
    "outline": {
     "headings": [],
     "lines": 232,
@@ -4855,9 +4919,9 @@
   {
    "path": "routes/japan/site/Гид.html",
    "ext": ".html",
-   "size": 8328,
-   "sha1": "baeee40f3621e10ebcdccf541ef086677f516108",
-   "mtime": 1795392052,
+   "size": 8564,
+   "sha1": "a0c7479dedabac7349f282b25a0638ffb76df8f2",
+   "mtime": 1795413847,
    "outline": {
     "headings": [],
     "lines": 106,
@@ -4878,11 +4942,39 @@
    "part_numbers": []
   },
   {
+   "path": "routes/japan/site/Источники.html",
+   "ext": ".html",
+   "size": 12909,
+   "sha1": "7f2e00a306f3fae020eb334d748132574e5f567d",
+   "mtime": 1795413847,
+   "outline": {
+    "headings": [],
+    "lines": 129,
+    "snippet": "<!DOCTYPE html>"
+   },
+   "keywords": [
+    "href",
+    "https",
+    "com",
+    "www",
+    "var",
+    "background",
+    "color",
+    "padding",
+    "font-size",
+    "code"
+   ],
+   "part_numbers": [
+    "S-001",
+    "S-043"
+   ]
+  },
+  {
    "path": "routes/japan/site/Чеклист.html",
    "ext": ".html",
    "size": 12776,
    "sha1": "ec4450b792714aa94dc8d90efb796c9b89ccf9f0",
-   "mtime": 1795392052,
+   "mtime": 1795413847,
    "outline": {
     "headings": [],
     "lines": 185,
