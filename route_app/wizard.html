@@ -105,6 +105,18 @@
          border:1px solid var(--line);border-radius:999px;font-size:.82rem;text-decoration:none}
   .toc a:hover{border-color:var(--green);color:var(--green-d)}
   @media print{ header,.help-search,.toc{display:none} .answer{break-inside:avoid} }
+  /* ── список валют с поиском ────────── */
+  .curr-list{display:none;max-height:220px;overflow:auto;border:1px solid var(--line);
+             border-radius:10px;background:#fff;margin-top:4px}
+  .curr-list .ci{padding:8px 12px;cursor:pointer;display:flex;gap:8px;align-items:center;
+                 border-bottom:1px solid var(--line);font-size:.88rem}
+  .curr-list .ci:hover{background:var(--green-soft)}
+  .curr-list .ci b{min-width:44px}
+  .curr-list .ci span{color:var(--muted);font-size:.8rem}
+  .curr-chip{display:inline-flex;align-items:center;gap:5px;background:var(--green-soft);
+             color:var(--green-d);border-radius:999px;padding:4px 10px;font-size:.82rem;
+             font-weight:700;margin:2px 4px 2px 0}
+  .curr-chip b{cursor:pointer}
   @media (max-width:640px){
     .hero{padding:12px 16px;gap:12px}
     .hero h1{font-size:1.05rem}
@@ -192,7 +204,12 @@
     <div><label>Сдвиг от UTC (фото/треки)</label><input id="cfgTzOff" type="number" value="5"></div>
   </div>
   <div class="row">
-    <div><label>Валюты стран (ISO)</label><input id="cfgCurr" value="BYN,UZS,TJS"></div>
+    <div><label>Валюты стран маршрута (поиск и выбор)</label>
+      <input id="cfgCurrSearch" placeholder="Поиск: JPY, йена, доллар…" oninput="currFilter()" onfocus="$('currList').style.display='block'">
+      <div class="curr-list" id="currList"></div>
+      <div id="currChips" style="margin-top:6px"></div>
+      <input type="hidden" id="cfgCurr" value="BYN,UZS,TJS">
+    </div>
     <div><label>Участников</label><input id="cfgMembers" type="number" value="1" min="1"></div>
   </div>
   <div class="row">
@@ -260,6 +277,9 @@
         <option value="openrouter">OpenRouter (есть бесплатные)</option>
         <option value="moonshot">Kimi (Moonshot AI)</option>
         <option value="anthropic">Claude (Anthropic)</option>
+        <option value="openai">GPT (OpenAI)</option>
+        <option value="google">Gemini (Google)</option>
+        <option value="deepseek">DeepSeek</option>
       </select></div>
     <div><label>Ключ провайдера</label>
       <input id="llmKey" type="password" placeholder="sk-..." onchange="saveLlmKey()">
@@ -460,15 +480,19 @@
 <div class="card answer" id="help-steps">
   <h3><span class="ic"><svg width="16" height="16"><use href="#i-map"/></svg></span>Что делает каждый шаг мастера</h3>
   <table>
-    <tr><th>Шаг</th><th>Что загрузить</th><th>Что получится</th></tr>
-    <tr><td>2 · Программа</td><td>PDF/DOCX/TXT с описанием или текст; плановый GPX; трек с часов (после похода)</td>
-        <td>программа.txt, черновик points.json</td></tr>
+    <tr><th>Шаг</th><th>Что загрузить / настроить</th><th>Что получится</th></tr>
+    <tr><td>1 · Проект</td><td>название, даты; тип маршрута (пеший/горный/болотный/культурно-городской/вело/байдарка/сапборд/рафтинг), пояс, валюты (список с поиском), участники</td>
+        <td>route.json — настройки применяются всеми шагами</td></tr>
+    <tr><td>2 · Программа</td><td>PDF/DOCX/TXT или текст; плановый GPX <i>или id отношения OSM</i>; трек с часов (после похода)</td>
+        <td>программа.txt, черновик points.json, track.gpx</td></tr>
     <tr><td>3 · Анализ</td><td>track.gpx + точки</td><td>анализ.json — км, высоты, уклоны, азимуты</td></tr>
     <tr><td>4 · Погода</td><td>даты + точки</td><td>Погода.md (прогноз/климат/факт), Световой_день.md (рассветы, Луна)</td></tr>
-    <tr><td>5 · Гид (ИИ)</td><td>ключ OpenRouter</td><td>Гид.md + Гид.html, аудиотексты → mp3, факты из Википедии/OSM</td></tr>
-    <tr><td>6 · Документы</td><td>—</td><td>маршрут.kml, календарь.ics, Чеклист.html, Аптечка.html, Деньги.md</td></tr>
-    <tr><td>7 · Результат</td><td>—</td><td>zip всего проекта</td></tr>
+    <tr><td>5 · Гид (ИИ)</td><td>ключ провайдера: OpenRouter / Kimi / Claude / GPT / Gemini / DeepSeek</td>
+        <td>Гид.md + Гид.html (с фото дней), факты из Википедии/OSM, аудиотексты → mp3, импорт готового аудиогида</td></tr>
+    <tr><td>6 · Документы</td><td>—</td><td>маршрут.kml, календарь.ics, Чеклист.html (+Keep), Аптечка.html + напоминания, Деньги.md, Снаряжение.md (веса), Бюджет.md, SOURCES.md</td></tr>
+    <tr><td>7 · Результат</td><td>—</td><td>zip всего проекта, проверка ссылок, публикация на GitHub Pages</td></tr>
   </table>
+  <p class="hint">Фото и видео — вкладка «Фотоотчёт» (сортировка по дням, фотометки к аудиогиду, карта и таблица похода с настройками привязки). Отчёт после похода — вкладка «Отчёт».</p>
   <p class="hint">Фото и видео живут в отдельной вкладке «Фотоотчёт» (сортировка по дням, фотометки к аудиогиду, карта и таблица похода с настройками привязки).</p>
   <p class="hint">Совет: в шаге 5 сначала «🔎 Найти факты», потом «Сгенерировать путеводитель» — гид будет с факт-блоками и источниками.</p>
 </div>
@@ -496,14 +520,17 @@
 
 <div class="card answer" id="help-llm">
   <h3><span class="ic"><svg width="16" height="16"><use href="#i-check"/></svg></span>Ключи LLM-провайдеров</h3>
-  <p>Провайдер выбирается в шаге 5 («Гид»):</p>
+  <p>Провайдер выбирается в шаге 5 («Гид»), ключи хранятся по каждому отдельно:</p>
   <ol>
     <li><b>OpenRouter</b> — есть бесплатные модели: <a href="https://openrouter.ai/keys" target="_blank">openrouter.ai/keys</a> → Sign up (Google) → «Create Key».</li>
     <li><b>Kimi (Moonshot)</b> — ключ с platform.moonshot.ai (ваша подписка Kimi).</li>
-    <li><b>Claude (Anthropic)</b> — ключ с console.anthropic.com (ваша подписка Claude).</li>
+    <li><b>Claude (Anthropic)</b> — ключ с console.anthropic.com.</li>
+    <li><b>GPT (OpenAI)</b> — ключ с platform.openai.com.</li>
+    <li><b>Gemini (Google)</b> — ключ с aistudio.google.com (есть бесплатный уровень).</li>
+    <li><b>DeepSeek</b> — ключ с platform.deepseek.com (дешёвый платный).</li>
   </ol>
-  <p class="hint">Ключи сохраняются локально по каждому провайдеру отдельно (в git не попадают).
-  Дневной лимит бесплатных моделей OpenRouter ~50 запросов: исчерпали — переключитесь на Kimi/Claude или подождите.</p>
+  <p class="hint">Ключи сохраняются локально (в git не попадают).
+  Дневной лимит бесплатных моделей OpenRouter ~50 запросов: исчерпали — переключитесь на другого провайдера или подождите.</p>
 </div>
 
 <div class="card answer" id="help-photo">
@@ -644,6 +671,7 @@ async function loadConfig(){
   $('cfgType').value = c.route_type; $('cfgTz').value = c.tz;
   $('cfgTzOff').value = c.tz_offset; $('cfgCurr').value = c.currencies;
   $('cfgMembers').value = c.members; $('phTz').value = c.tz_offset;
+  currSel = new Set((c.currencies||'').split(',').filter(Boolean)); currRender();
   $('currencies').value = c.currencies; $('gearMembers').value = c.members;
 }
 function pickProject(name){ if(name) setCur(name); }
@@ -825,7 +853,52 @@ function choosePicked(){
   closePicker();
 }
 
-// ---- LLM (OpenRouter / Kimi / Claude) ----
+// ---- валюты: список с поиском ----
+const CURRENCIES = [
+ ['BYN','белорусский рубль'],['RUB','российский рубль'],['USD','доллар США'],['EUR','евро'],
+ ['JPY','японская иена'],['CNY','китайский юань'],['KZT','казахстанский тенге'],
+ ['UZS','узбекский сум'],['TJS','таджикский сомони'],['KGS','киргизский сом'],
+ ['GEL','грузинский лари'],['AMD','армянский драм'],['AZN','азербайджанский манат'],
+ ['TRY','турецкая лира'],['THB','тайский бат'],['VND','вьетнамский донг'],
+ ['IDR','индонезийская рупия'],['MYR','малайзийский ринггит'],['SGD','сингапурский доллар'],
+ ['KRW','южнокорейская вона'],['INR','индийская рупия'],['NPR','непальская рупия'],
+ ['LKR','шри-ланкийская рупия'],['MMK','мьянманский кьят'],['KHR','камбоджийский риель'],
+ ['LAK','лаосский кип'],['MNT','монгольский тугрик'],['MOP','макаоский патака'],
+ ['TWD','тайваньский доллар'],['HKD','гонконгский доллар'],['PHP','филиппинское песо'],
+ ['GBP','британский фунт'],['CHF','швейцарский франк'],['PLN','польский злотый'],
+ ['CZK','чешская крона'],['HUF','венгерский форинт'],['RON','румынский лей'],
+ ['BGN','болгарский лев'],['UAH','украинская гривна'],['MDL','молдавский лей'],
+ ['SEK','шведская крона'],['NOK','норвежская крона'],['DKK','датская крона'],
+ ['ISK','исландская крона'],['AED','дирхам ОАЭ'],['SAR','саудовский риял'],
+ ['QAR','катарский риал'],['JOD','иорданский динар'],['OMR','оманский риал'],
+ ['EGP','египетский фунт'],['MAD','марокканский дирхам'],['ZAR','южноафриканский рэнд'],
+ ['KES','кенийский шиллинг'],['ETB','эфиопский быр'],['TND','тунисский динар'],
+ ['CAD','канадский доллар'],['MXN','мексиканское песо'],['BRL','бразильский реал'],
+ ['ARS','аргентинское песо'],['CLP','чилийское песо'],['PEN','перуанский соль'],
+ ['COP','колумбийское песо'],['AUD','австралийский доллар'],['NZD','новозеландский доллар'],
+ ['FJD','фиджийский доллар'],['PGK','папуа-новогвинейская кина'],['BOB','боливийское боливиано'],
+];
+let currSel = new Set($('cfgCurr').value.split(',').filter(Boolean));
+function currRender(){
+  const q = $('cfgCurrSearch').value.trim().toLowerCase();
+  $('currList').innerHTML = CURRENCIES
+    .filter(([c,n]) => !q || c.toLowerCase().includes(q) || n.toLowerCase().includes(q))
+    .map(([c,n]) => `<div class="ci" onclick="currToggle('${c}')">
+       <b>${currSel.has(c)?'✅':'⬜'} ${c}</b><span>${n}</span></div>`).join('')
+    || '<div class="ci">не найдено</div>';
+  $('currChips').innerHTML = [...currSel].map(c=>
+    `<span class="curr-chip">${c} <b onclick="currToggle('${c}')">✕</b></span>`).join('');
+  $('cfgCurr').value = [...currSel].join(',');
+}
+function currToggle(c){ currSel.has(c) ? currSel.delete(c) : currSel.add(c); currRender(); }
+function currFilter(){ currRender(); }
+document.addEventListener('click', e=>{
+  if(!e.target.closest('.curr-list') && e.target.id!=='cfgCurrSearch')
+    $('currList').style.display='none';
+});
+currRender();
+
+// ---- LLM (OpenRouter / Kimi / Claude / GPT / Gemini / DeepSeek) ----
 async function loadLlm(){
   const provider = $('llmProvider').value;
   try{

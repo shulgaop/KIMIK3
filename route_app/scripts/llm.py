@@ -35,6 +35,16 @@ PROVIDERS = {
     "anthropic": {"title": "Claude (Anthropic, подписка/баланс)",
                   "base": "https://api.anthropic.com/v1", "schema": "anthropic",
                   "default_model": "claude-sonnet-4-5"},
+    "openai": {"title": "GPT (OpenAI, платный API)",
+               "base": "https://api.openai.com/v1", "schema": "openai",
+               "default_model": "gpt-5"},
+    "google": {"title": "Gemini (Google AI, есть бесплатный уровень)",
+               # OpenAI-совместимый эндпоинт Gemini API
+               "base": "https://generativelanguage.googleapis.com/v1beta/openai",
+               "schema": "openai", "default_model": "gemini-2.5-flash"},
+    "deepseek": {"title": "DeepSeek (платный API, дешёвый)",
+                 "base": "https://api.deepseek.com/v1", "schema": "openai",
+                 "default_model": "deepseek-chat"},
 }
 
 # предпочтение бесплатных: сначала самые сильные/современные с большим контекстом
