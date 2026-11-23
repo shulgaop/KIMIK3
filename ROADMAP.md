@@ -24,7 +24,8 @@
 - ✅ F7 ICS-календарь — make_ics.py
 - ✅ F8 Чеклисты (+ Google Keep) — make_checklist.py
 - ✅ Аптечка (чеклист по высотам + ICS-напоминания) — first_aid.py
-- ✅ F10 Валюты (open.er-api.com) — currency.py
+- ✅ F10 Валюты: любые национальные (ISO), пересчёт из USD/EUR/BYN/RUB сразу
+  (open.er-api.com) — currency.py; бюджет с конвертацией — budget.py
 - ✅ F12 Снаряжение по LighterPack (итоги скриптом) — gear.py
 - ⬜ Приёмка v1: полный прогон мастера одной кнопкой «Сделать всё» (цепочка шагов 2–6).
 

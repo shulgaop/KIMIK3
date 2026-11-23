@@ -65,11 +65,12 @@ _Скрипт для раскраски маршрута по дням в Google
 - `main()` — —
 
 ## `scripts/currency.py`
-_currency.py — курсы валют стран маршрута на дату запроса (F10)._
+_currency.py — курсы любых национальных валют на дату запроса (F10)._
 
-Константы: `API`
+Константы: `API, FROM_DEFAULT`
 
-- `fetch_rates(base)` — —
+- `fetch_rates(base)` — Курсы «1 <base> = X <любая валюта>» на сегодня. Бросает SystemExit при сбое.
+- `build_rows(codes, from_list)` — Таблица: каждая целевая валюта против каждой опорной.
 - `main()` — —
 
 ## `scripts/daylight.py`

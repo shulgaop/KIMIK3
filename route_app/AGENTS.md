@@ -91,7 +91,7 @@ python3 scripts/llm.py audio projects/<маршрут>                          
 python3 scripts/make_guide_html.py projects/<маршрут>                     # Гид.md → Гид.html (профиль SVG)
 python3 scripts/daylight.py points.json --start Д --end Д --md Блок.md    # рассвет/закат + Луна
 python3 scripts/first_aid.py points.json --start Д --end Д --out выходные/  # аптечка+напоминания
-python3 scripts/currency.py --currencies BYN,UZS,TJS --md Деньги.md       # F10: курсы валют
+python3 scripts/currency.py --currencies BYN,UZS,TJS --md Деньги.md       # F10: любые валюты из USD/EUR/BYN/RUB
 python3 scripts/gear.py gear.json --members 2 --out Снаряжение.md         # F12: веса LighterPack
 python3 scripts/sources.py projects/<маршрут>                             # реестр источников
 python3 scripts/import_audioguide.py mp3/ --gpx track.gpx --out выходные/ # внешний аудиогид
