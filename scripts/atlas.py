@@ -16,12 +16,15 @@ Subcommands:
   fail <job> <file> <reason>   mark a file failed
 
 Only Python 3.9+ stdlib. Optional: pypdf (richer PDF outlines).
+В Git-проекте индексируются tracked и неигнорируемые untracked-файлы;
+.gitignore — обязательная граница приватности и исключения выходных данных.
 """
 
 import hashlib
 import json
 import os
 import re
+import subprocess
 import sys
 import zipfile
 import xml.etree.ElementTree as ET
@@ -184,20 +187,52 @@ def extract_file(path: Path, rel: str):
     return rec
 
 
+def visible_git_files(root: Path):
+    """Список tracked и неигнорируемых untracked-файлов; None вне Git.
+
+    Git сам применяет .gitignore, поэтому локальные проекты, секреты и тяжёлые
+    выходные каталоги не попадают ни в обход, ни в публичный индекс Atlas.
+    """
+    try:
+        result = subprocess.run(
+            ["git", "-C", str(root), "ls-files", "--cached", "--others",
+             "--exclude-standard", "-z"],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+    except (OSError, subprocess.CalledProcessError):
+        return None
+    paths = []
+    for raw in result.stdout.split(b"\0"):
+        if not raw:
+            continue
+        rel = os.fsdecode(raw)
+        parts = Path(rel).parts
+        if any(part in SKIP_DIRS for part in parts[:-1]) or parts[-1] in SKIP_FILES:
+            continue
+        if (root / rel).is_file():
+            paths.append(rel)
+    return paths
+
+
 def scan(root: Path):
+    """Извлечь записи только из доступных для публикации файлов проекта."""
+    visible = visible_git_files(root)
+    candidates = []
+    if visible is not None:
+        candidates = [root / rel for rel in visible]
+    else:
+        for dirpath, dirnames, filenames in os.walk(root):
+            dirnames[:] = [d for d in dirnames if d not in SKIP_DIRS]
+            for name in filenames:
+                if name not in SKIP_FILES:
+                    candidates.append(Path(dirpath) / name)
     files = []
-    for dirpath, dirnames, filenames in os.walk(root):
-        dirnames[:] = [d for d in dirnames if d not in SKIP_DIRS]
-        for name in filenames:
-            if name in SKIP_FILES:
-                continue
-            p = Path(dirpath) / name
-            rel = str(p.relative_to(root)).replace(os.sep, "/")
-            if p.suffix.lower() in IMG_EXTS:
-                files.append({"path": rel, "ext": p.suffix.lower(), "size": p.stat().st_size,
-                              "sha1": None, "mtime": int(p.stat().st_mtime)})
-            else:
-                files.append(extract_file(p, rel))
+    for p in candidates:
+        rel = str(p.relative_to(root)).replace(os.sep, "/")
+        if p.suffix.lower() in IMG_EXTS:
+            files.append({"path": rel, "ext": p.suffix.lower(), "size": p.stat().st_size,
+                          "sha1": None, "mtime": int(p.stat().st_mtime)})
+        else:
+            files.append(extract_file(p, rel))
     files.sort(key=lambda r: r["path"])
     return files
 
@@ -307,7 +342,7 @@ def cmd_build(root: Path):
     jobs = jobs_summary(root)
     (root / ATLAS_MD).write_text(render_atlas_md(root, files, clusters, jobs), encoding="utf-8")
     print(f"ATLAS built: {len(files)} files -> {ATLAS_MD}, {OUT_DIR}/{ATLAS_JSON}")
-    print(f"Run `python3 scripts/atlas.py query \"<term>\"` to locate content.")
+    print("Run `python3 scripts/atlas.py query \"<term>\"` to locate content.")
 
 
 def cmd_update(root: Path):

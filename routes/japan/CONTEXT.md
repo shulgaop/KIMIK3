@@ -105,6 +105,13 @@ iPhone 375 px без прокрутки (локально и на живом URL
   14/14 и `check_links.py` 0/0. Промпт обновлён:
   `Промт_TrackFourge_доступ_к_гидам.md`.
 
+- Atlas и приватность (2026-11-25): `scripts/atlas.py` теперь индексирует через
+  `git ls-files --cached --others --exclude-standard`, поэтому `.gitignore`
+  исключает `route_app/projects/`, `learn/`, локальный архив Фанских гор и
+  `routes/japan/site/` и из обхода, и из индекса. Предыдущая версия индекса
+  с такими путями заменена; force push не использовался. Проверка — запретные
+  пути отсутствуют в `ATLAS.md` и `atlas-out/atlas.json`, pyflakes чисто.
+
 - Редизайн под палитру main (2026-11-24): все 13 страниц пересобраны новым
   движком `route_app/scripts/make_guide_html.py` из main (бумага #f4f1e8,
   чернила #172820, зелень #153b32, терракота #a64f35, бренд «Trek Fourge ·
