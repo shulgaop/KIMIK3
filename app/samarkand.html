@@ -5,16 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Самарканд · Один день в городе Тимура · 06.09.2026</title>
 <style>
-:root{
-  --paper:#b0c6b3;
-  --paper-light:#cddccf;
-  --card:#dce7de;
-  --ink:#111111;
-  --ink-soft:#2e3a30;
-  --ink-mute:#4a5a4c;
-  --accent:#db3356;
-  --line:rgba(17,17,17,.18);
-}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
@@ -116,9 +106,139 @@ footer{
   nav.toc{display:none}
   section{page-break-inside:avoid}
 }
+
+:root{
+  --paper:#f4f1e8;--paper-light:#e8efe7;--card:#fffdf8;--ink:#172820;
+  --ink-soft:#34483e;--ink-mute:#617067;--accent:#a64f35;--line:#d4ddd4;
+  --forest:#153b32;--forest-light:#e8f0e9;--danger:#9c3f36;
+}
+html{scroll-padding-top:86px}
+body{background:var(--paper);color:var(--ink);font-size:17px;line-height:1.7}
+body::before{display:none}
+body,p,li,td,th{overflow-wrap:anywhere}
+a{text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #d57a57;outline-offset:3px}
+.wrap{max-width:1080px;padding:0 32px 80px}
+.site-header{position:sticky;top:0;z-index:30;padding:0;background:var(--forest);color:#fff;border-bottom:3px solid #d2b48c;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.site-header .shell{max-width:1120px;margin:0 auto;padding:11px 22px;display:flex;align-items:center;gap:18px}
+.site-header .brand{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;flex:0 0 auto}
+.site-header .brand:hover{color:#fff}
+.site-header .brand svg{width:31px;height:31px}
+.site-header .brand strong{display:block;font:700 1.08rem/1.1 Georgia,"Times New Roman",serif}
+.site-header .brand small{display:block;margin-top:3px;color:#cddbd3;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase}
+.site-nav{margin-left:auto;display:flex;align-items:center;gap:2px}
+.site-nav a{color:#d9e4de;text-decoration:none;font-size:.77rem;font-weight:600;padding:9px 10px;border-radius:7px;white-space:nowrap}
+.site-nav a:hover{color:#fff;background:rgba(255,255,255,.08)}
+.site-nav a[aria-current=page]{background:#fff;color:var(--forest)}
+.nav-toggle{display:none;margin-left:auto;font:650 .8rem inherit;color:#fff;background:transparent;border:1px solid rgba(255,255,255,.45);border-radius:7px;padding:9px 12px;cursor:pointer}
+.wrap>header{padding:50px 0 32px;border-bottom:1px solid var(--line)}
+.kicker{color:var(--ink-mute);font-size:.7rem;letter-spacing:.2em}
+h1{max-width:900px;letter-spacing:-.025em}
+h1 em{color:var(--accent)}
+.sub{color:var(--ink-soft);line-height:1.55}
+.meta-row{color:var(--ink-soft);gap:10px 24px}
+nav.toc{margin:28px 0 0;padding:18px 22px;background:var(--card);border:1px solid var(--line);border-radius:12px;columns:2;column-gap:34px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+nav.toc a{padding:8px 0;font-size:.9rem;line-height:1.4;border-bottom:1px solid var(--line)}
+nav.toc a:hover{color:var(--accent)}
+nav.toc a span{color:var(--ink-mute);font-size:.7rem;font-weight:650}
+section{margin-top:48px;scroll-margin-top:82px}
+h2{letter-spacing:-.015em}
+h2 .no{color:var(--accent);font-size:.58em;letter-spacing:.12em}
+h3{color:var(--forest);line-height:1.35}
+.lead{line-height:1.6}
+.table-scroll{max-width:100%;overflow-x:auto;margin:18px 0;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.table-scroll table{margin:0;min-width:680px;border:0;background:var(--card)}
+th,td{padding:11px 13px;border-bottom:1px solid var(--line)}
+th{background:var(--paper-light);color:var(--forest);border-bottom:1px solid #b9c9bc;font-size:.68rem}
+tr:last-child td{border-bottom:0}
+.fact,.warn,.tip,.audiobox,.route{padding:16px 18px;background:var(--card);border:1px solid var(--line);border-radius:9px;line-height:1.6}
+.fact{border-left:4px solid var(--forest)}
+.warn{border-left:4px solid var(--danger)}
+.tip{border-left:4px solid #8a7045}
+.audiobox{border-left:4px solid var(--accent)}
+.fact b.tag,.warn b.tag,.tip b.tag,.audiobox b.tag{letter-spacing:.14em}
+.warn b.tag{color:var(--danger)}
+.profile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 14px 8px}
+.chip{border-color:#b9c9bc;background:var(--paper-light);padding:4px 10px}
+.chip.hot{background:var(--accent);border-color:var(--accent)}
+.timeline .t{color:var(--accent)}
+footer{border-top:1px solid var(--line)}
+.toolbar{top:67px;background:var(--paper);border-bottom:1px solid var(--line);padding:12px 0;gap:8px}
+.toolbar button{font:650 .82rem/1.2 -apple-system,"Segoe UI",sans-serif;padding:9px 13px;border:1px solid var(--forest);border-radius:7px;background:var(--card);color:var(--forest);min-height:40px;cursor:pointer}
+.toolbar button:hover{background:var(--forest);color:#fff}
+.toolbar button.reading{background:var(--accent);border-color:var(--accent);color:#fff}
+.wrap>h1{margin-top:30px;font-size:clamp(2rem,5vw,3rem)}
+.wrap>.sub{margin:8px 0 18px;color:var(--ink-mute);font-size:.9rem}
+section[data-sec]{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:0 0 14px}
+section[data-sec] h2{font:700 1.2rem/1.35 Georgia,"Times New Roman",serif;letter-spacing:0}
+section[data-sec] h2 .speak{border:1px solid var(--line);background:var(--paper-light);color:var(--forest);border-radius:6px;padding:7px 9px;min-width:36px;min-height:36px;cursor:pointer}
+section[data-sec] h2 .cnt{color:var(--accent);font-family:-apple-system,"Segoe UI",sans-serif}
+section[data-sec] li{padding:9px 2px;border-bottom:1px solid var(--line)}
+section[data-sec] input[type=checkbox]{width:22px;height:22px;accent-color:var(--forest)}
+section[data-sec] p.t{padding:9px 2px;border-bottom:1px solid var(--line)}
+section[data-sec] p.t b,.crit{color:var(--danger)}
+.progress{font-family:-apple-system,"Segoe UI",sans-serif;color:var(--forest);white-space:nowrap}
+.note{color:var(--ink-mute)}
+a.back{margin-top:24px;color:var(--forest)}
+@media (max-width:820px){
+  .site-header .shell{padding:10px 16px;flex-wrap:wrap;gap:10px}
+  .nav-toggle{display:block;min-height:42px}
+  .site-nav{display:none;width:100%;margin:0;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px;padding-top:8px;border-top:1px solid rgba(255,255,255,.16)}
+  .site-nav.open{display:grid}
+  .site-nav a{padding:11px 12px;white-space:normal;min-height:44px}
+  .wrap{padding:0 18px 64px}
+  .wrap>header{padding:34px 0 26px}
+  nav.toc{columns:1;padding:14px 18px}
+  .toolbar{top:65px}
+}
+@media (max-width:480px){
+  .site-header .brand small{display:none}
+  .site-header .brand strong{font-size:1rem}
+  h1{font-size:clamp(2rem,11vw,3rem)}
+  .meta-row{display:grid;gap:8px}
+  .table-scroll{margin-left:-4px;margin-right:-4px}
+  section[data-sec]{padding:16px 14px}
+  section[data-sec] h2{flex-wrap:wrap}
+  .toolbar{position:static}
+  .toolbar button{flex:1;min-height:44px}
+  .progress{width:100%;text-align:right;padding:4px}
+  .timeline .step{gap:10px}
+  .timeline .t{flex-basis:62px}
+}
+@media (pointer:coarse){
+  nav.toc a,.site-nav a{min-height:44px;display:flex;align-items:center}
+  section[data-sec] label{min-height:32px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important}}
+@media print{
+  html{scroll-padding-top:0}
+  body{background:#fff;font-size:11pt}
+  .site-header,.toolbar,.speak,a.back{display:none!important}
+  .wrap{max-width:none;padding:0}
+  .wrap>header{padding-top:0}
+  nav.toc{display:none}
+  section{page-break-inside:auto;break-inside:auto;margin-top:28px}
+  h2,h3{break-after:avoid}
+  .fact,.warn,.tip,.audiobox,.route,.profile,section[data-sec],figure{break-inside:avoid;background:#fff}
+  .table-scroll{overflow:visible;border-color:#999}
+  .table-scroll table{min-width:0}
+  th,td{padding:6px 8px}
+}
 </style>
 </head>
 <body>
+<header class="site-header">
+  <div class="shell">
+    <a class="brand" href="index.html" aria-label="Trek Fourge — главный гид">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 25L11 9l5 8 4-6 9 14H3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 25l6-7 4 4 3-3 5 6" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="24.5" cy="6" r="2" fill="#d2b48c"/></svg>
+      <span><strong>Trek Fourge</strong><small>Полевой путеводитель</small></span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="siteNav">Меню</button>
+    <nav class="site-nav" id="siteNav" aria-label="Документы похода">
+      <a href="index.html">Маршрут</a><a href="samarkand.html" aria-current="page">Самарканд</a><a href="transfer.html">Трансфер</a><a href="checklist.html">Сборы</a><a href="gear.html">Снаряжение</a><a href="breathing.html">Практика</a>
+    </nav>
+  </div>
+</header>
 <div class="wrap">
 
 <header>
@@ -269,5 +389,26 @@ footer{
 </footer>
 
 </div>
+<script>
+(() => {
+  const toggle = document.querySelector('.nav-toggle');
+  const nav = document.getElementById('siteNav');
+  const closeNav = (returnFocus = false) => {
+    nav.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false');
+    if(returnFocus) toggle.focus();
+  };
+  toggle.addEventListener('click', () => {
+    const open = nav.classList.toggle('open'); toggle.setAttribute('aria-expanded', String(open));
+  });
+  nav.addEventListener('click', event => { if(event.target.closest('a')) closeNav(); });
+  document.addEventListener('keydown', event => { if(event.key === 'Escape') closeNav(true); });
+  document.querySelectorAll('table').forEach(table => {
+    const scroll = document.createElement('div'); scroll.className = 'table-scroll';
+    scroll.setAttribute('role', 'region'); scroll.setAttribute('aria-label', 'Таблица с горизонтальной прокруткой');
+    scroll.tabIndex = 0; table.before(scroll); scroll.append(table);
+  });
+  document.querySelectorAll('.speak').forEach(button => button.setAttribute('aria-label', 'Прочитать раздел вслух'));
+})();
+</script>
 </body>
 </html>

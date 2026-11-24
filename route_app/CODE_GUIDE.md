@@ -200,7 +200,7 @@ _make_guide_html.py — офлайн HTML-версия путеводителя 
 - `profile_svg(gpx_path, points_path, width, height)` — SVG-профиль высот: линия трека + точки программы с подписями.
 - `photos_by_day(project)` — Фото по дням из выходные/фото_карта.json (photo_sort) и фотометки.json
 - `inject_photos(md_text, by_day)` — После заголовков «##/### День N …» вставить ряд превью фото дня (raw HTML).
-- `build_html(md_text, title, svg)` — —
+- `build_html(md_text, title, svg)` — Собрать автономный HTML: заголовок, содержание, профиль, текст и таблицы.
 - `main()` — —
 
 ## `scripts/make_ics.py`
@@ -271,7 +271,7 @@ _photo_sort.py — сортировка фотографий похода по �
 - `interp_track(track, dt)` — Позиция на треке в момент dt (интерполяция между соседними точками).
 - `nearest_point(points, lat, lon)` — Ближайшая точка маршрута: (индекс, дистанция м).
 - `day_number(dt, start)` — День похода по дате съёмки (день 1 = дата старта); None, если вне дат.
-- `build_html(report, title)` — Офлайн HTML-отчёт: разделы по группам, сетка фото, печать A4.
+- `build_html(report, title)` — Офлайн HTML-отчёт: оболочка Trek Fourge, группы, сетка фото и печать A4.
 - `main()` — —
 
 ## `scripts/read_program.py`

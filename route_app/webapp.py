@@ -347,11 +347,8 @@ def step_photos_all(d, params):
                     "\n  ".join(tail[-4:]))
 
     # гео-фото-отчёт с картой (hike_report.py) — только если стоят зависимости
-    try:
-        import folium, openpyxl, reverse_geocoder  # noqa: F401
-        have_deps = True
-    except ImportError:
-        have_deps = False
+    have_deps = all(importlib.util.find_spec(name) is not None
+                    for name in ("folium", "openpyxl", "reverse_geocoder"))
     if have_deps:
         ok, out, err = run_hike_report(d, folder, params)
         any_ok |= ok
@@ -392,9 +389,8 @@ def step_report_map(d, params):
     folder = (params.get("folder") or "").strip()
     if not folder:
         raise HTTPException(400, "Сначала выберите папку с фотографиями")
-    try:
-        import folium, openpyxl, reverse_geocoder  # noqa: F401
-    except ImportError:
+    if any(importlib.util.find_spec(name) is None
+           for name in ("folium", "openpyxl", "reverse_geocoder")):
         raise HTTPException(400, "Нужны зависимости: pip install folium openpyxl "
                                  "reverse-geocoder pyosmogps")
     ok, out, err = run_hike_report(d, folder, params)
@@ -450,9 +446,7 @@ def step_tts(d, params):
     texts = d / OUT_DIR / "аудиотексты.json"
     if not texts.is_file():
         raise HTTPException(400, "Сначала сгенерируйте тексты аудиогида (кнопка выше)")
-    try:
-        import edge_tts  # noqa: F401
-    except ImportError:
+    if importlib.util.find_spec("edge_tts") is None:
         raise HTTPException(400, "Нужен edge-tts: pip install edge-tts -i https://pypi.org/simple")
     ok, out, err = run_script([SCRIPTS / "tts_audioguide.py", texts, d / OUT_DIR / "Аудиогид"],
                               timeout=3600)

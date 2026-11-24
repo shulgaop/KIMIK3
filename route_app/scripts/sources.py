@@ -12,7 +12,7 @@
 Использование:
   python3 sources.py projects/<маршрут>
 """
-import json, re, sys
+import json, sys
 from datetime import datetime
 from pathlib import Path
 
