@@ -352,6 +352,13 @@
    "part_numbers": []
   },
   {
+   "path": "guides.json",
+   "ext": ".json",
+   "size": 758,
+   "sha1": "99c136163486d8eff939c9a145f032110666a6d7",
+   "mtime": 1795545898
+  },
+  {
    "path": "route_app/AGENTS.md",
    "ext": ".md",
    "size": 12008,
@@ -1604,9 +1611,9 @@
   {
    "path": "routes/japan/CONTEXT.md",
    "ext": ".md",
-   "size": 11125,
-   "sha1": "048cb43f50fe2246a6669be20a68d6393d685b5d",
-   "mtime": 1795390946,
+   "size": 11783,
+   "sha1": "f8b2d678888bbf5ae7675b3bfcfcabec70c89848",
+   "mtime": 1795545985,
    "outline": {
     "headings": [
      "CONTEXT.md — маршрут «Япония» (единственный операционный снимок)",
@@ -1617,7 +1624,7 @@
      "Ссылки",
      "Замечания"
     ],
-    "lines": 132,
+    "lines": 140,
     "snippet": "Обновлён: 2026-11-23. Поддерживается по `routes/japan/AGENTS.md` §13."
    },
    "keywords": [
@@ -1625,12 +1632,12 @@
     "routes",
     "japan",
     "github",
-    "только",
     "data",
-    "pages",
-    "mp3",
     "generated",
-    "kimik3"
+    "только",
+    "make_site",
+    "pages",
+    "mp3"
    ],
    "part_numbers": [
     "D-001",
@@ -2441,6 +2448,37 @@
    ]
   },
   {
+   "path": "routes/japan/data/make_manifest.py",
+   "ext": ".py",
+   "size": 5926,
+   "sha1": "cc4aa6eb7172e88e9441c492115e823e00dfaf1b",
+   "mtime": 1795545865,
+   "outline": {
+    "symbols": [
+     "_",
+     "_",
+     "_",
+     "main"
+    ],
+    "lines": 124
+   },
+   "keywords": [
+    "манифест",
+    "none",
+    "гид",
+    "json",
+    "html",
+    "mp3",
+    "дни",
+    "аудио",
+    "сгенерировано",
+    "название"
+   ],
+   "part_numbers": [
+    "D-001"
+   ]
+  },
+  {
    "path": "routes/japan/data/make_route_kml.py",
    "ext": ".py",
    "size": 3156,
@@ -2469,14 +2507,14 @@
   {
    "path": "routes/japan/data/make_site.py",
    "ext": ".py",
-   "size": 7634,
-   "sha1": "4f24d04f7691ee6ba2ead3a5db81095ee6090496",
-   "mtime": 1795388738,
+   "size": 8021,
+   "sha1": "af65c0a57fba849ac09e2a0cd463919c7eaa29c8",
+   "mtime": 1795545877,
    "outline": {
     "symbols": [
      "main"
     ],
-    "lines": 146
+    "lines": 152
    },
    "keywords": [
     "var",
@@ -4141,6 +4179,13 @@
    "part_numbers": []
   },
   {
+   "path": "routes/japan/generated/гид.json",
+   "ext": ".json",
+   "size": 7331,
+   "sha1": "272811c3b01342f415717e2374f01b93b90cc79d",
+   "mtime": 1795545907
+  },
+  {
    "path": "routes/japan/generated/маршрут.ics",
    "ext": ".ics",
    "size": 7484,
@@ -4256,14 +4301,14 @@
    "ext": "",
    "size": 0,
    "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
-   "mtime": 1795413847
+   "mtime": 1795545907
   },
   {
    "path": "routes/japan/site/index.html",
    "ext": ".html",
    "size": 2983,
    "sha1": "8a347855cdf9f03ccbf80d148632235fd8bd076d",
-   "mtime": 1795413847,
+   "mtime": 1795545907,
    "outline": {
     "headings": [],
     "lines": 59,
@@ -4290,7 +4335,7 @@
    "ext": ".html",
    "size": 7441,
    "sha1": "a420cbd56c4b5079dbf2f342c4c0206ee9eb0d0f",
-   "mtime": 1795413847,
+   "mtime": 1795545907,
    "outline": {
     "headings": [],
     "lines": 116,
@@ -4341,7 +4386,7 @@
    "ext": ".html",
    "size": 23748,
    "sha1": "ec3838675e5c8db783976b4f4fe2b93b1873537b",
-   "mtime": 1795413847,
+   "mtime": 1795545907,
    "outline": {
     "headings": [],
     "lines": 238,
@@ -4399,7 +4444,7 @@
    "ext": ".html",
    "size": 7615,
    "sha1": "a3b354bd641467e0aabba5ca8cd7d0a6d085ed59",
-   "mtime": 1795413847,
+   "mtime": 1795545907,
    "outline": {
     "headings": [],
     "lines": 118,
@@ -4432,7 +4477,7 @@
    "ext": ".html",
    "size": 6618,
    "sha1": "65c5af9dfc11c4adbbb298cb90c310baa5b1eb3f",
-   "mtime": 1795413847,
+   "mtime": 1795545907,
    "outline": {
     "headings": [],
     "lines": 110,
@@ -4483,7 +4528,7 @@
    "ext": ".html",
    "size": 19496,
    "sha1": "014b3d22718a9ef8a21d54e28b1a7167e52c1115",
-   "mtime": 1795413847,
+   "mtime": 1795545907,
    "outline": {
     "headings": [],
     "lines": 246,
@@ -4582,7 +4627,7 @@
    "ext": ".html",
    "size": 22344,
    "sha1": "805f518fb471da793761a991a0d5499aaad0c81b",
-   "mtime": 1795413847,
+   "mtime": 1795545907,
    "outline": {
     "headings": [],
     "lines": 352,
@@ -4704,7 +4749,7 @@
    "ext": ".html",
    "size": 23441,
    "sha1": "ef49c33d51e3fe63b4e91a54f33afb1e2a900b57",
-   "mtime": 1795413847,
+   "mtime": 1795545907,
    "outline": {
     "headings": [],
     "lines": 265,
@@ -4791,7 +4836,7 @@
    "ext": ".html",
    "size": 7486,
    "sha1": "8d72dd9c7ae6ccc76f4b8a9dccf1e539d46765ea",
-   "mtime": 1795413847,
+   "mtime": 1795545907,
    "outline": {
     "headings": [],
     "lines": 111,
@@ -4824,7 +4869,7 @@
    "ext": ".html",
    "size": 5448,
    "sha1": "da54672cff03ec303a6600d822b59c145bbda41a",
-   "mtime": 1795413847,
+   "mtime": 1795545907,
    "outline": {
     "headings": [],
     "lines": 103,
@@ -4851,7 +4896,7 @@
    "ext": ".html",
    "size": 10999,
    "sha1": "97f0f64e42a95fb22a86f5bd15a77840ac99593f",
-   "mtime": 1795413847,
+   "mtime": 1795545907,
    "outline": {
     "headings": [],
     "lines": 230,
@@ -4885,7 +4930,7 @@
    "ext": ".html",
    "size": 9234,
    "sha1": "fc352bcc3fa3c083db3bf344333bac1113fee385",
-   "mtime": 1795413847,
+   "mtime": 1795545907,
    "outline": {
     "headings": [],
     "lines": 232,
@@ -4921,7 +4966,7 @@
    "ext": ".html",
    "size": 8564,
    "sha1": "a0c7479dedabac7349f282b25a0638ffb76df8f2",
-   "mtime": 1795413847,
+   "mtime": 1795545907,
    "outline": {
     "headings": [],
     "lines": 106,
@@ -4946,7 +4991,7 @@
    "ext": ".html",
    "size": 12909,
    "sha1": "7f2e00a306f3fae020eb334d748132574e5f567d",
-   "mtime": 1795413847,
+   "mtime": 1795545907,
    "outline": {
     "headings": [],
     "lines": 129,
@@ -4974,7 +5019,7 @@
    "ext": ".html",
    "size": 12776,
    "sha1": "ec4450b792714aa94dc8d90efb796c9b89ccf9f0",
-   "mtime": 1795413847,
+   "mtime": 1795545907,
    "outline": {
     "headings": [],
     "lines": 185,
@@ -4995,6 +5040,13 @@
    "part_numbers": [
     "SPF50"
    ]
+  },
+  {
+   "path": "routes/japan/site/гид.json",
+   "ext": ".json",
+   "size": 7331,
+   "sha1": "272811c3b01342f415717e2374f01b93b90cc79d",
+   "mtime": 1795545907
   },
   {
    "path": "routes/japan/site/маршрут.ics",
@@ -5090,9 +5142,9 @@
   {
    "path": "Инструкция_генерация_горных_маршрутов.md",
    "ext": ".md",
-   "size": 46659,
-   "sha1": "916009407b858b60e0065cca980ec38d17e58b20",
-   "mtime": 1795432311,
+   "size": 49576,
+   "sha1": "8ad849fe374d99db261e3a5a9806785bc63c9d2f",
+   "mtime": 1795545985,
    "outline": {
     "headings": [
      "Инструкция: генерация путеводителя горного пешего похода (+ HTML-версия + аудиогид)",
@@ -5107,6 +5159,7 @@
      "7. Аудиогид (принципы написания и генерации)",
      "8. Файлы выдачи",
      "8.1. Публикация веб-гида (GitHub Pages из приватного репозитория)",
+     "8.2. Интеграция гида с приложениями (манифест и реестр)",
      "9. Типовые грабли",
      "10. Чек-лист перед выдачей",
      "11. Автоматизация: скрипты и инструкции для кодовых агентов (Claude Code / Kimi Code)",
@@ -5115,26 +5168,59 @@
      "12.2. Обязательные итоги (считать скриптом, не в уме)",
      "12.3. Правила для ИИ-генерации"
     ],
-    "lines": 338,
+    "lines": 371,
     "snippet": "*По методике, отработанной на маршруте «Фанские горы — кольцо Чимтарги», 06–16.09.2026 (Артуч → Куликалон → пер. Алаудин → Алауддинские оз. → Мутные оз. → лагерь 4400 → пер. Чимтарга 4740 → Б. Алло → "
    },
    "keywords": [
     "без",
     "маршрут",
     "даты",
+    "только",
     "высоты",
-    "gpx",
     "день",
-    "маршрута",
     "html",
     "mp3",
-    "через"
+    "gpx",
+    "маршрута"
    ],
    "part_numbers": [
     "SHA-256",
     "T-006",
     "T-007"
    ]
+  },
+  {
+   "path": "Промт_TrackFourge_доступ_к_гидам.md",
+   "ext": ".md",
+   "size": 7476,
+   "sha1": "66b860f28708ff48277d9977cc4534248c784b32",
+   "mtime": 1795545950,
+   "outline": {
+    "headings": [
+     "Промт для Kimi Code — Track Fourge: доступ к опубликованным гидам",
+     "Задача",
+     "Контракт интеграции (уже действует)",
+     "Что сделать в приложении",
+     "Ограничения",
+     "Критерии приёмки",
+     "Справочно (не перепроверять факты маршрута)"
+    ],
+    "lines": 121,
+    "snippet": "Скопируй текст ниже линии в новый чат Kimi Code в проекте Track Fourge."
+   },
+   "keywords": [
+    "json",
+    "гид",
+    "гида",
+    "kimik3",
+    "github",
+    "url",
+    "guides",
+    "shulgaop",
+    "список",
+    "html"
+   ],
+   "part_numbers": []
   }
  ]
 }
