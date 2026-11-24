@@ -3,121 +3,155 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#3f6218">
-<title>TrailForge — мастер маршрутов</title>
+<meta name="theme-color" content="#153b32">
+<meta name="description" content="Trek Fourge — подготовка путеводителя, карты, погоды, аудиогида и документов похода">
+<title>Trek Fourge — мастер маршрутов</title>
 <style>
   :root{
-    --green:#78a22f; --green-d:#5e8424; --green-soft:#eef4e2;
-    --ink:#1c2b21; --muted:#5c6f60; --card:#ffffff; --bg:#f4f6f1;
-    --line:#dbe4d3; --danger:#d64545; --radius:14px;
+    --forest-950:#153b32;--forest-800:#214f42;--forest-700:#2d6754;
+    --green:#2d6754;--green-d:#214f42;--green-soft:#e8f0e9;
+    --ink:#172820;--muted:#5c6c64;--card:#fff;--bg:#f5f4ee;
+    --line:#d5dfd7;--line-strong:#b8c8bc;--sand:#eee8dc;--accent:#b85637;
+    --danger:#a43c36;--warning:#805b18;--info:#315f7c;--radius:12px;
+    --shadow:0 10px 30px rgba(21,59,50,.12);
   }
   *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-padding-top:24px}
   body{background:var(--bg);color:var(--ink);
-       font:15.5px/1.55 -apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif}
-  /* ── шапка ─────────────────────────── */
-  header{background:linear-gradient(135deg,#3f6218 0%,#78a22f 100%);color:#fff;padding:0}
-  .hero{max-width:900px;margin:0 auto;display:flex;align-items:center;gap:18px;padding:18px 20px}
-  .hero .logo{flex:0 0 auto}
-  .hero h1{font-size:1.35rem;font-weight:700;letter-spacing:.2px}
-  .hero p{font-size:.85rem;opacity:.92}
-  .hero .art{margin-left:auto;flex:0 0 auto;opacity:.95}
-  .tabs{max-width:900px;margin:0 auto;display:flex;gap:6px;padding:0 20px 12px}
-  .tabs button{background:rgba(255,255,255,.16);color:#fff;border:none;border-radius:999px;padding:8px 18px}
-  .tabs button.active{background:#fff;color:var(--green-d)}
-  /* ── контент ───────────────────────── */
-  .wrap{max-width:900px;margin:18px auto;padding:0 20px 40px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-        padding:20px 22px;margin-bottom:14px;box-shadow:0 1px 3px rgba(28,43,33,.06)}
-  .card h2{font-size:1.08rem;font-weight:700;display:flex;align-items:center;gap:10px;margin-bottom:4px}
-  .card h2 .ic{flex:0 0 auto;width:34px;height:34px;border-radius:10px;background:var(--green-soft);
-               display:flex;align-items:center;justify-content:center}
-  .card .sub{color:var(--muted);font-size:.88rem;margin-bottom:8px}
-  .card.done{border-left:4px solid var(--green)}
+       font:15.5px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",sans-serif}
+  body,p,li,td,th,.hint,.sub{overflow-wrap:anywhere}
+  a{color:var(--forest-700);text-underline-offset:3px}
+  a:hover{color:var(--accent)}
+  :focus-visible{outline:3px solid #d77b58;outline-offset:3px}
+  .skip-link{position:fixed;left:16px;top:-80px;z-index:50;background:#fff;color:var(--forest-950);padding:10px 16px;border-radius:8px}
+  .skip-link:focus{top:12px}
+  .app-header{background:var(--forest-950);color:#fff;border-bottom:3px solid #d2b48c}
+  .hero{max-width:1120px;margin:0 auto;display:flex;align-items:center;gap:16px;padding:20px 24px 16px}
+  .brand{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none;min-width:0}
+  .brand:hover{color:#fff}
+  .brand-mark{width:42px;height:42px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.35);border-radius:10px;flex:0 0 auto}
+  .brand-name{display:block;font:700 1.35rem/1.1 Georgia,"Times New Roman",serif;letter-spacing:.01em}
+  .brand-sub{display:block;margin-top:4px;font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;color:#ceddd5}
+  .hero-note{margin-left:auto;max-width:390px;color:#ceddd5;font-size:.84rem;line-height:1.45;text-align:right}
+  .nav-toggle{display:none;margin-left:auto;background:transparent;color:#fff;border-color:rgba(255,255,255,.45)}
+  .tabs{max-width:1120px;margin:0 auto;display:flex;gap:4px;padding:0 24px 14px}
+  .tabs button{background:transparent;color:#d9e4de;border:1px solid transparent;border-radius:8px;padding:9px 15px;min-height:40px}
+  .tabs button:hover{background:rgba(255,255,255,.08);color:#fff}
+  .tabs button.active{background:#fff;color:var(--forest-950);border-color:#fff}
+  .wrap{max-width:1120px;margin:0 auto;padding:26px 24px 56px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:26px 28px;margin-bottom:18px}
+  .card h2{font:700 1.4rem/1.25 Georgia,"Times New Roman",serif;display:flex;align-items:center;gap:12px;margin-bottom:8px}
+  .card h2 .ic{flex:0 0 auto;width:36px;height:36px;border-radius:9px;background:var(--green-soft);color:var(--forest-700);display:flex;align-items:center;justify-content:center}
+  .card .sub{color:var(--muted);font-size:.91rem;margin-bottom:14px;max-width:80ch}
+  .card.done{border-left:4px solid var(--forest-700)}
   .card.done .badge{display:inline-flex}
-  .badge{display:none;align-items:center;gap:4px;background:var(--green-soft);color:var(--green-d);
-         font-size:.75rem;font-weight:700;border-radius:999px;padding:3px 10px;margin-left:auto}
-  /* ── степпер ───────────────────────── */
-  .stepper{display:flex;gap:4px;overflow-x:auto;padding:4px 2px 12px;scrollbar-width:none}
-  .stepper::-webkit-scrollbar{display:none}
-  .stepper .st{flex:0 0 auto;display:flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;
-               background:#fff;border:1px solid var(--line);cursor:pointer;font-size:.8rem;font-weight:600;color:var(--muted)}
-  .stepper .st .num{width:22px;height:22px;border-radius:50%;background:var(--green-soft);color:var(--green-d);
-                    display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700}
-  .stepper .st.cur{background:var(--green);border-color:var(--green);color:#fff}
-  .stepper .st.cur .num{background:rgba(255,255,255,.25);color:#fff}
-  .stepper .st.done .num{background:var(--green);color:#fff}
-  /* ── контролы ──────────────────────── */
-  button{font:600 .92rem/1 inherit;padding:11px 18px;border-radius:999px;border:1.5px solid var(--green);
-         background:#fff;color:var(--green-d);cursor:pointer;transition:.15s;min-height:42px}
+  .badge{display:none;align-items:center;gap:4px;background:var(--green-soft);color:var(--forest-700);font:700 .7rem/1 -apple-system,"Segoe UI",sans-serif;border-radius:999px;padding:6px 10px;margin-left:auto;white-space:nowrap}
+  .stepper{display:flex;gap:7px;overflow-x:auto;padding:2px 2px 18px;scrollbar-width:thin;scrollbar-color:var(--line-strong) transparent}
+  .stepper .st{flex:1 0 132px;display:flex;align-items:center;gap:8px;padding:9px 11px;border-radius:9px;background:transparent;border:1px solid var(--line);cursor:pointer;font-size:.79rem;font-weight:650;color:var(--muted);text-align:left;min-height:48px}
+  .stepper .st:hover{background:var(--green-soft);border-color:var(--line-strong)}
+  .stepper .st .num{width:25px;height:25px;border-radius:50%;background:var(--green-soft);color:var(--forest-700);display:flex;align-items:center;justify-content:center;font-size:.74rem;font-weight:750;flex:0 0 auto}
+  .stepper .st.cur{background:var(--forest-800);border-color:var(--forest-800);color:#fff}
+  .stepper .st.cur .num{background:rgba(255,255,255,.16);color:#fff}
+  .stepper .st.done:not(.cur){border-color:#a9c3b1;color:var(--forest-700)}
+  .stepper .st.done .num{background:var(--forest-700);color:#fff}
+  button{font:650 .88rem/1.25 inherit;padding:10px 16px;border-radius:8px;border:1px solid var(--forest-700);background:#fff;color:var(--forest-700);cursor:pointer;transition:background-color .14s,border-color .14s,color .14s;min-height:42px}
   button:hover{background:var(--green-soft)}
-  button:disabled{opacity:.45;cursor:default}
-  button.primary{background:var(--green);color:#fff;border-color:var(--green)}
-  button.primary:hover{background:var(--green-d)}
-  button.big{font-size:1.02rem;padding:14px 22px;width:100%;margin-top:10px;min-height:50px;
-             box-shadow:0 2px 6px rgba(94,132,36,.3)}
-  button.small{font-size:.8rem;padding:7px 12px;border-color:var(--line);color:var(--muted)}
-  input,textarea,select{font:inherit;font-size:16px;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;
-                        background:#fff;width:100%;transition:.15s}
-  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--green);
-                        box-shadow:0 0 0 3px rgba(120,162,47,.15)}
-  textarea{font-family:Consolas,monospace;font-size:.84rem;min-height:110px}
-  label{display:block;font-size:.84rem;font-weight:600;margin:12px 0 5px;color:var(--ink)}
-  .row{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
-  .row>*{flex:1;min-width:150px}
-  pre{background:#f6f8f3;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:.8rem;
-      max-height:280px;overflow:auto;white-space:pre-wrap;margin-top:12px}
-  .ok{color:var(--green-d);font-weight:600}
-  .bad{color:var(--danger);font-weight:600}
-  ul.files{list-style:none;margin-top:10px}
-  ul.files li{padding:7px 0;border-bottom:1px solid var(--line)}
-  ul.files a{color:var(--green-d);font-weight:600;text-decoration:none}
+  button:disabled{opacity:.48;cursor:not-allowed}
+  button.primary{background:var(--forest-700);color:#fff;border-color:var(--forest-700)}
+  button.primary:hover{background:var(--forest-950);border-color:var(--forest-950)}
+  button.big{font-size:.96rem;padding:13px 20px;width:100%;margin-top:14px;min-height:50px}
+  button.small{font-size:.78rem;padding:7px 11px;border-color:var(--line);color:var(--muted);min-height:36px}
+  input,textarea,select{font:inherit;font-size:16px;padding:10px 12px;border:1px solid var(--line-strong);border-radius:8px;background:#fff;color:var(--ink);width:100%;transition:border-color .14s,box-shadow .14s;min-height:44px}
+  input::file-selector-button{font:650 .82rem inherit;color:var(--forest-700);background:var(--green-soft);border:0;border-radius:6px;padding:8px 12px;margin-right:12px;cursor:pointer}
+  input[type=checkbox]{min-height:0;width:18px;height:18px;accent-color:var(--forest-700)}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--forest-700);box-shadow:0 0 0 3px rgba(45,103,84,.15)}
+  textarea{font-family:Consolas,"Courier New",monospace;font-size:.84rem;min-height:118px;line-height:1.55;resize:vertical}
+  label{display:block;font-size:.82rem;font-weight:650;margin:14px 0 6px;color:var(--ink)}
+  .row{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;align-items:stretch}
+  .row>*{flex:1;min-width:160px}
+  .row>button{align-self:end}
+  pre{background:#f5f7f4;border:1px solid var(--line);border-left:3px solid var(--info);border-radius:8px;padding:13px 14px;font: .79rem/1.55 Consolas,"Courier New",monospace;max-height:280px;overflow:auto;white-space:pre-wrap;margin-top:14px}
+  pre.ok{background:#eff6f0;border-left-color:var(--forest-700);color:var(--forest-800);font-weight:600}
+  pre.bad{background:#fbefed;border-left-color:var(--danger);color:var(--danger);font-weight:600}
+  .ok{color:var(--forest-700);font-weight:650}
+  .bad{color:var(--danger);font-weight:650}
+  ul.files{list-style:none;margin-top:14px;border-top:1px solid var(--line)}
+  ul.files li{padding:10px 2px;border-bottom:1px solid var(--line)}
+  ul.files a{color:var(--forest-700);font-weight:650;text-decoration:none}
   ul.files a:hover{text-decoration:underline}
-  .ex{border:1px dashed var(--line);border-radius:10px;padding:10px;margin-top:8px}
-  .hint{font-size:.85rem;color:var(--muted);margin-top:6px}
-  .chip{display:inline-flex;align-items:center;gap:6px;background:var(--green-soft);color:var(--green-d);
-        border-radius:999px;padding:7px 14px;font-size:.85rem;font-weight:600;margin-top:8px;word-break:break-all}
-  details{margin-top:12px;border-top:1px solid var(--line);padding-top:10px}
-  summary{cursor:pointer;font-size:.86rem;font-weight:600;color:var(--muted)}
-  /* ── модальный выбор папки ─────────── */
-  .modal{position:fixed;inset:0;background:rgba(28,43,33,.45);display:none;align-items:center;justify-content:center;z-index:20}
+  .ex{border:1px solid var(--line);border-radius:8px;padding:12px;margin-top:10px;background:#fafbf8}
+  .ex i{color:var(--muted);font-size:.8rem}
+  .hint{font-size:.84rem;color:var(--muted);margin-top:8px;max-width:90ch}
+  .chip{display:inline-flex;align-items:center;gap:6px;background:var(--sand);color:var(--ink);border:1px solid #dfd4c2;border-radius:7px;padding:7px 11px;font-size:.8rem;font-weight:600;margin-top:10px;word-break:break-all;max-width:100%}
+  details{margin-top:16px;border-top:1px solid var(--line);padding-top:12px}
+  summary{cursor:pointer;font-size:.87rem;font-weight:650;color:var(--forest-700);min-height:32px;padding:4px 0}
+  .table-scroll{max-width:100%;overflow-x:auto;margin:12px 0;border:1px solid var(--line);border-radius:8px}
+  table{border-collapse:collapse;width:100%;font-size:.86rem;background:#fff}
+  th,td{padding:10px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+  th{background:var(--green-soft);color:var(--forest-800);font-size:.75rem;letter-spacing:.035em;text-transform:uppercase}
+  tr:last-child td{border-bottom:0}
+  .table-scroll table{margin:0;min-width:620px}
+  .modal{position:fixed;inset:0;background:rgba(15,35,29,.58);display:none;align-items:center;justify-content:center;z-index:20;padding:20px}
   .modal.open{display:flex}
-  .modal .box{background:#fff;border-radius:var(--radius);padding:18px;width:min(560px,92vw);
-              max-height:80vh;display:flex;flex-direction:column;box-shadow:0 8px 30px rgba(0,0,0,.2)}
-  .modal .crumbs{font-size:.85rem;font-weight:700;margin-bottom:10px;word-break:break-all}
-  .modal .list{overflow:auto;flex:1;border:1px solid var(--line);border-radius:10px}
-  .modal .item{padding:10px 14px;cursor:pointer;border-bottom:1px solid var(--line);
-               display:flex;justify-content:space-between;gap:8px;align-items:center}
+  .modal .box{background:#fff;border-radius:var(--radius);padding:20px;width:min(600px,100%);max-height:85vh;display:flex;flex-direction:column;box-shadow:var(--shadow)}
+  .modal .crumbs{font-size:.85rem;font-weight:700;margin-bottom:12px;word-break:break-all}
+  .modal .list{overflow:auto;flex:1;border:1px solid var(--line);border-radius:8px;min-height:180px}
+  .modal .item{padding:11px 13px;cursor:pointer;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;align-items:center}
   .modal .item:hover{background:var(--green-soft)}
-  .modal .cnt{font-size:.76rem;color:var(--muted)}
-  .modal .foot{display:flex;gap:8px;margin-top:12px}
-  a{color:var(--green-d)}
-  /* ── инструкция ────────────────────── */
-  .help-search{position:sticky;top:0;background:var(--bg);padding:6px 0 10px;z-index:5}
-  .answer h3{font-size:1rem;display:flex;align-items:center;gap:9px;margin-bottom:6px}
-  .answer .ic{flex:0 0 auto;width:30px;height:30px;border-radius:8px;background:var(--green-soft);
-              display:flex;align-items:center;justify-content:center;color:var(--green-d)}
-  .answer ol,.answer ul{margin:6px 0 6px 22px}
-  .answer li{margin:4px 0}
-  .answer table{margin:10px 0}
-  .kbd{background:var(--green-soft);border:1px solid var(--line);border-radius:6px;
-       padding:1px 8px;font-family:Consolas,monospace;font-size:.85em}
-  .toc a{display:inline-block;margin:2px 4px 2px 0;padding:4px 12px;background:#fff;
-         border:1px solid var(--line);border-radius:999px;font-size:.82rem;text-decoration:none}
-  .toc a:hover{border-color:var(--green);color:var(--green-d)}
-  @media print{ header,.help-search,.toc{display:none} .answer{break-inside:avoid} }
-  @media (max-width:640px){
-    .hero{padding:12px 16px;gap:12px}
-    .hero h1{font-size:1.05rem}
-    .hero p{font-size:.78rem}
-    .hero .art{display:none}
-    .hero .logo svg{width:34px;height:34px}
-    .card{padding:16px}
+  .modal .cnt{font-size:.76rem;color:var(--muted);white-space:nowrap}
+  .modal .foot{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+  .help-search{position:sticky;top:0;background:var(--bg);padding:4px 0 12px;z-index:5}
+  .answer h3{font:700 1.15rem/1.3 Georgia,"Times New Roman",serif;display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .answer .ic{flex:0 0 auto;width:30px;height:30px;border-radius:8px;background:var(--green-soft);display:flex;align-items:center;justify-content:center;color:var(--forest-700)}
+  .answer ol,.answer ul{margin:8px 0 8px 22px}
+  .answer li{margin:5px 0}
+  .answer table{margin:0}
+  .kbd{background:var(--sand);border:1px solid #dfd4c2;border-radius:5px;padding:1px 7px;font-family:Consolas,monospace;font-size:.85em}
+  .toc a{display:inline-block;margin:3px 5px 3px 0;padding:5px 11px;background:#fff;border:1px solid var(--line);border-radius:7px;font-size:.8rem;text-decoration:none}
+  .toc a:hover{border-color:var(--forest-700);color:var(--forest-700)}
+  .curr-list{display:none;max-height:220px;overflow:auto;border:1px solid var(--line-strong);border-radius:8px;background:#fff;margin-top:4px;position:relative;z-index:3}
+  .curr-list .ci{padding:9px 12px;cursor:pointer;display:flex;gap:8px;align-items:center;border-bottom:1px solid var(--line);font-size:.86rem}
+  .curr-list .ci:hover{background:var(--green-soft)}
+  .curr-list .ci b{min-width:70px}
+  .curr-list .ci span{color:var(--muted);font-size:.8rem}
+  .curr-chip{display:inline-flex;align-items:center;gap:5px;background:var(--green-soft);color:var(--forest-700);border-radius:6px;padding:4px 9px;font-size:.78rem;font-weight:700;margin:2px 4px 2px 0}
+  .curr-chip b{cursor:pointer;padding:4px}
+  @media (max-width:760px){
+    .hero{padding:14px 16px;gap:12px}
+    .hero-note{display:none}
+    .brand-mark{width:38px;height:38px}
+    .brand-name{font-size:1.18rem}
+    .brand-sub{font-size:.65rem}
+    .nav-toggle{display:block;padding:8px 12px;min-height:40px}
+    .tabs{display:none;padding:0 16px 14px;flex-direction:column;gap:5px}
+    .tabs.open{display:flex}
+    .tabs button{width:100%;text-align:left;padding:11px 13px}
+    .wrap{padding:18px 14px 40px}
+    .card{padding:20px 18px;margin-bottom:14px}
+    .card h2{font-size:1.25rem;align-items:flex-start}
+    .badge{margin-top:2px}
     .row>*{min-width:100%}
     .row button{width:100%}
-    .tabs button{flex:1;text-align:center}
-    ul.files li{padding:11px 0;font-size:1.02rem}
-    .modal .box{width:96vw;max-height:88vh}
     button.small{width:auto}
+    .modal{padding:12px}
+    .modal .box{padding:16px;max-height:90vh}
+    .modal .foot button{flex:1;min-width:120px}
+    ul.files li{padding:12px 2px;font-size:.96rem}
+  }
+  @media (pointer:coarse){
+    input,textarea,select{font-size:16px;min-height:48px}
+    button,summary{min-height:44px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{scroll-behavior:auto!important;transition:none!important}
+  }
+  @media print{
+    body{background:#fff}
+    .app-header,.help-search,.toc,.stepper,button{display:none!important}
+    .wrap{max-width:none;padding:0}
+    .card{border:0;padding:0;margin-bottom:20px}
+    .answer{break-inside:avoid}
+    .table-scroll{overflow:visible}
   }
 </style>
 </head>
@@ -140,30 +174,28 @@
   <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M15.5 15.5L21 21"/></symbol>
 </defs></svg>
 
-<header>
+<a class="skip-link" href="#main">К содержимому</a>
+<header class="app-header">
   <div class="hero">
-    <div class="logo">
-      <svg width="46" height="46" viewBox="0 0 48 48"><circle cx="24" cy="24" r="23" fill="rgba(255,255,255,.15)"/><path d="M10 33L19 15l5.5 9L28 18l10 15H10z" fill="#fff"/><circle cx="33.5" cy="13" r="2.6" fill="#ffd94d"/></svg>
-    </div>
-    <div>
-      <h1>TrailForge · Мастер маршрутов</h1>
-      <p>Гид, карта, погода, аудиогид, фотоотчёт — из программы и GPX</p>
-    </div>
-    <svg class="art" width="150" height="52" viewBox="0 0 150 52" aria-hidden="true">
-      <path d="M0 46 L28 14 L40 30 L52 8 L70 34 L82 20 L98 40 L112 26 L128 42 L150 46 Z" fill="rgba(255,255,255,.22)"/>
-      <path d="M0 48 L22 26 L36 40 L54 20 L74 44 L90 32 L110 46 L150 48 Z" fill="rgba(255,255,255,.35)"/>
-    </svg>
+    <a class="brand" href="/" aria-label="Trek Fourge — на главную">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="28" height="28" viewBox="0 0 32 32"><path d="M3 25L11 9l5 8 4-6 9 14H3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 25l6-7 4 4 3-3 5 6" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="24.5" cy="6" r="2" fill="#d2b48c"/></svg>
+      </span>
+      <span><span class="brand-name">Trek Fourge</span><span class="brand-sub">Мастер маршрутов</span></span>
+    </a>
+    <p class="hero-note">Путеводитель, карта, погода, аудиогид и фотоотчёт — из программы и GPX</p>
+    <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="mainNav">Меню</button>
   </div>
-  <div class="tabs">
-    <button class="active" id="tabWizard">Мастер</button>
-    <button id="tabPhotos">Фотоотчёт</button>
-    <button id="tabReport">Отчёт</button>
-    <button id="tabLearn">Обучение</button>
-    <button id="tabHelp">Инструкция</button>
-  </div>
+  <nav class="tabs" id="mainNav" aria-label="Основные разделы" role="tablist">
+    <button class="active" id="tabWizard" type="button" role="tab" aria-selected="true" aria-controls="pageWizard">Мастер</button>
+    <button id="tabPhotos" type="button" role="tab" aria-selected="false" aria-controls="pagePhotos" tabindex="-1">Фотоотчёт</button>
+    <button id="tabReport" type="button" role="tab" aria-selected="false" aria-controls="pageReport" tabindex="-1">Отчёт</button>
+    <button id="tabLearn" type="button" role="tab" aria-selected="false" aria-controls="pageLearn" tabindex="-1">Обучение</button>
+    <button id="tabHelp" type="button" role="tab" aria-selected="false" aria-controls="pageHelp" tabindex="-1">Инструкция</button>
+  </nav>
 </header>
 
-<div class="wrap">
+<main class="wrap" id="main">
 <div id="pageWizard">
 <div class="stepper" id="stepsBar"></div>
 
@@ -177,8 +209,33 @@
     <div><label>Последний день</label><input id="pEnd" type="date"></div>
   </div>
   <div class="row">
+    <div><label>Тип маршрута</label>
+      <select id="cfgType">
+        <option value="горный">⛰ горный (перевалы, высота)</option>
+        <option value="пеший">🥾 пеший (трекинг без перевалов)</option>
+        <option value="болотный">🌿 болотный (топи, броды)</option>
+        <option value="культурно-городской">🏯 культурно-городской</option>
+        <option value="вело">🚲 вело</option>
+        <option value="байдарка">🛶 байдарка</option>
+        <option value="сапборд">🏄 сапборд (SUP)</option>
+        <option value="рафтинг">🚣 рафтинг</option>
+      </select></div>
+    <div><label>Часовой пояс (IANA)</label><input id="cfgTz" value="Asia/Dushanbe"></div>
+    <div><label>Сдвиг от UTC (фото/треки)</label><input id="cfgTzOff" type="number" value="5"></div>
+  </div>
+  <div class="row">
+    <div><label>Валюты стран маршрута (поиск и выбор)</label>
+      <input id="cfgCurrSearch" placeholder="Поиск: JPY, йена, доллар…" oninput="currFilter()" onfocus="$('currList').style.display='block'">
+      <div class="curr-list" id="currList"></div>
+      <div id="currChips" style="margin-top:6px"></div>
+      <input type="hidden" id="cfgCurr" value="BYN,UZS,TJS">
+    </div>
+    <div><label>Участников</label><input id="cfgMembers" type="number" value="1" min="1"></div>
+  </div>
+  <div class="row">
     <button class="primary" onclick="createProject()">Создать проект</button>
     <select id="pList" onchange="pickProject(this.value)"><option value="">— открыть существующий —</option></select>
+    <button onclick="saveConfig()" title="Сохранить настройки маршрута для текущего проекта">Сохранить настройки</button>
   </div>
   <p class="hint" id="curProject">Проект не выбран — начните с названия и дат.</p>
 </div>
@@ -199,9 +256,14 @@
   </details>
   <label>GPX-трек маршрута (плановый)</label>
   <input type="file" id="fGpx" accept=".gpx" onchange="uploadFile(this,'track.gpx')">
+  <label>Нет GPX? Собрать трек из OpenStreetMap по id отношения (relation)</label>
+  <div class="row">
+    <input id="osmRel" placeholder="например 1240535 (Kumano Kodo Nakahechi)">
+    <button style="flex:0 0 auto" onclick="runStep('osm_gpx')">Собрать из OSM</button>
+  </div>
+  <pre id="logIn" style="display:none"></pre>
   <label>Трек с часов — записанный GPX (необязательно): фото без GPS привяжутся по времени точно к нему; дни без записи — оценка по плановому треку</label>
   <input type="file" accept=".gpx" onchange="uploadFile(this,'трек_с_часов.gpx')">
-  <pre id="logIn" style="display:none"></pre>
 </div>
 
 <div class="card" data-step="2">
@@ -224,7 +286,7 @@
 </div>
 
 <div class="card" data-step="4">
-  <h2><span class="ic"><svg width="19" height="19"><use href="#i-spark"/></svg></span>Гид (ИИ, OpenRouter)
+  <h2><span class="ic"><svg width="19" height="19"><use href="#i-spark"/></svg></span>Гид и аудиогид (ИИ)
     <span class="badge"><svg width="12" height="12"><use href="#i-check"/></svg>готово</span></h2>
   <p class="sub">Путеводитель из данных проекта. Провайдеры: <b>OpenRouter</b> (бесплатные модели,
   бесплатный ключ на <a href="https://openrouter.ai/keys" target="_blank">openrouter.ai/keys</a>),
@@ -235,6 +297,9 @@
         <option value="openrouter">OpenRouter (есть бесплатные)</option>
         <option value="moonshot">Kimi (Moonshot AI)</option>
         <option value="anthropic">Claude (Anthropic)</option>
+        <option value="openai">GPT (OpenAI)</option>
+        <option value="google">Gemini (Google)</option>
+        <option value="deepseek">DeepSeek</option>
       </select></div>
     <div><label>Ключ провайдера</label>
       <input id="llmKey" type="password" placeholder="sk-..." onchange="saveLlmKey()">
@@ -255,6 +320,11 @@
     <button onclick="runStep('audio_texts')">Тексты аудиогида (ИИ)</button>
     <button onclick="runStep('tts')">Озвучить mp3</button>
   </div>
+  <div class="row">
+    <button onclick="openPicker('audio')">🎧 Папка готового аудиогида (mp3)…</button>
+    <button id="btnAudioImport" onclick="runStep('audio_import')" disabled>Привязать к точкам и упаковать</button>
+  </div>
+  <span class="chip" id="audioChip" style="display:none"></span>
   <p class="hint">Совет: сначала «Найти факты», потом «Сгенерировать путеводитель» —
   гид получит факт-блоки с источниками.</p>
   <pre id="logGuide" style="display:none"></pre>
@@ -270,6 +340,7 @@
   </div>
   <div class="row">
     <button onclick="runStep('first_aid')" title="Чеклист аптечки по высотам маршрута + напоминания о приёме в календарь"><svg width="15" height="15" style="vertical-align:-2px"><use href="#i-pill"/></svg> Аптечка (чеклист + напоминания)</button>
+    <button onclick="runStep('sources')" title="Таблица всех источников проекта с датами проверки">Реестр источников (SOURCES.md)</button>
   </div>
   <div class="row">
     <div><label>Валюты стран маршрута (ISO через запятую)</label><input id="currencies" value="BYN,UZS,TJS"></div>
@@ -296,6 +367,12 @@
     <div class="row"><button onclick="saveJsonTo('gear.json',$('taGear').value,'logDocs')">Сохранить список</button>
     <button class="primary" onclick="runStep('gear')">Посчитать веса (Снаряжение.md)</button></div>
   </details>
+  <details>
+    <summary>💴 Бюджет поездки (бюджет.json)</summary>
+    <textarea id="taBudget"></textarea>
+    <div class="row"><button onclick="saveJsonTo('бюджет.json',$('taBudget').value,'logDocs')">Сохранить бюджет</button>
+    <button class="primary" onclick="runStep('budget')">Посчитать бюджет (Бюджет.md)</button></div>
+  </details>
   <pre id="logDocs" style="display:none"></pre>
 </div>
 
@@ -306,8 +383,11 @@
   <div class="row">
     <button onclick="refreshFiles()">Обновить список</button>
     <button class="primary" id="btnZip" onclick="downloadZip()" disabled>Скачать всё одним zip</button>
+    <button onclick="runStep('publish')" title="Копия выдачи в app/guides/ + git push → GitHub Pages">🌐 Опубликовать (GitHub Pages)</button>
+    <button onclick="runStep('check_links')" title="Битые внутренние ссылки в HTML выдачи">Проверить ссылки</button>
   </div>
   <ul class="files" id="filesOut"></ul>
+  <pre id="logResult" style="display:none"></pre>
   <p class="hint">Фото и видео — во вкладке «Фотоотчёт». СТАТУС проекта обновляется автоматически.</p>
 </div>
 </div>
@@ -420,16 +500,19 @@
 <div class="card answer" id="help-steps">
   <h3><span class="ic"><svg width="16" height="16"><use href="#i-map"/></svg></span>Что делает каждый шаг мастера</h3>
   <table>
-    <tr><th>Шаг</th><th>Что загрузить</th><th>Что получится</th></tr>
-    <tr><td>2 · Программа</td><td>PDF/DOCX/TXT с описанием или текст; плановый GPX; трек с часов (после похода)</td>
-        <td>программа.txt, черновик points.json</td></tr>
+    <tr><th>Шаг</th><th>Что загрузить / настроить</th><th>Что получится</th></tr>
+    <tr><td>1 · Проект</td><td>название, даты; тип маршрута (пеший/горный/болотный/культурно-городской/вело/байдарка/сапборд/рафтинг), пояс, валюты (список с поиском), участники</td>
+        <td>route.json — настройки применяются всеми шагами</td></tr>
+    <tr><td>2 · Программа</td><td>PDF/DOCX/TXT или текст; плановый GPX <i>или id отношения OSM</i>; трек с часов (после похода)</td>
+        <td>программа.txt, черновик points.json, track.gpx</td></tr>
     <tr><td>3 · Анализ</td><td>track.gpx + точки</td><td>анализ.json — км, высоты, уклоны, азимуты</td></tr>
     <tr><td>4 · Погода</td><td>даты + точки</td><td>Погода.md (прогноз/климат/факт), Световой_день.md (рассветы, Луна)</td></tr>
-    <tr><td>5 · Гид (ИИ)</td><td>ключ OpenRouter</td><td>Гид.md + Гид.html, аудиотексты → mp3, факты из Википедии/OSM</td></tr>
-    <tr><td>6 · Документы</td><td>—</td><td>маршрут.kml, календарь.ics, Чеклист.html, Аптечка.html, Деньги.md</td></tr>
-    <tr><td>7 · Результат</td><td>—</td><td>zip всего проекта</td></tr>
+    <tr><td>5 · Гид (ИИ)</td><td>ключ провайдера: OpenRouter / Kimi / Claude / GPT / Gemini / DeepSeek</td>
+        <td>Гид.md + Гид.html (с фото дней), факты из Википедии/OSM, аудиотексты → mp3, импорт готового аудиогида</td></tr>
+    <tr><td>6 · Документы</td><td>—</td><td>маршрут.kml, календарь.ics, Чеклист.html (+Keep), Аптечка.html + напоминания, Деньги.md, Снаряжение.md (веса), Бюджет.md, SOURCES.md</td></tr>
+    <tr><td>7 · Результат</td><td>—</td><td>zip всего проекта, проверка ссылок, публикация на GitHub Pages</td></tr>
   </table>
-  <p class="hint">Фото и видео живут в отдельной вкладке «Фотоотчёт» (сортировка по дням, фотометки к аудиогиду, карта и таблица похода с настройками привязки).</p>
+  <p class="hint">Фото и видео — вкладка «Фотоотчёт» (сортировка по дням, фотометки к аудиогиду, карта и таблица похода с настройками привязки). Отчёт после похода — вкладка «Отчёт».</p>
   <p class="hint">Совет: в шаге 5 сначала «🔎 Найти факты», потом «Сгенерировать путеводитель» — гид будет с факт-блоками и источниками.</p>
 </div>
 
@@ -456,14 +539,17 @@
 
 <div class="card answer" id="help-llm">
   <h3><span class="ic"><svg width="16" height="16"><use href="#i-check"/></svg></span>Ключи LLM-провайдеров</h3>
-  <p>Провайдер выбирается в шаге 5 («Гид»):</p>
+  <p>Провайдер выбирается в шаге 5 («Гид»), ключи хранятся по каждому отдельно:</p>
   <ol>
     <li><b>OpenRouter</b> — есть бесплатные модели: <a href="https://openrouter.ai/keys" target="_blank">openrouter.ai/keys</a> → Sign up (Google) → «Create Key».</li>
     <li><b>Kimi (Moonshot)</b> — ключ с platform.moonshot.ai (ваша подписка Kimi).</li>
-    <li><b>Claude (Anthropic)</b> — ключ с console.anthropic.com (ваша подписка Claude).</li>
+    <li><b>Claude (Anthropic)</b> — ключ с console.anthropic.com.</li>
+    <li><b>GPT (OpenAI)</b> — ключ с platform.openai.com.</li>
+    <li><b>Gemini (Google)</b> — ключ с aistudio.google.com (есть бесплатный уровень).</li>
+    <li><b>DeepSeek</b> — ключ с platform.deepseek.com (дешёвый платный).</li>
   </ol>
-  <p class="hint">Ключи сохраняются локально по каждому провайдеру отдельно (в git не попадают).
-  Дневной лимит бесплатных моделей OpenRouter ~50 запросов: исчерпали — переключитесь на Kimi/Claude или подождите.</p>
+  <p class="hint">Ключи сохраняются локально (в git не попадают).
+  Дневной лимит бесплатных моделей OpenRouter ~50 запросов: исчерпали — переключитесь на другого провайдера или подождите.</p>
 </div>
 
 <div class="card answer" id="help-photo">
@@ -515,9 +601,9 @@
 </div>
 </div>
 
-</div>
+</main>
 
-<div class="modal" id="picker">
+<div class="modal" id="picker" role="dialog" aria-modal="true" aria-labelledby="pkCrumbs">
   <div class="box">
     <div class="crumbs" id="pkCrumbs">Выбор папки</div>
     <div class="list" id="pkList"></div>
@@ -533,6 +619,7 @@
 const $ = id => document.getElementById(id);
 let cur = localStorage.getItem('routeWizardProject') || '';
 let photoFolder = '';
+let audioFolder = '';
 let doneSteps = new Set();
 const STEP_NAMES = ['Проект','Программа','Анализ','Погода','Гид (ИИ)','Документы','Результат'];
 // какие файлы выдачи отмечают шаг выполненным
@@ -546,7 +633,7 @@ function drawSteps(active){
     const inner = doneSteps.has(i)
       ? '<span class="num"><svg width="12" height="12"><use href="#i-check"/></svg></span>'
       : `<span class="num">${i+1}</span>`;
-    return `<span class="${cls}" onclick="showStep(${i})">${inner}${n}</span>`;
+    return `<button type="button" class="${cls}" onclick="showStep(${i})" ${i===active?'aria-current="step"':''}>${inner}${n}</button>`;
   }).join('');
   document.querySelectorAll('#pageWizard .card[data-step]').forEach(c=>{
     c.style.display = +c.dataset.step===active ? '' : 'none';
@@ -555,7 +642,8 @@ function drawSteps(active){
 }
 let activeStep = 0;
 function showStep(i){ activeStep=i; drawSteps(i); if(i===STEP_NAMES.length-1) refreshFiles();
-  window.scrollTo({top:0, behavior:'smooth'}); }
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.scrollTo({top:0, behavior:reduceMotion ? 'auto' : 'smooth'}); }
 function nextStep(){ if(activeStep < STEP_NAMES.length-1) showStep(activeStep+1); }
 
 async function api(path, opts={}){
@@ -575,7 +663,7 @@ function setCur(name){
   $('repProject').textContent = name || 'не выбран';
   $('btnZip').disabled = !name;
   doneSteps = new Set(name ? [0] : []);
-  if(name) refreshFiles(true);
+  if(name) { refreshFiles(true); loadConfig(); }
 }
 async function loadProjects(){
   const list = await api('/api/projects');
@@ -584,8 +672,27 @@ async function loadProjects(){
 }
 async function createProject(){
   const name = $('pName').value.trim(); if(!name) return alert('Введите название похода');
-  await api('/api/projects', {method:'POST', body:JSON.stringify({name})});
+  await api('/api/projects', {method:'POST', body:JSON.stringify({name, config: collectConfig()})});
   setCur(name); loadProjects(); nextStep();
+}
+function collectConfig(){
+  return {route_type: $('cfgType').value, tz: $('cfgTz').value.trim() || 'Asia/Dushanbe',
+          tz_offset: +$('cfgTzOff').value || 0, currencies: $('cfgCurr').value.trim(),
+          members: +$('cfgMembers').value || 1};
+}
+async function saveConfig(){
+  if(!cur) return alert('Сначала выберите проект');
+  await api(`/api/projects/${enc()}/config`, {method:'PUT', body:JSON.stringify(collectConfig())});
+  $('curProject').textContent = `Текущий проект: «${cur}». Настройки сохранены ✓`;
+}
+async function loadConfig(){
+  if(!cur) return;
+  const c = await api(`/api/projects/${enc()}/config`);
+  $('cfgType').value = c.route_type; $('cfgTz').value = c.tz;
+  $('cfgTzOff').value = c.tz_offset; $('cfgCurr').value = c.currencies;
+  $('cfgMembers').value = c.members; $('phTz').value = c.tz_offset;
+  currSel = new Set((c.currencies||'').split(',').filter(Boolean)); currRender();
+  $('currencies').value = c.currencies; $('gearMembers').value = c.members;
 }
 function pickProject(name){ if(name) setCur(name); }
 
@@ -633,7 +740,8 @@ async function runStep(step){
                  guide:'logGuide', guide_html:'logGuide', audio_texts:'logGuide', tts:'logGuide',
                  research:'logGuide', daylight:'logWeather',
                  photos:'logPhotos', marks:'logPhotos', photos_all:'logPhotos',
-                 report_map:'logPhotos'}[step] || 'logDocs';
+                 report_map:'logPhotos', audio_import:'logGuide', publish:'logResult',
+                 osm_gpx:'logIn', check_links:'logResult'}[step] || 'logDocs';
   log(logId, '⏳ Выполняю… это может занять до пары минут.');
   const body = {};
   if(step==='program'){
@@ -655,6 +763,13 @@ async function runStep(step){
     body.folder = photoFolder; body.start = $('pStart').value;
     body.tz_offset = $('phTz').value; body.max_gap_min = $('phGap').value;
     body.plan_interp = $('phPlan').checked; body.offline_tiles = $('phTiles').checked;
+  }
+  if(step==='audio_import'){ body.folder = audioFolder; }
+  if(step==='osm_gpx'){ body.relation = $('osmRel').value.trim(); }
+  if(step==='budget'){
+    if($('pStart').value && $('pEnd').value){
+      body.days = Math.round((new Date($('pEnd').value) - new Date($('pStart').value))/86400000) + 1;
+    }
   }
   try{
     const r = await api(`/api/projects/${enc()}/run/${step}`, {method:'POST', body:JSON.stringify(body)});
@@ -679,9 +794,10 @@ async function runStep(step){
 
 function eventsTemplate(){
   const s=$('pStart').value||'2026-09-06', e=$('pEnd').value||'2026-09-16';
+  const tz=$('cfgTz').value.trim()||'Asia/Dushanbe';
   return JSON.stringify([
-    {summary:'Старт похода', date:s, tzid:'Asia/Dushanbe', alarms_min:[720]},
-    {summary:'Финиш похода', date:e, tzid:'Asia/Dushanbe', alarms_min:[720]}
+    {summary:'Старт похода', date:s, tzid:tz, alarms_min:[720]},
+    {summary:'Финиш похода', date:e, tzid:tz, alarms_min:[720]}
   ], null, 1);
 }
 const CHECKLIST_TEMPLATE = JSON.stringify({
@@ -700,6 +816,12 @@ const GEAR_TEMPLATE = JSON.stringify([
   {category:'Одежда на себе', item:'Ботинки треккинговые', weight_g:1300, qty:1, worn:true},
   {category:'Электроника', item:'Пауэрбанк', weight_g:null, qty:1}
 ], null, 1);
+const BUDGET_TEMPLATE = JSON.stringify([
+  {item:'Билеты (авиа/жд)', amount:null, currency:'EUR', note:'проверить цену'},
+  {item:'Отель', amount:60, currency:'EUR', per_day:true},
+  {item:'Питание', amount:25, currency:'EUR', per_person:true, per_day:true},
+  {item:'Транспорт по маршруту', amount:12000, currency:'JPY', per_person:true, note:'проверить расписание'}
+], null, 1);
 
 async function refreshFiles(silent){
   if(!cur) return;
@@ -717,9 +839,14 @@ function downloadZip(){ location.href = `/api/projects/${enc()}/zip`; }
 
 // ---- выбор папки с фото (проводник по компьютеру) ----
 let pkPath = '';
-async function openPicker(){
+let pickerTarget = 'photos';
+let pickerReturnFocus = null;
+async function openPicker(target){
+  pickerTarget = target || 'photos';
+  pickerReturnFocus = document.activeElement;
   $('picker').classList.add('open');
   await pickerGo('');
+  $('pkChoose').focus();
 }
 async function pickerGo(path){
   const r = await api('/api/browse' + (path ? '?path=' + encodeURIComponent(path) : ''));
@@ -732,17 +859,72 @@ async function pickerGo(path){
   $('pkChoose').textContent = r.media_here ? `Выбрать (здесь ${r.media_here} фото/видео)` : 'Выбрать эту папку';
 }
 function pickerUp(){ if(pkPath) api('/api/browse?path='+encodeURIComponent(pkPath)).then(r=>{ if(r.parent!==undefined) pickerGo(r.parent); }); }
-function closePicker(){ $('picker').classList.remove('open'); }
+function closePicker(){
+  $('picker').classList.remove('open');
+  if(pickerReturnFocus && pickerReturnFocus.isConnected) pickerReturnFocus.focus();
+}
 function choosePicked(){
   if(!pkPath) return alert('Зайдите в нужную папку');
-  photoFolder = pkPath;
-  $('folderChip').style.display = '';
-  $('folderChip').textContent = '📂 ' + photoFolder;
-  $('btnPhotosAll').disabled = false;
+  if(pickerTarget === 'audio'){
+    audioFolder = pkPath;
+    $('audioChip').style.display = '';
+    $('audioChip').textContent = '🎧 ' + audioFolder;
+    $('btnAudioImport').disabled = false;
+  }else{
+    photoFolder = pkPath;
+    $('folderChip').style.display = '';
+    $('folderChip').textContent = '📂 ' + photoFolder;
+    $('btnPhotosAll').disabled = false;
+  }
   closePicker();
 }
 
-// ---- LLM (OpenRouter / Kimi / Claude) ----
+// ---- валюты: список с поиском ----
+const CURRENCIES = [
+ ['BYN','белорусский рубль'],['RUB','российский рубль'],['USD','доллар США'],['EUR','евро'],
+ ['JPY','японская иена'],['CNY','китайский юань'],['KZT','казахстанский тенге'],
+ ['UZS','узбекский сум'],['TJS','таджикский сомони'],['KGS','киргизский сом'],
+ ['GEL','грузинский лари'],['AMD','армянский драм'],['AZN','азербайджанский манат'],
+ ['TRY','турецкая лира'],['THB','тайский бат'],['VND','вьетнамский донг'],
+ ['IDR','индонезийская рупия'],['MYR','малайзийский ринггит'],['SGD','сингапурский доллар'],
+ ['KRW','южнокорейская вона'],['INR','индийская рупия'],['NPR','непальская рупия'],
+ ['LKR','шри-ланкийская рупия'],['MMK','мьянманский кьят'],['KHR','камбоджийский риель'],
+ ['LAK','лаосский кип'],['MNT','монгольский тугрик'],['MOP','макаоский патака'],
+ ['TWD','тайваньский доллар'],['HKD','гонконгский доллар'],['PHP','филиппинское песо'],
+ ['GBP','британский фунт'],['CHF','швейцарский франк'],['PLN','польский злотый'],
+ ['CZK','чешская крона'],['HUF','венгерский форинт'],['RON','румынский лей'],
+ ['BGN','болгарский лев'],['UAH','украинская гривна'],['MDL','молдавский лей'],
+ ['SEK','шведская крона'],['NOK','норвежская крона'],['DKK','датская крона'],
+ ['ISK','исландская крона'],['AED','дирхам ОАЭ'],['SAR','саудовский риял'],
+ ['QAR','катарский риал'],['JOD','иорданский динар'],['OMR','оманский риал'],
+ ['EGP','египетский фунт'],['MAD','марокканский дирхам'],['ZAR','южноафриканский рэнд'],
+ ['KES','кенийский шиллинг'],['ETB','эфиопский быр'],['TND','тунисский динар'],
+ ['CAD','канадский доллар'],['MXN','мексиканское песо'],['BRL','бразильский реал'],
+ ['ARS','аргентинское песо'],['CLP','чилийское песо'],['PEN','перуанский соль'],
+ ['COP','колумбийское песо'],['AUD','австралийский доллар'],['NZD','новозеландский доллар'],
+ ['FJD','фиджийский доллар'],['PGK','папуа-новогвинейская кина'],['BOB','боливийское боливиано'],
+];
+let currSel = new Set($('cfgCurr').value.split(',').filter(Boolean));
+function currRender(){
+  const q = $('cfgCurrSearch').value.trim().toLowerCase();
+  $('currList').innerHTML = CURRENCIES
+    .filter(([c,n]) => !q || c.toLowerCase().includes(q) || n.toLowerCase().includes(q))
+    .map(([c,n]) => `<div class="ci" onclick="currToggle('${c}')">
+       <b>${currSel.has(c)?'✅':'⬜'} ${c}</b><span>${n}</span></div>`).join('')
+    || '<div class="ci">не найдено</div>';
+  $('currChips').innerHTML = [...currSel].map(c=>
+    `<span class="curr-chip">${c} <b onclick="currToggle('${c}')">✕</b></span>`).join('');
+  $('cfgCurr').value = [...currSel].join(',');
+}
+function currToggle(c){ currSel.has(c) ? currSel.delete(c) : currSel.add(c); currRender(); }
+function currFilter(){ currRender(); }
+document.addEventListener('click', e=>{
+  if(!e.target.closest('.curr-list') && e.target.id!=='cfgCurrSearch')
+    $('currList').style.display='none';
+});
+currRender();
+
+// ---- LLM (OpenRouter / Kimi / Claude / GPT / Gemini / DeepSeek) ----
 async function loadLlm(){
   const provider = $('llmProvider').value;
   try{
@@ -813,12 +995,40 @@ $('tabLearn').onclick = ()=>{ showTab('Learn'); loadLearn(); };
 $('tabHelp').onclick = ()=>{ showTab('Help'); };
 function showTab(t){
   for(const p of ['Wizard','Photos','Report','Learn','Help']){
-    $('page'+p).style.display = p===t ? '' : 'none';
-    $('tab'+p).classList.toggle('active', p===t);
+    const selected = p===t;
+    $('page'+p).style.display = selected ? '' : 'none';
+    $('tab'+p).classList.toggle('active', selected);
+    $('tab'+p).setAttribute('aria-selected', String(selected));
+    $('tab'+p).tabIndex = selected ? 0 : -1;
   }
+  closeNav();
   if(t==='Report') $('repProject').textContent = cur || 'не выбран';
   if(t==='Photos') $('photoProject').textContent = cur || 'не выбран';
 }
+function closeNav(){
+  $('mainNav').classList.remove('open');
+  $('navToggle').setAttribute('aria-expanded', 'false');
+}
+$('navToggle').onclick = ()=>{
+  const open = $('mainNav').classList.toggle('open');
+  $('navToggle').setAttribute('aria-expanded', String(open));
+};
+$('mainNav').addEventListener('keydown', event=>{
+  if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
+  const tabs = [...$('mainNav').querySelectorAll('[role=tab]')];
+  const current = tabs.indexOf(document.activeElement);
+  if(current < 0) return;
+  event.preventDefault();
+  const next = event.key==='Home' ? 0 : event.key==='End' ? tabs.length-1 :
+    (current + (event.key==='ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+  tabs[next].focus(); tabs[next].click();
+});
+document.addEventListener('keydown', event=>{
+  if(event.key!=='Escape') return;
+  closeNav();
+  if($('picker').classList.contains('open')) closePicker();
+});
+$('picker').addEventListener('click', event=>{ if(event.target===$('picker')) closePicker(); });
 
 // ---- инструкция: живой поиск ----
 function filterHelp(){
@@ -883,9 +1093,36 @@ async function addNote(){
   buildReport();
 }
 
+function enhanceInterface(){
+  document.querySelectorAll('table').forEach(table=>{
+    const scroll = document.createElement('div');
+    scroll.className = 'table-scroll';
+    scroll.setAttribute('role', 'region');
+    scroll.setAttribute('aria-label', 'Таблица с горизонтальной прокруткой');
+    table.before(scroll); scroll.append(table);
+  });
+  document.querySelectorAll('pre[id^="log"]').forEach(logEl=>{
+    logEl.setAttribute('role', 'status'); logEl.setAttribute('aria-live', 'polite');
+  });
+  let generatedId = 0;
+  document.querySelectorAll('label').forEach(labelEl=>{
+    if(labelEl.htmlFor || labelEl.querySelector('input,textarea,select')) return;
+    const control = labelEl.nextElementSibling;
+    if(!control || !control.matches('input:not([type=hidden]),textarea,select')) return;
+    if(!control.id) control.id = `field-${++generatedId}`;
+    labelEl.htmlFor = control.id;
+  });
+  for(const p of ['Wizard','Photos','Report','Learn','Help']){
+    $('page'+p).setAttribute('role', 'tabpanel');
+    $('page'+p).setAttribute('aria-labelledby', 'tab'+p);
+  }
+}
+
+enhanceInterface();
 $('taEvents').value = eventsTemplate();
 $('taChecklist').value = CHECKLIST_TEMPLATE;
 $('taGear').value = GEAR_TEMPLATE;
+$('taBudget').value = BUDGET_TEMPLATE;
 setCur(cur); loadProjects(); drawSteps(0); loadLlm();
 </script>
 </body>

@@ -6,7 +6,8 @@
 - отметки сохраняются в localStorage браузера (работает офлайн);
 - озвучка НЕОТМЕЧЕННЫХ пунктов через Web Speech API (голос браузера, ru-RU):
   кнопка 🔊 у раздела, «Читать всё», «Стоп»;
-- счётчики по разделам и общий прогресс; @media print; мобильная вёрстка.
+- счётчики по разделам и общий прогресс; @media print; мобильная вёрстка;
+- единая с гидом природная палитра, крупные touch-цели и заметный фокус.
 
 Использование:
   python3 make_checklist.py checklist.json Чеклист.html
@@ -32,37 +33,59 @@ TEMPLATE = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>%%TITLE%%</title>
 <style>
-  :root{--paper:#b0c6b3;--ink:#111;--crim:#db3356;--card:#fdfdfb;--line:#7a947e}
+  :root{--paper:#f4f1e8;--ink:#172820;--muted:#617067;--forest:#153b32;--crim:#a64f35;--card:#fffdf8;--line:#d4ddd4;--soft:#e8efe7}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--paper);color:var(--ink);font:16px/1.55 -apple-system,"Segoe UI",Roboto,sans-serif;padding:18px}
-  .wrap{max-width:760px;margin:0 auto}
-  h1{font-family:Georgia,serif;font-size:1.7rem;margin:8px 0 2px}
-  .sub{font-size:.9rem;opacity:.85;margin-bottom:14px}
-  .toolbar{position:sticky;top:0;background:var(--paper);padding:8px 0;border-bottom:2px solid var(--ink);display:flex;gap:8px;flex-wrap:wrap;z-index:5;margin-bottom:14px}
-  button{font:600 .92rem/1 inherit;padding:9px 14px;border:2px solid var(--ink);background:var(--card);cursor:pointer;border-radius:6px}
-  button:hover{background:var(--ink);color:var(--paper)}
+  body{background:var(--paper);color:var(--ink);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+  body,p,li{overflow-wrap:anywhere}
+  button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid #d57a57;outline-offset:3px}
+  .site-header{background:var(--forest);color:#fff;border-bottom:3px solid #d2b48c}
+  .site-header .shell{max-width:900px;margin:0 auto;padding:13px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .brand{color:#fff;text-decoration:none;font:700 1.05rem Georgia,"Times New Roman",serif}
+  .brand small{display:block;font: .62rem/1.4 -apple-system,"Segoe UI",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#cddbd3;margin-top:3px}
+  .top-link{color:#fff;font-size:.8rem;text-underline-offset:3px}
+  .wrap{max-width:900px;margin:0 auto;padding:32px 24px 64px}
+  h1{font:700 clamp(2rem,5vw,3rem)/1.1 Georgia,"Times New Roman",serif;letter-spacing:-.02em;margin:0 0 10px}
+  .sub{font-size:.9rem;color:var(--muted);margin-bottom:20px;max-width:75ch}
+  .toolbar{position:sticky;top:0;background:var(--paper);padding:12px 0;border-bottom:1px solid var(--line);display:flex;gap:8px;flex-wrap:wrap;z-index:5;margin-bottom:18px}
+  button{font:650 .84rem/1.2 inherit;padding:10px 13px;border:1px solid var(--forest);background:var(--card);color:var(--forest);cursor:pointer;border-radius:7px;min-height:42px}
+  button:hover{background:var(--forest);color:#fff}
   button.reading{background:var(--crim);border-color:var(--crim);color:#fff}
-  .progress{font:600 .95rem/1 Georgia,serif;align-self:center;margin-left:auto}
-  section{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin-bottom:14px}
-  h2{font-family:Georgia,serif;font-size:1.15rem;display:flex;align-items:center;gap:10px;margin-bottom:8px;cursor:pointer}
-  h2 .speak{font-size:.8rem;padding:5px 10px;border-width:1px}
-  h2 .cnt{margin-left:auto;font:600 .85rem/1 inherit;color:var(--crim)}
+  .progress{font:650 .9rem/1 -apple-system,"Segoe UI",sans-serif;align-self:center;margin-left:auto;color:var(--forest);white-space:nowrap}
+  section{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-bottom:14px}
+  h2{font:700 1.2rem/1.35 Georgia,"Times New Roman",serif;color:var(--forest);display:flex;align-items:center;gap:10px;margin-bottom:10px;cursor:pointer}
+  h2 .speak{font: .8rem/1 -apple-system,"Segoe UI",sans-serif;padding:7px 9px;border:1px solid var(--line);background:var(--soft);min-width:38px;min-height:38px}
+  h2 .cnt{margin-left:auto;font:650 .82rem/1 -apple-system,"Segoe UI",sans-serif;color:var(--crim);white-space:nowrap}
   ul{list-style:none}
-  li{display:flex;gap:10px;padding:6px 2px;border-bottom:1px dashed var(--line);align-items:flex-start}
+  li{display:flex;gap:11px;padding:9px 2px;border-bottom:1px solid var(--line);align-items:flex-start}
   li:last-child{border-bottom:none}
-  input[type=checkbox]{width:20px;height:20px;margin-top:2px;accent-color:var(--crim);flex-shrink:0;cursor:pointer}
+  input[type=checkbox]{width:22px;height:22px;margin-top:2px;accent-color:var(--forest);flex-shrink:0;cursor:pointer}
   label{cursor:pointer;flex:1}
-  li.done label{text-decoration:line-through;opacity:.5}
-  .note{font-size:.85rem;opacity:.8;margin-top:8px;font-style:italic}
+  li.done label{text-decoration:line-through;opacity:.55}
+  .note{font-size:.84rem;color:var(--muted);margin-top:10px;font-style:italic}
+  @media (max-width:600px){
+    .site-header .shell{padding:11px 16px}
+    .wrap{padding:26px 16px 48px}
+    section{padding:16px 14px}
+    h2{flex-wrap:wrap}
+    .toolbar{position:static}
+    .toolbar button{flex:1;min-height:44px}
+    .progress{width:100%;text-align:right;padding:4px}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
   @media print{
-    body{background:#fff}
-    .toolbar{display:none}
+    body{background:#fff;font-size:11pt}
+    .site-header,.toolbar,.speak{display:none!important}
+    .wrap{max-width:none;padding:0}
     section{break-inside:avoid;border:1px solid #999}
   }
 </style>
 </head>
 <body>
-<div class="wrap">
+<header class="site-header"><div class="shell">
+  <a class="brand" href="#checklist">Trek Fourge<small>Подготовка к походу</small></a>
+  <a class="top-link" href="#sections">К списку</a>
+</div></header>
+<main class="wrap" id="checklist">
 <h1>%%TITLE%%</h1>
 <p class="sub">%%SUBTITLE%%</p>
 
@@ -70,11 +93,13 @@ TEMPLATE = """<!DOCTYPE html>
   <button id="readAll">&#x1F50A; Читать всё</button>
   <button id="stopRead">&#x23F9; Стоп</button>
   <button id="reset">&#x21BA; Сбросить отметки</button>
-  <span class="progress" id="progress">0 / 0</span>
+  <span class="progress" id="progress" role="status" aria-live="polite">0 / 0</span>
 </div>
 
+<div id="sections">
 %%SECTIONS%%
 </div>
+</main>
 <script>
 const synth = window.speechSynthesis;
 function secText(h2){
@@ -152,7 +177,7 @@ def render_sections(sections):
                          f'<label for="c{n}">{esc_html(text)}</label></li>')
         note = f'\n<p class="note">{esc_html(sec["note"])}</p>' if sec.get("note") else ""
         out.append(f"""<section data-sec>
-<h2 onclick="speakSec(this)">{si} · {esc_html(sec["title"])} <button class="speak" onclick="event.stopPropagation();speakSec(this.parentElement)">&#x1F50A;</button><span class="cnt"></span></h2>
+<h2 onclick="speakSec(this)">{si} · {esc_html(sec["title"])} <button class="speak" aria-label="Прочитать раздел вслух" onclick="event.stopPropagation();speakSec(this.parentElement)">&#x1F50A;</button><span class="cnt"></span></h2>
 <ul>
 {chr(10).join(items)}
 </ul>{note}

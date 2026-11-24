@@ -14,7 +14,7 @@
 события.json, чеклист.json) и «выходные/» (всё, что производят скрипты).
 После каждого удачного шага автоматически обновляется СТАТУС (F9, контракт).
 """
-import argparse, io, importlib.util, json, os, subprocess, sys, zipfile
+import argparse, io, importlib.util, json, os, shutil, subprocess, sys, zipfile
 from pathlib import Path
 from urllib.parse import quote
 
@@ -31,6 +31,32 @@ EXAMPLES_FILE = LEARN / "примеры.json"
 
 # канонические имена входных файлов проекта (мастер сохраняет загрузки под ними)
 IN_DIR, OUT_DIR = "входные", "выходные"
+
+# конфиг маршрута по умолчанию (route.json в папке проекта; правится в шаге 1)
+DEFAULT_ROUTE_CONFIG = {
+    "tz": "Asia/Dushanbe",       # пояс IANA (календарь, напоминания)
+    "tz_offset": 5,              # сдвиг от UTC (фото: EXIF vs GPX; отчёт по треку)
+    "currencies": "BYN,UZS,TJS", # валюты стран маршрута (F10)
+    "route_type": "горный",      # горный | городской | культурный — влияет на гид
+    "members": 1,                # участников (F12 групповое снаряжение)
+    "bbox": None,                # [S, N, W, E] — валидация KML; None → считается из трека
+}
+
+
+def route_config(d):
+    """Конфиг маршрута проекта: route.json поверх значений по умолчанию."""
+    cfg = dict(DEFAULT_ROUTE_CONFIG)
+    p = d / "route.json"
+    if p.is_file():
+        try:
+            cfg.update(json.loads(p.read_text(encoding="utf-8")))
+        except json.JSONDecodeError:
+            pass
+    # миграция старых значений типа маршрута
+    cfg["route_type"] = {"культурный": "культурно-городской",
+                         "городской": "культурно-городской"}.get(cfg["route_type"],
+                                                                  cfg["route_type"])
+    return cfg
 
 app = FastAPI(title="Генератор путеводителей горных походов")
 
@@ -109,8 +135,28 @@ def create_project(payload: dict = Body(...)):
     d.mkdir(parents=True, exist_ok=True)
     (d / IN_DIR).mkdir(exist_ok=True)
     (d / OUT_DIR).mkdir(exist_ok=True)
+    cfg = route_config(d)
+    if payload.get("config"):  # настройки маршрута из шага 1
+        cfg.update({k: v for k, v in payload["config"].items() if k in DEFAULT_ROUTE_CONFIG})
+        (d / "route.json").write_text(json.dumps(cfg, ensure_ascii=False, indent=1),
+                                      encoding="utf-8")
     update_status(d)
     return {"ok": True, "name": name}
+
+
+@app.get("/api/projects/{name}/config")
+def get_config(name):
+    return route_config(project_dir(name))
+
+
+@app.put("/api/projects/{name}/config")
+def put_config(name, payload: dict = Body(...)):
+    d = project_dir(name)
+    cfg = route_config(d)
+    cfg.update({k: v for k, v in payload.items() if k in DEFAULT_ROUTE_CONFIG})
+    (d / "route.json").write_text(json.dumps(cfg, ensure_ascii=False, indent=1) + "\n",
+                                  encoding="utf-8")
+    return {"ok": True, "config": cfg}
 
 
 @app.post("/api/projects/{name}/upload")
@@ -203,7 +249,7 @@ def step_kml(d, params):
     gpx = d / IN_DIR / "track.gpx"
     if not gpx.is_file():
         raise HTTPException(400, "Загрузите входные/track.gpx")
-    bbox = track_bbox(gpx)
+    bbox = route_config(d)["bbox"] or track_bbox(gpx)
     args = [SCRIPTS / "make_kml.py", gpx, d / OUT_DIR / "маршрут.kml",
             "--bbox", *[f"{x:.4f}" for x in bbox]]
     splits = params.get("split_km") or []
@@ -301,11 +347,8 @@ def step_photos_all(d, params):
                     "\n  ".join(tail[-4:]))
 
     # гео-фото-отчёт с картой (hike_report.py) — только если стоят зависимости
-    try:
-        import folium, openpyxl, reverse_geocoder  # noqa: F401
-        have_deps = True
-    except ImportError:
-        have_deps = False
+    have_deps = all(importlib.util.find_spec(name) is not None
+                    for name in ("folium", "openpyxl", "reverse_geocoder"))
     if have_deps:
         ok, out, err = run_hike_report(d, folder, params)
         any_ok |= ok
@@ -327,8 +370,10 @@ def run_hike_report(d, folder, params):
     extra = [t for t in (watch, planned) if t]  # записанный + плановый треки
     if extra:
         args += ["--gpx", *extra]
-    if params.get("tz_offset") not in (None, ""):
-        args += ["--tz-offset", str(params["tz_offset"])]
+    tz = params.get("tz_offset")
+    if tz in (None, ""):
+        tz = route_config(d)["tz_offset"]
+    args += ["--tz-offset", str(tz)]
     if params.get("max_gap_min") not in (None, ""):
         args += ["--max-gap-min", str(params["max_gap_min"])]
     if params.get("plan_interp") is False:
@@ -344,9 +389,8 @@ def step_report_map(d, params):
     folder = (params.get("folder") or "").strip()
     if not folder:
         raise HTTPException(400, "Сначала выберите папку с фотографиями")
-    try:
-        import folium, openpyxl, reverse_geocoder  # noqa: F401
-    except ImportError:
+    if any(importlib.util.find_spec(name) is None
+           for name in ("folium", "openpyxl", "reverse_geocoder")):
         raise HTTPException(400, "Нужны зависимости: pip install folium openpyxl "
                                  "reverse-geocoder pyosmogps")
     ok, out, err = run_hike_report(d, folder, params)
@@ -402,9 +446,7 @@ def step_tts(d, params):
     texts = d / OUT_DIR / "аудиотексты.json"
     if not texts.is_file():
         raise HTTPException(400, "Сначала сгенерируйте тексты аудиогида (кнопка выше)")
-    try:
-        import edge_tts  # noqa: F401
-    except ImportError:
+    if importlib.util.find_spec("edge_tts") is None:
         raise HTTPException(400, "Нужен edge-tts: pip install edge-tts -i https://pypi.org/simple")
     ok, out, err = run_script([SCRIPTS / "tts_audioguide.py", texts, d / OUT_DIR / "Аудиогид"],
                               timeout=3600)
@@ -425,8 +467,9 @@ def step_daylight(d, params):
     start, end = params.get("start"), params.get("end")
     if not start or not end:
         raise HTTPException(400, "Укажите даты проекта (шаг 1)")
+    tz = route_config(d)["tz"]
     return (*run_script([SCRIPTS / "daylight.py", pts, "--start", start, "--end", end,
-                         "--md", d / OUT_DIR / "Световой_день.md"]),)
+                         "--tz", tz, "--md", d / OUT_DIR / "Световой_день.md"]),)
 
 
 def step_first_aid(d, params):
@@ -439,7 +482,8 @@ def step_first_aid(d, params):
         raise HTTPException(400, "Укажите даты проекта (шаг 1)")
     out = d / OUT_DIR
     ok1, _, err1 = run_script([SCRIPTS / "first_aid.py", pts, "--start", start,
-                               "--end", end, "--out", out])
+                               "--end", end, "--tz", route_config(d)["tz"],
+                               "--out", out])
     if not ok1:
         return False, "", err1
     ok2, _, err2 = run_script([SCRIPTS / "make_checklist.py", out / "аптечка_чеклист.json",
@@ -451,14 +495,15 @@ def step_first_aid(d, params):
 
 def step_currency(d, params):
     """Курсы валют стран маршрута (F10) → Деньги.md."""
-    codes = (params.get("currencies") or "BYN,UZS,TJS").strip()
+    codes = (params.get("currencies") or route_config(d)["currencies"]).strip()
     return (*run_script([SCRIPTS / "currency.py", "--currencies", codes,
                          "--md", d / OUT_DIR / "Деньги.md"]),)
 
 
 def step_report(d, params):
     """Отчёт о пройденном походе: записанный трек + описание + дописки."""
-    return (*run_script([SCRIPTS / "make_report.py", d]),)
+    tz_off = route_config(d)["tz_offset"]
+    return (*run_script([SCRIPTS / "make_report.py", d, "--tz-offset", str(tz_off)]),)
 
 
 def step_gear(d, params):
@@ -471,11 +516,97 @@ def step_gear(d, params):
                          "--out", d / OUT_DIR / "Снаряжение.md"]),)
 
 
+def step_sources(d, params):
+    """Реестр источников SOURCES.md (входные + источники фактов)."""
+    return (*run_script([SCRIPTS / "sources.py", d]),)
+
+
+def step_audio_import(d, params):
+    """Импорт готового аудиогида (mp3-папка) с привязкой к точкам 🎧 по именам."""
+    folder = (params.get("folder") or "").strip()
+    if not folder:
+        raise HTTPException(400, "Выберите папку с mp3 аудиогида")
+    gpx = d / IN_DIR / "track.gpx"
+    if not gpx.is_file():
+        raise HTTPException(400, "Нужен входные/track.gpx с точками 🎧 аудиогида")
+    return (*run_script([SCRIPTS / "import_audioguide.py", folder, "--gpx", gpx,
+                         "--out", d / OUT_DIR], timeout=900),)
+
+
+def step_publish(d, params):
+    """Публикация выдачи на GitHub Pages: app/guides/<проект>/ + git push.
+    Публикует только сгенерированную выдачу (гид/чеклист/отчёт/фото), без входных."""
+    repo = BASE.parent  # корень KIMIK3 (родитель route_app)
+    guides = repo / "app" / "guides" / d.name
+    copied = []
+    for f in ("Гид.html", "Чеклист.html", "Отчёт.html", "фотоотчёт.html"):
+        src = d / OUT_DIR / f
+        if src.is_file():
+            guides.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(src, guides / f)
+            copied.append(f)
+    for sub in ("фото", "фото_метки"):  # ресурсы, на которые ссылаются HTML
+        sdir = d / OUT_DIR / sub
+        if sdir.is_dir():
+            shutil.copytree(sdir, guides / sub, dirs_exist_ok=True)
+            copied.append(sub + "/")
+    if not copied:
+        raise HTTPException(400, "Нечего публиковать: сначала сгенерируйте Гид.html "
+                                 "(шаг «Гид») или другие выходные")
+
+    def git(*args):
+        r = subprocess.run(["git", "-C", str(repo), *args],
+                           capture_output=True, text=True, encoding="utf-8", errors="replace")
+        return r.returncode, (r.stdout + r.stderr).strip()
+    code, out = git("add", "app/guides")
+    if code:
+        return False, "", f"git add: {out}"
+    code, out = git("diff", "--cached", "--quiet")
+    if code == 0:
+        return True, "", "Изменений нет — опубликованная версия уже актуальна"
+    code, out = git("commit", "-m", f"Гид: публикация «{d.name}» ({', '.join(copied)})")
+    if code:
+        return False, "", f"git commit: {out}"
+    code, out = git("push", "origin", "main")
+    if code:
+        return False, "", f"git push: {out}"
+    url = f"https://shulgaop.github.io/KIMIK3/guides/{quote(d.name)}/"
+    return True, "", (f"✓ Опубликовано: {url}\n(будет доступно после сборки Pages, "
+                      f"1–2 мин; workflow pages.yml публикует app/)")
+
+
+def step_osm_gpx(d, params):
+    """GPX-трек из OSM-отношения (Overpass), если у пользователя нет трека."""
+    rel = str(params.get("relation") or "").strip()
+    if not rel.isdigit():
+        raise HTTPException(400, "Укажите числовой id OSM-отношения (relation)")
+    return (*run_script([SCRIPTS / "fetch_osm_gpx.py", rel, d / IN_DIR / "track.gpx",
+                         d.name], timeout=300),)
+
+
+def step_budget(d, params):
+    """Бюджет поездки кодом (бюджет.json) → Бюджет.md; курсы через currency.py."""
+    src = d / IN_DIR / "бюджет.json"
+    if not src.is_file():
+        raise HTTPException(400, "Сохраните бюджет.json (редактор в «Документах»)")
+    cfg = route_config(d)
+    return (*run_script([SCRIPTS / "budget.py", src, "--members", cfg["members"],
+                         "--days", max(int(params.get("days") or 1), 1),
+                         "--out", d / OUT_DIR / "Бюджет.md"], timeout=120),)
+
+
+def step_check_links(d, params):
+    """Проверка внутренних ссылок выдачи перед публикацией."""
+    return (*run_script([SCRIPTS / "check_links.py", d / OUT_DIR]),)
+
+
 STEPS = {"program": step_program, "analyze": step_analyze, "weather": step_weather,
          "guide": step_guide, "guide_html": step_guide_html, "research": step_research,
          "audio_texts": step_audio_texts, "tts": step_tts,
          "daylight": step_daylight, "first_aid": step_first_aid, "currency": step_currency,
-         "gear": step_gear,
+         "gear": step_gear, "sources": step_sources, "publish": step_publish,
+         "audio_import": step_audio_import, "osm_gpx": step_osm_gpx,
+         "budget": step_budget, "check_links": step_check_links,
          "report": step_report,
          "kml": step_kml, "ics": step_ics, "checklist": step_checklist,
          "photos": step_photos, "marks": step_marks, "photos_all": step_photos_all,

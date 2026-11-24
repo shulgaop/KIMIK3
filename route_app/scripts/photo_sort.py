@@ -113,23 +113,31 @@ def day_number(dt, start):
 
 
 def build_html(report, title):
-    """Офлайн HTML-отчёт: разделы по группам, сетка фото, печать A4."""
+    """Офлайн HTML-отчёт: оболочка Trek Fourge, группы, сетка фото и печать A4."""
     css = """
-  body{background:#b0c6b3;color:#111;font:15px/1.5 -apple-system,"Segoe UI",Roboto,sans-serif;padding:18px}
-  .wrap{max-width:900px;margin:0 auto}
-  h1{font-family:Georgia,serif;font-size:1.6rem}
-  h2{font-family:Georgia,serif;font-size:1.1rem;margin:16px 0 8px}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
-  figure{margin:0;background:#fdfdfb;border:1px solid #7a947e;border-radius:6px;padding:6px}
-  figure img{width:100%;border-radius:4px;display:block}
-  figcaption{font-size:.75rem;word-break:break-all}
-  .meta{font-size:.85rem;opacity:.8}
-  @media print{body{background:#fff}figure{break-inside:avoid}}
+  :root{--paper:#f4f1e8;--ink:#172820;--muted:#617067;--forest:#153b32;--card:#fffdf8;--line:#d4ddd4}
+  *{box-sizing:border-box}
+  body{background:var(--paper);color:var(--ink);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;margin:0}
+  .site-header{background:var(--forest);color:#fff;border-bottom:3px solid #d2b48c;padding:14px 24px}
+  .brand{font:700 1.05rem Georgia,"Times New Roman",serif}
+  .brand small{display:block;font: .62rem/1.4 -apple-system,"Segoe UI",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#cddbd3;margin-top:3px}
+  .wrap{max-width:1120px;margin:0 auto;padding:32px 24px 56px}
+  h1{font:700 clamp(2rem,5vw,3rem)/1.1 Georgia,"Times New Roman",serif;letter-spacing:-.02em;margin:0 0 12px}
+  h2{font:700 1.25rem/1.3 Georgia,"Times New Roman",serif;color:var(--forest);margin:30px 0 12px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+  figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:9px;padding:8px;overflow:hidden}
+  figure img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:6px;display:block}
+  figcaption{font-size:.78rem;overflow-wrap:anywhere;padding:7px 2px 2px}
+  .meta{font-size:.88rem;color:var(--muted);max-width:80ch}
+  @media (max-width:600px){.wrap{padding:26px 16px 44px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}}
+  @media print{body{background:#fff}.site-header{display:none}.wrap{padding:0}figure{break-inside:avoid}}
 """
     parts = ["<!DOCTYPE html><html lang='ru'><head><meta charset='UTF-8'>",
              "<meta name='viewport' content='width=device-width, initial-scale=1'>",
-             f"<title>{title}</title><style>{css}</style></head><body><div class='wrap'>",
-             f"<h1>{title}</h1>",
+             "<meta name='theme-color' content='#153b32'>",
+             f"<title>{title}</title><style>{css}</style></head><body>",
+             "<header class='site-header'><div class='brand'>Trek Fourge<small>Фотоотчёт по маршруту</small></div></header>",
+             "<main class='wrap'>", f"<h1>{title}</h1>",
              f"<p class='meta'>Фото: {report['total']} · с GPS: {report['with_gps']} · "
              f"по времени трека: {report['by_time']} · неразобранных: {report['unsorted']} · "
              f"собрано {report['generated_at']}</p>"]
@@ -142,7 +150,7 @@ def build_html(report, title):
                          + (f"<br>{ph['dist_m']} м от точки" if ph.get("dist_m") else "")
                          + "</figcaption></figure>")
         parts.append("</div>")
-    parts.append("</div></body></html>")
+    parts.append("</main></body></html>")
     return "\n".join(parts)
 
 

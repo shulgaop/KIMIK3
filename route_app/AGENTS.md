@@ -27,6 +27,9 @@ KML, СТАТУС. Контрольные числа: 87,45 км, 1533–4739 м
   (настраивается), проверка ffprobe каждого файла, zip; точки 🎧 дописываются в GPX.
 - **HTML-гид**: один самодостаточный файл, инлайн CSS/JS, системные шрифты с
   кириллицей, якорное оглавление, SVG-профиль высот, @media print, мобильная вёрстка.
+  Единая дизайн-система: природная палитра, навигация с активным разделом,
+  мобильное меню с Escape, видимый :focus-visible, reduced motion, крупные
+  touch-цели и независимая прокрутка широких таблиц.
 - **СТАТУС**: обновляется после КАЖДОГО изменения выдачи (не в конце сессии) —
   `scripts/make_status.py projects/<маршрут>`; разделы «Решения, которые НЕ
   откатывать» и «Открытые вопросы» скрипт переносит, правит их человек/агент.
@@ -91,8 +94,10 @@ python3 scripts/llm.py audio projects/<маршрут>                          
 python3 scripts/make_guide_html.py projects/<маршрут>                     # Гид.md → Гид.html (профиль SVG)
 python3 scripts/daylight.py points.json --start Д --end Д --md Блок.md    # рассвет/закат + Луна
 python3 scripts/first_aid.py points.json --start Д --end Д --out выходные/  # аптечка+напоминания
-python3 scripts/currency.py --currencies BYN,UZS,TJS --md Деньги.md       # F10: курсы валют
+python3 scripts/currency.py --currencies BYN,UZS,TJS --md Деньги.md       # F10: любые валюты из USD/EUR/BYN/RUB
 python3 scripts/gear.py gear.json --members 2 --out Снаряжение.md         # F12: веса LighterPack
+python3 scripts/sources.py projects/<маршрут>                             # реестр источников
+python3 scripts/import_audioguide.py mp3/ --gpx track.gpx --out выходные/ # внешний аудиогид
 python3 scripts/test_regression.py                                        # регрессия (14 проверок)
 python3 scripts/hike_report.py /папка/фото   # гео-фото-отчёт: видео, DJI, офлайн-карта
 python3 scripts/color_route_by_days.py track.gpx out.kml        # трек по дням (из таймстемпов)

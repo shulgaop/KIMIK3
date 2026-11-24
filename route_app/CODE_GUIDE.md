@@ -4,6 +4,56 @@
 не править руками. Обязателен к обновлению в том же коммите, что и код
 (AGENTS.md, раздел «Стандарты кода»).
 
+## `scripts/atlas.py`
+_project-atlas: persistent project memory for agent work on large corpora._
+
+Константы: `OUT_DIR, ATLAS_JSON, ATLAS_MD, JOBS_DIR, RESULTS_DIR, SKIP_DIRS, SKIP_FILES, MAX_FILE_SIZE, CODE_EXTS, DOC_EXTS, SHEET_EXTS, IMG_EXTS, STOPWORDS, PART_NUM_RE, WORD_RE, PY_SYMBOL_RE, JS_SYMBOL_RE`
+
+- `sha1_file(path)` — —
+- `_docx_outline(path)` — Outline from .docx using only stdlib (docx is a zip of XML).
+- `_xlsx_outline(path)` — —
+- `_pdf_outline(path)` — —
+- `_text_outline(path, ext)` — —
+- `extract_file(path, rel)` — —
+- `scan(root)` — —
+- `build_clusters(files, min_shared, max_clusters)` — LLM-free clustering: files sharing >= min_shared keywords form a cluster.
+- `render_atlas_md(root, files, clusters, jobs_summary)` — —
+- `out_root(root)` — —
+- `cmd_build(root)` — —
+- `cmd_update(root)` — —
+- `cmd_query(root, text)` — —
+- `cmd_related(root, target)` — —
+- `_job_path(root, job)` — —
+- `cmd_manifest(root, job, targets)` — —
+- `_set_status(root, job, file, status, note)` — —
+- `cmd_status(root, job)` — —
+- `jobs_summary(root)` — —
+- `main()` — —
+
+## `scripts/budget.py`
+_budget.py — бюджет поездки кодом (обобщение budget.py проекта Япония)._
+
+- `load_currency_module()` — —
+- `compute(items, members, days, base)` — Итоги по валютам + конвертация в базовую по живому курсу.
+- `to_markdown(rows, totals, base, converted, rate_note, members, days)` — —
+- `main()` — —
+
+## `scripts/build_gpx_from_osm.py`
+_Сборка GPX из файла OSM API (/relation/<id>/full)._
+
+Константы: `SKIP_ROLES`
+
+- `parse_osm(path)` — Возвращает (узлы, линии, список way-участков отношения в порядке членов).
+- `chain_segments(segments)` — Склеивает список сегментов в цепочку по совпадающим концам.
+- `main()` — Точка входа: читает OSM XML, пишет GPX, печатает число точек.
+
+## `scripts/check_links.py`
+_check_links.py — проверка комплекта выдачи перед публикацией._
+
+- `internal_links(folder)` — Все внутренние ссылки HTML-файлов → абсолютные пути целей.
+- `http_links(folder)` — Все внешние http(s)-ссылки.
+- `main()` — —
+
 ## `scripts/color_route_by_days.py`
 _Скрипт для раскраски маршрута по дням в Google Earth._
 
@@ -15,11 +65,12 @@ _Скрипт для раскраски маршрута по дням в Google
 - `main()` — —
 
 ## `scripts/currency.py`
-_currency.py — курсы валют стран маршрута на дату запроса (F10)._
+_currency.py — курсы любых национальных валют на дату запроса (F10)._
 
-Константы: `API`
+Константы: `API, FROM_DEFAULT`
 
-- `fetch_rates(base)` — —
+- `fetch_rates(base)` — Курсы «1 <base> = X <любая валюта>» на сегодня. Бросает SystemExit при сбое.
+- `build_rows(codes, from_list)` — Таблица: каждая целевая валюта против каждой опорной.
 - `main()` — —
 
 ## `scripts/daylight.py`
@@ -32,6 +83,16 @@ _daylight.py — световой день и ночное небо для то�
 - `moon(d)` — Возраст Луны (сутки), фаза, освещённость диска.
 - `fmt_utc(utc_min, offset)` — —
 - `main()` — —
+
+## `scripts/fetch_osm_gpx.py`
+_Сборка GPX из OSM-отношения (Overpass API) для маршрута Японии._
+
+Константы: `OVERPASS`
+
+- `fetch_relation(rel_id)` — Возвращает JSON Overpass с полной геометрией отношения (зеркала по очереди).
+- `relation_to_points(data)` — Собирает точки всех way-участков отношения в один список (lat, lon).
+- `write_gpx(points, path, name)` — Пишет точки в GPX 1.1 (trkpt lat/lon, ele=0 при отсутствии данных).
+- `main()` — Точка входа: relation_id, выходной файл, имя трека из argv.
 
 ## `scripts/first_aid.py`
 _first_aid.py — модуль «Аптечка»: чеклист медикаментов + напоминания о приёме._
@@ -94,10 +155,16 @@ _============================================================_
 - `ask_dji_mode()` — Интерактивный выбор способа обработки видео DJI.
 - `main()` — —
 
+## `scripts/import_audioguide.py`
+_import_audioguide.py — импорт готового аудиогида (mp3) и привязка к точкам 🎧._
+
+- `norm(s)` — Нормализация имени для сопоставления: мелкие буквы, только слова.
+- `main()` — —
+
 ## `scripts/llm.py`
 _llm.py — LLM-слой через OpenRouter (F4: генерация гида и др.)._
 
-Константы: `API, CONFIG, PROVIDERS, FREE_PREFERENCE, GUIDE_SYSTEM, AUDIO_SYSTEM`
+Константы: `API, CONFIG, PROVIDERS, FREE_PREFERENCE, ROUTE_TYPES, GUIDE_SYSTEM, AUDIO_SYSTEM`
 
 - `load_config()` — Конфиг: {"provider": ..., "keys": {провайдер: ключ}, "models": {...}}.
 - `save_config(cfg)` — —
@@ -133,7 +200,7 @@ _make_guide_html.py — офлайн HTML-версия путеводителя 
 - `profile_svg(gpx_path, points_path, width, height)` — SVG-профиль высот: линия трека + точки программы с подписями.
 - `photos_by_day(project)` — Фото по дням из выходные/фото_карта.json (photo_sort) и фотометки.json
 - `inject_photos(md_text, by_day)` — После заголовков «##/### День N …» вставить ряд превью фото дня (raw HTML).
-- `build_html(md_text, title, svg)` — —
+- `build_html(md_text, title, svg)` — Собрать автономный HTML: заголовок, содержание, профиль, текст и таблицы.
 - `main()` — —
 
 ## `scripts/make_ics.py`
@@ -204,7 +271,7 @@ _photo_sort.py — сортировка фотографий похода по �
 - `interp_track(track, dt)` — Позиция на треке в момент dt (интерполяция между соседними точками).
 - `nearest_point(points, lat, lon)` — Ближайшая точка маршрута: (индекс, дистанция м).
 - `day_number(dt, start)` — День похода по дате съёмки (день 1 = дата старта); None, если вне дат.
-- `build_html(report, title)` — Офлайн HTML-отчёт: разделы по группам, сетка фото, печать A4.
+- `build_html(report, title)` — Офлайн HTML-отчёт: оболочка Trek Fourge, группы, сетка фото и печать A4.
 - `main()` — —
 
 ## `scripts/read_program.py`
@@ -229,6 +296,15 @@ _research.py — сбор фактов по маршруту из открыты
 - `overpass_pois(south, north, west, east)` — Инфраструктура из OSM: родники/вода, хижины, сёла, магазины в bbox.
 - `collect_facts(points, region, use_overpass, bbox)` — Собрать факты по всем точкам: поиск + геопоиск Википедии, POI из OSM.
 - `to_markdown(facts)` — Дайджест фактов для LLM: по точкам + инфраструктура + источники.
+- `main()` — —
+
+## `scripts/sources.py`
+_sources.py — реестр источников проекта SOURCES.md (по протоколу проекта Япония)._
+
+Константы: `STATUSES`
+
+- `collect(project)` — Записи реестра: файлы входных + URL источников фактов.
+- `load_manual(project)` — Ручные строки прошлого SOURCES.md (статусы «ожидается» и др.) — переносим.
 - `main()` — —
 
 ## `scripts/test_regression.py`
@@ -267,11 +343,13 @@ _weather.py — погодный движок (F3) для точек маршр�
 ## `webapp.py`
 _webapp.py — веб-интерфейс мастера генерации маршрутов (ТЗ, v2)._
 
-Константы: `BASE, SCRIPTS, PROJECTS, LEARN, RULES_FILE, EXAMPLES_FILE, STEPS, MEDIA_EXT, DEFAULT_RULES`
+Константы: `BASE, SCRIPTS, PROJECTS, LEARN, RULES_FILE, EXAMPLES_FILE, DEFAULT_ROUTE_CONFIG, STEPS, MEDIA_EXT, DEFAULT_RULES`
 
 - `GET /` → `index()`
 - `GET /api/projects` → `list_projects()`
 - `POST /api/projects` → `create_project()`
+- `GET /api/projects/{name}/config` → `get_config()`
+- `PUT /api/projects/{name}/config` → `put_config()`
 - `POST /api/projects/{name}/upload` → `upload()`
 - `GET /api/projects/{name}/files` → `files()`
 - `GET /api/projects/{name}/read` → `read_file()`
@@ -287,6 +365,7 @@ _webapp.py — веб-интерфейс мастера генерации ма�
 - `PUT /api/learn/rules` → `learn_rules()`
 - `POST /api/learn/examples` → `learn_example_add()`
 - `DELETE /api/learn/examples/{idx}` → `learn_example_del()`
+- `route_config(d)` — Конфиг маршрута проекта: route.json поверх значений по умолчанию.
 - `safe_name(name)` — Имя проекта/файла: без слэшей и служебных символов, кириллица разрешена.
 - `project_dir(name)` — —
 - `run_script(args, cwd, timeout, stdin_text, env_extra)` — Запуск скрипта из scripts/ с UTF-8-окружением; возвращает (ok, stdout, stderr).
@@ -296,6 +375,8 @@ _webapp.py — веб-интерфейс мастера генерации ма�
 - `index()` — —
 - `list_projects()` — —
 - `create_project(payload)` — —
+- `get_config(name)` — —
+- `put_config(name, payload)` — —
 - `upload(name, payload)` — Сохранить входной файл: {"filename", "text"} для текста или
 - `files(name)` — —
 - `read_file(name, path)` — —
@@ -322,6 +403,12 @@ _webapp.py — веб-интерфейс мастера генерации ма�
 - `step_currency(d, params)` — Курсы валют стран маршрута (F10) → Деньги.md.
 - `step_report(d, params)` — Отчёт о пройденном походе: записанный трек + описание + дописки.
 - `step_gear(d, params)` — F12: весовой чеклист снаряжения (LighterPack) → Снаряжение.md.
+- `step_sources(d, params)` — Реестр источников SOURCES.md (входные + источники фактов).
+- `step_audio_import(d, params)` — Импорт готового аудиогида (mp3-папка) с привязкой к точкам 🎧 по именам.
+- `step_publish(d, params)` — Публикация выдачи на GitHub Pages: app/guides/<проект>/ + git push.
+- `step_osm_gpx(d, params)` — GPX-трек из OSM-отношения (Overpass), если у пользователя нет трека.
+- `step_budget(d, params)` — Бюджет поездки кодом (бюджет.json) → Бюджет.md; курсы через currency.py.
+- `step_check_links(d, params)` — Проверка внутренних ссылок выдачи перед публикацией.
 - `run_step(name, step, payload)` — —
 - `add_note(name, payload)` — Дописка к отчёту: свободный текст И/ИЛИ файл-вложение (PDF/DOCX/TXT —
 - `browse(path)` — Проводник по папкам компьютера для выбора директории с фото.
