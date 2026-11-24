@@ -24,6 +24,9 @@ spec = importlib.util.spec_from_file_location("make_guide_html", ENGINE_PATH)
 eng = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(eng)
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from icons import add_favicon, decorate_markdown  # noqa: E402
+
 # Служебные страницы верхнего уровня: markdown-источник → заголовок вкладки.
 PAGES = {
     "Бронирования.md": "Япония 2027 · Бронирования",
@@ -53,7 +56,8 @@ def build(source, title, out):
         by_day = eng.photos_by_day(source)
         if by_day:
             md_text, _added = eng.inject_photos(md_text, by_day)
-    html = eng.build_html(md_text, title, svg)
+    md_text = decorate_markdown(md_text)
+    html = add_favicon(eng.build_html(md_text, title, svg))
     out.write_text(html + "\n", encoding="utf-8")
     print(f"✓ {out.relative_to(ROOT)} — «{title}»", file=sys.stderr)
 

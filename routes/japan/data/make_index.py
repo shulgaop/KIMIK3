@@ -18,6 +18,9 @@ from pathlib import Path
 КОРЕНЬ = Path(__file__).resolve().parent.parent
 СКРИПТЫ_ДВИЖКА = КОРЕНЬ.parent.parent / "route_app" / "scripts"
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from icons import FAVICON_LINK  # noqa: E402
+
 # Дополнительные стили только для карточек оглавления; базовая палитра — из
 # движка, чтобы стартовая страница и дневные гиды выглядели одним комплектом.
 CSS_КАРТОЧКИ = """
@@ -109,6 +112,7 @@ def main() -> None:
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Япония 2027 · Фудзи и Кумано Кодо — путеводитель</title>
+{FAVICON_LINK}
 <style>{_css_движка()}{CSS_КАРТОЧКИ}</style>
 </head>
 <body>

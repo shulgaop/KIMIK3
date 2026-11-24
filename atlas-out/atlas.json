@@ -1819,9 +1819,9 @@
   {
    "path": "routes/japan/CONTEXT.md",
    "ext": ".md",
-   "size": 12749,
-   "sha1": "e9f49cf7bf34fcf10b9ff1d9ebd1ce4f971a30e6",
-   "mtime": 1795546948,
+   "size": 13732,
+   "sha1": "0cc3be7f93efe5b8da6ba65dc469586ef60105c7",
+   "mtime": 1795549371,
    "outline": {
     "headings": [
      "CONTEXT.md — маршрут «Япония» (единственный операционный снимок)",
@@ -1832,7 +1832,7 @@
      "Ссылки",
      "Замечания"
     ],
-    "lines": 151,
+    "lines": 161,
     "snippet": "Обновлён: 2026-11-24. Поддерживается по `routes/japan/AGENTS.md` §13."
    },
    "keywords": [
@@ -2563,6 +2563,41 @@
    "mtime": 1795367815
   },
   {
+   "path": "routes/japan/data/icons.py",
+   "ext": ".py",
+   "size": 10676,
+   "sha1": "40d28687451c4c6f820878aebd90321ba7a3698e",
+   "mtime": 1795549127,
+   "outline": {
+    "symbols": [
+     "classify",
+     "_",
+     "decorate_markdown",
+     "_favicon_uri",
+     "add_favicon"
+    ],
+    "lines": 177
+   },
+   "keywords": [
+    "path",
+    "категория",
+    "str",
+    "svg",
+    "none",
+    "circle",
+    "return",
+    "текст",
+    "ячейки",
+    "html"
+   ],
+   "part_numbers": [
+    "C17",
+    "M10",
+    "M12",
+    "M15"
+   ]
+  },
+  {
    "path": "routes/japan/data/kawaguchiko_full.osm",
    "ext": ".osm",
    "size": 92459,
@@ -2628,16 +2663,16 @@
   {
    "path": "routes/japan/data/make_index.py",
    "ext": ".py",
-   "size": 7580,
-   "sha1": "b956a92b15a237a2bb11ebcec625606a182b34a7",
-   "mtime": 1795413668,
+   "size": 7698,
+   "sha1": "c15a1f3bcc54e8fa7f44d7a3326e6f6a53363801",
+   "mtime": 1795548697,
    "outline": {
     "symbols": [
      "_css_",
      "_",
      "main"
     ],
-    "lines": 154
+    "lines": 158
    },
    "keywords": [
     "html",
@@ -2645,13 +2680,14 @@
     "гид",
     "номер",
     "json",
+    "str",
     "дни",
     "var",
-    "str",
     "code",
     "make_guide_html"
    ],
    "part_numbers": [
+    "E402",
     "T-005"
    ]
   },
@@ -2689,30 +2725,32 @@
   {
    "path": "routes/japan/data/make_pages_html.py",
    "ext": ".py",
-   "size": 3352,
-   "sha1": "e87cfd9444e1b1b4566ed7e73479540eec89a1ef",
-   "mtime": 1795546880,
+   "size": 3527,
+   "sha1": "2fd5007f16695858140cc3e94b75e4a79d960938",
+   "mtime": 1795548652,
    "outline": {
     "symbols": [
      "h1_of",
      "build",
      "main"
     ],
-    "lines": 76
+    "lines": 80
    },
    "keywords": [
     "source",
     "япония",
     "json",
+    "import",
     "eng",
     "title",
+    "md_text",
     "days",
-    "import",
     "root",
-    "md_path",
-    "main"
+    "md_path"
    ],
-   "part_numbers": []
+   "part_numbers": [
+    "E402"
+   ]
   },
   {
    "path": "routes/japan/data/make_route_kml.py",
@@ -2743,29 +2781,30 @@
   {
    "path": "routes/japan/data/make_site.py",
    "ext": ".py",
-   "size": 8021,
-   "sha1": "af65c0a57fba849ac09e2a0cd463919c7eaa29c8",
-   "mtime": 1795545877,
+   "size": 8411,
+   "sha1": "6738ce21f1e51a5b64eb57aa1d86765586f6e34b",
+   "mtime": 1795548729,
    "outline": {
     "symbols": [
      "main"
     ],
-    "lines": 152
+    "lines": 160
    },
    "keywords": [
     "var",
     "источник",
     "html",
+    "текст",
     "выход",
     "пароль",
+    "head",
+    "import",
     "хэш",
-    "текст",
-    "localstorage",
-    "слово",
-    "head"
+    "localstorage"
    ],
    "part_numbers": [
     "D-001",
+    "E402",
     "SHA-256",
     "T-007"
    ]
@@ -3099,12 +3138,12 @@
   {
    "path": "routes/japan/generated/slice-day1/выходные/Гид.html",
    "ext": ".html",
-   "size": 10418,
-   "sha1": "addc53a4aea3408a91f80221a8a76724ec459ca0",
-   "mtime": 1795546885,
+   "size": 11378,
+   "sha1": "2d6c18bea3e3a55c7b2fadb169179c18a615a67c",
+   "mtime": 1795549140,
    "outline": {
     "headings": [],
-    "lines": 155,
+    "lines": 156,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
@@ -3120,6 +3159,7 @@
     "font-size"
    ],
    "part_numbers": [
+    "M10",
     "S-006",
     "S-008",
     "S-013",
@@ -3186,28 +3226,31 @@
   {
    "path": "routes/japan/generated/slice-day2/выходные/Гид.html",
    "ext": ".html",
-   "size": 27020,
-   "sha1": "ff652f3c827477df7934972115d96fd6ff911b32",
-   "mtime": 1795546885,
+   "size": 34244,
+   "sha1": "fb8ac384350c2de1854a6a669872f6dc96e87b90",
+   "mtime": 1795549140,
    "outline": {
     "headings": [],
-    "lines": 277,
+    "lines": 279,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
+    "fill",
+    "svg",
+    "width",
+    "height",
+    "path",
+    "round",
+    "none",
     "var",
-    "font-size",
-    "class",
-    "padding",
-    "text",
-    "nav",
-    "станция",
-    "display",
-    "code",
-    "background"
+    "stroke",
+    "fffdf8"
    ],
    "part_numbers": [
     "D-006",
+    "M10",
+    "M12",
+    "M15",
     "S-008",
     "S-011",
     "S-027",
@@ -3289,12 +3332,12 @@
   {
    "path": "routes/japan/generated/slice-day3/выходные/Гид.html",
    "ext": ".html",
-   "size": 10623,
-   "sha1": "790eb24e2bf5dd5526ff21e900ca8a351c8c22a6",
-   "mtime": 1795546885,
+   "size": 11583,
+   "sha1": "06024ab5759fbbddcb65c112793b11b33bc3fbe6",
+   "mtime": 1795549140,
    "outline": {
     "headings": [],
-    "lines": 157,
+    "lines": 158,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
@@ -3310,6 +3353,7 @@
     "rem"
    ],
    "part_numbers": [
+    "M10",
     "S-008",
     "S-013",
     "S-027",
@@ -3361,12 +3405,12 @@
   {
    "path": "routes/japan/generated/slice-day4/выходные/Гид.html",
    "ext": ".html",
-   "size": 9654,
-   "sha1": "944417d098489df29de430e3dee77d7a0e0d99c4",
-   "mtime": 1795546886,
+   "size": 10614,
+   "sha1": "e5c55832add2d20b0ccbaced8559580587846a05",
+   "mtime": 1795549140,
    "outline": {
     "headings": [],
-    "lines": 149,
+    "lines": 150,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
@@ -3382,6 +3426,7 @@
     "rem"
    ],
    "part_numbers": [
+    "M10",
     "S-006",
     "S-008",
     "S-013",
@@ -3447,28 +3492,31 @@
   {
    "path": "routes/japan/generated/slice-day5/выходные/Гид.html",
    "ext": ".html",
-   "size": 22818,
-   "sha1": "36ce2206b45c94ba106e228e39947f57aaa65d80",
-   "mtime": 1795546886,
+   "size": 29918,
+   "sha1": "7bade46ebca30a78984fe0455323b87410c629db",
+   "mtime": 1795549140,
    "outline": {
     "headings": [],
-    "lines": 285,
+    "lines": 287,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
+    "fill",
+    "path",
+    "svg",
+    "width",
+    "height",
+    "round",
+    "none",
     "var",
     "font-size",
-    "text",
-    "strong",
-    "class",
-    "padding",
-    "nav",
-    "display",
-    "fill",
-    "background"
+    "stroke"
    ],
    "part_numbers": [
     "D-012",
+    "M10",
+    "M12",
+    "M15",
     "S-006",
     "S-008",
     "S-016",
@@ -3590,28 +3638,31 @@
   {
    "path": "routes/japan/generated/slice-day6/выходные/Гид.html",
    "ext": ".html",
-   "size": 25738,
-   "sha1": "9416fc752cc4b52bb701f34635ed6ab7a70d59a4",
-   "mtime": 1795546886,
+   "size": 34128,
+   "sha1": "982039794efecb097b5d01f564539f6c607cdc17",
+   "mtime": 1795549141,
    "outline": {
     "headings": [],
-    "lines": 391,
+    "lines": 393,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
+    "fill",
+    "path",
+    "svg",
+    "width",
+    "height",
+    "round",
+    "none",
     "var",
     "strong",
-    "font-size",
-    "text",
-    "fill",
-    "class",
-    "padding",
-    "sans-serif",
-    "nav",
-    "href"
+    "font-size"
    ],
    "part_numbers": [
     "D-012",
+    "M10",
+    "M12",
+    "M15",
     "S-006",
     "S-008",
     "S-013",
@@ -3757,28 +3808,31 @@
   {
    "path": "routes/japan/generated/slice-day7/выходные/Гид.html",
    "ext": ".html",
-   "size": 26734,
-   "sha1": "97646c9eb96e814f0a56504251a1f80a752e9390",
-   "mtime": 1795546886,
+   "size": 35257,
+   "sha1": "7314799f4b70c11545331a626d43edf253fe62e3",
+   "mtime": 1795549141,
    "outline": {
     "headings": [],
-    "lines": 304,
+    "lines": 306,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
-    "var",
-    "font-size",
-    "strong",
-    "text",
-    "class",
-    "padding",
-    "code",
     "fill",
-    "nav",
-    "когути"
+    "path",
+    "svg",
+    "width",
+    "height",
+    "round",
+    "none",
+    "var",
+    "stroke",
+    "fffdf8"
    ],
    "part_numbers": [
     "D-012",
+    "M10",
+    "M12",
+    "M15",
     "S-008",
     "S-013",
     "S-022",
@@ -3890,12 +3944,12 @@
   {
    "path": "routes/japan/generated/slice-day8/выходные/Гид.html",
    "ext": ".html",
-   "size": 10492,
-   "sha1": "4edb7afbc7087d9460f17fc07fddbd0d02b51d17",
-   "mtime": 1795546886,
+   "size": 11452,
+   "sha1": "e045269c54ccf827ee780c2b4ef32f3710ee3d02",
+   "mtime": 1795549141,
    "outline": {
     "headings": [],
-    "lines": 150,
+    "lines": 151,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
@@ -3911,6 +3965,7 @@
     "rem"
    ],
    "part_numbers": [
+    "M10",
     "S-008",
     "S-013",
     "S-022",
@@ -3961,12 +4016,12 @@
   {
    "path": "routes/japan/generated/slice-day9/выходные/Гид.html",
    "ext": ".html",
-   "size": 8441,
-   "sha1": "6c6a146f0f2bd853bfe73ca0771e47f417b3358c",
-   "mtime": 1795546886,
+   "size": 9028,
+   "sha1": "9aaa57ef65977877d17598cf0f0ab72ad651ef57",
+   "mtime": 1795549141,
    "outline": {
     "headings": [],
-    "lines": 142,
+    "lines": 143,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
@@ -4020,12 +4075,12 @@
   {
    "path": "routes/japan/generated/Бронирования.html",
    "ext": ".html",
-   "size": 14232,
-   "sha1": "8b6cc332bcafea4312dea700084a5902afd02ece",
-   "mtime": 1795546886,
+   "size": 14819,
+   "sha1": "69963500047284dc7afae6905f143808390a8d95",
+   "mtime": 1795549141,
    "outline": {
     "headings": [],
-    "lines": 269,
+    "lines": 270,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
@@ -4038,7 +4093,7 @@
     "nav",
     "ожидается",
     "display",
-    "class"
+    "www"
    ],
    "part_numbers": [
     "S-007",
@@ -4094,28 +4149,31 @@
   {
    "path": "routes/japan/generated/Бюджет.html",
    "ext": ".html",
-   "size": 12607,
-   "sha1": "8f7cf8a7127d8a9023a390285780b4b70658de11",
-   "mtime": 1795546886,
+   "size": 15649,
+   "sha1": "b8dda6aab75e14a2a2768315c595fb5569fd09dc",
+   "mtime": 1795549141,
    "outline": {
     "headings": [],
-    "lines": 271,
+    "lines": 272,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
     "code",
     "var",
+    "width",
+    "height",
     "проверить",
+    "svg",
     "padding",
     "class",
     "nav",
-    "display",
-    "background",
-    "color",
-    "margin"
+    "display"
    ],
    "part_numbers": [
     "D-009",
+    "M10",
+    "M12",
+    "M15",
     "S-007",
     "S-008",
     "S-011",
@@ -4173,12 +4231,12 @@
   {
    "path": "routes/japan/generated/Гид.html",
    "ext": ".html",
-   "size": 10321,
-   "sha1": "e1af744bda747cf05bc6b1ddcef0f2f110507002",
-   "mtime": 1795546897,
+   "size": 10908,
+   "sha1": "50811c96cc876bc9c080cf4d1f65ddaf2946bfd7",
+   "mtime": 1795549141,
    "outline": {
     "headings": [],
-    "lines": 127,
+    "lines": 128,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
@@ -4187,23 +4245,23 @@
     "html",
     "padding",
     "color",
+    "href",
     "margin",
     "font-size",
     "rem",
-    "display",
-    "href"
+    "display"
    ],
    "part_numbers": []
   },
   {
    "path": "routes/japan/generated/Источники.html",
    "ext": ".html",
-   "size": 15722,
-   "sha1": "e6f546c481c4e657ccaab0f7cea07a640bfbb7cc",
-   "mtime": 1795546886,
+   "size": 16309,
+   "sha1": "109d95f6a326b3234929b5b5dca33e5ec0048ad6",
+   "mtime": 1795549141,
    "outline": {
     "headings": [],
-    "lines": 168,
+    "lines": 169,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
@@ -4418,8 +4476,8 @@
    "path": "routes/japan/generated/гид.json",
    "ext": ".json",
    "size": 7331,
-   "sha1": "a82ba03eaacd6efe4d042c0676583792aa1842ee",
-   "mtime": 1795546897
+   "sha1": "3c0a3f7f4e9bb739ce054f169507f6faf8e09b84",
+   "mtime": 1795549141
   },
   {
    "path": "routes/japan/generated/маршрут.ics",
@@ -4537,17 +4595,17 @@
    "ext": "",
    "size": 0,
    "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
-   "mtime": 1795546898
+   "mtime": 1795549142
   },
   {
    "path": "routes/japan/site/index.html",
    "ext": ".html",
-   "size": 2983,
-   "sha1": "8a347855cdf9f03ccbf80d148632235fd8bd076d",
-   "mtime": 1795546898,
+   "size": 3570,
+   "sha1": "1f8bc77ddd41dc6ddcf87af5031921681bd42442",
+   "mtime": 1795549142,
    "outline": {
     "headings": [],
-    "lines": 59,
+    "lines": 60,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
@@ -4556,11 +4614,11 @@
     "font-size",
     "rem",
     "html",
-    "background",
     "width",
-    "card",
-    "display",
-    "padding"
+    "background",
+    "svg",
+    "cpath",
+    "card"
    ],
    "part_numbers": [
     "SHA-256"
@@ -4569,12 +4627,12 @@
   {
    "path": "routes/japan/site/slice-day1/выходные/Гид.html",
    "ext": ".html",
-   "size": 10619,
-   "sha1": "5ff531146c3c5b2d4b291aa27dc2bab0685f982d",
-   "mtime": 1795546898,
+   "size": 11579,
+   "sha1": "159bab512ed78139eacff7c48fa993d7536c2d62",
+   "mtime": 1795549141,
    "outline": {
     "headings": [],
-    "lines": 156,
+    "lines": 157,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
@@ -4590,6 +4648,7 @@
     "font-size"
    ],
    "part_numbers": [
+    "M10",
     "S-006",
     "S-008",
     "S-013",
@@ -4620,28 +4679,31 @@
   {
    "path": "routes/japan/site/slice-day2/выходные/Гид.html",
    "ext": ".html",
-   "size": 27221,
-   "sha1": "5b212bba5dc26b700355f0ebcd83cc867c04b368",
-   "mtime": 1795546898,
+   "size": 34445,
+   "sha1": "44f2e2652b1ac7cc53eb1ba0c8e17adee730df7b",
+   "mtime": 1795549141,
    "outline": {
     "headings": [],
-    "lines": 278,
+    "lines": 280,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
+    "fill",
+    "svg",
+    "width",
+    "height",
+    "path",
+    "round",
+    "none",
     "var",
-    "font-size",
-    "class",
-    "padding",
-    "text",
-    "nav",
-    "станция",
-    "display",
-    "code",
-    "background"
+    "stroke",
+    "fffdf8"
    ],
    "part_numbers": [
     "D-006",
+    "M10",
+    "M12",
+    "M15",
     "S-008",
     "S-011",
     "S-027",
@@ -4678,12 +4740,12 @@
   {
    "path": "routes/japan/site/slice-day3/выходные/Гид.html",
    "ext": ".html",
-   "size": 10824,
-   "sha1": "a1976f7d1b5944ee48ab88d5b3ecfccd0c988de7",
-   "mtime": 1795546898,
+   "size": 11784,
+   "sha1": "cdfe95eaa266fd173361023b42735c8041748252",
+   "mtime": 1795549142,
    "outline": {
     "headings": [],
-    "lines": 158,
+    "lines": 159,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
@@ -4699,6 +4761,7 @@
     "rem"
    ],
    "part_numbers": [
+    "M10",
     "S-008",
     "S-013",
     "S-027",
@@ -4711,12 +4774,12 @@
   {
    "path": "routes/japan/site/slice-day4/выходные/Гид.html",
    "ext": ".html",
-   "size": 9855,
-   "sha1": "681e25abb0d06df012b9eb7e6a7674de2fe330fd",
-   "mtime": 1795546898,
+   "size": 10815,
+   "sha1": "f5a2ecdd9e5637b4e3bda07a8e4a785f9c78e8b0",
+   "mtime": 1795549142,
    "outline": {
     "headings": [],
-    "lines": 150,
+    "lines": 151,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
@@ -4732,6 +4795,7 @@
     "rem"
    ],
    "part_numbers": [
+    "M10",
     "S-006",
     "S-008",
     "S-013",
@@ -4762,28 +4826,31 @@
   {
    "path": "routes/japan/site/slice-day5/выходные/Гид.html",
    "ext": ".html",
-   "size": 23019,
-   "sha1": "d75c1a62e1aa4c458ce00461097592f789cc6aac",
-   "mtime": 1795546898,
+   "size": 30119,
+   "sha1": "14c00921ea4b9113280dfb83ac6345c9415c290b",
+   "mtime": 1795549142,
    "outline": {
     "headings": [],
-    "lines": 286,
+    "lines": 288,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
+    "fill",
+    "path",
+    "svg",
+    "width",
+    "height",
+    "round",
+    "none",
     "var",
     "font-size",
-    "text",
-    "strong",
-    "class",
-    "padding",
-    "nav",
-    "display",
-    "fill",
-    "background"
+    "stroke"
    ],
    "part_numbers": [
     "D-012",
+    "M10",
+    "M12",
+    "M15",
     "S-006",
     "S-008",
     "S-016",
@@ -4861,28 +4928,31 @@
   {
    "path": "routes/japan/site/slice-day6/выходные/Гид.html",
    "ext": ".html",
-   "size": 25939,
-   "sha1": "bbde8d5136786c87f81b9ee4748c01b803714bff",
-   "mtime": 1795546898,
+   "size": 34329,
+   "sha1": "a67ffe8f5dee0f37708ae4b9dd5d03adc2f90be7",
+   "mtime": 1795549142,
    "outline": {
     "headings": [],
-    "lines": 392,
+    "lines": 394,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
+    "fill",
+    "path",
+    "svg",
+    "width",
+    "height",
+    "round",
+    "none",
     "var",
     "strong",
-    "font-size",
-    "text",
-    "fill",
-    "class",
-    "padding",
-    "sans-serif",
-    "nav",
-    "href"
+    "font-size"
    ],
    "part_numbers": [
     "D-012",
+    "M10",
+    "M12",
+    "M15",
     "S-006",
     "S-008",
     "S-013",
@@ -4983,28 +5053,31 @@
   {
    "path": "routes/japan/site/slice-day7/выходные/Гид.html",
    "ext": ".html",
-   "size": 26935,
-   "sha1": "b3c03237ff383f33adfd32a60f8e6e187bd74146",
-   "mtime": 1795546898,
+   "size": 35458,
+   "sha1": "02ff675c6bd4c507a42aa99f89a901aad50cd881",
+   "mtime": 1795549142,
    "outline": {
     "headings": [],
-    "lines": 305,
+    "lines": 307,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
-    "var",
-    "font-size",
-    "strong",
-    "text",
-    "class",
-    "padding",
-    "code",
     "fill",
-    "nav",
-    "когути"
+    "path",
+    "svg",
+    "width",
+    "height",
+    "round",
+    "none",
+    "var",
+    "stroke",
+    "fffdf8"
    ],
    "part_numbers": [
     "D-012",
+    "M10",
+    "M12",
+    "M15",
     "S-008",
     "S-013",
     "S-022",
@@ -5070,12 +5143,12 @@
   {
    "path": "routes/japan/site/slice-day8/выходные/Гид.html",
    "ext": ".html",
-   "size": 10693,
-   "sha1": "b6a570b3dc101695b5d2b191bef2fa8b42394e84",
-   "mtime": 1795546898,
+   "size": 11653,
+   "sha1": "9821500abf2047c5d66bb0a59133fbfd1adbddfa",
+   "mtime": 1795549142,
    "outline": {
     "headings": [],
-    "lines": 151,
+    "lines": 152,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
@@ -5091,6 +5164,7 @@
     "rem"
    ],
    "part_numbers": [
+    "M10",
     "S-008",
     "S-013",
     "S-022",
@@ -5103,12 +5177,12 @@
   {
    "path": "routes/japan/site/slice-day9/выходные/Гид.html",
    "ext": ".html",
-   "size": 8642,
-   "sha1": "87516c37c9f22c620ea17c6d12339ab326d7b3ef",
-   "mtime": 1795546898,
+   "size": 9229,
+   "sha1": "3ed0880fdff211d0315e68bd378f806a33f6db8f",
+   "mtime": 1795549142,
    "outline": {
     "headings": [],
-    "lines": 143,
+    "lines": 144,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
@@ -5130,12 +5204,12 @@
   {
    "path": "routes/japan/site/Бронирования.html",
    "ext": ".html",
-   "size": 14427,
-   "sha1": "660d38e8525b871816c992bc9e5a70c515cfbc7f",
-   "mtime": 1795546897,
+   "size": 15014,
+   "sha1": "0404fd6d17566f73170baf324b009964fcfe5196",
+   "mtime": 1795549141,
    "outline": {
     "headings": [],
-    "lines": 270,
+    "lines": 271,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
@@ -5148,7 +5222,7 @@
     "nav",
     "ожидается",
     "display",
-    "class"
+    "www"
    ],
    "part_numbers": [
     "S-007",
@@ -5164,28 +5238,31 @@
   {
    "path": "routes/japan/site/Бюджет.html",
    "ext": ".html",
-   "size": 12802,
-   "sha1": "15cc08152abaf1e75a60a680255bab7988241167",
-   "mtime": 1795546897,
+   "size": 15844,
+   "sha1": "2902a1d65bf5b1ebf4b4e6fed9319ff245793445",
+   "mtime": 1795549141,
    "outline": {
     "headings": [],
-    "lines": 272,
+    "lines": 273,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
     "code",
     "var",
+    "width",
+    "height",
     "проверить",
+    "svg",
     "padding",
     "class",
     "nav",
-    "display",
-    "background",
-    "color",
-    "margin"
+    "display"
    ],
    "part_numbers": [
     "D-009",
+    "M10",
+    "M12",
+    "M15",
     "S-007",
     "S-008",
     "S-011",
@@ -5200,12 +5277,12 @@
   {
    "path": "routes/japan/site/Гид.html",
    "ext": ".html",
-   "size": 10516,
-   "sha1": "2dc928efa90d464844b0df099b3c9063885a5e51",
-   "mtime": 1795546897,
+   "size": 11103,
+   "sha1": "31fce842bc7c7b8491df813297f087d13a740af0",
+   "mtime": 1795549141,
    "outline": {
     "headings": [],
-    "lines": 128,
+    "lines": 129,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
@@ -5214,23 +5291,23 @@
     "html",
     "padding",
     "color",
+    "href",
     "margin",
     "font-size",
     "rem",
-    "display",
-    "href"
+    "display"
    ],
    "part_numbers": []
   },
   {
    "path": "routes/japan/site/Источники.html",
    "ext": ".html",
-   "size": 15917,
-   "sha1": "b03b891b620f5fabeec8afabcd1981585beb3821",
-   "mtime": 1795546898,
+   "size": 16504,
+   "sha1": "0c477def39d6a70a0b55d56556cb59bbb2301eff",
+   "mtime": 1795549141,
    "outline": {
     "headings": [],
-    "lines": 169,
+    "lines": 170,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
@@ -5253,12 +5330,12 @@
   {
    "path": "routes/japan/site/Чеклист.html",
    "ext": ".html",
-   "size": 14998,
-   "sha1": "414a061a414fbcc09c9bc8c090f63fc0a26f7153",
-   "mtime": 1795546898,
+   "size": 15585,
+   "sha1": "4e116f51aadb8c37df0a726a3055723c33847d14",
+   "mtime": 1795549141,
    "outline": {
     "headings": [],
-    "lines": 209,
+    "lines": 210,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
@@ -5281,8 +5358,8 @@
    "path": "routes/japan/site/гид.json",
    "ext": ".json",
    "size": 7331,
-   "sha1": "a82ba03eaacd6efe4d042c0676583792aa1842ee",
-   "mtime": 1795546897
+   "sha1": "3c0a3f7f4e9bb739ce054f169507f6faf8e09b84",
+   "mtime": 1795549141
   },
   {
    "path": "routes/japan/site/маршрут.ics",

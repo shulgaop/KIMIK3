@@ -18,7 +18,11 @@ SHA-256 кодового слова (Web Crypto API), пароль в откры
 import argparse
 import hashlib
 import shutil
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from icons import FAVICON_LINK  # noqa: E402
 
 КОРЕНЬ = Path(__file__).resolve().parent.parent
 ИСТОЧНИК = КОРЕНЬ / "generated"
@@ -27,16 +31,18 @@ from pathlib import Path
 ПАРОЛЬ_ПО_УМОЛЧАНИЮ = "кумано2027"  # выдано пользователю в чате T-007
 КЛЮЧ_ХРАНИЛИЩА = "japanGate"        # имя отметки в localStorage
 
-# То же оформление, что у дневных гидов (палитра васи/индиго/вермильон),
-# чтобы экран входа не выбивался из комплекта.
+# То же оформление, что у дневных гидов (палитра «полевого журнала»:
+# бумага/чернила/лесная зелень/терракота), чтобы экран входа не выбивался
+# из комплекта.
 ШАБЛОН_ВХОДА = """<!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Япония 2027 — вход</title>
+""" + FAVICON_LINK + """
 <style>
-:root{{--paper:#f4efe3;--ink:#1c1a16;--ai:#1f3a5f;--shu:#b23a2a;--card:#fcfbf6;--line:#c9c0a8}}
+:root{{--paper:#f4f1e8;--ink:#172820;--ai:#153b32;--shu:#a64f35;--card:#fffdf8;--line:#d4ddd4}}
 *{{box-sizing:border-box}}
 body{{background:var(--paper);color:var(--ink);font:16px/1.65 Georgia,"Times New Roman",serif;
      margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}}
@@ -121,6 +127,8 @@ def собрать(пароль: str) -> None:
             if "<head>" not in текст:
                 raise ValueError(f"нет <head> в {источник}")
             текст = текст.replace("<head>", "<head>\n" + сторож, 1)
+            if 'rel="icon"' not in текст:  # единый favicon комплекта
+                текст = текст.replace("</head>", FAVICON_LINK + "\n</head>", 1)
             цель.write_text(текст, encoding="utf-8")
         else:
             shutil.copy2(источник, цель)
