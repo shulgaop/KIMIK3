@@ -10,7 +10,7 @@
   :root{
     --forest-950:#153b32;--forest-800:#214f42;--forest-700:#2d6754;
     --green:#2d6754;--green-d:#214f42;--green-soft:#e8f0e9;
-    --ink:#172820;--muted:#5c6c64;--card:#fff;--bg:#f5f4ee;
+    --ink:#172820;--ink-soft:#34483e;--muted:#5c6c64;--card:#fff;--bg:#f5f4ee;
     --line:#d5dfd7;--line-strong:#b8c8bc;--sand:#eee8dc;--accent:#b85637;
     --danger:#a43c36;--warning:#805b18;--info:#315f7c;--radius:12px;
     --shadow:0 10px 30px rgba(21,59,50,.12);
@@ -109,6 +109,55 @@
   .kbd{background:var(--sand);border:1px solid #dfd4c2;border-radius:5px;padding:1px 7px;font-family:Consolas,monospace;font-size:.85em}
   .toc a{display:inline-block;margin:3px 5px 3px 0;padding:5px 11px;background:#fff;border:1px solid var(--line);border-radius:7px;font-size:.8rem;text-decoration:none}
   .toc a:hover{border-color:var(--forest-700);color:var(--forest-700)}
+  .library-head{display:flex;align-items:flex-start;gap:18px;justify-content:space-between}
+  .library-head>div{min-width:0}
+  .library-head .sub{margin-bottom:0}
+  .library-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+  .library-settings{margin-top:16px}
+  .library-toolbar{display:flex;gap:12px;align-items:end;margin:16px 0}
+  .library-toolbar>div{flex:1;min-width:160px}
+  .library-toolbar label{margin:0 0 5px}
+  .library-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  .trip-card{padding:22px;margin:0;min-width:0;align-self:start}
+  .trip-card h3{font:700 1.25rem/1.3 Georgia,"Times New Roman",serif;margin:0;color:var(--forest-950)}
+  .trip-top{display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .trip-status{flex:0 0 auto;display:inline-flex;align-items:center;border-radius:999px;padding:5px 9px;font-size:.7rem;font-weight:700;background:var(--sand);color:var(--ink)}
+  .trip-status.upcoming{background:var(--green-soft);color:var(--forest-700)}
+  .trip-status.active{background:#e5f1eb;color:#1f6a49}
+  .trip-status.past{background:#eceeec;color:var(--muted)}
+  .trip-dates{margin-top:9px;font-weight:650;color:var(--forest-700)}
+  .trip-summary{display:flex;flex-wrap:wrap;gap:7px 14px;margin-top:12px;color:var(--muted);font-size:.82rem}
+  .trip-meta{margin-top:10px;color:var(--muted);font-size:.76rem}
+  .trip-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+  .trip-actions .button,button.trip-toggle{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;font:650 .84rem/1.25 inherit;padding:10px 14px;border-radius:8px;border:1px solid var(--forest-700);background:#fff;color:var(--forest-700);min-height:42px;cursor:pointer}
+  .trip-actions .button.primary{background:var(--forest-700);color:#fff}
+  .trip-actions .button:hover{background:var(--green-soft);color:var(--forest-700)}
+  .trip-actions .button.primary:hover{background:var(--forest-950);color:#fff}
+  .trip-details{margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
+  .trip-details h4{font-size:.83rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:16px 0 8px}
+  .day-list,.audio-list,.kit-list{list-style:none;padding:0}
+  .day-item{padding:11px 0;border-top:1px solid var(--line)}
+  .day-item:first-child{border-top:0}
+  .day-title{font-weight:650;line-height:1.4}
+  .day-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:5px;font-size:.8rem}
+  .day-links details{margin:0;padding:0;border:0;max-width:100%}
+  .day-links summary{font-size:.8rem;min-height:28px;padding:0}
+  .audio-list{margin:7px 0 7px 12px}
+  .audio-list li{padding:5px 0;border-bottom:1px dotted var(--line)}
+  .audio-list small{color:var(--muted)}
+  .kit-list li{padding:7px 0;border-bottom:1px solid var(--line)}
+  .kit-list small{display:block;color:var(--muted)}
+  .notice{border:1px solid var(--line);border-left:4px solid var(--info);border-radius:8px;padding:11px 13px;margin:12px 0;font-size:.85rem;background:#f2f6f8}
+  .notice.success{border-left-color:var(--forest-700);background:var(--green-soft)}
+  .notice.warning{border-left-color:var(--warning);background:#faf4e7}
+  .notice.error{border-left-color:var(--danger);background:#fbefed;color:var(--danger)}
+  .empty-state{grid-column:1/-1;border:1px dashed var(--line-strong);border-radius:var(--radius);padding:30px 22px;text-align:center;color:var(--muted);background:rgba(255,255,255,.45)}
+  .empty-state h3{font:700 1.2rem Georgia,"Times New Roman",serif;color:var(--ink);margin-bottom:7px}
+  .build-new{color:var(--accent);font-weight:700}
+  .link-disabled{color:var(--muted);font-size:.8rem;cursor:not-allowed}
+  .gate-hint{margin-top:12px;padding:10px 12px;background:var(--sand);border-radius:7px;font-size:.8rem;color:var(--ink-soft)}
+  @media (max-width:900px){.library-grid{grid-template-columns:1fr}}
+  @media (max-width:760px){.library-head{display:block}.library-actions{justify-content:flex-start;margin-top:12px}.library-toolbar{display:block}.library-toolbar>div+div{margin-top:10px}.trip-card{padding:18px}}
   .curr-list{display:none;max-height:220px;overflow:auto;border:1px solid var(--line-strong);border-radius:8px;background:#fff;margin-top:4px;position:relative;z-index:3}
   .curr-list .ci{padding:9px 12px;cursor:pointer;display:flex;gap:8px;align-items:center;border-bottom:1px solid var(--line);font-size:.86rem}
   .curr-list .ci:hover{background:var(--green-soft)}
@@ -188,6 +237,7 @@
   </div>
   <nav class="tabs" id="mainNav" aria-label="Основные разделы" role="tablist">
     <button class="active" id="tabWizard" type="button" role="tab" aria-selected="true" aria-controls="pageWizard">Мастер</button>
+    <button id="tabLibrary" type="button" role="tab" aria-selected="false" aria-controls="pageLibrary" tabindex="-1">Библиотека</button>
     <button id="tabPhotos" type="button" role="tab" aria-selected="false" aria-controls="pagePhotos" tabindex="-1">Фотоотчёт</button>
     <button id="tabReport" type="button" role="tab" aria-selected="false" aria-controls="pageReport" tabindex="-1">Отчёт</button>
     <button id="tabLearn" type="button" role="tab" aria-selected="false" aria-controls="pageLearn" tabindex="-1">Обучение</button>
@@ -392,6 +442,39 @@
 </div>
 </div>
 
+<div id="pageLibrary" style="display:none">
+<section class="card" aria-labelledby="libraryTitle">
+  <div class="library-head">
+    <div>
+      <h2 id="libraryTitle"><span class="ic"><svg width="19" height="19"><use href="#i-map"/></svg></span>Библиотека путешествий</h2>
+      <p class="sub">Опубликованные путеводители, дни маршрута, аудио и документы. Состав библиотеки определяется реестром гидов, а не кодом приложения.</p>
+    </div>
+    <div class="library-actions">
+      <button id="libraryRefresh" type="button">Обновить</button>
+    </div>
+  </div>
+  <p class="hint" id="libraryCacheMeta" role="status" aria-live="polite">Библиотека ещё не загружена.</p>
+  <div id="libraryNotice" class="notice" role="status" aria-live="polite">При первом открытии реестр и манифесты загружаются из сети. Последняя удачная копия сохраняется только в этом браузере.</div>
+  <details class="library-settings">
+    <summary>Источник реестра и приватность</summary>
+    <label for="libraryRegistryUrl">URL файла guides.json</label>
+    <input id="libraryRegistryUrl" type="url" value="https://raw.githubusercontent.com/shulgaop/KIMIK3/main/guides.json" spellcheck="false">
+    <div class="row">
+      <button id="librarySaveSource" type="button">Сохранить источник</button>
+      <button id="libraryResetSource" type="button">Восстановить по умолчанию</button>
+    </div>
+    <p class="hint">Приложение читает только реестр и манифесты JSON. Кодовое слово приватного гида не запрашивается и не сохраняется: его нужно ввести на сайте гида после перехода.</p>
+  </details>
+</section>
+<div class="library-toolbar" aria-label="Фильтры библиотеки">
+  <div><label for="librarySearch">Поиск по названию и дням</label><input id="librarySearch" type="search" placeholder="Например: Япония или Фудзи" disabled></div>
+  <div><label for="libraryStatus">Статус поездки</label><select id="libraryStatus" disabled><option value="all">Все путешествия</option><option value="upcoming">Предстоящие</option><option value="active">Сейчас в поездке</option><option value="past">Завершённые</option></select></div>
+</div>
+<div class="library-grid" id="libraryList" aria-live="polite">
+  <div class="empty-state"><h3>Путешествия появятся здесь</h3><p>Откройте раздел при подключении к сети или нажмите «Обновить».</p></div>
+</div>
+</div>
+
 <div id="pagePhotos" style="display:none">
 <div class="card">
   <h2><span class="ic"><svg width="19" height="19"><use href="#i-camera"/></svg></span>Фотоотчёт по маршруту</h2>
@@ -477,6 +560,7 @@
 <div class="help-search"><input id="helpQ" placeholder="Поиск по инструкции… (например: ключ, фото, телефон)" oninput="filterHelp()"></div>
 <div class="card toc"><b>Оглавление:</b><br>
   <a href="#help-start">Быстрый старт</a><a href="#help-steps">Шаги мастера</a>
+  <a href="#help-library">Библиотека</a>
   <a href="#help-report">Отчёт</a><a href="#help-learn">Обучение</a>
   <a href="#help-llm">Ключ OpenRouter</a><a href="#help-photo">Фото и видео</a>
   <a href="#help-phone">С телефона</a><a href="#help-files">Где файлы</a>
@@ -494,6 +578,17 @@
         <b>Гид (ИИ)</b> → <b>Документы</b> → <b>Фото</b>. Пройденные шаги отмечаются галочкой ✓.</li>
     <li><b>Шаг «Результат»:</b> «Скачать всё одним zip» — весь комплект (гид, карта, календарь,
         чеклист, аудиогид, фотоотчёт) в одном архиве.</li>
+  </ol>
+</div>
+
+<div class="card answer" id="help-library">
+  <h3><span class="ic"><svg width="16" height="16"><use href="#i-map"/></svg></span>Библиотека путешествий</h3>
+  <ol>
+    <li>Откройте вкладку <b>«Библиотека»</b>: приложение загрузит <span class="kbd">guides.json</span> и манифест каждого гида. Название, даты и статус поездки видны в общем списке.</li>
+    <li><b>«Дни и файлы»</b> раскрывает страницы дней, аудиотреки, KML, календарь, чеклист, бюджет, бронирования и источники. Ссылки открываются в новой вкладке.</li>
+    <li>Для приватного гида кодовое слово вводится только на его сайте. Библиотека его не запрашивает, не передаёт и не хранит.</li>
+    <li>Последний реестр и манифесты сохраняются в браузере. Без сети показывается их дата; неоткрытые ранее сетевые ссылки отключаются.</li>
+    <li>Поиск ищет также по названиям дней. В настройках можно указать другой URL реестра; кнопка «Обновить» повторно загружает все JSON.</li>
   </ol>
 </div>
 
@@ -971,7 +1066,343 @@ function drawExamples(list){
      <div class="hint">Вход: ${esc((e.input||'').slice(0,120))}…</div></div>`).join('')
     || '<p class="hint">Примеров пока нет.</p>';
 }
-const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+  .replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+
+// ---- библиотека опубликованных путешествий ----
+const LIBRARY_DEFAULT_REGISTRY = 'https://raw.githubusercontent.com/shulgaop/KIMIK3/main/guides.json';
+const LIBRARY_SOURCE_KEY = 'trekLibraryRegistryUrl';
+const LIBRARY_CACHE_KEY = 'trekLibraryCacheV1';
+const LIBRARY_SEEN_KEY = 'trekLibrarySeenV1';
+const LIBRARY_OPENED_KEY = 'trekLibraryOpenedV1';
+let libraryRegistry = null;
+let libraryRegistrySavedAt = '';
+let libraryManifests = {};
+let libraryExpanded = new Set();
+let libraryLoaded = false;
+let libraryLoading = false;
+let librarySeen = libraryRead(LIBRARY_SEEN_KEY, {});
+let libraryOpened = new Set(libraryRead(LIBRARY_OPENED_KEY, []));
+
+function libraryRead(key, fallback){
+  try{ const raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : fallback; }
+  catch(e){ return fallback; }
+}
+function libraryWrite(key, value){
+  try{ localStorage.setItem(key, JSON.stringify(value)); return true; }
+  catch(e){ return false; }
+}
+function librarySource(){
+  try{ return localStorage.getItem(LIBRARY_SOURCE_KEY) || LIBRARY_DEFAULT_REGISTRY; }
+  catch(e){ return LIBRARY_DEFAULT_REGISTRY; }
+}
+function libraryUrl(value, base){
+  try{
+    const url = new URL(value, base || location.origin);
+    return ['http:','https:'].includes(url.protocol) ? url.href : null;
+  }catch(e){ return null; }
+}
+function libraryResolve(guide, path){
+  const base = libraryUrl(guide.url);
+  if(!base || !path) return null;
+  return libraryUrl(path, base.endsWith('/') ? base : base + '/');
+}
+function libraryMajor(schema){
+  return typeof schema==='string' ? schema.split('/').pop().split('.')[0] : '';
+}
+function libraryValidateRegistry(data){
+  if(!data || typeof data!=='object' || !Array.isArray(data.guides))
+    throw new Error('В реестре нет списка guides');
+  if(libraryMajor(data.schema)!=='1')
+    throw new Error('Неподдерживаемая версия реестра: ' + (data.schema || 'не указана'));
+  data.guides = data.guides.map(guide=>guide && typeof guide==='object' && !Array.isArray(guide) ? guide : {});
+  return data;
+}
+function libraryValidateManifest(data){
+  if(!data || typeof data!=='object' || Array.isArray(data))
+    throw new Error('Манифест должен быть JSON-объектом');
+  if(data.days!==undefined && (!Array.isArray(data.days) || data.days.some(day=>!day || typeof day!=='object' || Array.isArray(day))))
+    throw new Error('Поле days манифеста имеет неверный формат');
+  if(data.files!==undefined && (!data.files || typeof data.files!=='object' || Array.isArray(data.files)))
+    throw new Error('Поле files манифеста имеет неверный формат');
+  return {data, unsupported:libraryMajor(data.schema)!=='1'};
+}
+async function libraryFetchJson(url){
+  const safe = libraryUrl(url);
+  if(!safe) throw new Error('Допустимы только HTTP(S) URL');
+  const controller = new AbortController();
+  const timer = setTimeout(()=>controller.abort(), 15000);
+  try{
+    const response = await fetch(safe, {cache:'no-cache', signal:controller.signal});
+    if(!response.ok) throw new Error(`HTTP ${response.status}`);
+    const text = await response.text();
+    try{ return JSON.parse(text); }
+    catch(e){ throw new Error('Сервер вернул некорректный JSON'); }
+  }catch(e){
+    if(e.name==='AbortError') throw new Error('Превышено время ожидания');
+    throw e;
+  }finally{ clearTimeout(timer); }
+}
+function libraryLoadCache(){
+  const cache = libraryRead(LIBRARY_CACHE_KEY, null);
+  if(!cache || cache.source!==librarySource()) return false;
+  try{
+    libraryRegistry = libraryValidateRegistry(cache.registry.data);
+    libraryRegistrySavedAt = cache.registry.savedAt || '';
+    libraryManifests = {};
+    for(const [key, entry] of Object.entries(cache.manifests || {})){
+      if(!entry || !entry.data) continue;
+      libraryManifests[key] = {data:entry.data, savedAt:entry.savedAt || '', cached:true,
+        unsupported:libraryMajor(entry.data.schema)!=='1'};
+    }
+    renderLibrary();
+    return true;
+  }catch(e){ return false; }
+}
+function librarySaveCache(){
+  const manifests = {};
+  for(const [key, entry] of Object.entries(libraryManifests)){
+    if(entry.data) manifests[key] = {data:entry.data, savedAt:entry.savedAt};
+  }
+  libraryWrite(LIBRARY_CACHE_KEY, {source:librarySource(),
+    registry:{data:libraryRegistry, savedAt:libraryRegistrySavedAt}, manifests});
+}
+function libraryNotice(text, kind=''){
+  $('libraryNotice').className = 'notice' + (kind ? ' '+kind : '');
+  $('libraryNotice').textContent = text;
+}
+function libraryToday(tz){
+  try{
+    const parts = new Intl.DateTimeFormat('en-US', {timeZone:tz || 'UTC',
+      year:'numeric', month:'2-digit', day:'2-digit'}).formatToParts(new Date());
+    const values = Object.fromEntries(parts.map(p=>[p.type,p.value]));
+    return `${values.year}-${values.month}-${values.day}`;
+  }catch(e){ return new Date().toISOString().slice(0,10); }
+}
+function libraryTripStatus(dates){
+  if(!dates || !/^\d{4}-\d{2}-\d{2}$/.test(dates.start) || !/^\d{4}-\d{2}-\d{2}$/.test(dates.end))
+    return {key:'unknown', text:'Даты уточняются'};
+  const today = libraryToday(dates.tz);
+  if(today < dates.start) return {key:'upcoming', text:'Предстоит'};
+  if(today > dates.end) return {key:'past', text:'Завершено'};
+  return {key:'active', text:'Сейчас в поездке'};
+}
+function libraryFormatDate(value){
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(value || '')) return 'дата не указана';
+  return new Intl.DateTimeFormat('ru-RU', {timeZone:'UTC', day:'2-digit', month:'2-digit', year:'numeric'})
+    .format(new Date(value + 'T00:00:00Z'));
+}
+function libraryFormatTime(value){
+  if(!value) return 'время не указано';
+  const date = new Date(value);
+  if(Number.isNaN(date.getTime())) return String(value);
+  return new Intl.DateTimeFormat('ru-RU', {dateStyle:'medium', timeStyle:'short'}).format(date);
+}
+function libraryBytes(bytes){
+  if(!Number.isFinite(bytes) || bytes<=0) return '';
+  return bytes>=1048576 ? `${(bytes/1048576).toFixed(1)} МБ` : `${Math.round(bytes/1024)} КБ`;
+}
+function libraryLink(url, label, className=''){
+  const safe = libraryUrl(url);
+  if(!safe) return '<span class="link-disabled">Ссылка недоступна</span>';
+  if(!navigator.onLine && !libraryOpened.has(safe))
+    return `<span class="link-disabled" title="Эта ссылка ещё не открывалась и не сохранена">${esc(label)} · нужно подключение</span>`;
+  const offlineTitle = !navigator.onLine ? 'Ссылка открывалась ранее; доступ зависит от кэша браузера' : '';
+  return `<a class="${esc(className)}" href="${esc(safe)}" data-library-link="${esc(safe)}" target="_blank" rel="noopener noreferrer" ${offlineTitle?`title="${offlineTitle}"`:''}>${esc(label)}</a>`;
+}
+function libraryManifestSummary(entry){
+  if(!entry || !entry.data) return '';
+  const days = Array.isArray(entry.data.days) ? entry.data.days : [];
+  const audio = days.reduce((sum,day)=>sum+(Array.isArray(day.audio)?day.audio.filter(track=>track && typeof track==='object').length:0),0);
+  const files = entry.data.files && typeof entry.data.files==='object' ? Object.keys(entry.data.files).length : 0;
+  return `<div class="trip-summary"><span>Дней: ${days.length}</span><span>Аудиотреков: ${audio}</span><span>Файлов комплекта: ${files}</span></div>`;
+}
+function libraryDayHtml(guide, day){
+  const page = libraryResolve(guide, day.page);
+  const audio = Array.isArray(day.audio) ? day.audio.filter(track=>track && typeof track==='object') : [];
+  const audioHtml = audio.length ? `<details><summary>Аудио дня (${audio.length})</summary><ul class="audio-list">${audio.map(track=>{
+    const href = libraryResolve(guide, track.file);
+    const size = libraryBytes(track.bytes);
+    return `<li>${libraryLink(href, track.title || 'Аудиотрек')}${size?` <small>${size}</small>`:''}</li>`;
+  }).join('')}</ul></details>` : '';
+  return `<li class="day-item"><div class="day-title">${esc(day.title || `День ${day.day || ''}`)}</div>
+    <div class="day-links">${libraryLink(page,'Открыть день')}${audioHtml}</div></li>`;
+}
+function libraryFilesHtml(guide, files){
+  const labels = {kml:'Карта KML',ics:'Календарь ICS',checklist:'Чеклист',budget:'Бюджет',bookings:'Бронирования',sources:'Источники'};
+  return `<ul class="kit-list">${Object.entries(files).map(([key,file])=>{
+    if(!file || !file.file) return '';
+    return `<li>${libraryLink(libraryResolve(guide,file.file),labels[key] || file.title || key)}${file.title?`<small>${esc(file.title)}</small>`:''}</li>`;
+  }).join('')}</ul>`;
+}
+function libraryDetailsHtml(guide, key, index, entry){
+  const manifest = entry.data;
+  const days = Array.isArray(manifest.days) ? [...manifest.days].sort((a,b)=>(+a.day||0)-(+b.day||0)) : [];
+  const files = manifest.files && typeof manifest.files==='object' ? manifest.files : {};
+  const commit = manifest.build && manifest.build.commit;
+  return `<div class="trip-details" id="trip-details-${index}">
+    ${manifest.gate || guide.gate ? '<p class="gate-hint">При первом переходе сайт попросит кодовое слово. Введите его там: библиотека не получает и не сохраняет это слово.</p>' : ''}
+    <h4>Дни маршрута</h4>${days.length?`<ul class="day-list">${days.map(day=>libraryDayHtml(guide,day)).join('')}</ul>`:'<p class="hint">В манифесте нет описания дней.</p>'}
+    <h4>Комплект маршрута</h4>${Object.keys(files).length?libraryFilesHtml(guide,files):'<p class="hint">Файлы комплекта не перечислены.</p>'}
+    ${commit?`<p class="trip-meta">Сборка <code>${esc(commit)}</code>${manifest.build.utc?` · ${esc(libraryFormatTime(manifest.build.utc))}`:''}</p>`:''}
+  </div>`;
+}
+function libraryCardHtml(guide, index){
+  const key = String(guide.id || `record-${index}`);
+  const entry = libraryManifests[key] || {};
+  const status = libraryTripStatus(guide.dates);
+  const title = guide.title || 'Путешествие без названия';
+  const dates = guide.dates ? `${libraryFormatDate(guide.dates.start)} — ${libraryFormatDate(guide.dates.end)}${guide.dates.tz?` · ${guide.dates.tz}`:''}` : 'Даты не указаны';
+  const manifest = entry.data;
+  const mainPage = manifest && manifest.entry ? libraryResolve(guide,manifest.entry) : libraryUrl(guide.url);
+  const commit = manifest && manifest.build && manifest.build.commit;
+  const hasUpdate = !!(commit && librarySeen[key] && librarySeen[key]!==commit);
+  const expanded = libraryExpanded.has(key);
+  let stateHtml = '';
+  if(!guide.id || !guide.url || !guide.manifest)
+    stateHtml = '<div class="notice error">Запись реестра не содержит id, url или manifest.</div>';
+  else if(entry.loading)
+    stateHtml = '<div class="notice">Загружаю манифест и содержимое маршрута…</div>';
+  else if(entry.error && !manifest)
+    stateHtml = `<div class="notice error">Не удалось загрузить манифест: ${esc(entry.error)}. Остальные путешествия доступны.</div>`;
+  else if(entry.unsupported)
+    stateHtml = `<div class="notice warning">Версия манифеста «${esc(manifest.schema || 'не указана')}» пока не поддерживается. Гид можно открыть прямой ссылкой.</div>`;
+  else if(entry.error)
+    stateHtml = `<div class="notice warning">Показана сохранённая копия. Обновление не удалось: ${esc(entry.error)}.</div>`;
+  const buildMeta = manifest ? `<p class="trip-meta">${entry.cached?'Сохранённая копия':'Манифест загружен'}${entry.savedAt?` · ${esc(libraryFormatTime(entry.savedAt))}`:''}${hasUpdate?' · <span class="build-new">есть новая сборка</span>':''}</p>` : '';
+  return `<article class="card trip-card" data-guide="${esc(key)}">
+    <div class="trip-top"><h3>${esc(title)}</h3><span class="trip-status ${status.key}">${status.text}</span></div>
+    <div class="trip-dates">${esc(dates)}</div>
+    ${libraryManifestSummary(entry)}${buildMeta}${stateHtml}
+    <div class="trip-actions">
+      ${libraryLink(mainPage,'Открыть путеводитель','button primary')}
+      ${manifest && !entry.unsupported?`<button type="button" class="trip-toggle" data-library-toggle="${esc(key)}" data-guide-index="${index}" aria-expanded="${expanded}" aria-controls="trip-details-${index}">${expanded?'Скрыть дни и файлы':'Дни и файлы'}</button>`:''}
+    </div>
+    ${expanded && manifest && !entry.unsupported?libraryDetailsHtml(guide,key,index,entry):''}
+  </article>`;
+}
+function renderLibrary(){
+  const list = $('libraryList');
+  if(!libraryRegistry){
+    $('librarySearch').disabled = true; $('libraryStatus').disabled = true;
+    return;
+  }
+  $('librarySearch').disabled = false; $('libraryStatus').disabled = false;
+  const query = $('librarySearch').value.trim().toLowerCase();
+  const filter = $('libraryStatus').value;
+  const guides = libraryRegistry.guides.filter((guide,index)=>{
+    const key = String(guide.id || `record-${index}`);
+    const manifest = libraryManifests[key] && libraryManifests[key].data;
+    const days = manifest && Array.isArray(manifest.days) ? manifest.days.map(day=>day.title).join(' ') : '';
+    const matchesQuery = !query || `${guide.title || ''} ${days}`.toLowerCase().includes(query);
+    const status = libraryTripStatus(guide.dates).key;
+    return matchesQuery && (filter==='all' || filter===status);
+  });
+  const sourceIndexes = new Map(libraryRegistry.guides.map((guide,index)=>[guide,index]));
+  list.innerHTML = guides.length ? guides.map(guide=>libraryCardHtml(guide,sourceIndexes.get(guide))).join('') :
+    '<div class="empty-state"><h3>Ничего не найдено</h3><p>Измените запрос или выберите другой статус поездки.</p></div>';
+  $('libraryCacheMeta').textContent = `Источник: ${librarySource()} · копия реестра: ${libraryFormatTime(libraryRegistrySavedAt)} · путешествий: ${libraryRegistry.guides.length}`;
+}
+async function loadLibrary(){
+  if(libraryLoading) return;
+  if(!navigator.onLine){
+    const cached = libraryRegistry || libraryLoadCache();
+    libraryNotice(cached ? 'Нет подключения. Показаны сохранённые реестр и манифесты; неоткрытые ранее ссылки отключены.' : 'Нет подключения и сохранённой копии библиотеки.', 'warning');
+    renderLibrary(); return;
+  }
+  libraryLoading = true; $('libraryRefresh').disabled = true;
+  const previousCache = libraryRead(LIBRARY_CACHE_KEY, null);
+  libraryNotice('Обновляю реестр и манифесты…');
+  try{
+    let registry;
+    try{
+      registry = libraryValidateRegistry(await libraryFetchJson(librarySource()));
+      libraryRegistry = registry; libraryRegistrySavedAt = new Date().toISOString();
+      libraryManifests = {};
+    }catch(e){
+      if(!libraryRegistry && !libraryLoadCache()) throw e;
+      libraryNotice(`Не удалось обновить реестр: ${e.message}. Показана сохранённая копия.`, 'warning');
+      renderLibrary(); return;
+    }
+    libraryManifests = Object.fromEntries(libraryRegistry.guides.map((guide,index)=>
+      [String(guide.id || `record-${index}`), {loading:true}]));
+    renderLibrary();
+    await Promise.all(libraryRegistry.guides.map(async(guide,index)=>{
+      const key = String(guide.id || `record-${index}`);
+      if(!guide.id || !guide.url || !guide.manifest){
+        libraryManifests[key] = {error:'некорректная запись реестра'}; return;
+      }
+      try{
+        const result = libraryValidateManifest(await libraryFetchJson(guide.manifest));
+        libraryManifests[key] = {...result, savedAt:new Date().toISOString()};
+        librarySaveCache();
+      }catch(e){
+        const saved = previousCache && previousCache.source===librarySource() && previousCache.manifests && previousCache.manifests[key];
+        libraryManifests[key] = saved && saved.data ? {data:saved.data, savedAt:saved.savedAt,
+          cached:true, unsupported:libraryMajor(saved.data.schema)!=='1', error:e.message} : {error:e.message};
+      }
+      renderLibrary();
+    }));
+    const failed = Object.values(libraryManifests).filter(entry=>entry.error).length;
+    libraryNotice(failed ? `Библиотека обновлена, но ${failed} манифест(ов) недоступны. Проверьте карточки ниже.` : 'Библиотека обновлена. Реестр и манифесты сохранены для работы без сети.', failed?'warning':'success');
+    librarySaveCache();
+  }catch(e){
+    libraryNotice(`Библиотека недоступна: ${e.message}. Проверьте источник и подключение.`, 'error');
+  }finally{
+    libraryLoading = false; $('libraryRefresh').disabled = false; renderLibrary();
+  }
+}
+function openLibrary(){
+  if(libraryLoaded) return;
+  libraryLoaded = true;
+  const hasCache = libraryLoadCache();
+  if(hasCache) libraryNotice('Показана последняя сохранённая копия. Выполняется обновление…');
+  loadLibrary();
+}
+function saveLibrarySource(value){
+  const safe = libraryUrl(value.trim());
+  if(!safe){ libraryNotice('Укажите корректный HTTP(S) URL реестра.', 'error'); return; }
+  try{ localStorage.setItem(LIBRARY_SOURCE_KEY, safe); }
+  catch(e){ libraryNotice('Браузер не разрешил сохранить источник. Проверьте настройки хранилища.', 'error'); return; }
+  libraryRegistry = null; libraryManifests = {}; libraryExpanded.clear();
+  $('libraryList').innerHTML = '';
+  loadLibrary();
+}
+
+$('libraryRefresh').addEventListener('click', loadLibrary);
+$('librarySearch').addEventListener('input', renderLibrary);
+$('libraryStatus').addEventListener('change', renderLibrary);
+$('librarySaveSource').addEventListener('click', ()=>saveLibrarySource($('libraryRegistryUrl').value));
+$('libraryResetSource').addEventListener('click', ()=>{
+  $('libraryRegistryUrl').value = LIBRARY_DEFAULT_REGISTRY; saveLibrarySource(LIBRARY_DEFAULT_REGISTRY);
+});
+$('libraryList').addEventListener('click', event=>{
+  const toggle = event.target.closest('[data-library-toggle]');
+  if(toggle){
+    const key = toggle.dataset.libraryToggle;
+    if(libraryExpanded.has(key)) libraryExpanded.delete(key); else libraryExpanded.add(key);
+    const manifest = libraryManifests[key] && libraryManifests[key].data;
+    const commit = manifest && manifest.build && manifest.build.commit;
+    if(commit){ librarySeen[key] = commit; libraryWrite(LIBRARY_SEEN_KEY, librarySeen); }
+    renderLibrary();
+    const replacement = [...document.querySelectorAll('[data-library-toggle]')].find(el=>el.dataset.libraryToggle===key);
+    if(replacement) replacement.focus();
+    return;
+  }
+  const link = event.target.closest('a[data-library-link]');
+  if(link){
+    libraryOpened.add(link.dataset.libraryLink);
+    libraryWrite(LIBRARY_OPENED_KEY, [...libraryOpened].slice(-300));
+  }
+});
+window.addEventListener('online', ()=>{ if(libraryLoaded) loadLibrary(); });
+window.addEventListener('offline', ()=>{
+  if(!libraryLoaded) return;
+  libraryNotice('Нет подключения. Показаны сохранённые данные; неоткрытые ранее ссылки отключены.', 'warning');
+  renderLibrary();
+});
+$('libraryRegistryUrl').value = librarySource();
+
 async function saveRules(){
   await api('/api/learn/rules', {method:'PUT', body:JSON.stringify({text:$('taRules').value})});
   $('rulesMsg').textContent = ' ✓ сохранено';
@@ -989,12 +1420,13 @@ async function delExample(i){
 }
 
 $('tabWizard').onclick = ()=>{ showTab('Wizard'); };
+$('tabLibrary').onclick = ()=>{ showTab('Library'); openLibrary(); };
 $('tabPhotos').onclick = ()=>{ showTab('Photos'); };
 $('tabReport').onclick = ()=>{ showTab('Report'); };
 $('tabLearn').onclick = ()=>{ showTab('Learn'); loadLearn(); };
 $('tabHelp').onclick = ()=>{ showTab('Help'); };
 function showTab(t){
-  for(const p of ['Wizard','Photos','Report','Learn','Help']){
+  for(const p of ['Wizard','Library','Photos','Report','Learn','Help']){
     const selected = p===t;
     $('page'+p).style.display = selected ? '' : 'none';
     $('tab'+p).classList.toggle('active', selected);
@@ -1112,7 +1544,7 @@ function enhanceInterface(){
     if(!control.id) control.id = `field-${++generatedId}`;
     labelEl.htmlFor = control.id;
   });
-  for(const p of ['Wizard','Photos','Report','Learn','Help']){
+  for(const p of ['Wizard','Library','Photos','Report','Learn','Help']){
     $('page'+p).setAttribute('role', 'tabpanel');
     $('page'+p).setAttribute('aria-labelledby', 'tab'+p);
   }
