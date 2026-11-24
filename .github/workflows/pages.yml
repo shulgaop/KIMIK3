@@ -1,0 +1,41 @@
+# Автопубликация гида «Япония 2027» на GitHub Pages (D-001, T-007).
+#
+# При пуше в рабочую ветку по файлам маршрута пересобирает публикуемую
+# копию сайта (`routes/japan/data/make_site.py`: экран кодового слова +
+# сторожевые скрипты) и выкладывает её в ветку gh-pages, из которой
+# сконфигурирован GitHub Pages. Откат — теги `site-ГГГГ-ММ-ДД` на gh-pages.
+name: Публикация гида Японии
+
+on:
+  push:
+    branches: [feature/japan-guide]
+    paths:
+      - "routes/japan/generated/**"
+      - "routes/japan/config/**"
+      - "routes/japan/data/make_site.py"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Сборка публикуемой копии (парольный экран)
+        run: python routes/japan/data/make_site.py
+
+      - name: Деплой в gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: routes/japan/site
+          publish_branch: gh-pages
+          commit_message: "Публикация гида «Япония 2027» (авто, ${{ github.sha }})"

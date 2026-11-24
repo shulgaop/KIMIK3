@@ -1,0 +1,17 @@
+{
+ "schema": "kimik3-guides-registry/1",
+ "note": "Реестр опубликованных гидов для приложений (Track Fourge). Новый маршрут — новая запись; манифест каждого гида лежит по <url>гид.json (схема kimik3-guide-manifest/1).",
+ "updated": "2026-11-24",
+ "guides": [
+  {
+   "id": "japan-2027",
+   "title": "Япония 2027 · Фудзи и Кумано Кодо",
+   "url": "https://shulgaop.github.io/KIMIK3/",
+   "manifest": "https://shulgaop.github.io/KIMIK3/гид.json",
+   "dates": {"start": "2027-09-02", "end": "2027-09-10", "tz": "Asia/Tokyo"},
+   "gate": "sha256-localstorage",
+   "repo_path": "routes/japan/",
+   "rollback_tag": "site-2026-11-23"
+  }
+ ]
+}

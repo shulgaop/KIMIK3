@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Чеклист · Япония 2027 · Фудзи и Кумано Кодо</title>
+<style>
+  :root{--paper:#b0c6b3;--ink:#111;--crim:#db3356;--card:#fdfdfb;--line:#7a947e}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font:16px/1.55 -apple-system,"Segoe UI",Roboto,sans-serif;padding:18px}
+  .wrap{max-width:760px;margin:0 auto}
+  h1{font-family:Georgia,serif;font-size:1.7rem;margin:8px 0 2px}
+  .sub{font-size:.9rem;opacity:.85;margin-bottom:14px}
+  .toolbar{position:sticky;top:0;background:var(--paper);padding:8px 0;border-bottom:2px solid var(--ink);display:flex;gap:8px;flex-wrap:wrap;z-index:5;margin-bottom:14px}
+  button{font:600 .92rem/1 inherit;padding:9px 14px;border:2px solid var(--ink);background:var(--card);cursor:pointer;border-radius:6px}
+  button:hover{background:var(--ink);color:var(--paper)}
+  button.reading{background:var(--crim);border-color:var(--crim);color:#fff}
+  .progress{font:600 .95rem/1 Georgia,serif;align-self:center;margin-left:auto}
+  section{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin-bottom:14px}
+  h2{font-family:Georgia,serif;font-size:1.15rem;display:flex;align-items:center;gap:10px;margin-bottom:8px;cursor:pointer}
+  h2 .speak{font-size:.8rem;padding:5px 10px;border-width:1px}
+  h2 .cnt{margin-left:auto;font:600 .85rem/1 inherit;color:var(--crim)}
+  ul{list-style:none}
+  li{display:flex;gap:10px;padding:6px 2px;border-bottom:1px dashed var(--line);align-items:flex-start}
+  li:last-child{border-bottom:none}
+  input[type=checkbox]{width:20px;height:20px;margin-top:2px;accent-color:var(--crim);flex-shrink:0;cursor:pointer}
+  label{cursor:pointer;flex:1}
+  li.done label{text-decoration:line-through;opacity:.5}
+  .note{font-size:.85rem;opacity:.8;margin-top:8px;font-style:italic}
+  @media print{
+    body{background:#fff}
+    .toolbar{display:none}
+    section{break-inside:avoid;border:1px solid #999}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Чеклист · Япония 2027 · Фудзи и Кумано Кодо</h1>
+<p class="sub">02–10 сентября 2027 · отметки сохраняются в этом браузере</p>
+
+<div class="toolbar">
+  <button id="readAll">&#x1F50A; Читать всё</button>
+  <button id="stopRead">&#x23F9; Стоп</button>
+  <button id="reset">&#x21BA; Сбросить отметки</button>
+  <span class="progress" id="progress">0 / 0</span>
+</div>
+
+<section data-sec>
+<h2 onclick="speakSec(this)">1 · Документы и брони (проверить до вылета) <button class="speak" onclick="event.stopPropagation();speakSec(this.parentElement)">&#x1F50A;</button><span class="cnt"></span></h2>
+<ul>
+<li><input type="checkbox" id="c1"><label for="c1">Загранпаспорт (срок &gt; 6 мес. после поездки)</label></li>
+<li><input type="checkbox" id="c2"><label for="c2">Авиабилеты open jaw: прилёт Токио, вылет Осака (Кансай) — бронь ожидается</label></li>
+<li><input type="checkbox" id="c3"><label for="c3">Бронь хижины 8-й станции Фудзи на 03.09 (распечатка/офлайн-скрин)</label></li>
+<li><input type="checkbox" id="c4"><label for="c4">Брони минсюку: Цугизакура/Нонака (06.09), Юноминэ (07.09), Кацуура (08.09)</label></li>
+<li><input type="checkbox" id="c5"><label for="c5">Автобус Синдзюку → 5-я станция Фудзи на 03.09 (Busta Shinjuku)</label></li>
+<li><input type="checkbox" id="c6"><label for="c6">Отели: Токио (02.09), Киото (04.09), Танабэ (05.09), Осака (09.09)</label></li>
+<li><input type="checkbox" id="c7"><label for="c7">Страховка с горным трекингом до 4000 м</label></li>
+<li><input type="checkbox" id="c8"><label for="c8">Офлайн: KML маршрута, гиды дней (HTML), аудиогид, офлайн-карты (Organic/Maps.me)</label></li>
+<li><input type="checkbox" id="c9"><label for="c9">Наличные иены: взнос Фудзи ¥4000, минсюку/онсэны/автобусы часто без карт</label></li>
+</ul>
+<p class="note">брони по списку бронирований — статусы и сроки</p>
+</section>
+
+<section data-sec>
+<h2 onclick="speakSec(this)">2 · Трек (Кумано, 3 дня) <button class="speak" onclick="event.stopPropagation();speakSec(this.parentElement)">&#x1F50A;</button><span class="cnt"></span></h2>
+<ul>
+<li><input type="checkbox" id="c10"><label for="c10">Рюкзак 25–35 л + чехол от дождя</label></li>
+<li><input type="checkbox" id="c11"><label for="c11">Треккинговые палки</label></li>
+<li><input type="checkbox" id="c12"><label for="c12">Обувь треккинговая разношенная</label></li>
+<li><input type="checkbox" id="c13"><label for="c13">Дождевик (сентябрь — самый мокрый сезон)</label></li>
+<li><input type="checkbox" id="c14"><label for="c14">Вода: фляги/гидратор 1,5–2 л</label></li>
+<li><input type="checkbox" id="c15"><label for="c15">Сухпаёк на 2 привала в день</label></li>
+<li><input type="checkbox" id="c16"><label for="c16">Книжечка штампов (двойной паломник)</label></li>
+<li><input type="checkbox" id="c17"><label for="c17">Фонарь налобный (запасной свет)</label></li>
+<li><input type="checkbox" id="c18"><label for="c18">Купальник и маленькое полотенце — онсэны (Юноминэ, Кацуура)</label></li>
+</ul>
+</section>
+
+<section data-sec>
+<h2 onclick="speakSec(this)">3 · Фудзи (высота, 0–10 °C на вершине) <button class="speak" onclick="event.stopPropagation();speakSec(this.parentElement)">&#x1F50A;</button><span class="cnt"></span></h2>
+<ul>
+<li><input type="checkbox" id="c19"><label for="c19">Тёплый слой (флис/пуховик) — на вершине 0–10 °C даже днём</label></li>
+<li><input type="checkbox" id="c20"><label for="c20">Мембранная куртка и штаны (ветер, грозы после полудня)</label></li>
+<li><input type="checkbox" id="c21"><label for="c21">Перчатки и шапка</label></li>
+<li><input type="checkbox" id="c22"><label for="c22">Солнцезащита: очки, крем SPF50, крышка головы (выше 6-й станции нет тени)</label></li>
+<li><input type="checkbox" id="c23"><label for="c23">Бафф/маска от вулканической пыли на спуске</label></li>
+<li><input type="checkbox" id="c24"><label for="c24">Повербанк (розеток в хижине мало)</label></li>
+<li><input type="checkbox" id="c25"><label for="c25">Наличные мелочью: вода/чай на тропе, туалеты ~¥200–300</label></li>
+</ul>
+</section>
+
+<section data-sec>
+<h2 onclick="speakSec(this)">4 · Аптечка <button class="speak" onclick="event.stopPropagation();speakSec(this.parentElement)">&#x1F50A;</button><span class="cnt"></span></h2>
+<ul>
+<li><input type="checkbox" id="c26"><label for="c26">Персональные лекарства + копия рецептов (в Японии ограничения на ряд препаратов — проверить заранее)</label></li>
+<li><input type="checkbox" id="c27"><label for="c27">От высотной болезни: питьевой режим; при симптомах — спуск</label></li>
+<li><input type="checkbox" id="c28"><label for="c28">Пластыри/мозольный набор, эластичный бинт</label></li>
+<li><input type="checkbox" id="c29"><label for="c29">Обезбол/жаропонижающее, средство от расстройства</label></li>
+<li><input type="checkbox" id="c30"><label for="c30">Антисептик, солнцезащитный и успокаивающий кремы</label></li>
+</ul>
+</section>
+
+<section data-sec>
+<h2 onclick="speakSec(this)">5 · Электроника и связь <button class="speak" onclick="event.stopPropagation();speakSec(this.parentElement)">&#x1F50A;</button><span class="cnt"></span></h2>
+<ul>
+<li><input type="checkbox" id="c31"><label for="c31">Телефон: офлайн-карты, KML, HTML-гиды, аудиогид скачаны</label></li>
+<li><input type="checkbox" id="c32"><label for="c32">eSIM/роуминг (проверить покрытие в горах Кумано — местами нет связи)</label></li>
+<li><input type="checkbox" id="c33"><label for="c33">Переходник питания (тип A, 100 В)</label></li>
+<li><input type="checkbox" id="c34"><label for="c34">Зарядки и кабели, повербанк</label></li>
+</ul>
+</section>
+
+<section data-sec>
+<h2 onclick="speakSec(this)">6 · Перед выходом (каждый трековый день) <button class="speak" onclick="event.stopPropagation();speakSec(this.parentElement)">&#x1F50A;</button><span class="cnt"></span></h2>
+<ul>
+<li><input type="checkbox" id="c35"><label for="c35">Прогноз погоды и предупреждения о тайфунах (JMA)</label></li>
+<li><input type="checkbox" id="c36"><label for="c36">Вода 1,5–2 л, перекус, дождевик в быстром доступе</label></li>
+<li><input type="checkbox" id="c37"><label for="c37">Книжечка штампов, наличные, заряженный телефон</label></li>
+<li><input type="checkbox" id="c38"><label for="c38">План Б на день из гида (автобусные точки схода)</label></li>
+</ul>
+</section>
+</div>
+<script>
+const synth = window.speechSynthesis;
+function secText(h2){
+  const sec = h2.closest('section');
+  let t = h2.childNodes[0].textContent.trim() + '. ';
+  sec.querySelectorAll('label').forEach(l=>{ if(!l.closest('li').classList.contains('done')) t += l.textContent.trim() + '. '; });
+  return t;
+}
+function speak(txt){
+  synth.cancel();
+  const u = new SpeechSynthesisUtterance(txt);
+  u.lang = 'ru-RU'; u.rate = 0.95;
+  synth.speak(u);
+}
+function speakSec(h2){ speak(secText(h2)); }
+document.getElementById('readAll').onclick = ()=>{
+  synth.cancel();
+  const secs = [...document.querySelectorAll('section[data-sec]')];
+  let i = 0;
+  const btn = document.getElementById('readAll');
+  btn.classList.add('reading'); btn.textContent = '\u{1F50A} Читаю\u{2026}';
+  function next(){
+    if(i >= secs.length){ btn.classList.remove('reading'); btn.textContent='\u{1F50A} Читать всё'; return; }
+    const u = new SpeechSynthesisUtterance(secText(secs[i].querySelector('h2')));
+    u.lang='ru-RU'; u.rate=0.95; u.onend = ()=>{ i++; next(); };
+    synth.speak(u);
+  }
+  next();
+};
+document.getElementById('stopRead').onclick = ()=>{
+  synth.cancel();
+  const btn = document.getElementById('readAll');
+  btn.classList.remove('reading'); btn.textContent='\u{1F50A} Читать всё';
+};
+const boxes = [...document.querySelectorAll('input[type=checkbox]')];
+function refresh(){
+  let done = 0;
+  boxes.forEach(b=>{
+    b.closest('li').classList.toggle('done', b.checked);
+    if(b.checked) done++;
+  });
+  document.getElementById('progress').textContent = done + ' / ' + boxes.length;
+  document.querySelectorAll('section[data-sec]').forEach(s=>{
+    const bs = [...s.querySelectorAll('input[type=checkbox]')];
+    const d = bs.filter(b=>b.checked).length;
+    s.querySelector('.cnt').textContent = d + '/' + bs.length;
+  });
+  localStorage.setItem('japanChecklist', JSON.stringify(boxes.map(b=>b.checked)));
+}
+boxes.forEach(b=>b.addEventListener('change', refresh));
+try{
+  const saved = JSON.parse(localStorage.getItem('japanChecklist')||'[]');
+  saved.forEach((v,i)=>{ if(boxes[i]) boxes[i].checked = v; });
+}catch(e){}
+refresh();
+document.getElementById('reset').onclick = ()=>{ if(confirm('Сбросить все отметки?')){ boxes.forEach(b=>b.checked=false); refresh(); } };
+</script>
+</body>
+</html>
+
