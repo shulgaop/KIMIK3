@@ -1819,9 +1819,9 @@
   {
    "path": "routes/japan/CONTEXT.md",
    "ext": ".md",
-   "size": 11783,
-   "sha1": "f8b2d678888bbf5ae7675b3bfcfcabec70c89848",
-   "mtime": 1795545985,
+   "size": 12749,
+   "sha1": "e9f49cf7bf34fcf10b9ff1d9ebd1ce4f971a30e6",
+   "mtime": 1795546948,
    "outline": {
     "headings": [
      "CONTEXT.md — маршрут «Япония» (единственный операционный снимок)",
@@ -1832,8 +1832,8 @@
      "Ссылки",
      "Замечания"
     ],
-    "lines": 140,
-    "snippet": "Обновлён: 2026-11-23. Поддерживается по `routes/japan/AGENTS.md` §13."
+    "lines": 151,
+    "snippet": "Обновлён: 2026-11-24. Поддерживается по `routes/japan/AGENTS.md` §13."
    },
    "keywords": [
     "фудзи",
@@ -1841,9 +1841,9 @@
     "japan",
     "github",
     "data",
+    "make_site",
     "generated",
     "только",
-    "make_site",
     "pages",
     "mp3"
    ],
@@ -2687,6 +2687,34 @@
    ]
   },
   {
+   "path": "routes/japan/data/make_pages_html.py",
+   "ext": ".py",
+   "size": 3352,
+   "sha1": "e87cfd9444e1b1b4566ed7e73479540eec89a1ef",
+   "mtime": 1795546880,
+   "outline": {
+    "symbols": [
+     "h1_of",
+     "build",
+     "main"
+    ],
+    "lines": 76
+   },
+   "keywords": [
+    "source",
+    "япония",
+    "json",
+    "eng",
+    "title",
+    "days",
+    "import",
+    "root",
+    "md_path",
+    "main"
+   ],
+   "part_numbers": []
+  },
+  {
    "path": "routes/japan/data/make_route_kml.py",
    "ext": ".py",
    "size": 3156,
@@ -3071,25 +3099,25 @@
   {
    "path": "routes/japan/generated/slice-day1/выходные/Гид.html",
    "ext": ".html",
-   "size": 7240,
-   "sha1": "2cc113cf0beacdd8c3596ebea24d20f705e9407d",
-   "mtime": 1795384245,
+   "size": 10418,
+   "sha1": "addc53a4aea3408a91f80221a8a76724ec459ca0",
+   "mtime": 1795546885,
    "outline": {
     "headings": [],
-    "lines": 115,
+    "lines": 155,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
     "var",
     "strong",
+    "padding",
+    "nav",
+    "display",
     "code",
     "background",
     "color",
-    "padding",
-    "font-size",
-    "nav",
     "margin",
-    "line"
+    "font-size"
    ],
    "part_numbers": [
     "S-006",
@@ -3103,7 +3131,7 @@
    "ext": ".md",
    "size": 3218,
    "sha1": "ccdd7b3d7130af81624e3d8c4fd1cb5e350ff493",
-   "mtime": 1795384237,
+   "mtime": 1795546772,
    "outline": {
     "headings": [
      "День 1 · Токио · прилёт",
@@ -3139,7 +3167,7 @@
    "ext": ".json",
    "size": 1813,
    "sha1": "8b027bb7bb6f31e71ff5e3dd8023f809efce76cb",
-   "mtime": 1795390138
+   "mtime": 1795546772
   },
   {
    "path": "routes/japan/generated/slice-day2/входные/texts.json",
@@ -3153,30 +3181,30 @@
    "ext": ".gpx",
    "size": 28508,
    "sha1": "25db15b234674a8898086af57c12640430516c44",
-   "mtime": 1795390138
+   "mtime": 1795546772
   },
   {
    "path": "routes/japan/generated/slice-day2/выходные/Гид.html",
    "ext": ".html",
-   "size": 23547,
-   "sha1": "470411f04623f4e7b1abc85fe94d0612497c73c1",
-   "mtime": 1795390169,
+   "size": 27020,
+   "sha1": "ff652f3c827477df7934972115d96fd6ff911b32",
+   "mtime": 1795546885,
    "outline": {
     "headings": [],
-    "lines": 237,
+    "lines": 277,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
     "var",
     "font-size",
+    "class",
+    "padding",
     "text",
-    "code",
-    "fill",
+    "nav",
     "станция",
-    "background",
-    "мин",
-    "c1a16",
-    "font-family"
+    "display",
+    "code",
+    "background"
    ],
    "part_numbers": [
     "D-006",
@@ -3197,7 +3225,7 @@
    "ext": ".md",
    "size": 6712,
    "sha1": "7a7693b3d6b6f19a0f6c489b74c6fdb0601163ef",
-   "mtime": 1795390138,
+   "mtime": 1795546772,
    "outline": {
     "headings": [
      "День 2 · Фудзи · 5-я станция → хижина 8-й станции",
@@ -3261,25 +3289,25 @@
   {
    "path": "routes/japan/generated/slice-day3/выходные/Гид.html",
    "ext": ".html",
-   "size": 7414,
-   "sha1": "1f20a9fb80b6bd5184e1abdba3abde6968bc87de",
-   "mtime": 1795384246,
+   "size": 10623,
+   "sha1": "790eb24e2bf5dd5526ff21e900ca8a351c8c22a6",
+   "mtime": 1795546885,
    "outline": {
     "headings": [],
-    "lines": 117,
+    "lines": 157,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
     "var",
-    "background",
-    "киото",
-    "strong",
-    "color",
     "padding",
-    "font-size",
-    "code",
     "nav",
-    "margin"
+    "display",
+    "background",
+    "color",
+    "margin",
+    "strong",
+    "font-size",
+    "rem"
    ],
    "part_numbers": [
     "S-008",
@@ -3296,7 +3324,7 @@
    "ext": ".md",
    "size": 3555,
    "sha1": "08f92c162ae7efde16492fdea82830e4c6e55928",
-   "mtime": 1795384237,
+   "mtime": 1795546772,
    "outline": {
     "headings": [
      "День 3 · Фудзи · рассвет и спуск → Киото",
@@ -3333,24 +3361,24 @@
   {
    "path": "routes/japan/generated/slice-day4/выходные/Гид.html",
    "ext": ".html",
-   "size": 6417,
-   "sha1": "7eca591df81c9d6f80e183cbcd22ebe0aa758073",
-   "mtime": 1795384246,
+   "size": 9654,
+   "sha1": "944417d098489df29de430e3dee77d7a0e0d99c4",
+   "mtime": 1795546886,
    "outline": {
     "headings": [],
-    "lines": 109,
+    "lines": 149,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
     "var",
     "strong",
+    "padding",
+    "nav",
+    "display",
     "background",
     "color",
-    "padding",
-    "font-size",
-    "nav",
     "margin",
-    "кии-танабэ",
+    "font-size",
     "rem"
    ],
    "part_numbers": [
@@ -3365,7 +3393,7 @@
    "ext": ".md",
    "size": 2518,
    "sha1": "de599cb53238417710a7fc2175db7cf67b6cfd5f",
-   "mtime": 1795384237,
+   "mtime": 1795546772,
    "outline": {
     "headings": [
      "День 4 · Киото (полдня) → экспресс Куросио → Кии-Танабэ",
@@ -3400,7 +3428,7 @@
    "ext": ".json",
    "size": 2191,
    "sha1": "b773b8aa72fd3f49cd7716344710e389a3ae024e",
-   "mtime": 1795385016
+   "mtime": 1795546772
   },
   {
    "path": "routes/japan/generated/slice-day5/входные/texts.json",
@@ -3414,30 +3442,30 @@
    "ext": ".gpx",
    "size": 52105,
    "sha1": "160eca6f563b97120673e07cf3e2798d212de1a4",
-   "mtime": 1795385016
+   "mtime": 1795546772
   },
   {
    "path": "routes/japan/generated/slice-day5/выходные/Гид.html",
    "ext": ".html",
-   "size": 19295,
-   "sha1": "31224e1c18cc664c5d09f66970878356ec714c99",
-   "mtime": 1795385017,
+   "size": 22818,
+   "sha1": "36ce2206b45c94ba106e228e39947f57aaa65d80",
+   "mtime": 1795546886,
    "outline": {
     "headings": [],
-    "lines": 245,
+    "lines": 285,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
     "var",
     "font-size",
     "text",
-    "fill",
     "strong",
-    "c1a16",
-    "background",
-    "href",
-    "font-family",
-    "sans-serif"
+    "class",
+    "padding",
+    "nav",
+    "display",
+    "fill",
+    "background"
    ],
    "part_numbers": [
     "D-012",
@@ -3457,7 +3485,7 @@
    "ext": ".md",
    "size": 6575,
    "sha1": "cca93d33c1a6f632b2fed360e72fe1324fca33f8",
-   "mtime": 1795385016,
+   "mtime": 1795546772,
    "outline": {
     "headings": [
      "День 5 · Такидзири → Такахара → Цугизакура · Кумано Кодо Накахэти",
@@ -3562,25 +3590,25 @@
   {
    "path": "routes/japan/generated/slice-day6/выходные/Гид.html",
    "ext": ".html",
-   "size": 22143,
-   "sha1": "aabadf0308be5d575cedd710782d71a000f7f99b",
-   "mtime": 1795374043,
+   "size": 25738,
+   "sha1": "9416fc752cc4b52bb701f34635ed6ab7a70d59a4",
+   "mtime": 1795546886,
    "outline": {
     "headings": [],
-    "lines": 351,
+    "lines": 391,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
-    "text",
-    "strong",
     "var",
+    "strong",
     "font-size",
+    "text",
     "fill",
-    "c1a16",
-    "href",
-    "font-family",
+    "class",
+    "padding",
     "sans-serif",
-    "background"
+    "nav",
+    "href"
    ],
    "part_numbers": [
     "D-012",
@@ -3710,7 +3738,7 @@
    "ext": ".json",
    "size": 2345,
    "sha1": "47078d6cccc2a31a2c2b197167a8c394496fe15f",
-   "mtime": 1795385016
+   "mtime": 1795546772
   },
   {
    "path": "routes/japan/generated/slice-day7/входные/texts.json",
@@ -3724,30 +3752,30 @@
    "ext": ".gpx",
    "size": 23371,
    "sha1": "69673a119407fd83df1e80324b50e4b08c5ba23b",
-   "mtime": 1795385016
+   "mtime": 1795546772
   },
   {
    "path": "routes/japan/generated/slice-day7/выходные/Гид.html",
    "ext": ".html",
-   "size": 23240,
-   "sha1": "b146cf5bfc073871738cf894367e94f4fe04d421",
-   "mtime": 1795385017,
+   "size": 26734,
+   "sha1": "97646c9eb96e814f0a56504251a1f80a752e9390",
+   "mtime": 1795546886,
    "outline": {
     "headings": [],
-    "lines": 264,
+    "lines": 304,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
     "var",
-    "text",
     "font-size",
     "strong",
-    "fill",
+    "text",
+    "class",
+    "padding",
     "code",
-    "c1a16",
-    "href",
-    "когути",
-    "мин"
+    "fill",
+    "nav",
+    "когути"
    ],
    "part_numbers": [
     "D-012",
@@ -3769,7 +3797,7 @@
    "ext": ".md",
    "size": 7510,
    "sha1": "24e42c5273f5fc2854c86d823dc2fc65066a017e",
-   "mtime": 1795385016,
+   "mtime": 1795546772,
    "outline": {
     "headings": [
      "День 7 · Когумотори-гоэ · Хонгу → Когути → Кацуура",
@@ -3862,25 +3890,25 @@
   {
    "path": "routes/japan/generated/slice-day8/выходные/Гид.html",
    "ext": ".html",
-   "size": 7285,
-   "sha1": "4944c980d5968ba5addc790a8f2086463257de39",
-   "mtime": 1795384248,
+   "size": 10492,
+   "sha1": "4edb7afbc7087d9460f17fc07fddbd0d02b51d17",
+   "mtime": 1795546886,
    "outline": {
     "headings": [],
-    "lines": 110,
+    "lines": 150,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
-    "strong",
     "var",
+    "strong",
+    "padding",
+    "nav",
+    "display",
     "background",
     "color",
-    "padding",
+    "margin",
     "font-size",
-    "code",
-    "nav",
-    "сингу",
-    "margin"
+    "rem"
    ],
    "part_numbers": [
     "S-008",
@@ -3897,7 +3925,7 @@
    "ext": ".md",
    "size": 3211,
    "sha1": "b4cb9c4282ffc1a29f70aef1e242963165ac8e70",
-   "mtime": 1795384237,
+   "mtime": 1795546772,
    "outline": {
     "headings": [
      "День 8 · Нати и Сингу → переезд в Осаку",
@@ -3933,24 +3961,24 @@
   {
    "path": "routes/japan/generated/slice-day9/выходные/Гид.html",
    "ext": ".html",
-   "size": 5247,
-   "sha1": "88b0fbad4651dfcf1a390972b8ad329a7874f06f",
-   "mtime": 1795384248,
+   "size": 8441,
+   "sha1": "6c6a146f0f2bd853bfe73ca0771e47f417b3358c",
+   "mtime": 1795546886,
    "outline": {
     "headings": [],
-    "lines": 102,
+    "lines": 142,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
     "var",
+    "padding",
+    "nav",
+    "display",
     "background",
     "color",
-    "padding",
-    "font-size",
-    "nav",
     "margin",
+    "font-size",
     "rem",
-    "line",
     "solid"
    ],
    "part_numbers": [
@@ -3962,7 +3990,7 @@
    "ext": ".md",
    "size": 1660,
    "sha1": "c8b3439eafc77b0fbea294f19b197f8c7fcbcccc",
-   "mtime": 1795384237,
+   "mtime": 1795546772,
    "outline": {
     "headings": [
      "День 9 · Осака · вылет из Кансая",
@@ -3992,25 +4020,25 @@
   {
    "path": "routes/japan/generated/Бронирования.html",
    "ext": ".html",
-   "size": 10804,
-   "sha1": "72b99cf798193ff6077320aaa7a28085409602b0",
-   "mtime": 1795390307,
+   "size": 14232,
+   "sha1": "8b6cc332bcafea4312dea700084a5902afd02ece",
+   "mtime": 1795546886,
    "outline": {
     "headings": [],
-    "lines": 229,
+    "lines": 269,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
     "code",
-    "href",
     "var",
+    "href",
     "https",
     "com",
+    "padding",
+    "nav",
     "ожидается",
-    "www",
-    "background",
-    "мес",
-    "color"
+    "display",
+    "class"
    ],
    "part_numbers": [
     "S-007",
@@ -4066,24 +4094,24 @@
   {
    "path": "routes/japan/generated/Бюджет.html",
    "ext": ".html",
-   "size": 9039,
-   "sha1": "d2cd5eea84b655cc3dceb5deabdb0faebe4f475e",
-   "mtime": 1795385166,
+   "size": 12607,
+   "sha1": "8f7cf8a7127d8a9023a390285780b4b70658de11",
+   "mtime": 1795546886,
    "outline": {
     "headings": [],
-    "lines": 231,
+    "lines": 271,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
     "code",
     "var",
     "проверить",
-    "background",
-    "table",
-    "color",
     "padding",
-    "font-size",
+    "class",
     "nav",
+    "display",
+    "background",
+    "color",
     "margin"
    ],
    "part_numbers": [
@@ -4145,50 +4173,50 @@
   {
    "path": "routes/japan/generated/Гид.html",
    "ext": ".html",
-   "size": 8369,
-   "sha1": "76b8e307e79dea08538c7902f7489eab1b7d7ab1",
-   "mtime": 1795413846,
+   "size": 10321,
+   "sha1": "e1af744bda747cf05bc6b1ddcef0f2f110507002",
+   "mtime": 1795546897,
    "outline": {
     "headings": [],
-    "lines": 105,
+    "lines": 127,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
     "var",
     "div",
     "html",
-    "href",
-    "background",
+    "padding",
     "color",
-    "class",
-    "meta",
+    "margin",
     "font-size",
-    "margin"
+    "rem",
+    "display",
+    "href"
    ],
    "part_numbers": []
   },
   {
    "path": "routes/japan/generated/Источники.html",
    "ext": ".html",
-   "size": 12714,
-   "sha1": "380404a18ca246629ef926a929921dc4ebd85e3b",
-   "mtime": 1795413668,
+   "size": 15722,
+   "sha1": "e6f546c481c4e657ccaab0f7cea07a640bfbb7cc",
+   "mtime": 1795546886,
    "outline": {
     "headings": [],
-    "lines": 128,
+    "lines": 168,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
     "href",
     "https",
     "com",
-    "www",
     "var",
-    "background",
-    "color",
+    "www",
     "padding",
-    "font-size",
-    "code"
+    "nav",
+    "display",
+    "background",
+    "color"
    ],
    "part_numbers": [
     "S-001",
@@ -4234,12 +4262,12 @@
   {
    "path": "routes/japan/generated/Чеклист.html",
    "ext": ".html",
-   "size": 12581,
-   "sha1": "8334614d6539d2f6aea1f4dd94b7337888d16782",
-   "mtime": 1795384398,
+   "size": 14803,
+   "sha1": "2226b5aef31d3c29b9b5565313fa1db3e8152c88",
+   "mtime": 1795546893,
    "outline": {
     "headings": [],
-    "lines": 184,
+    "lines": 208,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
@@ -4248,9 +4276,9 @@
     "type",
     "checkbox",
     "button",
-    "section",
-    "class",
     "var",
+    "class",
+    "section",
     "onclick",
     "span"
    ],
@@ -4390,8 +4418,8 @@
    "path": "routes/japan/generated/гид.json",
    "ext": ".json",
    "size": 7331,
-   "sha1": "272811c3b01342f415717e2374f01b93b90cc79d",
-   "mtime": 1795545907
+   "sha1": "a82ba03eaacd6efe4d042c0676583792aa1842ee",
+   "mtime": 1795546897
   },
   {
    "path": "routes/japan/generated/маршрут.ics",
@@ -4509,14 +4537,14 @@
    "ext": "",
    "size": 0,
    "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
-   "mtime": 1795545907
+   "mtime": 1795546898
   },
   {
    "path": "routes/japan/site/index.html",
    "ext": ".html",
    "size": 2983,
    "sha1": "8a347855cdf9f03ccbf80d148632235fd8bd076d",
-   "mtime": 1795545907,
+   "mtime": 1795546898,
    "outline": {
     "headings": [],
     "lines": 59,
@@ -4541,25 +4569,25 @@
   {
    "path": "routes/japan/site/slice-day1/выходные/Гид.html",
    "ext": ".html",
-   "size": 7441,
-   "sha1": "a420cbd56c4b5079dbf2f342c4c0206ee9eb0d0f",
-   "mtime": 1795545907,
+   "size": 10619,
+   "sha1": "5ff531146c3c5b2d4b291aa27dc2bab0685f982d",
+   "mtime": 1795546898,
    "outline": {
     "headings": [],
-    "lines": 116,
+    "lines": 156,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
     "var",
     "strong",
+    "padding",
+    "nav",
+    "display",
     "code",
     "background",
     "color",
-    "padding",
-    "font-size",
-    "nav",
     "margin",
-    "line"
+    "font-size"
    ],
    "part_numbers": [
     "S-006",
@@ -4573,7 +4601,7 @@
    "ext": ".json",
    "size": 1813,
    "sha1": "8b027bb7bb6f31e71ff5e3dd8023f809efce76cb",
-   "mtime": 1795390138
+   "mtime": 1795546772
   },
   {
    "path": "routes/japan/site/slice-day2/входные/texts.json",
@@ -4587,30 +4615,30 @@
    "ext": ".gpx",
    "size": 28508,
    "sha1": "25db15b234674a8898086af57c12640430516c44",
-   "mtime": 1795390138
+   "mtime": 1795546772
   },
   {
    "path": "routes/japan/site/slice-day2/выходные/Гид.html",
    "ext": ".html",
-   "size": 23748,
-   "sha1": "ec3838675e5c8db783976b4f4fe2b93b1873537b",
-   "mtime": 1795545907,
+   "size": 27221,
+   "sha1": "5b212bba5dc26b700355f0ebcd83cc867c04b368",
+   "mtime": 1795546898,
    "outline": {
     "headings": [],
-    "lines": 238,
+    "lines": 278,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
     "var",
     "font-size",
+    "class",
+    "padding",
     "text",
-    "code",
-    "fill",
+    "nav",
     "станция",
-    "background",
-    "мин",
-    "c1a16",
-    "font-family"
+    "display",
+    "code",
+    "background"
    ],
    "part_numbers": [
     "D-006",
@@ -4650,25 +4678,25 @@
   {
    "path": "routes/japan/site/slice-day3/выходные/Гид.html",
    "ext": ".html",
-   "size": 7615,
-   "sha1": "a3b354bd641467e0aabba5ca8cd7d0a6d085ed59",
-   "mtime": 1795545907,
+   "size": 10824,
+   "sha1": "a1976f7d1b5944ee48ab88d5b3ecfccd0c988de7",
+   "mtime": 1795546898,
    "outline": {
     "headings": [],
-    "lines": 118,
+    "lines": 158,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
     "var",
-    "background",
-    "киото",
-    "strong",
-    "color",
     "padding",
-    "font-size",
-    "code",
     "nav",
-    "margin"
+    "display",
+    "background",
+    "color",
+    "margin",
+    "strong",
+    "font-size",
+    "rem"
    ],
    "part_numbers": [
     "S-008",
@@ -4683,24 +4711,24 @@
   {
    "path": "routes/japan/site/slice-day4/выходные/Гид.html",
    "ext": ".html",
-   "size": 6618,
-   "sha1": "65c5af9dfc11c4adbbb298cb90c310baa5b1eb3f",
-   "mtime": 1795545907,
+   "size": 9855,
+   "sha1": "681e25abb0d06df012b9eb7e6a7674de2fe330fd",
+   "mtime": 1795546898,
    "outline": {
     "headings": [],
-    "lines": 110,
+    "lines": 150,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
     "var",
     "strong",
+    "padding",
+    "nav",
+    "display",
     "background",
     "color",
-    "padding",
-    "font-size",
-    "nav",
     "margin",
-    "кии-танабэ",
+    "font-size",
     "rem"
    ],
    "part_numbers": [
@@ -4715,7 +4743,7 @@
    "ext": ".json",
    "size": 2191,
    "sha1": "b773b8aa72fd3f49cd7716344710e389a3ae024e",
-   "mtime": 1795385016
+   "mtime": 1795546772
   },
   {
    "path": "routes/japan/site/slice-day5/входные/texts.json",
@@ -4729,30 +4757,30 @@
    "ext": ".gpx",
    "size": 52105,
    "sha1": "160eca6f563b97120673e07cf3e2798d212de1a4",
-   "mtime": 1795385016
+   "mtime": 1795546772
   },
   {
    "path": "routes/japan/site/slice-day5/выходные/Гид.html",
    "ext": ".html",
-   "size": 19496,
-   "sha1": "014b3d22718a9ef8a21d54e28b1a7167e52c1115",
-   "mtime": 1795545907,
+   "size": 23019,
+   "sha1": "d75c1a62e1aa4c458ce00461097592f789cc6aac",
+   "mtime": 1795546898,
    "outline": {
     "headings": [],
-    "lines": 246,
+    "lines": 286,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
     "var",
     "font-size",
     "text",
-    "fill",
     "strong",
-    "c1a16",
-    "background",
-    "href",
-    "font-family",
-    "sans-serif"
+    "class",
+    "padding",
+    "nav",
+    "display",
+    "fill",
+    "background"
    ],
    "part_numbers": [
     "D-012",
@@ -4833,25 +4861,25 @@
   {
    "path": "routes/japan/site/slice-day6/выходные/Гид.html",
    "ext": ".html",
-   "size": 22344,
-   "sha1": "805f518fb471da793761a991a0d5499aaad0c81b",
-   "mtime": 1795545907,
+   "size": 25939,
+   "sha1": "bbde8d5136786c87f81b9ee4748c01b803714bff",
+   "mtime": 1795546898,
    "outline": {
     "headings": [],
-    "lines": 352,
+    "lines": 392,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
-    "text",
-    "strong",
     "var",
+    "strong",
     "font-size",
+    "text",
     "fill",
-    "c1a16",
-    "href",
-    "font-family",
+    "class",
+    "padding",
     "sans-serif",
-    "background"
+    "nav",
+    "href"
    ],
    "part_numbers": [
     "D-012",
@@ -4936,7 +4964,7 @@
    "ext": ".json",
    "size": 2345,
    "sha1": "47078d6cccc2a31a2c2b197167a8c394496fe15f",
-   "mtime": 1795385016
+   "mtime": 1795546772
   },
   {
    "path": "routes/japan/site/slice-day7/входные/texts.json",
@@ -4950,30 +4978,30 @@
    "ext": ".gpx",
    "size": 23371,
    "sha1": "69673a119407fd83df1e80324b50e4b08c5ba23b",
-   "mtime": 1795385016
+   "mtime": 1795546772
   },
   {
    "path": "routes/japan/site/slice-day7/выходные/Гид.html",
    "ext": ".html",
-   "size": 23441,
-   "sha1": "ef49c33d51e3fe63b4e91a54f33afb1e2a900b57",
-   "mtime": 1795545907,
+   "size": 26935,
+   "sha1": "b3c03237ff383f33adfd32a60f8e6e187bd74146",
+   "mtime": 1795546898,
    "outline": {
     "headings": [],
-    "lines": 265,
+    "lines": 305,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
     "var",
-    "text",
     "font-size",
     "strong",
-    "fill",
+    "text",
+    "class",
+    "padding",
     "code",
-    "c1a16",
-    "href",
-    "когути",
-    "мин"
+    "fill",
+    "nav",
+    "когути"
    ],
    "part_numbers": [
     "D-012",
@@ -5042,25 +5070,25 @@
   {
    "path": "routes/japan/site/slice-day8/выходные/Гид.html",
    "ext": ".html",
-   "size": 7486,
-   "sha1": "8d72dd9c7ae6ccc76f4b8a9dccf1e539d46765ea",
-   "mtime": 1795545907,
+   "size": 10693,
+   "sha1": "b6a570b3dc101695b5d2b191bef2fa8b42394e84",
+   "mtime": 1795546898,
    "outline": {
     "headings": [],
-    "lines": 111,
+    "lines": 151,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
-    "strong",
     "var",
+    "strong",
+    "padding",
+    "nav",
+    "display",
     "background",
     "color",
-    "padding",
+    "margin",
     "font-size",
-    "code",
-    "nav",
-    "сингу",
-    "margin"
+    "rem"
    ],
    "part_numbers": [
     "S-008",
@@ -5075,24 +5103,24 @@
   {
    "path": "routes/japan/site/slice-day9/выходные/Гид.html",
    "ext": ".html",
-   "size": 5448,
-   "sha1": "da54672cff03ec303a6600d822b59c145bbda41a",
-   "mtime": 1795545907,
+   "size": 8642,
+   "sha1": "87516c37c9f22c620ea17c6d12339ab326d7b3ef",
+   "mtime": 1795546898,
    "outline": {
     "headings": [],
-    "lines": 103,
+    "lines": 143,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
     "var",
+    "padding",
+    "nav",
+    "display",
     "background",
     "color",
-    "padding",
-    "font-size",
-    "nav",
     "margin",
+    "font-size",
     "rem",
-    "line",
     "solid"
    ],
    "part_numbers": [
@@ -5102,25 +5130,25 @@
   {
    "path": "routes/japan/site/Бронирования.html",
    "ext": ".html",
-   "size": 10999,
-   "sha1": "97f0f64e42a95fb22a86f5bd15a77840ac99593f",
-   "mtime": 1795545907,
+   "size": 14427,
+   "sha1": "660d38e8525b871816c992bc9e5a70c515cfbc7f",
+   "mtime": 1795546897,
    "outline": {
     "headings": [],
-    "lines": 230,
+    "lines": 270,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
     "code",
-    "href",
     "var",
+    "href",
     "https",
     "com",
+    "padding",
+    "nav",
     "ожидается",
-    "www",
-    "background",
-    "мес",
-    "color"
+    "display",
+    "class"
    ],
    "part_numbers": [
     "S-007",
@@ -5136,24 +5164,24 @@
   {
    "path": "routes/japan/site/Бюджет.html",
    "ext": ".html",
-   "size": 9234,
-   "sha1": "fc352bcc3fa3c083db3bf344333bac1113fee385",
-   "mtime": 1795545907,
+   "size": 12802,
+   "sha1": "15cc08152abaf1e75a60a680255bab7988241167",
+   "mtime": 1795546897,
    "outline": {
     "headings": [],
-    "lines": 232,
+    "lines": 272,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
     "code",
     "var",
     "проверить",
-    "background",
-    "table",
-    "color",
     "padding",
-    "font-size",
+    "class",
     "nav",
+    "display",
+    "background",
+    "color",
     "margin"
    ],
    "part_numbers": [
@@ -5172,50 +5200,50 @@
   {
    "path": "routes/japan/site/Гид.html",
    "ext": ".html",
-   "size": 8564,
-   "sha1": "a0c7479dedabac7349f282b25a0638ffb76df8f2",
-   "mtime": 1795545907,
+   "size": 10516,
+   "sha1": "2dc928efa90d464844b0df099b3c9063885a5e51",
+   "mtime": 1795546897,
    "outline": {
     "headings": [],
-    "lines": 106,
+    "lines": 128,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
     "var",
     "div",
     "html",
-    "href",
-    "background",
+    "padding",
     "color",
-    "class",
-    "meta",
+    "margin",
     "font-size",
-    "margin"
+    "rem",
+    "display",
+    "href"
    ],
    "part_numbers": []
   },
   {
    "path": "routes/japan/site/Источники.html",
    "ext": ".html",
-   "size": 12909,
-   "sha1": "7f2e00a306f3fae020eb334d748132574e5f567d",
-   "mtime": 1795545907,
+   "size": 15917,
+   "sha1": "b03b891b620f5fabeec8afabcd1981585beb3821",
+   "mtime": 1795546898,
    "outline": {
     "headings": [],
-    "lines": 129,
+    "lines": 169,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
     "href",
     "https",
     "com",
-    "www",
     "var",
-    "background",
-    "color",
+    "www",
     "padding",
-    "font-size",
-    "code"
+    "nav",
+    "display",
+    "background",
+    "color"
    ],
    "part_numbers": [
     "S-001",
@@ -5225,12 +5253,12 @@
   {
    "path": "routes/japan/site/Чеклист.html",
    "ext": ".html",
-   "size": 12776,
-   "sha1": "ec4450b792714aa94dc8d90efb796c9b89ccf9f0",
-   "mtime": 1795545907,
+   "size": 14998,
+   "sha1": "414a061a414fbcc09c9bc8c090f63fc0a26f7153",
+   "mtime": 1795546898,
    "outline": {
     "headings": [],
-    "lines": 185,
+    "lines": 209,
     "snippet": "<!DOCTYPE html>"
    },
    "keywords": [
@@ -5239,9 +5267,9 @@
     "type",
     "checkbox",
     "button",
-    "section",
-    "class",
     "var",
+    "class",
+    "section",
     "onclick",
     "span"
    ],
@@ -5253,8 +5281,8 @@
    "path": "routes/japan/site/гид.json",
    "ext": ".json",
    "size": 7331,
-   "sha1": "272811c3b01342f415717e2374f01b93b90cc79d",
-   "mtime": 1795545907
+   "sha1": "a82ba03eaacd6efe4d042c0676583792aa1842ee",
+   "mtime": 1795546897
   },
   {
    "path": "routes/japan/site/маршрут.ics",
@@ -5350,9 +5378,9 @@
   {
    "path": "Инструкция_генерация_горных_маршрутов.md",
    "ext": ".md",
-   "size": 49796,
-   "sha1": "57ed84c983acd5e24850a2bb5813bbb7a6760e23",
-   "mtime": 1795546446,
+   "size": 50372,
+   "sha1": "f1feebd3934970628bd43a30847597d790d37b20",
+   "mtime": 1795546984,
    "outline": {
     "headings": [
      "Инструкция: генерация путеводителя горного пешего похода (+ HTML-версия + аудиогид)",
@@ -5376,20 +5404,20 @@
      "12.2. Обязательные итоги (считать скриптом, не в уме)",
      "12.3. Правила для ИИ-генерации"
     ],
-    "lines": 370,
+    "lines": 371,
     "snippet": "*По методике, отработанной на маршруте «Фанские горы — кольцо Чимтарги», 06–16.09.2026 (Артуч → Куликалон → пер. Алаудин → Алауддинские оз. → Мутные оз. → лагерь 4400 → пер. Чимтарга 4740 → Б. Алло → "
    },
    "keywords": [
     "без",
     "маршрут",
     "даты",
+    "день",
     "только",
     "высоты",
-    "день",
+    "маршрута",
     "html",
     "mp3",
-    "gpx",
-    "маршрута"
+    "gpx"
    ],
    "part_numbers": [
     "SHA-256",
